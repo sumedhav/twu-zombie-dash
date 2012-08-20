@@ -1,20 +1,17 @@
 package com.zombiedash.app.model;
 
 public class Admin {
-    private static Admin currentInstance = null;
+    String userName;
+    char[] password;
 
-    private Admin() {}
-
-    public static Admin getCurrentInstance() {
-        if (null == currentInstance) {
-            currentInstance = new Admin();
-        }
-        return currentInstance;
+    public Admin(String userName,char[] password) {
+        this.userName = userName;
+        this.password = password;
     }
 
-    public Boolean authenticate(String userName, char[] password) {
-        boolean properUserName = userName.equals("admin");
-        boolean properPassword = new String(password).equals("Welcome1");
-        return (properUserName && properPassword);
+    public void authenticate(String userName, char[] password) {
+        boolean properUserName = userName.equals(this.userName);
+        boolean properPassword = new String(password).equals(new String(this.password));
+        if(!(properUserName &&  properPassword)) throw new RuntimeException("Authentication Failure");
     }
 }
