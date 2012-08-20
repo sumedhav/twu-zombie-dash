@@ -1,4 +1,5 @@
 build/
 out/
+lib/
 *.iws
-/lib
+.*DS_Store
