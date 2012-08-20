@@ -1,13 +1,12 @@
-package com.zombiedash.app;
+package com.zombiedash.app.model;
 
-import com.zombiedash.app.model.Admin;
 import org.junit.Test;
 
 public class AdminTest {
     @Test
     public void shouldAuthenticateWithProperCredentials() throws Exception {
         Admin admin =  new Admin("admin","Welcome1".toCharArray());
-        admin.authenticate("admin","Welcome1".toCharArray());
+        admin.authenticate("admin", "Welcome1".toCharArray());
     }
 
     @Test(expected = RuntimeException.class)
