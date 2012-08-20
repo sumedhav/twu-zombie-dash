@@ -1,10 +1,10 @@
 package com.zombiedash.app.model;
 
-public class Admin {
+public class User {
     String userName;
     char[] password;
 
-    public Admin(String userName,char[] password) {
+    public User(String userName, char[] password) {
         this.userName = userName;
         this.password = password;
     }
