@@ -1,3 +1,6 @@
+package com.zombiedash.app.repository;
+
+import com.zombiedash.app.model.Question;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

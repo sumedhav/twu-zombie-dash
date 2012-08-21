@@ -215,13 +215,6 @@
       <jarDirectory url="file://$PROJECT_DIR$/lib/runtime/jar" recursive="false" />
       <jarDirectory url="file://$PROJECT_DIR$/lib/runtime/jar" recursive="false" type="SOURCES" />
     </library>
-    <library name="validation-api-1.0.0.GA">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/validation-api-1.0.0.GA.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
   </component>
 </project>
 

@@ -1,3 +1,6 @@
+package com.zombiedash.app.repository;
+
+import com.zombiedash.app.model.Question;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
