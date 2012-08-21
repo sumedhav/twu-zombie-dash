@@ -1,6 +1,23 @@
 package com.zombiedash.app.model;
 
 public class User {
+    public String getUserName() {
+        return userName;
+    }
+
+    public char[] getPassword() {
+        return password;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
+
     String userName;
     char[] password;
 
