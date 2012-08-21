@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class ConferenceRepository {
+    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO Conference values (?,?,?,?,?,?,?,?,?,?)";
     private Conference conference;
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -17,10 +19,7 @@ public class ConferenceRepository {
     }
 
     public Integer saveConference() {
-        String sql = "INSERT INTO conferences " +
-                "(name,topic,description,venue,startDate,endDate,maxAttendee," +
-                "organiserName,organiserContactNumber,organiserEmail) values (?,?,?,?,?,?,?,?,?,?)";
-        return jdbcTemplate.update(sql, new Object[]{
+        return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
                 conference.getName(),
                 conference.getTopic(),
                 conference.getDescription(),
@@ -30,7 +29,7 @@ public class ConferenceRepository {
                 conference.getMaxAttendee(),
                 conference.getOrganiserName(),
                 conference.getOrganiserContactNumber(),
-                conference.getOrganiserEmail()});
+                conference.getOrganiserEmail());
     }
 
     public void setConference(Conference conference) {
