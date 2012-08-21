@@ -17,7 +17,10 @@ public class ConferenceRepository {
     }
 
     public void saveConference() {
-
+        String sql = "IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND  TABLE_NAME = 'TheTable'))\n" +
+                "BEGIN\n" +
+                "    --Do Stuff\n" +
+                "END";
     }
 
 

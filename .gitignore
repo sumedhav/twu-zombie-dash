@@ -2,4 +2,5 @@ build/
 out/
 lib/
 *.iws
+*.ipr
 .*DS_Store

@@ -1,6 +1,7 @@
 package com.zombiedash.app.model;
 
 
+import com.zombiedash.app.service.UserService;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 

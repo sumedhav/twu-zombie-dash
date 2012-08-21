@@ -1,4 +1,4 @@
-package com.zombiedash.app.unit.controller;
+package com.zombiedash.app.controller;
 
 import com.zombiedash.app.controller.ConferenceController;
 import com.zombiedash.app.repository.ConferenceRepository;

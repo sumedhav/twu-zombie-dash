@@ -16,8 +16,6 @@
     <orderEntry type="library" exported="" name="jetty-jars" level="project" />
     <orderEntry type="library" exported="" name="runtime-jars" level="project" />
     <orderEntry type="library" exported="" name="buildtime-jars" level="project" />
-    <orderEntry type="library" name="api" level="application" />
-    <orderEntry type="library" name="validation-api-1.0.0.GA" level="project" />
   </component>
 </module>
 
