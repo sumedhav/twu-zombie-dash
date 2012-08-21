@@ -17,6 +17,7 @@
         <pathelement location="${unit.test.dir}/resources"/>
         <pathelement location="${src.dir}/resources"/>
         <pathelement location="${src.dir}/deployment/env/dev"/>
+        <pathelement location="${integration.test.dir}/resources"/>
         <fileset dir="${compile.dir}"/>
         <fileset dir="lib/runtime/jar"/>
         <fileset dir="lib/buildtime/jar" />
