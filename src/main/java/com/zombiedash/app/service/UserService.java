@@ -1,5 +1,6 @@
-package com.zombiedash.app.model;
+package com.zombiedash.app.service;
 
+import com.zombiedash.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

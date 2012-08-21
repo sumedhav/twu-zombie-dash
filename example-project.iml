@@ -10,18 +10,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/unit-tests/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/resources" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/forms" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/resources" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="jetty-jars" level="project" />
     <orderEntry type="library" exported="" name="runtime-jars" level="project" />
     <orderEntry type="library" exported="" name="buildtime-jars" level="project" />
-    <orderEntry type="library" name="api" level="application" />
-    <orderEntry type="library" name="validation-api-1.0.0.GA" level="project" />
   </component>
 </module>
 
