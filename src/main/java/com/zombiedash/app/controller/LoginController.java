@@ -1,6 +1,8 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.User;
+import com.zombiedash.app.model.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/login")
 
 public class LoginController {
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "LoginForm", method = RequestMethod.GET)
     public String showForm() {
@@ -20,9 +24,9 @@ public class LoginController {
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
     public String processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, HttpServletRequest request) {
-        User givenUser = new User(username, password.toCharArray());
+        User givenUser = userService.createAdmin();
         try{
-            givenUser.authenticate("Yahya", "12".toCharArray());
+            givenUser.authenticate(username, password.toCharArray());
             return "loginsuccess";
         }
         catch (Exception e){
