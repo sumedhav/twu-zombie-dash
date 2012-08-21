@@ -7,12 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public UserService(){
-    }
-
+    @Autowired
     public UserService(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -24,5 +21,9 @@ public class UserService {
         sql = "SELECT password FROM users WHERE role = ?";
         String password = jdbcTemplate.queryForObject(sql, args, String.class);
         return new User(username,password.toCharArray());
+    }
+
+    public User authenticateAndReturnUser(String username, String password) {
+        return null;  //To change body of created methods use File | Settings | File Templates.
     }
 }
