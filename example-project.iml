@@ -10,6 +10,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/unit-tests/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/forms" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/integration-tests/resources" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

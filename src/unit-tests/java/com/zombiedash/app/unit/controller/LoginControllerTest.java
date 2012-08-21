@@ -1,5 +1,6 @@
-package com.zombiedash.app.controller;
+package com.zombiedash.app.unit.controller;
 
+import com.zombiedash.app.controller.LoginController;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;
