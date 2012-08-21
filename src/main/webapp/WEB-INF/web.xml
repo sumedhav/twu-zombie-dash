@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>APP</display-name>
+    <display-name>Zombie</display-name>
 
     <context-param>
         <param-name>defaultHtmlEscape</param-name>
@@ -31,11 +31,11 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/page/*</url-pattern>
+        <url-pattern>/zombie/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <error-page>

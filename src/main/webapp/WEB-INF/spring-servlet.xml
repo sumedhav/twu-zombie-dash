@@ -10,12 +10,12 @@
 
     <context:annotation-config />
 
-    <context:component-scan base-package="com.example.app">
+    <context:component-scan base-package="com.zombiedash.app">
     </context:component-scan>
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:properties-ref="externalProperties"
-          p:searchSystemEnvironment="true" />
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"-->
+          <!--p:properties-ref="externalProperties"-->
+          <!--p:searchSystemEnvironment="true" />-->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />

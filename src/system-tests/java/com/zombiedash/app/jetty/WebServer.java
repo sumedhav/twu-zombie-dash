@@ -1,4 +1,4 @@
-package com.example.app.jetty;
+package com.zombiedash.app.jetty;
 
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.webapp.WebAppContext;
