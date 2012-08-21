@@ -16,13 +16,22 @@ public class ConferenceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void saveConference() {
-        String sql = "IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND  TABLE_NAME = 'TheTable'))\n" +
-                "BEGIN\n" +
-                "    --Do Stuff\n" +
-                "END";
+    public Integer saveConference() {
+        String sql = "INSERT INTO conferences " +
+                "(name,topic,description,venue,startDate,endDate,maxAttendee," +
+                "organiserName,organiserContactNumber,organiserEmail) values (?,?,?,?,?,?,?,?,?,?)";
+        return jdbcTemplate.update(sql, new Object[]{
+                conference.getName(),
+                conference.getTopic(),
+                conference.getDescription(),
+                conference.getVenue(),
+                conference.getStartDate(),
+                conference.getEndDate(),
+                conference.getMaxAttendee(),
+                conference.getOrganiserName(),
+                conference.getOrganiserContactNumber(),
+                conference.getOrganiserEmail()});
     }
-
 
     public void setConference(Conference conference) {
         this.conference = conference;
