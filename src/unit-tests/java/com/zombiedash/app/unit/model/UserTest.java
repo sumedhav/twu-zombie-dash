@@ -1,5 +1,6 @@
-package com.zombiedash.app.model;
+package com.zombiedash.app.unit.model;
 
+import com.zombiedash.app.model.User;
 import org.junit.Test;
 
 public class UserTest {
