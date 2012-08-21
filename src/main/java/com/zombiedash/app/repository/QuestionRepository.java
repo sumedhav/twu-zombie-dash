@@ -1,6 +1,7 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ public class QuestionRepository {
     private static final String SELECT_ALL_QUESTIONS = "select * from Question";
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public QuestionRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
