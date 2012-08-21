@@ -15,6 +15,7 @@
 
     <path id="common-classpath">
         <pathelement location="${unit.test.dir}/resources"/>
+        <pathelement location="${integration.test.dir}/resources"/>
         <pathelement location="${src.dir}/resources"/>
         <pathelement location="${src.dir}/deployment/env/dev"/>
         <pathelement location="${integration.test.dir}/resources"/>
