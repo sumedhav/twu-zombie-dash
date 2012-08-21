@@ -42,7 +42,7 @@ public class ConferenceController {
                         conferenceOrganiserName,
                         conferenceOrganiserContactNumber,
                         conferenceOrganiserEmail);
-        conferenceRepository.setConference(conference);
+        conferenceRepository.saveConference(conference);
         return new ModelAndView("home");
     }
 

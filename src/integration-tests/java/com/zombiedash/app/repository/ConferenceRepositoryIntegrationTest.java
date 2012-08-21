@@ -31,8 +31,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
         String organiserEmail = "smiley@gmail.com";
         Conference conference = new Conference(name,topic,description,venue,startDate,endDate,maxAttendee,organiserName,organiserContactNumber,organiserEmail);
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        conferenceRepository.setConference(conference);
-        int numberOfRows = conferenceRepository.saveConference();
+        int numberOfRows = conferenceRepository.saveConference(conference);
         assertThat(numberOfRows,is(equalTo(1)));
     }
 }

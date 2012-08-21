@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ConferenceRepository {
     public static final String SQL_CONFERENCE_INSERT = "INSERT INTO Conference values (?,?,?,?,?,?,?,?,?,?)";
-    private Conference conference;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -18,7 +17,7 @@ public class ConferenceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Integer saveConference() {
+    public Integer saveConference(Conference conference) {
         return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
                 conference.getName(),
                 conference.getTopic(),
@@ -30,9 +29,5 @@ public class ConferenceRepository {
                 conference.getOrganiserName(),
                 conference.getOrganiserContactNumber(),
                 conference.getOrganiserEmail());
-    }
-
-    public void setConference(Conference conference) {
-        this.conference = conference;
     }
 }

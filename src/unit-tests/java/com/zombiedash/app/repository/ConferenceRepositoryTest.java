@@ -27,9 +27,7 @@ public class ConferenceRepositoryTest {
         when(conference.getStartDate()).thenReturn("");
         when(conference.getTopic()).thenReturn("");
         when(conference.getVenue()).thenReturn("");
-
-        conferenceRepository.setConference(conference);
-        int numberOfRows = conferenceRepository.saveConference();
+        int numberOfRows = conferenceRepository.saveConference(conference);
         assertThat(numberOfRows,is(equalTo(1)));
     }
 }
