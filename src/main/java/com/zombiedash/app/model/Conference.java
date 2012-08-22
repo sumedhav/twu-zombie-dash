@@ -2,9 +2,6 @@ package com.zombiedash.app.model;
 
 
 public class Conference {
-
-
-
     private String name;
     private String topic;
     private String description;
