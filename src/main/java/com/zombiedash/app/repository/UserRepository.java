@@ -14,6 +14,8 @@ import java.util.List;
 public class UserRepository {
     private JdbcTemplate jdbcTemplate;
     private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM users where role = ?";
+    private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM users where username = ?";
+    private static final String RETRIEVE_ALL_USERS = "SELECT * FROM users";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -23,6 +25,31 @@ public class UserRepository {
     public User retrieveAdminUser() {
         Object[] adminRoleArg = new Object[]{0};
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_ROW, adminRoleArg, new RowMapper() {
+            @Override
+            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+
+                return new User(resultSet.getString("username"),
+                        resultSet.getString("password"));
+            }
+        });
+        return userList.get(0);
+    }
+
+    public List<User> retrieveAllUsers() {
+        List<User> userList = jdbcTemplate.query(RETRIEVE_ALL_USERS, new RowMapper() {
+            @Override
+            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+
+                return new User(resultSet.getString("username"),
+                        resultSet.getString("password"));
+            }
+        });
+        return userList;
+    }
+
+    public User retrieveUser(String username) {
+        Object[] arg = new Object[]{username};
+        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 

@@ -8,9 +8,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.isNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -33,4 +39,32 @@ public class UserServiceTest {
         assertNull(userService.authenticateAndReturnUser("admefhvjin", "Welcomdfgrfjgre1"));
     }
 
+    @Test
+    public void shouldListUsers() {
+        List list = new ArrayList<User>();
+        list.add(new User("admin", "password"));
+        list.add(new User("user", "password"));
+        given(userRepository.retrieveAllUsers()).willReturn(list);
+
+        UserService userService = new UserService(userRepository);
+        List<User> result = userService.getAllUsers();
+
+        assertThat(result.get(0), is(new User("admin", "password")));
+        assertThat(result.get(1), is(new User("user", "password")));
+    }
+
+    @Test
+    public void shouldGetUser() {
+        given(userRepository.retrieveUser("user")).willReturn(new User("user", "password"));
+
+        UserService userService = new UserService(userRepository);
+        User result = userService.getUser("user");
+
+        assertThat(result, is(new User("user", "password")));
+    }
+
+    @Test
+    public void should() {
+
+    }
 }
