@@ -4,11 +4,13 @@ public class User implements java.io.Serializable {
     String userName;
     char[] password;
     Boolean loggedStatus = false;
+    private Role userRole;
 
 
     public User(String userName, char[] password) {
         this.userName = userName;
         this.password = password;
+        this.userRole = Role.GAME_DESIGNER;
     }
 
     public void authenticate(String userName, char[] password) {
@@ -21,4 +23,13 @@ public class User implements java.io.Serializable {
     public Boolean isLoggedIn() {
         return loggedStatus;
     }
+
+    public Role getUserRole() {
+        return userRole;
+    }
+
+    public void setRole(Role role) {
+        this.userRole = role;
+    }
+
 }
