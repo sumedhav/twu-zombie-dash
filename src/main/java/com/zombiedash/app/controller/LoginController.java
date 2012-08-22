@@ -7,8 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/login")
@@ -28,17 +27,15 @@ public class LoginController {
     }
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
-    public String processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, HttpServletRequest request) {
+    public ModelAndView processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, ModelAndView modelAndView) {
 
         User givenUser = userService.authenticateAndReturnUser(username,password);
         if(givenUser==null) {
-            request.setAttribute("errorMessage", "You have entered an invalid Username or Password!!");
-            return "loginform";
+            modelAndView.addObject("errorMessage", "You have entered an invalid Username or Password!!");
+            modelAndView.setViewName("loginform");
+            return modelAndView;
         }
-        return "loginsuccess";
+        modelAndView.setViewName("loginsuccess");
+        return modelAndView;
     }
-
-
-
-
 }

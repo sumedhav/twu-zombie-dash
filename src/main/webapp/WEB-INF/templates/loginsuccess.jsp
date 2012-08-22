@@ -21,7 +21,7 @@ pageEncoding="ISO-8859-1"%>
                 <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/view">CONFERENCES</a></td>
             </tr>
             <tr>
-                <td><a href="">USERS</a></td>
+                <td><a href="/zombie/admin/users/">USERS</a></td>
             </tr>
 
         </table>
