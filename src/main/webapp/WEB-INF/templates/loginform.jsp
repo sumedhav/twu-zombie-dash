@@ -3,7 +3,7 @@
     <h1>
         <center> Login Form </center>
     </h1>
-    <form commandName="loginForm" action="/zombie/login/Authenticate" method = "POST">
+    <form commandName="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
         <div style="color:red; text-align:center"><%
             if(request.getAttribute("errorMessage")!=null)
             {
@@ -16,7 +16,7 @@
             <tr>
                 <td>
                     <p>
-                        <img align="right" src="../../static/images/Zombie-Dash.jpg"/>
+                        <img align="right" src="${pageContext.request.contextPath}/static/images/Zombie-Dash.jpg"/>
                     </p>
                 </td>
                 <td>
