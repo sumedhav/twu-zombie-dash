@@ -4,14 +4,9 @@
         <center> Login Form </center>
     </h1>
     <form commandName="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
-        <div style="color:red; text-align:center"><%
-            if(request.getAttribute("errorMessage")!=null)
-            {
-                String msg = (String)request.getAttribute("errorMessage");
-                out.println(msg);
-            }
-            %>
-        <c:out value="${message}"/></div>
+        <div style="color:red; text-align:center">
+        ${errorMessage}
+        </div>
         <table>
             <tr>
                 <td>
