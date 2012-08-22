@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -31,8 +31,7 @@ public class LoginControllerTest {
     public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() {
         User user = mock(User.class);
         given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
-
-        String viewName = new LoginController(userService).processForm("admin","Welcome1", new MockHttpServletRequest());
+        String viewName = new LoginController(userService).processForm("admin","Welcome1", new ModelAndView()).getViewName();
 
         assertThat(viewName,equalTo("loginsuccess"));
     }
@@ -40,8 +39,7 @@ public class LoginControllerTest {
     @Test
     public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated(){
         given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(null);
-
-        String viewName = new LoginController(userService).processForm("admin1","Welcome1", new MockHttpServletRequest());
+        String viewName = new LoginController(userService).processForm("admin1","Welcome1", new ModelAndView()).getViewName();
 
         assertThat(viewName, equalTo("loginform"));
    }

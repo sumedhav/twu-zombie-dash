@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -54,5 +56,31 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     assertThat(actualConference.getEndDate(),is(equalTo("2012-08-23")));
     assertThat(actualConference.getMaxAttendee(), is(equalTo(2)));
     assertThat(actualConference.getTopic(), is(equalTo("Java")));
+  }
+
+  @Test
+  public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
+    String name = "Java Conference";
+    String topic = "Java";
+    String description = "for people who really like java";
+    String venue = "near you";
+    String startDate = "2012-08-21";
+    String endDate = "2012-08-23";
+    int maxAttendee = 2;
+    String organiserName = "Mr. Smiley";
+    String organiserContactNumber = "5555-5555";
+    String organiserEmail = "smiley@gmail.com";
+    Conference firstConference = new Conference(name, topic, description, venue, startDate, endDate, maxAttendee, organiserName, organiserContactNumber, organiserEmail);
+    ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
+    conferenceRepository.saveConference(firstConference);
+    String otherName = "Other Java Conference";
+    Conference secondConference = new Conference(otherName, topic, description, venue, startDate, endDate, maxAttendee, organiserName, organiserContactNumber, organiserEmail);
+    conferenceRepository.saveConference(secondConference);
+    List<Conference> actualConferences = conferenceRepository.showAllConferences();
+    for (Conference actualConference : actualConferences) {
+      assertThat(actualConference.getEndDate(), is(equalTo("2012-08-23")));
+      assertThat(actualConference.getMaxAttendee(), is(equalTo(2)));
+      assertThat(actualConference.getOrganiserName(), is(equalTo("Mr. Smiley")));
+    }
   }
 }

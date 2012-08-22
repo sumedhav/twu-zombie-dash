@@ -11,10 +11,6 @@ public class Option {
         this.isCorrect = correct;
     }
 
-    public int getQuestionId() {
-        return questionId;
-    }
-
     public String getText() {
         return text;
     }
