@@ -2,6 +2,8 @@ package com.zombiedash.app.model;
 
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,5 +24,11 @@ public class UserTest {
     public void shouldNotAuthenticateWithoutProperPassword() throws Exception {
         User user =  new User("user","Welcome1");
        assertFalse(user.authenticate("user", "abc"));
+    }
+
+    @Test
+    public void shouldCheckIfUserIsAGameDesigner() {
+        Role userRole = new User("designer","password").getUserRole();
+        assertThat(userRole, is(Role.GAME_DESIGNER));
     }
 }

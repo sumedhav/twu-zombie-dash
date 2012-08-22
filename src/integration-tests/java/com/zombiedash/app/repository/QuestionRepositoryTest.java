@@ -36,17 +36,14 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     public void shouldRetrieveAllQuestions() {
         setUpQuestions();
         QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
-
         List<Question> questions = questionRepository.listAllQuestions();
-
-//        List<Option> optionList=questionRepository.listAllOptions(1);
         assertThat(questions.size(),is(2));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
                 aQuestionWith("Where is Red Fort",
                         new HashMap<String, Boolean>() {{
                             put("Delhi", true);
                             put("Paris", false);
-                            put("Delhi", false);
+                            put("New York", false);
                         }}
                 ),
                 aQuestionWith("Is it lunch time?", new HashMap<String, Boolean>() {{
@@ -56,7 +53,6 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         );
         assertThat(questions, matchTheInsertedQuestions);
     }
-
     private void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
                 "insert into Question (ID,Text) values(%d, '%s')", id, text));
@@ -67,4 +63,5 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
                 "values (%d, %d, '%s', %b)",
                 optionId, questionId, text, correct));
     }
+
 }

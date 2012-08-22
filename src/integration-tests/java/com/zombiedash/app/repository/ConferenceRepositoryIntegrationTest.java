@@ -14,24 +14,45 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = "/test-application-context.xml")
 public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
-    @Test
-    public void shouldSaveToDatabase() throws Exception {
-        String name = "Java Conference";
-        String topic = "Java";
-        String description = "for people who really like java";
-        String venue = "near you";
-        String startDate = "2012-08-21";
-        String endDate = "2012-08-23";
-        int maxAttendee = 2;
-        String organiserName = "Mr. Smiley";
-        String organiserContactNumber = "5555-5555";
-        String organiserEmail = "smiley@gmail.com";
-        Conference conference = new Conference(name,topic,description,venue,startDate,endDate,maxAttendee,organiserName,organiserContactNumber,organiserEmail);
-        ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        int numberOfRows = conferenceRepository.saveConference(conference);
-        assertThat(numberOfRows,is(equalTo(1)));
-    }
+  @Test
+  public void shouldSaveToDatabase() throws Exception {
+    String name = "Java Conference";
+    String topic = "Java";
+    String description = "for people who really like java";
+    String venue = "near you";
+    String startDate = "2012-08-21";
+    String endDate = "2012-08-23";
+    int maxAttendee = 2;
+    String organiserName = "Mr. Smiley";
+    String organiserContactNumber = "5555-5555";
+    String organiserEmail = "smiley@gmail.com";
+    Conference conference = new Conference(name,topic,description,venue,startDate,endDate,maxAttendee,organiserName,organiserContactNumber,organiserEmail);
+    ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
+    int numberOfRows = conferenceRepository.saveConference(conference);
+    assertThat(numberOfRows,is(equalTo(1)));
+  }
+
+  @Test
+  public void shouldRetrieveConferenceFromDatabase() throws Exception {
+    String name = "Java Conference";
+    String topic = "Java";
+    String description = "for people who really like java";
+    String venue = "near you";
+    String startDate = "2012-08-21";
+    String endDate = "2012-08-23";
+    int maxAttendee = 2;
+    String organiserName = "Mr. Smiley";
+    String organiserContactNumber = "5555-5555";
+    String organiserEmail = "smiley@gmail.com";
+    Conference conference = new Conference(name, topic, description, venue, startDate, endDate, maxAttendee, organiserName, organiserContactNumber, organiserEmail);
+    ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
+    conferenceRepository.saveConference(conference);
+    Conference actualConference = conferenceRepository.showConference("Java Conference");
+    assertThat(actualConference.getEndDate(),is(equalTo("2012-08-23")));
+    assertThat(actualConference.getMaxAttendee(), is(equalTo(2)));
+    assertThat(actualConference.getTopic(), is(equalTo("Java")));
+  }
 }

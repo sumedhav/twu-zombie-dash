@@ -27,8 +27,4 @@ public class Question {
    public List<Option> getOptions() {
         return options;
     }
-    //    public boolean isGivenOptionCorrect(Option option) {
-//        for (Option anOption : options) {
-//        }
-//    }
 }
