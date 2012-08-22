@@ -42,26 +42,7 @@
                 <td><input type='text' name='conf_venue' />
                 </td>
             </tr>
-            <tr>
-                <td>Speaker Name:</td>
-                <td><input type='text' name='conf_speaker_name' />
-                </td>
-            </tr>
-            <tr>
-                <td>Speaker Domain:</td>
-                <td><input type='text' name='conf_speaker_domain' />
-                </td>
-            </tr>
-            <tr>
-                <td>Speaker Contact No:</td>
-                <td><input type='text' name='conf_speaker_contact_number' />
-                </td>
-            </tr>
-            <tr>
-                <td>Speaker Email Address:</td>
-                <td><input type='text' name='conf_speaker_email' />
-                </td>
-            </tr>
+
             <tr>
                 <td>Organiser Name:</td>
                 <td><input type='text' name='conf_organiser_name' />

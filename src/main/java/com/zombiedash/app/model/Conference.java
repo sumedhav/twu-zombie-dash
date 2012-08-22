@@ -2,6 +2,9 @@ package com.zombiedash.app.model;
 
 
 public class Conference {
+
+
+
     private String name;
     private String topic;
     private String description;
@@ -9,9 +12,9 @@ public class Conference {
     private String startDate;
     private String endDate;
     private int maxAttendee;
-    private Speaker speaker;
-    private Organiser organiser;
-
+    private String organiserName;
+    private String organiserContactNumber;
+    private String organiserEmail;
 
     public Conference(String name,
                       String topic,
@@ -20,8 +23,9 @@ public class Conference {
                       String startDate,
                       String endDate,
                       int maxAttendee,
-                      Speaker speaker,
-                      Organiser organiser) {
+                      String organiserName,
+                      String organiserContactNumber,
+                      String organiserEmail) {
         this.name = name;
         this.topic = topic;
         this.description = description;
@@ -29,7 +33,48 @@ public class Conference {
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxAttendee = maxAttendee;
-        this.speaker = speaker;
-        this.organiser = organiser;
+        this.organiserName = organiserName;
+        this.organiserContactNumber = organiserContactNumber;
+        this.organiserEmail = organiserEmail;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public int getMaxAttendee() {
+        return maxAttendee;
+    }
+
+    public String getOrganiserName() {
+        return organiserName;
+    }
+
+    public String getOrganiserContactNumber() {
+        return organiserContactNumber;
+    }
+
+    public String getOrganiserEmail() {
+        return organiserEmail;
     }
 }

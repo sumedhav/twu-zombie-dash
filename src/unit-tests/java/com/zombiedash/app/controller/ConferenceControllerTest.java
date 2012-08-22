@@ -22,7 +22,7 @@ public class ConferenceControllerTest {
     public void submitShouldGoToHome() throws Exception {
         ConferenceController conferenceController = new ConferenceController();
         ConferenceRepository conferenceService = mock(ConferenceRepository.class);
-        ModelAndView actualModel = conferenceController.submit("","","","","","","","","","","","","","0",conferenceService);
+        ModelAndView actualModel = conferenceController.submit("","","","","","","0","","","",conferenceService);
         assertThat(actualModel.getViewName(),is(equalTo("home")));
     }
 }

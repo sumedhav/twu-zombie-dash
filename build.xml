@@ -149,10 +149,10 @@
             <classes dir="${dist.dir}/classes"/>
             <classes dir="${src.dir}/resources"/>
             <webinf dir="${src.dir}/deployment">
-                <include name="applicationContext-*.xml"/>
+                <!--<include name="applicationContext-*.xml"/>-->
             </webinf>
             <fileset dir="${src.dir}/webapp">
-                <exclude name="**/applicationContext-properties.xml"/>
+                <!--<exclude name="**/applicationContext-properties.xml"/>-->
                 <exclude name="**/web.xml"/>
                 <exclude name="static/"/>
                 <exclude name="src/"/>
@@ -163,7 +163,8 @@
                 <include name="static/"/>
             </zipfileset>
             <lib dir="${compile.dir}" excludes="*-tests.jar"/>
-            <lib dir="lib/runtime/jar"/>
+            <lib dir="lib/runtime/jar" excludes="servlet-api*, jsp-api*"/>
+            <lib dir="lib/tomcat/jar" excludes="servlet-api*, jsp-api*" />
         </war>
     </target>
 

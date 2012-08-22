@@ -1,17 +1,34 @@
 package com.zombiedash.app.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Question {
     private int questionId;
     private String text;
 
-//    private List<com.zombiedash.app.model.Option> allowedOptions =new ArrayList<com.zombiedash.app.model.Option>();
+    private List<Option> options =new ArrayList<Option>();
 
     public Question(int questionId, String text) {
         this.questionId = questionId;
         this.text = text;
+
+    }
+    public Question(int questionId, String text, List<Option> options) {
+        this.questionId = questionId;
+        this.text = text;
+        this.options =options;
     }
 
     public String getText() {
         return text;
     }
+
+   public List<Option> getOptions() {
+        return options;
+    }
+    //    public boolean isGivenOptionCorrect(Option option) {
+//        for (Option anOption : options) {
+//        }
+//    }
 }
