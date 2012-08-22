@@ -7,8 +7,7 @@
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
 	<h3>Create Conference: Enter Details</h3>
 
-	<form name='conferenceCreationForm' action="${pageContext.request.contextPath}/zombie/admin/conference/submit"
-		method='POST'>
+	<form name='conferenceCreationForm' action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method='POST'>
 
 		<table>
 			<tr>

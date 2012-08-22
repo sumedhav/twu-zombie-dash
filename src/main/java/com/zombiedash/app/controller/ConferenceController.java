@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/admin/conference")
@@ -25,11 +28,15 @@ public class ConferenceController {
     return new ModelAndView("createconference");
   }
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "view" ,method = RequestMethod.GET)
   public ModelAndView home() {
-    return new ModelAndView("conferencehome");
+    List<Conference> conferenceList = conferenceRepository.showAllConferences();
+    List<String> conferenceNames = new ArrayList<String>();
+    for (Conference conference : conferenceList) {
+      conferenceNames.add(conference.getName());
+    }
+    return new ModelAndView("conferencehome","Conferences", conferenceNames);
   }
-
 
   @RequestMapping(value = "submit", method = RequestMethod.POST)
   public ModelAndView submit(@RequestParam("conf_name") String conferenceName,
