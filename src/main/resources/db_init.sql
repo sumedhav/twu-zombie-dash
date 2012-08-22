@@ -1,7 +1,7 @@
-create table Question (ID INT PRIMARY KEY,
+CREATE TABLE Question (ID INT PRIMARY KEY,
                        Text varchar(50) NOT NULL,
 );
-create table Option(
+CREATE TABLE Option(
             ID INT PRIMARY KEY,
             QUESTION_ID int NOT NULL,
             Text varchar(50) NOT NULL,
@@ -10,15 +10,16 @@ create table Option(
 );
 
 CREATE TABLE Conference(
-    ID INT NOT NULL AUTO_INCREMENT,
-    NAME VARCHAR(30) NOT NULL,
+    NAME VARCHAR(30) NOT NULL PRIMARY KEY,
     TOPIC VARCHAR(30) NOT NULL,
     DESCRIPTION VARCHAR(100) NOT NULL,
     VENUE VARCHAR(20) NOT NULL,
     START_DATE DATE NOT NULL,
     END_DATE DATE NOT NULL,
     MAX_ATTENDEE INT NOT NULL,
-    PRIMARY KEY (ID)
+    ORGANISER_NAME VARCHAR(30) NOT NULL,
+    ORGANISER_CONTACT_NO VARCHAR(10) NOT NULL,
+    ORGANISER_EMAIL VARCHAR(30) NOT NULL
 );
 
 DROP TABLE IF EXISTS users;
@@ -27,6 +28,3 @@ CREATE TABLE users(username varchar(20) NOT NULL PRIMARY KEY,
                 role number(1) NOT NULL);
 
 INSERT INTO users VALUES('admin','Welcome1',0);
-
-INSERT INTO Conference(name,topic,description,venue,start_date,end_date,max_attendee)
-             values('Java Conf','Java','complete description of java','Bangalore','2012-12-24','2012-12-24',200);

@@ -2,6 +2,7 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ public class QuestionRepository {
     private static final String SELECT_ALL_VALID_OPTIONS = "select option.question_id,option.text,option.correct  from Question,Option where question.Id = ? and question.Id=option.question_Id";
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public QuestionRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

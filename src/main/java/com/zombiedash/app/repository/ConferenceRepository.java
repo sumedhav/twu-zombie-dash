@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class ConferenceRepository {
-    private Conference conference;
+    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO Conference values (?,?,?,?,?,?,?,?,?,?)";
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -16,15 +17,17 @@ public class ConferenceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void saveConference() {
-        String sql = "IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TheSchema' AND  TABLE_NAME = 'TheTable'))\n" +
-                "BEGIN\n" +
-                "    --Do Stuff\n" +
-                "END";
-    }
-
-
-    public void setConference(Conference conference) {
-        this.conference = conference;
+    public Integer saveConference(Conference conference) {
+        return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
+                conference.getName(),
+                conference.getTopic(),
+                conference.getDescription(),
+                conference.getVenue(),
+                conference.getStartDate(),
+                conference.getEndDate(),
+                conference.getMaxAttendee(),
+                conference.getOrganiserName(),
+                conference.getOrganiserContactNumber(),
+                conference.getOrganiserEmail());
     }
 }
