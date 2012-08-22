@@ -11,7 +11,7 @@ pageEncoding="ISO-8859-1"%>
         <h3> Welcome <core:out value="${loginForm.username}" /></h3>
         <table>
             <tr>
-                <td style="width:1000px;text-align:right;"><a href="/zombie/login/LoginForm">LOG OUT</a></td>
+                <td style="width:1000px;text-align:right;"><a href="${pageContext.request.contextPath}/zombie/login/LoginForm">LOG OUT</a></td>
             </tr>
 
             <tr>

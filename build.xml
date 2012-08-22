@@ -157,8 +157,8 @@
                 <exclude name="static/"/>
                 <exclude name="src/"/>
             </fileset>
-            <zipfileset prefix="${build.number}" dir="${dist.dir}/webapp"/>
-            <zipfileset prefix="${build.number}" dir="${src.dir}/webapp">
+            <zipfileset dir="${dist.dir}/webapp"/>
+            <zipfileset dir="${src.dir}/webapp">
                 <exclude name="static/js/page/**/*.js"/>
                 <include name="static/"/>
             </zipfileset>
