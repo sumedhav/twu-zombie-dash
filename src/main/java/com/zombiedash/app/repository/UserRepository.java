@@ -16,6 +16,7 @@ public class UserRepository {
     private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM users where role = ?";
     private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM users where username = ?";
     private static final String RETRIEVE_ALL_USERS = "SELECT * FROM users";
+    private static final String INSERT_USER = "INSERT INTO users values (?,?,?,?)";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -58,5 +59,19 @@ public class UserRepository {
             }
         });
         return userList.get(0);
+    }
+
+    public Boolean createUser(User user) {
+        Integer result = jdbcTemplate.update(INSERT_USER,
+                user.getUserName(),
+                user.getPassword(),
+                user.getRole(),
+                user.getName()
+                );
+        if (result == 1) {
+            return true;
+        }
+        return false;
+
     }
 }

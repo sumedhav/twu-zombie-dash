@@ -41,4 +41,11 @@ public class UserRepositoryIntegrationTest {
         assertThat(result.get(0), is(new User("admin", "Welcome1")));
     }
 
+    @Test
+    public void shouldCreateUser() {
+        UserRepository userRepository = new UserRepository(jdbcTemplate);
+        userRepository.createUser(new User("designer", "password"));
+        User designer = userRepository.retrieveUser("designer");
+        assertThat(designer, is(new User("designer", "password")));
+    }
 }

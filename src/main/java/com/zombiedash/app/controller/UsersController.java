@@ -29,9 +29,16 @@ public class UsersController {
     }
 
     @RequestMapping(value = "create/")
-    public ModelAndView createUser(@RequestParam("username") String username,
-                                   @RequestParam("password") String password) {
-        userService.createUser(username, password);
+    public ModelAndView createUser() {
         return new ModelAndView("createuser");
     }
+
+    @RequestMapping(value = "create/submit/", method = RequestMethod.POST)
+    public ModelAndView createUserSubmit(@RequestParam("username") String username,
+                                   @RequestParam("password") String password) {
+        userService.createUser(username, password);
+        ModelAndView modelAndView = new ModelAndView("listusers", "Users", userService.getAllUsers());
+        return modelAndView;
+    }
+
 }

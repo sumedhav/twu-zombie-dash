@@ -4,11 +4,13 @@ public class User implements java.io.Serializable {
     String userName;
     String password;
     private Role userRole;
+    private String name;
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
         this.userRole = Role.GAME_DESIGNER;
+        this.name = "Mr. Mysterious";
     }
 
     public boolean authenticate(String userName, String password) {
@@ -50,5 +52,21 @@ public class User implements java.io.Serializable {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         return result;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Integer getRole() {
+        return userRole.getVal();
+    }
+
+    public String getName() {
+        return name;
     }
 }

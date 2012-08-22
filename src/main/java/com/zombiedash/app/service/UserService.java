@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public boolean createUser(String username, String password) {
-
-        return true;
+        User user = new User(username, password);
+        return userRepository.createUser(user);
     }
 }

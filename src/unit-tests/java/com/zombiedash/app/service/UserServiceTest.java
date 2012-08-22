@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.isNotNull;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -64,7 +65,13 @@ public class UserServiceTest {
     }
 
     @Test
-    public void should() {
+    public void shouldCreateNewUser() {
+        User user = new User("designer", "password");
+        given(userRepository.createUser(user)).willReturn(true);
 
+        UserService userService = new UserService(userRepository);
+        Boolean userCreated = userService.createUser("designer", "password");
+
+        assertThat(userCreated, is(true));
     }
 }

@@ -31,7 +31,7 @@ public class UsersControllerTest {
     @Test
     public void shouldReturnAViewWithNameCreateUser() {
         UsersController usersController = new UsersController(userService);
-        String result = usersController.createUser("user", "password").getViewName();
+        String result = usersController.createUser().getViewName();
         assertThat(result, is("createuser"));
     }
 
@@ -52,11 +52,11 @@ public class UsersControllerTest {
 
     @Test
     public void shouldCreateAnUser() {
-        given(userService.createUser("designer", "password")).willReturn(true);
-
         UsersController usersController = new UsersController(userService);
-        usersController.createUser("designer", "password");
+        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password");
         verify(userService, times(1)).createUser("designer", "password");
+
+        assertThat(modelAndView.getViewName(), is("listusers"));
 
 
 //        ModelAndView modelAndView = usersController.listUsers();
