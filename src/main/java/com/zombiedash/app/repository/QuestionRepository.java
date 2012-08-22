@@ -22,7 +22,7 @@ public class QuestionRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List listAllOptions(int questionId){
+    private List<Option> listAllOptions(int questionId){
         Object[] arg=new Object[]{questionId};
 
         return jdbcTemplate.query(SELECT_ALL_VALID_OPTIONS,arg, new RowMapper() {
@@ -30,7 +30,7 @@ public class QuestionRepository {
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
                 Boolean correct=resultSet.getString("correct").equalsIgnoreCase("true")?true:false;
                 return new Option(Integer.parseInt(resultSet.getString("question_Id")),
-                        resultSet.getString("Text"),correct);
+                        resultSet.getString("Text"), correct);
             }
         });
     }
