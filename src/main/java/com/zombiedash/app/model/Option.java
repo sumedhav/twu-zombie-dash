@@ -1,14 +1,25 @@
 package com.zombiedash.app.model;
 
 public class Option {
-    private int id, question_id;
+    private int questionId;
     private String text;
     private boolean isCorrect;
 
-    public Option(int id, int question_id, String text, String correct) {
-        this.id = id;
-        this.question_id = question_id;
+    public Option( int questionId, String text, Boolean correct) {
+        this.questionId = questionId;
         this.text = text;
-        this.isCorrect = correct.equalsIgnoreCase("true") ? true : false;
+        this.isCorrect = correct;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public boolean isCorrect() {
+        return isCorrect;
     }
 }

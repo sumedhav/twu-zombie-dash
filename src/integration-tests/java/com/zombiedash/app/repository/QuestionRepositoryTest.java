@@ -1,8 +1,6 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Question;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static com.zombiedash.test.matchers.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
@@ -41,10 +39,11 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
         List<Question> questions = questionRepository.listAllQuestions();
 
+//        List<Option> optionList=questionRepository.listAllOptions(1);
         assertThat(questions.size(),is(2));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
                 aQuestionWith("Where is Red Fort",
-                        new HashMap<String, Boolean>(){{
+                        new HashMap<String, Boolean>() {{
                             put("Delhi", true);
                             put("Paris", false);
                             put("Delhi", false);
@@ -58,10 +57,6 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         assertThat(questions, matchTheInsertedQuestions);
     }
 
-    private Matcher<Question> aQuestionWith(String text, HashMap<String, Boolean> options) {
-        return new QuestionMatcher(text, options);
-    }
-
     private void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
                 "insert into Question (ID,Text) values(%d, '%s')", id, text));
@@ -71,24 +66,5 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         jdbcTemplate.execute(String.format("insert into Option (id,question_id,text,correct) " +
                 "values (%d, %d, '%s', %b)",
                 optionId, questionId, text, correct));
-    }
-
-    private class QuestionMatcher extends BaseMatcher<Question> {
-        private final String text;
-
-        public QuestionMatcher(String text, Map<String, Boolean> options) {
-            this.text = text;
-        }
-
-        @Override
-        public boolean matches(Object item) {
-            Question question = (Question) item;
-            return question.getText().equals(text);
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
     }
 }
