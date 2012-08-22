@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/login")
 
@@ -26,10 +28,11 @@ public class LoginController {
     }
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
-    public String processForm(@RequestParam("Username") String username, @RequestParam("Password") String password) {
+    public String processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, HttpServletRequest request) {
 
         User givenUser = userService.authenticateAndReturnUser(username,password);
         if(givenUser==null) {
+            request.setAttribute("errorMessage", "You have entered an invalid Username or Password!!");
             return "loginform";
         }
         return "loginsuccess";
