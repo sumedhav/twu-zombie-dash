@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 public class ConferenceRepository {
   public static final String SQL_CONFERENCE_INSERT = "INSERT INTO Conference values (?,?,?,?,?,?,?,?,?,?)";
   public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM Conference WHERE name = ?";
-
-  @Autowired
   private JdbcTemplate jdbcTemplate;
 
   @Autowired

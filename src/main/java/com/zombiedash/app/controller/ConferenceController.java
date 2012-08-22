@@ -2,6 +2,7 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/admin/conference")
 public class ConferenceController {
+  private ConferenceRepository conferenceRepository;
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
+  @Autowired
+  public ConferenceController(ConferenceRepository conferenceRepository) {
+    this.conferenceRepository = conferenceRepository;
+  }
+
+  @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView create() {
         return new ModelAndView("createconference");
     }
@@ -29,8 +36,7 @@ public class ConferenceController {
                                @RequestParam("conf_max_attendees") String conferenceMaxAttendees,
                                @RequestParam("conf_organiser_name") String conferenceOrganiserName,
                                @RequestParam("conf_organiser_contact_number") String conferenceOrganiserContactNumber,
-                               @RequestParam("conf_organiser_email") String conferenceOrganiserEmail,
-                               ConferenceRepository conferenceRepository) {
+                               @RequestParam("conf_organiser_email") String conferenceOrganiserEmail) {
         Conference conference =
                 new Conference(conferenceName,
                         conferenceTopic,
