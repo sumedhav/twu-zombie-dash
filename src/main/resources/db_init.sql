@@ -28,3 +28,5 @@ CREATE TABLE users(username varchar(20) NOT NULL PRIMARY KEY,
                 role number(1) NOT NULL);
 
 INSERT INTO users VALUES('admin','Welcome1',0);
+
+

@@ -2,40 +2,25 @@ package com.zombiedash.app.model;
 
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class UserTest {
     @Test
     public void shouldAuthenticateWithProperCredentials() throws Exception {
-        User user =  new User("user","Welcome1".toCharArray());
-        user.authenticate("user", "Welcome1".toCharArray());
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWithoutProperUserName() throws Exception {
-        User user =  new User("user","Welcome1".toCharArray());
-        user.authenticate("administrator","Welcome1".toCharArray());
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowExceptionWithoutProperPassword() throws Exception {
-        User user =  new User("user","Welcome1".toCharArray());
-       user.authenticate("user","abc".toCharArray());
+        User user =  new User("user","Welcome1");
+        assertTrue(user.authenticate("user", "Welcome1"));
     }
 
     @Test
-    public void loggedInAdminShouldBeLoggedIn() throws Exception {
-        User user = new User("user","Welcome1".toCharArray());
-        user.authenticate("user","Welcome1".toCharArray());
-        Boolean logStatus = user.isLoggedIn();
-        assertThat(logStatus,is(true));
+    public void shouldNotAuthenticateWithoutProperUserName() throws Exception {
+        User user =  new User("user","Welcome1");
+        assertFalse(user.authenticate("administrator", "Welcome1"));
     }
 
     @Test
-    public void unloggedInAdminShouldNotBeLoggedIn() throws Exception {
-        User user = new User("user","Welcome1".toCharArray());
-        Boolean logStatus = user.isLoggedIn();
-        assertThat(logStatus,is(false));
+    public void shouldNotAuthenticateWithoutProperPassword() throws Exception {
+        User user =  new User("user","Welcome1");
+       assertFalse(user.authenticate("user", "abc"));
     }
 }

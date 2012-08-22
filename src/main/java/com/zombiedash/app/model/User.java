@@ -2,23 +2,18 @@ package com.zombiedash.app.model;
 
 public class User implements java.io.Serializable {
     String userName;
-    char[] password;
-    Boolean loggedStatus = false;
+    String password;
 
 
-    public User(String userName, char[] password) {
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-    public void authenticate(String userName, char[] password) {
+    public boolean authenticate(String userName, String password) {
         boolean properUserName = userName.equals(this.userName);
-        boolean properPassword = new String(password).equals(new String(this.password));
-        if(!(properUserName &&  properPassword)) throw new RuntimeException("Authentication Failure");
-        loggedStatus = true;
+        boolean properPassword = password.equals(this.password);
+        return properUserName && properPassword;
     }
 
-    public Boolean isLoggedIn() {
-        return loggedStatus;
-    }
 }

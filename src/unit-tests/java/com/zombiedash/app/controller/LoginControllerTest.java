@@ -1,26 +1,21 @@
 package com.zombiedash.app.controller;
 
-import com.zombiedash.app.controller.LoginController;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginControllerTest {
+
     @Mock
     UserService userService;
 
@@ -34,18 +29,18 @@ public class LoginControllerTest {
     @Test
     public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() {
         User user = mock(User.class);
-        given(userService.authenticateAndReturnUser("test.username", "test.password")).willReturn(user);
+        given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
 
-        String viewName = new LoginController(userService).processForm("test.username","test.password");
+        String viewName = new LoginController(userService).processForm("admin","Welcome1");
 
         assertThat(viewName,equalTo("loginsuccess"));
     }
 
     @Test
     public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated(){
-        given(userService.authenticateAndReturnUser("test.username", "test.password")).willThrow(new RuntimeException("WRROOOOONG"));
+        given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(null);
 
-        String viewName = new LoginController(userService).processForm("test.username","test.password");
+        String viewName = new LoginController(userService).processForm("admin1","Welcome1");
 
         assertThat(viewName, equalTo("loginform"));
    }
