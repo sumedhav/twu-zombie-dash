@@ -1,13 +1,13 @@
 <html>
-<body>
+<body onload='document.loginForm.Username.focus();'>
     <h1>
-        <center> Login Form </center>
+        <center>Login</center>
     </h1>
-    <form commandName="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
+    <form name="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
         <div style="color:red; text-align:center">
         ${errorMessage}
         </div>
-        <table>
+        <table align="center">
             <tr>
                 <td>
                     <p>
@@ -15,7 +15,7 @@
                     </p>
                 </td>
                 <td>
-                    <table>
+                    <table style="margin-left:50">
                         <tr>
                             <td>Username:<FONT color="red"><form:errors
                             path="username" /></FONT></td>

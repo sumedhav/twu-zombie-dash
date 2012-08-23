@@ -1,6 +1,5 @@
 package com.zombiedash.app.controller;
 
-import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,14 +27,15 @@ public class LoginController {
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
     public ModelAndView processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, ModelAndView modelAndView) {
-
-        User givenUser = userService.authenticateAndReturnUser(username,password);
-        if(givenUser==null) {
-            modelAndView.addObject("errorMessage", "You have entered an invalid Username or Password!!");
-            modelAndView.setViewName("loginform");
-            return modelAndView;
-        }
-        modelAndView.setViewName("loginsuccess");
-        return modelAndView;
+            try {
+                userService.authenticateAndReturnUser(username,password);
+                modelAndView.addObject("username",username);
+                modelAndView.setViewName("loginsuccess");
+            } catch (Exception e) {
+                modelAndView.addObject("errorMessage", "You have entered an invalid Username or Password!!");
+                modelAndView.setViewName("loginform");
+            } finally {
+                return modelAndView;
+            }
     }
 }

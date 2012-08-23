@@ -28,7 +28,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() {
+    public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() throws Exception {
         User user = mock(User.class);
         given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
         String viewName = new LoginController(userService).processForm("admin","Welcome1", new ModelAndView()).getViewName();
@@ -37,8 +37,8 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated(){
-        given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(null);
+    public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated() throws Exception{
+        given(userService.authenticateAndReturnUser(anyString(), anyString())).willThrow(Exception.class);
         String viewName = new LoginController(userService).processForm("admin1","Welcome1", new ModelAndView()).getViewName();
 
         assertThat(viewName, equalTo("loginform"));
