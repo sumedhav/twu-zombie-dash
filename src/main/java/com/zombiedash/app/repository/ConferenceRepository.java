@@ -26,16 +26,16 @@ public class ConferenceRepository {
 
   public Integer saveConference(Conference conference) {
     return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
-        conference.getName(),
-        conference.getTopic(),
-        conference.getDescription(),
-        conference.getVenue(),
-        conference.getStartDate(),
-        conference.getEndDate(),
-        conference.getMaxAttendee(),
-        conference.getOrganiserName(),
-        conference.getOrganiserContactNumber(),
-        conference.getOrganiserEmail());
+              conference.getName(),
+              conference.getTopic(),
+              conference.getDescription(),
+              conference.getVenue(),
+              conference.getStartDate(),
+              conference.getEndDate(),
+              conference.getMaxAttendee(),
+              conference.getOrganiserName(),
+              conference.getOrganiserContactNumber(),
+              conference.getOrganiserEmail());
   }
 
   public Conference showConference(String conferenceName) {

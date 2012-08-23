@@ -24,7 +24,7 @@ public class TriviaGamePageTest {
 
         Browser browser = Application.browser();
 
-        initializeQuestions();
+        //initializeQuestions();
 
         browser.open("/zombie/conference/user/game");
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
@@ -42,13 +42,13 @@ public class TriviaGamePageTest {
         dataSource.setUsername("sa");
 
         jdbcTemplate = new JdbcTemplate(dataSource);
-        givenAQuestionWith(1, "Where is Red Fort");
-        givenAnOptionFor(1, 1, "Delhi", true);
-        givenAnOptionFor(1, 2, "Paris", false);
-        givenAnOptionFor(1, 3, "New York", false);
-        givenAQuestionWith(2, "Is it lunch time?");
-        givenAnOptionFor(2, 4, "I bet it is", true);
-        givenAnOptionFor(2, 5, "No thanks, fasting at the moment", false);
+        givenAQuestionWith(11, "Where is Red Fort");
+        givenAnOptionFor(11, 1, "Delhi", true);
+        givenAnOptionFor(11, 2, "Paris", false);
+        givenAnOptionFor(11, 3, "New York", false);
+        givenAQuestionWith(21, "Is it lunch time?");
+        givenAnOptionFor(21, 4, "I bet it is", true);
+        givenAnOptionFor(21, 5, "No thanks, fasting at the moment", false);
     }
 
     private void givenAQuestionWith(int id, String text) {

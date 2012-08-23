@@ -15,16 +15,29 @@ import java.util.List;
 public class QuestionRepository {
     private static final String SELECT_ALL_QUESTIONS = "select * from Question";
     private static final String SELECT_ALL_VALID_OPTIONS = "select option.question_id,option.text,option.correct  from Question,Option where question.Id = ? and question.Id=option.question_Id";
+    private static final String INSERT_QUESTIONS= "insert into question (id,text) values (?,?) ";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public QuestionRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        setUpQuestions();
     }
 
+    private void setUpQuestions(){
+        try{
+        givenAQuestionWith(15, "Where is Red Fort");
+        givenAnOptionFor(15, 1, "Delhi", true);
+        givenAnOptionFor(15, 2, "Paris", false);
+        givenAnOptionFor(15, 3, "New York", false);
+        givenAQuestionWith(2, "Is it lunch time?");
+        givenAnOptionFor(2, 1, "I bet it is", true);
+        givenAnOptionFor(2, 2, "No thanks, fasting at the moment", false);
+        }catch(Exception ignored){}
+
+    }
     private List<Option> listAllOptions(int questionId){
         Object[] arg=new Object[]{questionId};
-
         return jdbcTemplate.query(SELECT_ALL_VALID_OPTIONS,arg, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -43,5 +56,15 @@ public class QuestionRepository {
                         resultSet.getString("Text"),listAllOptions(Integer.parseInt(resultSet.getString("Id"))));
             }
         });
+    }
+    private void givenAQuestionWith(int id, String text) {
+        jdbcTemplate.execute(String.format(
+                "insert into Question (ID,Text) values(%d, '%s')", id, text));
+    }
+
+    private void givenAnOptionFor(int questionId, int optionId, String text, boolean correct) {
+        jdbcTemplate.execute(String.format("insert into Option (id,question_id,text,correct) " +
+                "values (%d, %d, '%s', %b)",
+                optionId, questionId, text, correct));
     }
 }
