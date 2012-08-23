@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("${pageContext.request.contextPath}/admin/users/")
+@RequestMapping("/admin/users/")
 public class UsersController {
 
     private UserService userService;
@@ -37,10 +37,22 @@ public class UsersController {
                                          @RequestParam("role") String role,
                                          @RequestParam("name") String name,
                                          @RequestParam("email") String email) {
-
-        User user = new User(username, password, Role.generateRole(role), name, email);
-        userService.createUser(user);
-        return new ModelAndView("redirect:${pageContext.request.contextPath}/zombie/admin/users/");
+        ModelAndView modelAndView;
+        try{
+            User user = new User(username, password, Role.generateRole(role), name, email);
+            userService.createUser(user);
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/");
+        }
+        catch(Exception excp){
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage/");
+        }
+        return modelAndView;
     }
+
+    @RequestMapping(value = "/errorPage/", method = RequestMethod.GET)
+    public ModelAndView processError(){
+        return new ModelAndView("errorPage");
+    }
+
 
 }

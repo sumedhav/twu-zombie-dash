@@ -4,6 +4,7 @@ import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +27,6 @@ public class ConferenceController {
   @RequestMapping(value = "createConference", method = RequestMethod.GET)
   public ModelAndView createConference() {
     return new ModelAndView("createconference");
-  }
-
-  @RequestMapping(value = "view", method = RequestMethod.POST)
-  public ModelAndView view(@RequestParam String conferenceName) {
-      return new ModelAndView("conferenceview");
   }
 
   @RequestMapping(value = "home",method = RequestMethod.GET)
@@ -60,7 +56,13 @@ public class ConferenceController {
             conferenceEndDate,
             Integer.parseInt(conferenceMaxAttendees));
     conferenceRepository.saveConference(conference);
-    return home();
+    return new ModelAndView("conferencehome");
   }
+
+    @RequestMapping(value = "view/{conferenceName}")
+    public ModelAndView view(@PathVariable String conferenceName) {
+        Conference thisConference = conferenceRepository.showConference(conferenceName);
+        return new ModelAndView("conferenceview","Conference", thisConference);
+    }
 
 }

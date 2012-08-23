@@ -1,10 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <t:wrapper>
     <h1>User Details</h1>
-    <form method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create/submit/">
+    <div id="errorMessageDiv">
+    ${errorMessage}
+    </div>
+    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create/submit/">
     <p>Username: <input name="username" type="text"  /> </p>
     <p>Password: <input name="password" type="text"  /> </p>
     <p>Name: <input name="name" type="text"  /> </p>
