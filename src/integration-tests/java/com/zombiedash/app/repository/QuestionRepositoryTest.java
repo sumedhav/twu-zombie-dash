@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
 import org.hamcrest.Matcher;
 import org.junit.Test;
@@ -8,10 +9,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.zombiedash.test.matchers.QuestionMatcher.aQuestionWith;
+import static com.zombiedash.app.repository.QuestionMatcher.aQuestionWith;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
@@ -21,6 +24,7 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private List<Option> anOptionList;
 
     private void setUpQuestions(){
         givenAQuestionWith(1, "Where is Red Fort");
@@ -28,8 +32,8 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         givenAnOptionFor(1, 2, "Paris", false);
         givenAnOptionFor(1, 3, "New York", false);
         givenAQuestionWith(2, "Is it lunch time?");
-        givenAnOptionFor(2, 4, "I bet it is", true);
-        givenAnOptionFor(2, 5, "No thanks, fasting at the moment", false);
+        givenAnOptionFor(2, 1, "I bet it is", true);
+        givenAnOptionFor(2, 2, "No thanks, fasting at the moment", false);
 
     }
     @Test
@@ -37,9 +41,9 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         setUpQuestions();
         QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
         List<Question> questions = questionRepository.listAllQuestions();
-        assertThat(questions.size(),is(2));
+        assertThat(questions.size(), is(2));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
-                aQuestionWith("Where is Red Fort",
+                QuestionMatcher.aQuestionWith("Where is Red Fort",
                         new HashMap<String, Boolean>() {{
                             put("Delhi", true);
                             put("Paris", false);
@@ -53,6 +57,19 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         );
         assertThat(questions, matchTheInsertedQuestions);
     }
+
+    @Test
+    public void shouldReturnCorrectOption(){
+        anOptionList = new ArrayList<Option>();
+        anOptionList.add(new Option(1, "Bangalore", true));
+        anOptionList.add(new Option(2, "Paris", false));
+        anOptionList.add(new Option(3, "Johannesburg", false));
+
+        String expectedCorrectOption = "Bangalore";
+        Question aQuestion = new Question(1, "Where are you?", anOptionList);
+
+        assertThat(aQuestion.getValidOption(), equalTo(expectedCorrectOption));
+    }
     private void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
                 "insert into Question (ID,Text) values(%d, '%s')", id, text));
@@ -65,3 +82,4 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     }
 
 }
+

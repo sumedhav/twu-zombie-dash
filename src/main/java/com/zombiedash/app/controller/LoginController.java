@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/login")
@@ -28,14 +29,15 @@ public class LoginController {
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
     public ModelAndView processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, ModelAndView modelAndView) {
-
-        User givenUser = userService.authenticateAndReturnUser(username,password);
-        if(givenUser==null) {
-            modelAndView.addObject("errorMessage", "You have entered an invalid Username or Password!!");
-            modelAndView.setViewName("loginform");
-            return modelAndView;
-        }
-        modelAndView.setViewName("loginsuccess");
-        return modelAndView;
+            try {
+                userService.authenticateAndReturnUser(username,password);
+                modelAndView.addObject("username",username);
+                modelAndView.setViewName("loginsuccess");
+            } catch (Exception e) {
+                modelAndView.addObject("errorMessage", "You have entered an invalid Username or Password!!");
+                modelAndView.setViewName("loginform");
+            } finally {
+                return modelAndView;
+            }
     }
 }

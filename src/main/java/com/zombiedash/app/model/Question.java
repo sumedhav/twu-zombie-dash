@@ -22,4 +22,16 @@ public class Question {
    public List<Option> getOptions() {
         return options;
     }
+
+    public String getValidOption() {
+        String answer = "";
+        for (Option option : options){
+            if(option.isCorrect()){
+                answer = option.getText();
+                break;
+            }
+        }
+        return answer;
+    }
 }
+

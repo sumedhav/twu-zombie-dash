@@ -23,7 +23,7 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public User retrieveAdminUser() {
+    public User retrieveAdminUser() throws Exception{
         Object[] adminRoleArg = new Object[]{0};
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_ROW, adminRoleArg, new RowMapper() {
             @Override
