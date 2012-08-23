@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Welcome to Trivia Game!</title>
-</head>
-<body class="home">
-    <p> Welcome to the trivia game </p>
-</body>
-</html>
+       </head>
+       <body class="home">
+           <p> Welcome to the trivia game </p>
+       </body>
+       </html>

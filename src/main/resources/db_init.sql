@@ -2,12 +2,14 @@ CREATE TABLE Question (ID INT PRIMARY KEY,
                        Text varchar(50) NOT NULL,
 );
 CREATE TABLE Option(
-            ID INT PRIMARY KEY,
+            ID INT,
             QUESTION_ID int NOT NULL,
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
+            PRIMARY KEY (ID,QUESTION_ID),
             FOREIGN KEY(QUESTION_ID) REFERENCES Question(ID)
 );
+
 
 CREATE TABLE Conference(
     NAME VARCHAR(30) NOT NULL PRIMARY KEY,
