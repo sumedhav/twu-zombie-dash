@@ -60,7 +60,7 @@ public class UserRepository {
         return userList.get(0);
     }
 
-    public Boolean createUser(User user) {
+    public Boolean createUser(User user){
         Integer result = jdbcTemplate.update(INSERT_USER,
                 user.getUserName(),
                 user.getPassword(),
