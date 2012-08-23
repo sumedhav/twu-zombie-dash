@@ -1,6 +1,8 @@
+DROP TABLE IF EXISTS Question;
 CREATE TABLE Question (ID INT PRIMARY KEY,
                        Text varchar(50) NOT NULL,
 );
+DROP TABLE IF EXISTS Option;
 CREATE TABLE Option(
             ID INT,
             QUESTION_ID int NOT NULL,
@@ -10,6 +12,7 @@ CREATE TABLE Option(
             FOREIGN KEY(QUESTION_ID) REFERENCES Question(ID)
 );
 
+DROP TABLE IF EXISTS Conference;
 
 CREATE TABLE Conference(
     NAME VARCHAR(30) NOT NULL PRIMARY KEY,
