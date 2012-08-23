@@ -55,8 +55,8 @@ public class UsersControllerTest {
     @Test
     public void shouldCreateAnUser() {
         UsersController usersController = new UsersController(userService);
-        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService, times(1)).createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
+        verify(userService, times(1)).createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/"));
     }
@@ -65,8 +65,8 @@ public class UsersControllerTest {
     public void shouldDisplayErrorPageIfCredentialValidationFails() {
         doThrow(new RuntimeException()).when(userService).createUser((User) anyObject());
         UsersController usersController = new UsersController(userService);
-        ModelAndView modelAndView = usersController.createUserSubmit("", "password", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService, times(1)).createUser(new User("", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        ModelAndView modelAndView = usersController.createUserSubmit("", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
+        verify(userService, times(1)).createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage/"));
     }

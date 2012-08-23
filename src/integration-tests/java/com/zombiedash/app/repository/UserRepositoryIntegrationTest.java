@@ -47,16 +47,16 @@ public class UserRepositoryIntegrationTest {
     @Test
     public void shouldCreateUser() {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
-        userRepository.createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
+        userRepository.createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
         User designer = userRepository.retrieveUser("designer");
-        assertThat(designer, is(new User("designer", "password", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
+        assertThat(designer, is(new User("designer", "password1", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
     }
 
     @Test(expected = DataIntegrityViolationException.class)
     public void shouldNotAllowNullUserName(){
         UserRepository userRepository = new UserRepository(jdbcTemplate);
-        userRepository.createUser(new User("", "password", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
+        userRepository.createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
         User designer = userRepository.retrieveUser("");
-        assertThat(designer, is(new User("", "password", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
+        assertThat(designer, is(new User("", "password1", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
     }
 }

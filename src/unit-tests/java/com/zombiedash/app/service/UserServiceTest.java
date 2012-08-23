@@ -52,34 +52,34 @@ public class UserServiceTest {
     @Test
     public void shouldListUsers() {
         List list = new ArrayList<User>();
-        list.add(new User("admin", "password"));
-        list.add(new User("user", "password"));
+        list.add(new User("admin", "password1"));
+        list.add(new User("user", "password1"));
         given(userRepository.retrieveAllUsers()).willReturn(list);
 
         UserService userService = new UserService(userRepository);
         List<User> result = userService.getAllUsers();
 
-        assertThat(result.get(0), is(new User("admin", "password")));
-        assertThat(result.get(1), is(new User("user", "password")));
+        assertThat(result.get(0), is(new User("admin", "password1")));
+        assertThat(result.get(1), is(new User("user", "password1")));
     }
 
     @Test
     public void shouldGetUser() {
-        given(userRepository.retrieveUser("user")).willReturn(new User("user", "password"));
+        given(userRepository.retrieveUser("user")).willReturn(new User("user", "password1"));
 
         UserService userService = new UserService(userRepository);
         User result = userService.getUser("user");
 
-        assertThat(result, is(new User("user", "password")));
+        assertThat(result, is(new User("user", "password1")));
     }
 
     @Test
     public void shouldCreateNewUser() {
-        User user = new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com");
+        User user = new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com");
         given(userRepository.createUser(user)).willReturn(true);
 
         UserService userService = new UserService(userRepository);
-        Boolean userCreated = userService.createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        Boolean userCreated = userService.createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
         assertThat(userCreated, is(true));
     }
