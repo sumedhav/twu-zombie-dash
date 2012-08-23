@@ -16,7 +16,7 @@ public class UserRepository {
     private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM users where role = ?";
     private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM users where username = ?";
     private static final String RETRIEVE_ALL_USERS = "SELECT * FROM users";
-    private static final String INSERT_USER = "INSERT INTO users values (?,?,?,?)";
+    private static final String INSERT_USER = "INSERT INTO users values (?,?,?,?,?)";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -37,7 +37,7 @@ public class UserRepository {
     }
 
     public List<User> retrieveAllUsers() {
-        List<User> userList = jdbcTemplate.query(RETRIEVE_ALL_USERS, new RowMapper() {
+        return jdbcTemplate.query(RETRIEVE_ALL_USERS, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
@@ -45,7 +45,6 @@ public class UserRepository {
                         resultSet.getString("password"));
             }
         });
-        return userList;
     }
 
     public User retrieveUser(String username) {
@@ -61,17 +60,15 @@ public class UserRepository {
         return userList.get(0);
     }
 
-    public Boolean createUser(User user) {
+    public Boolean createUser(User user){
         Integer result = jdbcTemplate.update(INSERT_USER,
                 user.getUserName(),
                 user.getPassword(),
                 user.getRole(),
-                user.getName()
+                user.getName(),
+                user.getEmail()
                 );
-        if (result == 1) {
-            return true;
-        }
-        return false;
+        return result == 1;
 
     }
 }

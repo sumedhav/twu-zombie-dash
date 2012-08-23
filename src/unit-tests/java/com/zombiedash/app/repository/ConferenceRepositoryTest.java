@@ -25,16 +25,13 @@ public class ConferenceRepositoryTest {
   @Test
   public void shouldNotThrowErrorAndSaveConferenceToDatabase() throws Exception {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
-    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT, "","","","","","",0,"","","")).thenReturn(1);
+    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT, "","","","","","",0)).thenReturn(1);
     ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
     Conference conference = mock(Conference.class);
     when(conference.getDescription()).thenReturn("");
     when(conference.getEndDate()).thenReturn("");
     when(conference.getMaxAttendee()).thenReturn(0);
     when(conference.getName()).thenReturn("");
-    when(conference.getOrganiserContactNumber()).thenReturn("");
-    when(conference.getOrganiserEmail()).thenReturn("");
-    when(conference.getOrganiserName()).thenReturn("");
     when(conference.getStartDate()).thenReturn("");
     when(conference.getTopic()).thenReturn("");
     when(conference.getVenue()).thenReturn("");
@@ -53,7 +50,7 @@ public class ConferenceRepositoryTest {
             SqlRowSet sqlRowSet = mock(SqlRowSet.class);
             when(sqlRowSet.getString(anyInt())).thenReturn("java");
             when(sqlRowSet.getString(6)).thenReturn("2012-06-07");
-            when(sqlRowSet.getInt(anyInt())).thenReturn(0);
+            when(sqlRowSet.getInt(anyInt())).thenReturn(1);
             return sqlRowSet;
           }
         });
@@ -71,28 +68,22 @@ public class ConferenceRepositoryTest {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
         HashMap<String,Object> firstResult = new HashMap<String, Object>();
-        firstResult.put("name", "");
-        firstResult.put("topic","");
-        firstResult.put("description","");
-        firstResult.put("venue","");
+        firstResult.put("name", "Java");
+        firstResult.put("topic","Java");
+        firstResult.put("description","Java");
+        firstResult.put("venue","here");
         firstResult.put("start_date", dateFormat.parse("2012-06-07"));
         firstResult.put("end_date", dateFormat.parse("2012-06-07"));
-        firstResult.put("max_attendee",0);
-        firstResult.put("organiser_name","");
-        firstResult.put("organiser_contact_no","");
-        firstResult.put("organiser_email","");
+        firstResult.put("max_attendee",1);
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();
-        secondResult.put("name", "");
-        secondResult.put("topic", "");
-        secondResult.put("description", "");
-        secondResult.put("venue", "");
+        secondResult.put("name", "Java");
+        secondResult.put("topic", "Java");
+        secondResult.put("description", "Java");
+        secondResult.put("venue", "here");
         secondResult.put("start_date", dateFormat.parse("2012-06-07"));
         secondResult.put("end_date", dateFormat.parse("2012-06-07"));
-        secondResult.put("max_attendee", 0);
-        secondResult.put("organiser_name", "");
-        secondResult.put("organiser_contact_no", "");
-        secondResult.put("organiser_email", "");
+        secondResult.put("max_attendee", 1);
         resultBlock.add(secondResult);
         return resultBlock;
       }

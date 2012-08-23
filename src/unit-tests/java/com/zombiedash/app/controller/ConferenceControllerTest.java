@@ -30,7 +30,7 @@ public class ConferenceControllerTest {
   public void submitShouldGoToHome() throws Exception {
     ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
     ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-    ModelAndView actualModel = conferenceController.submit("", "", "", "", "", "", "0", "", "", "");
+    ModelAndView actualModel = conferenceController.submit("NotNull", "NotNull", "NotNull", "NotNull", "NotNull", "NotNull", "1");
     assertThat(actualModel.getViewName(),is(equalTo("conferencehome")));
   }
 }
