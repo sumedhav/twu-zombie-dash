@@ -3,6 +3,8 @@ package com.zombiedash.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zombiedash.app.model.Role;
+import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,10 +55,11 @@ public class UsersControllerTest {
     @Test
     public void shouldCreateAnUser() {
         UsersController usersController = new UsersController(userService);
-        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password");
-        verify(userService, times(1)).createUser("designer", "password");
 
-        assertThat(modelAndView.getViewName(), is("listusers"));
+        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password", "GameDesigner", "MR.Right", "right@gmail.com");
+        verify(userService, times(1)).createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+
+        assertThat(modelAndView.getViewName(), is("redirect:${pageContext.request.contextPath}/zombie/admin/users/"));
 
 
 //        ModelAndView modelAndView = usersController.listUsers();

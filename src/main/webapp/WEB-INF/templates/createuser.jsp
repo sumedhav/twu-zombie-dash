@@ -8,6 +8,7 @@
     <p>Username: <input name="username" type="text"  /> </p>
     <p>Password: <input name="password" type="text"  /> </p>
     <p>Name: <input name="name" type="text"  /> </p>
+    <p>Email: <input name="email" type="text" /> </p>
     <p>Role:
     <select name="role">
     <option value="GameDesigner">Game Designer</option>

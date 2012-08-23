@@ -8,6 +8,7 @@ pageEncoding="ISO-8859-1"%>
 
 <html>
     <body>
+        <h1> Zombie Dash <h1>
         <h3> Welcome ${username} !!</h3>
         <table>
             <tr>
