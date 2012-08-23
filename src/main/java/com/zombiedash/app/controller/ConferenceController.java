@@ -28,7 +28,7 @@ public class ConferenceController {
     return new ModelAndView("createconference");
   }
 
-  @RequestMapping(value = "view" ,method = RequestMethod.GET)
+  @RequestMapping(value = "home",method = RequestMethod.GET)
   public ModelAndView home() {
     List<Conference> conferenceList = conferenceRepository.showAllConferences();
     List<String> conferenceNames = new ArrayList<String>();
@@ -61,7 +61,7 @@ public class ConferenceController {
             conferenceOrganiserContactNumber,
             conferenceOrganiserEmail);
     conferenceRepository.saveConference(conference);
-    return new ModelAndView("conferencehome");
+    return home();
   }
 
 }
