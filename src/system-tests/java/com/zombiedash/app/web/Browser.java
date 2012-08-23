@@ -1,4 +1,4 @@
-package com.example.app.web.page;
+package com.zombiedash.app.web;
 
 
 import org.openqa.selenium.By;
