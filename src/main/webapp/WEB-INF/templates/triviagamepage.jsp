@@ -25,7 +25,7 @@
 </head>
 <body class="home">
   <h2>Welcome YAHYA to JAVA CONFERENCE</h2>
-  <form method="post" action="/zombie/blah" onSubmit="return validate(${fn:length(questions)})">
+  <form method="post" action="/zombie/conference/user/game/result" onSubmit="return validate(${fn:length(questions)})">
     <c:forEach var="question" items="${questions}" varStatus="questionStatus">
     <h3>${question.text}</h3>
       <table>
