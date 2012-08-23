@@ -54,7 +54,7 @@
                 <formatter type="xml"/>
                 <batchtest todir="${test.report.dir}">
                     <fileset dir="@{testdir}/java">
-                        <include name="**/*Test*.java"/>
+                        <include name="**/*Test.java"/>
                     </fileset>
                 </batchtest>
             </junit>

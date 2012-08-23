@@ -1,7 +1,8 @@
 package com.zombiedash.app.web;
 
-import com.example.app.jetty.WebServer;
+import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Browser;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
@@ -86,5 +87,13 @@ public class Application {
         public void run() {
             instance.stop();
         }
+    }
+
+    public static BasicDataSource setupDataSource(){
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:mem:db1");
+        dataSource.setUsername("sa");
+        return dataSource;
     }
 }
