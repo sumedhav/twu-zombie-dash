@@ -14,17 +14,34 @@ public class LoginPageTest {
     @Test
     public void shouldGoToAdminLoginSuccessPageIfUserIsAdmin() throws Exception {
         Browser browser = Application.browser();
-        browser.open("http://www.google.com");
+        browser.open("/zombie/login/LoginForm");
 
-//        WebElement usernameElement = browser.findElement(By.name("Username"));
-//        usernameElement.sendKeys("admin");
-//
-//        WebElement passwordElement = browser.findElement(By.name("Password"));
-//        passwordElement.sendKeys("Welcome1");
-//
-//        WebElement submitElement = browser.findElement(By.name("Submit"));
-//        submitElement.click();
-//
-//        assertThat(browser.getCurrentUrl(), is("/zombie/login/Authenticate"));
+        WebElement usernameElement = browser.findElement(By.name("Username"));
+        usernameElement.sendKeys("admin");
+
+        WebElement passwordElement = browser.findElement(By.name("Password"));
+        passwordElement.sendKeys("Welcome1");
+
+        WebElement submitElement = browser.findElement(By.name("Submit"));
+        submitElement.click();
+
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
+    }
+
+    @Test
+    public void shouldStayInLoginFormIfLoginUnsuccessful() throws Exception {
+        Browser browser = Application.browser();
+        browser.open("/zombie/login/LoginForm");
+
+        WebElement usernameElement = browser.findElement(By.name("Username"));
+        usernameElement.sendKeys("admin1");
+
+        WebElement passwordElement = browser.findElement(By.name("Password"));
+        passwordElement.sendKeys("12Welcome1");
+
+        WebElement submitElement = browser.findElement(By.name("Submit"));
+        submitElement.click();
+
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
     }
 }
