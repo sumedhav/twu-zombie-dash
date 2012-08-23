@@ -26,8 +26,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Rollback(true)
     public void shouldSaveConferenceToDatabase() throws Exception {
         Conference conference = new Conference("Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2,
-                "Mr. Smiley", "5555-5555", "smiley@gmail.com");
+                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         int numberOfRows = conferenceRepository.saveConference(conference);
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,"Java Conference");
@@ -40,9 +39,6 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
         assertThat(sqlRowSet.getString(5),is(equalTo("2012-08-21")));
         assertThat(sqlRowSet.getString(6),is(equalTo("2012-08-23")));
         assertThat(sqlRowSet.getInt(7),is(equalTo(2)));
-        assertThat(sqlRowSet.getString(8),is(equalTo("Mr. Smiley")));
-        assertThat(sqlRowSet.getString(9),is(equalTo("5555-5555")));
-        assertThat(sqlRowSet.getString(10),is(equalTo("smiley@gmail.com")));
     }
 
     @Test
@@ -50,8 +46,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,"Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2,
-                "Mr. Smiley", "5555-5555", "smiley@gmail.com");
+                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         Conference actualConference = conferenceRepository.showConference("Java Conference");
         assertThat(actualConference.getName(),is(equalTo("Java Conference")));
         assertThat(actualConference.getTopic(),is(equalTo("Java")));
@@ -60,9 +55,6 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
         assertThat(actualConference.getStartDate(),is(equalTo("2012-08-21")));
         assertThat(actualConference.getEndDate(),is(equalTo("2012-08-23")));
         assertThat(actualConference.getMaxAttendee(),is(equalTo(2)));
-        assertThat(actualConference.getOrganiserName(),is(equalTo("Mr. Smiley")));
-        assertThat(actualConference.getOrganiserContactNumber(),is(equalTo("5555-5555")));
-        assertThat(actualConference.getOrganiserEmail(),is(equalTo("smiley@gmail.com")));
     }
 
     @Test
@@ -70,11 +62,9 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,"Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2,
-                "Mr. Smiley", "5555-5555", "smiley@gmail.com");
+                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,"Other Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2,
-                "Mr. Smiley", "5555-5555", "smiley@gmail.com");
+                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         List<Conference> actualConferences = conferenceRepository.showAllConferences();
         assertThat(actualConferences.get(0).getName(),is(equalTo("Java Conference")));
         assertThat(actualConferences.get(1).getName(),is(equalTo("Other Java Conference")));
@@ -85,9 +75,6 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
             assertThat(actualConference.getStartDate(),is(equalTo("2012-08-21")));
             assertThat(actualConference.getEndDate(),is(equalTo("2012-08-23")));
             assertThat(actualConference.getMaxAttendee(),is(equalTo(2)));
-            assertThat(actualConference.getOrganiserName(),is(equalTo("Mr. Smiley")));
-            assertThat(actualConference.getOrganiserContactNumber(),is(equalTo("5555-5555")));
-            assertThat(actualConference.getOrganiserEmail(),is(equalTo("smiley@gmail.com")));
         }
     }
 }

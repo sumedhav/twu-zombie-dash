@@ -28,6 +28,11 @@ public class ConferenceController {
     return new ModelAndView("createconference");
   }
 
+  @RequestMapping(value = "view", method = RequestMethod.POST)
+  public ModelAndView view(@RequestParam String conferenceName) {
+      return new ModelAndView("conferenceview");
+  }
+
   @RequestMapping(value = "home",method = RequestMethod.GET)
   public ModelAndView home() {
     List<Conference> conferenceList = conferenceRepository.showAllConferences();
@@ -45,10 +50,7 @@ public class ConferenceController {
                              @RequestParam("conf_end_date") String conferenceEndDate,
                              @RequestParam("conf_description") String conferenceDescription,
                              @RequestParam("conf_venue") String conferenceVenue,
-                             @RequestParam("conf_max_attendees") String conferenceMaxAttendees,
-                             @RequestParam("conf_organiser_name") String conferenceOrganiserName,
-                             @RequestParam("conf_organiser_contact_number") String conferenceOrganiserContactNumber,
-                             @RequestParam("conf_organiser_email") String conferenceOrganiserEmail) {
+                             @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
     Conference conference =
         new Conference(conferenceName,
             conferenceTopic,
@@ -56,10 +58,7 @@ public class ConferenceController {
             conferenceVenue,
             conferenceStartDate,
             conferenceEndDate,
-            Integer.parseInt(conferenceMaxAttendees),
-            conferenceOrganiserName,
-            conferenceOrganiserContactNumber,
-            conferenceOrganiserEmail);
+            Integer.parseInt(conferenceMaxAttendees));
     conferenceRepository.saveConference(conference);
     return home();
   }

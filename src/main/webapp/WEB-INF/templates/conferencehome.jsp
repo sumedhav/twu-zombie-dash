@@ -14,7 +14,8 @@
           <h1>Conferences</h1>
           <ul>
           <c:forEach var="conference" items="${Conferences}">
-          <li><c:out value="${conference}"/></li>
+              <form commandName="${conference}" action="${pageContext.request.contextPath}/zombie/admin/conference/view" method = "POST">
+                  <input type="submit" value="${conference}" />
           </c:forEach>
           </ul>
       </t:wrapper>
