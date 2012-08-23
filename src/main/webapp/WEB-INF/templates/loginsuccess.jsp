@@ -8,22 +8,29 @@ pageEncoding="ISO-8859-1"%>
 
 <html>
     <body>
-        <h3> Welcome <core:out value="${loginForm.username}" /></h3>
+        <h3> Welcome ${username} !!</h3>
         <table>
             <tr>
-                <td style="width:1000px;text-align:right;"><a href="${pageContext.request.contextPath}/zombie/login/LoginForm">LOG OUT</a></td>
-            </tr>
-
-            <tr>
-                <td  style="width:1000px;text-align:right;"><a href="">CHANGE PASSWORD</a></td>
-            </tr>
-            <tr>
-                <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/view">CONFERENCES</a></td>
-            </tr>
-            <tr>
-                <td><a href="/zombie/admin/users/">USERS</a></td>
-            </tr>
-
+                <td style="width:1000px">
+                    <table>
+                        <tr>
+                            <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/view">CONFERENCES</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="${pageContext.request.contextPath}/zombie/admin/users/">USERS</a></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td><a href="${pageContext.request.contextPath}/zombie/login/LoginForm">LOG OUT</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="">CHANGE PASSWORD</a></td>
+                        </tr>
+                    </table>
+                </td>
         </table>
     </body>
 </html>
