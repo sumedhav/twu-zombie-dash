@@ -3,12 +3,22 @@
 pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.io.*,java.util.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 
 <html>
     <head>
         <title>Zombie Dash : Welcome</title>
+        <script type="text/javascript">
+        function invalidateSession()
+        {
+            session = request.getSession();
+            session.removeAttribute("username");
+            session.invalidate();
+         }
+        </script>
     </head>
     <body>
         <h1> Zombie Dash <h1>
@@ -28,13 +38,16 @@ pageEncoding="ISO-8859-1"%>
                 <td>
                     <table>
                         <tr>
-                            <td><a href="${pageContext.request.contextPath}/zombie/login/LoginForm">LOG OUT</a></td>
+                            <td><a href="" onclick = "invalidateSession()">LOG OUT</a>
+                            </td>
                         </tr>
                         <tr>
                             <td><a href="">CHANGE PASSWORD</a></td>
                         </tr>
                     </table>
                 </td>
+            </tr>
         </table>
+
     </body>
 </html>
