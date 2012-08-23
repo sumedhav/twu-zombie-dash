@@ -1,8 +1,5 @@
 package com.zombiedash.app.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
@@ -12,11 +9,14 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsersControllerTest {
@@ -55,18 +55,20 @@ public class UsersControllerTest {
     @Test
     public void shouldCreateAnUser() {
         UsersController usersController = new UsersController(userService);
-
         ModelAndView modelAndView = usersController.createUserSubmit("designer", "password", "GameDesigner", "MR.Right", "right@gmail.com");
         verify(userService, times(1)).createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
-        assertThat(modelAndView.getViewName(), is("redirect:${pageContext.request.contextPath}/zombie/admin/users/"));
-
-
-//        ModelAndView modelAndView = usersController.listUsers();
-//        List<String> result = (ArrayList<String>) modelAndView.getModel().get("Users");
-//
-//        assertThat(result.get(0), is("Username: admin, Password: Welcome1"));
-//        assertThat(result.get(1), is("Username: designer, Password: password"));
-
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/"));
     }
+
+    @Test
+    public void shouldDisplayErrorPageIfCredentialValidationFails() {
+        doThrow(new RuntimeException()).when(userService).createUser((User) anyObject());
+        UsersController usersController = new UsersController(userService);
+        ModelAndView modelAndView = usersController.createUserSubmit("", "password", "GameDesigner", "MR.Right", "right@gmail.com");
+        verify(userService, times(1)).createUser(new User("", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage/"));
+    }
+
 }

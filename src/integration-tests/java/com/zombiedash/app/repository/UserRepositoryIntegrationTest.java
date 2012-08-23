@@ -1,15 +1,16 @@
 package com.zombiedash.app.repository;
 
-import java.util.List;
-
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -49,5 +50,13 @@ public class UserRepositoryIntegrationTest {
         userRepository.createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
         User designer = userRepository.retrieveUser("designer");
         assertThat(designer, is(new User("designer", "password", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void shouldNotAllowNullUserName(){
+        UserRepository userRepository = new UserRepository(jdbcTemplate);
+        userRepository.createUser(new User("", "password", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
+        User designer = userRepository.retrieveUser("");
+        assertThat(designer, is(new User("", "password", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
     }
 }
