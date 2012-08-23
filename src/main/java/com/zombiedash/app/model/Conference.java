@@ -17,6 +17,15 @@ public class Conference {
                       String startDate,
                       String endDate,
                       int maxAttendee) {
+        if (name.isEmpty() ||
+                topic.isEmpty() ||
+                description.isEmpty() ||
+                venue.isEmpty() ||
+                startDate.isEmpty() ||
+                endDate.isEmpty() ||
+                maxAttendee <= 0) {
+            throw new RuntimeException();
+        }
         this.name = name;
         this.topic = topic;
         this.description = description;
