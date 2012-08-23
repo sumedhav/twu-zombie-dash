@@ -31,3 +31,5 @@ CREATE TABLE users(username varchar(20) NOT NULL PRIMARY KEY,
 INSERT INTO users VALUES('admin','Welcome1',0,'Administrator');
 
 
+
+

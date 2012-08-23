@@ -1,7 +1,7 @@
 package com.example.app.web.page.tests;
 
-import com.example.app.web.page.Application;
-import com.example.app.web.page.Browser;
+import com.zombiedash.app.web.Application;
+import com.zombiedash.app.web.Browser;
 import org.junit.rules.ExternalResource;
 
 public class LoginLogoutRule extends ExternalResource {

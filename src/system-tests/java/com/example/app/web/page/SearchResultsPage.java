@@ -1,5 +1,7 @@
 package com.example.app.web.page;
 
+import com.zombiedash.app.web.Browser;
+
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
