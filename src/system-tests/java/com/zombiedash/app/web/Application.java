@@ -93,7 +93,7 @@ public class Application {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setUrl("jdbc:h2:mem:db1");
-        dataSource.setUsername("sa");
+        dataSource.setUsername("user");
         return dataSource;
     }
 }
