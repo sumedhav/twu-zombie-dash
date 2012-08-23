@@ -31,7 +31,7 @@
                             <td><input path="password" type ="password" name = "Password" /></td>
                         </tr>
                         <tr>
-                            <td><input type="submit" value="Submit" /></td>
+                            <td><input type="submit" value="Submit" name = "Submit"/></td>
                         </tr>
                     </table>
                 </td>
