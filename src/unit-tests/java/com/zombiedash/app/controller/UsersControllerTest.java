@@ -15,8 +15,8 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsersControllerTest {
@@ -55,20 +55,18 @@ public class UsersControllerTest {
     @Test
     public void shouldCreateAnUser() {
         UsersController usersController = new UsersController(userService);
+
         ModelAndView modelAndView = usersController.createUserSubmit("designer", "password", "GameDesigner", "MR.Right", "right@gmail.com");
         verify(userService, times(1)).createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/"));
+
+
+//        ModelAndView modelAndView = usersController.listUsers();
+//        List<String> result = (ArrayList<String>) modelAndView.getModel().get("Users");
+//
+//        assertThat(result.get(0), is("Username: admin, Password: Welcome1"));
+//        assertThat(result.get(1), is("Username: designer, Password: password"));
+
     }
-
-    @Test
-    public void shouldDisplayErrorPageIfCredentialValidationFails() {
-        doThrow(new RuntimeException()).when(userService).createUser((User) anyObject());
-        UsersController usersController = new UsersController(userService);
-        ModelAndView modelAndView = usersController.createUserSubmit("", "password", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService, times(1)).createUser(new User("", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
-
-        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage/"));
-    }
-
 }

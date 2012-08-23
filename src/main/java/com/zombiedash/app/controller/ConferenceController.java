@@ -17,47 +17,52 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/conference")
 public class ConferenceController {
-  private ConferenceRepository conferenceRepository;
+    private ConferenceRepository conferenceRepository;
 
-  @Autowired
-  public ConferenceController(ConferenceRepository conferenceRepository) {
-    this.conferenceRepository = conferenceRepository;
-  }
-
-  @RequestMapping(value = "createConference", method = RequestMethod.GET)
-  public ModelAndView createConference() {
-    return new ModelAndView("createconference");
-  }
-
-  @RequestMapping(value = "home",method = RequestMethod.GET)
-  public ModelAndView home() {
-    List<Conference> conferenceList = conferenceRepository.showAllConferences();
-    List<String> conferenceNames = new ArrayList<String>();
-    for (Conference conference : conferenceList) {
-      conferenceNames.add(conference.getName());
+    @Autowired
+    public ConferenceController(ConferenceRepository conferenceRepository) {
+        this.conferenceRepository = conferenceRepository;
     }
-    return new ModelAndView("conferencehome","Conferences", conferenceNames);
-  }
 
-  @RequestMapping(value = "submit", method = RequestMethod.POST)
-  public ModelAndView submit(@RequestParam("conf_name") String conferenceName,
-                             @RequestParam("conf_topic") String conferenceTopic,
-                             @RequestParam("conf_start_date") String conferenceStartDate,
-                             @RequestParam("conf_end_date") String conferenceEndDate,
-                             @RequestParam("conf_description") String conferenceDescription,
-                             @RequestParam("conf_venue") String conferenceVenue,
-                             @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
-    Conference conference =
-        new Conference(conferenceName,
-            conferenceTopic,
-            conferenceDescription,
-            conferenceVenue,
-            conferenceStartDate,
-            conferenceEndDate,
-            Integer.parseInt(conferenceMaxAttendees));
-    conferenceRepository.saveConference(conference);
-    return new ModelAndView("conferencehome");
-  }
+    @RequestMapping(value = "createConference", method = RequestMethod.GET)
+    public ModelAndView createConference() {
+        return new ModelAndView("createconference");
+    }
+
+    @RequestMapping(value = "home",method = RequestMethod.GET)
+    public ModelAndView home() {
+        List<Conference> conferenceList = conferenceRepository.showAllConferences();
+        List<String> conferenceNames = new ArrayList<String>();
+        for (Conference conference : conferenceList) {
+            conferenceNames.add(conference.getName());
+        }
+        return new ModelAndView("conferencehome","Conferences", conferenceNames);
+    }
+
+    @RequestMapping(value = "submit", method = RequestMethod.POST)
+    public ModelAndView submit(@RequestParam("conf_name") String conferenceName,
+                               @RequestParam("conf_topic") String conferenceTopic,
+                               @RequestParam("conf_start_date") String conferenceStartDate,
+                               @RequestParam("conf_end_date") String conferenceEndDate,
+                               @RequestParam("conf_description") String conferenceDescription,
+                               @RequestParam("conf_venue") String conferenceVenue,
+                               @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
+        Conference conference;
+        try {
+            conference = new Conference(
+                    conferenceName,
+                    conferenceTopic,
+                    conferenceDescription,
+                    conferenceVenue,
+                    conferenceStartDate,
+                    conferenceEndDate,
+                    Integer.parseInt(conferenceMaxAttendees));
+        } catch (RuntimeException e) {
+            return new ModelAndView("createconference","ErrorString", "ALL FIELDS ARE COMPULSORY");
+        }
+        conferenceRepository.saveConference(conference);
+        return new ModelAndView("conferencehome");
+    }
 
     @RequestMapping(value = "view/{conferenceName}")
     public ModelAndView view(@PathVariable String conferenceName) {
