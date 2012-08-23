@@ -6,6 +6,7 @@
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
 	<h3>Create Conference: Enter Details</h3>
+	 <h4> <FONT color="red">${ErrorString}</FONT></h4>
 
 	<form name='conferenceCreationForm' action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method='POST'>
 
@@ -30,7 +31,6 @@
                 <td><input type='text' name='conf_end_date' />
                 </td>
             </tr>
-
             <tr>
                 <td>Description:</td>
                 <td><input type='text' name='conf_description' width = 1000/>

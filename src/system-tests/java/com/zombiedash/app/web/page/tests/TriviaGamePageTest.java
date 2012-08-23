@@ -21,9 +21,10 @@ public class TriviaGamePageTest {
 
     @Test
     public void shouldDisplayGameQuestions() {
+
         Browser browser = Application.browser();
 
-        initializeQuestionsAndOptions();
+        //initializeQuestionsAndOptions();
 
         browser.open("/zombie/conference/user/game");
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
