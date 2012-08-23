@@ -7,4 +7,5 @@ public class ConferenceTest {
     public void constructorShouldThrowExceptionOnAnyEmptyField(){
         new Conference("","","","","","",0);
     }
+
 }

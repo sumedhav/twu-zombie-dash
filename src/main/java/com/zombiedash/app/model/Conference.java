@@ -24,7 +24,7 @@ public class Conference {
                 startDate.isEmpty() ||
                 endDate.isEmpty() ||
                 maxAttendee <= 0) {
-            throw new RuntimeException();
+            throw new IllegalStateException();
         }
         this.name = name;
         this.topic = topic;
