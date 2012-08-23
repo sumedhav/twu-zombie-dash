@@ -1,11 +1,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <html>
 <head>
   <title>Welcome to Trivia Game!</title>
+    <script>
+      function validate(numQns){
+        var radios = document.getElementsByTagName('input');
+        var value=0;
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].type === 'radio' && radios[i].checked) {
+                value++;
+            }
+        }
+        if (value < numQns) {
+          alert("You need to answer all the questions!");
+          return false;
+          }
+        else {
+          return true;
+        }
+      }
+    </script>
 </head>
 <body class="home">
   <h2>Welcome YAHYA to JAVA CONFERENCE</h2>
-  <form action="#">
+  <form method="post" action="/zombie/blah" onSubmit="return validate(${fn:length(questions)})">
     <c:forEach var="question" items="${questions}" varStatus="questionStatus">
     <h3>${question.text}</h3>
       <table>
@@ -22,8 +42,8 @@
       </table>
     </c:forEach>
     <div>
-    <input type="submit" value="SUBMIT" />
-    <div>
+      <input type="submit" value="SUBMIT" />
+    </div>
   </form>
 </body>
 </html>
