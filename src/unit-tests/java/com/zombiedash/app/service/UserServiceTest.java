@@ -31,13 +31,25 @@ public class UserServiceTest {
         assertNotNull(userService.authenticateAndReturnUser("admin", "Welcome1"));
     }
 
-    @Test
+    @Test (expected = Exception.class)
+    public void shouldNotAuthenticateAndReturnNullForIncorrectPassword() throws Exception {
+        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        UserService userService = new UserService(userRepository);
+        userService.authenticateAndReturnUser("admin", "Welcome2");
+    }
+
+    @Test (expected = Exception.class)
+    public void shouldNotAuthenticateAndReturnNullForIncorrectUserName() throws Exception {
+        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        UserService userService = new UserService(userRepository);
+        userService.authenticateAndReturnUser("admefhvjin", "Welcome1");
+    }
+
+    @Test (expected = Exception.class)
     public void shouldNotAuthenticateAndReturnNullForIncorrectCredentials() throws Exception {
         given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
         UserService userService = new UserService(userRepository);
-        assertNull(userService.authenticateAndReturnUser("admin", "Welcome2"));
-        assertNull(userService.authenticateAndReturnUser("admefhvjin", "Welcome1"));
-        assertNull(userService.authenticateAndReturnUser("admefhvjin", "Welcomdfgrfjgre1"));
+        userService.authenticateAndReturnUser("admefhvjin", "Welcomdfgrfjgre1");
     }
 
     @Test
