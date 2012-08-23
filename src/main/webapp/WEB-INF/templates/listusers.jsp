@@ -9,5 +9,5 @@
     <li><c:out value="${user}"/></li>
     </c:forEach>
     </ul>
-    <input type="submit" value="Create User" onclick="location.href='../createuser'" />
+    <input type="submit" value="Create User" onclick="location.href='create/'" />
 </t:wrapper>

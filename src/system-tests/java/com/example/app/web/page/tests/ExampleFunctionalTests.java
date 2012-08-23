@@ -1,6 +1,6 @@
 package com.example.app.web.page.tests;
 
-import com.example.app.web.page.Browser;
+import com.zombiedash.app.web.Browser;
 import org.junit.Rule;
 import org.junit.Test;
 

@@ -2,34 +2,71 @@ package com.zombiedash.app.model;
 
 public class User implements java.io.Serializable {
     String userName;
-    char[] password;
-    Boolean loggedStatus = false;
+    String password;
     private Role userRole;
+    private String name;
 
-
-    public User(String userName, char[] password) {
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
         this.userRole = Role.GAME_DESIGNER;
+        this.name = "Mr. Mysterious";
     }
 
-    public void authenticate(String userName, char[] password) {
+    public boolean authenticate(String userName, String password) {
         boolean properUserName = userName.equals(this.userName);
-        boolean properPassword = new String(password).equals(new String(this.password));
-        if(!(properUserName &&  properPassword)) throw new RuntimeException("Authentication Failure");
-        loggedStatus = true;
-    }
-
-    public Boolean isLoggedIn() {
-        return loggedStatus;
+        boolean properPassword = password.equals(this.password);
+        return properUserName && properPassword;
     }
 
     public Role getUserRole() {
         return userRole;
     }
 
-    public void setRole(Role role) {
+    public void setUserRole(Role role) {
         this.userRole = role;
     }
 
+    @Override
+    public String toString() {
+        return "Username: " + userName + ", Password: " + password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+        if (userRole != user.userRole) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userName != null ? userName.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
+        return result;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Integer getRole() {
+        return userRole.getVal();
+    }
+
+    public String getName() {
+        return name;
+    }
 }

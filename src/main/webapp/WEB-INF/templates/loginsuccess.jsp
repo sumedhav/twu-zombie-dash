@@ -18,10 +18,10 @@ pageEncoding="ISO-8859-1"%>
                 <td  style="width:1000px;text-align:right;"><a href="">CHANGE PASSWORD</a></td>
             </tr>
             <tr>
-                <td><a href="">CONFERENCES</a></td>
+                <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/view">CONFERENCES</a></td>
             </tr>
             <tr>
-                <td><a href="">USERS</a></td>
+                <td><a href="/zombie/admin/users/">USERS</a></td>
             </tr>
 
         </table>

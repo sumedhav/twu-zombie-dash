@@ -9,11 +9,6 @@ public class Question {
 
     private List<Option> options =new ArrayList<Option>();
 
-    public Question(int questionId, String text) {
-        this.questionId = questionId;
-        this.text = text;
-
-    }
     public Question(int questionId, String text, List<Option> options) {
         this.questionId = questionId;
         this.text = text;

@@ -1,6 +1,7 @@
-package com.example.app.web.page;
+package com.zombiedash.app.web;
 
 import com.example.app.jetty.WebServer;
+import com.zombiedash.app.web.Browser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 

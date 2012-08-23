@@ -1,5 +1,6 @@
 package com.example.app.web.page;
 
+import com.zombiedash.app.web.Browser;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertThat;
