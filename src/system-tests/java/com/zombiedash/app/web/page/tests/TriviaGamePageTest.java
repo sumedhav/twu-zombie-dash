@@ -30,9 +30,9 @@ public class TriviaGamePageTest {
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
 
         List<WebElement> elements = browser.findElements(By.cssSelector("h3"));
-//        assertThat(elements.size(), is(2));
-//        assertThat(elements.get(0).getText(), equalTo("Where is Red Fort"));
-//        assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
+        assertThat(elements.size(), is(2));
+        assertThat(elements.get(0).getText(), equalTo("Where is Red Fort"));
+        assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
     }
 
     private void initializeQuestions() {
