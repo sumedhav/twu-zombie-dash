@@ -9,9 +9,6 @@ public class Conference {
     private String startDate;
     private String endDate;
     private int maxAttendee;
-    private String organiserName;
-    private String organiserContactNumber;
-    private String organiserEmail;
 
     public Conference(String name,
                       String topic,
@@ -19,10 +16,7 @@ public class Conference {
                       String venue,
                       String startDate,
                       String endDate,
-                      int maxAttendee,
-                      String organiserName,
-                      String organiserContactNumber,
-                      String organiserEmail) {
+                      int maxAttendee) {
         this.name = name;
         this.topic = topic;
         this.description = description;
@@ -30,9 +24,6 @@ public class Conference {
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxAttendee = maxAttendee;
-        this.organiserName = organiserName;
-        this.organiserContactNumber = organiserContactNumber;
-        this.organiserEmail = organiserEmail;
     }
 
     public String getName() {
@@ -61,17 +52,5 @@ public class Conference {
 
     public int getMaxAttendee() {
         return maxAttendee;
-    }
-
-    public String getOrganiserName() {
-        return organiserName;
-    }
-
-    public String getOrganiserContactNumber() {
-        return organiserContactNumber;
-    }
-
-    public String getOrganiserEmail() {
-        return organiserEmail;
     }
 }

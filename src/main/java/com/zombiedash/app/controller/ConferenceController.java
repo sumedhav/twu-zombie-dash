@@ -4,6 +4,7 @@ import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,10 +46,7 @@ public class ConferenceController {
                              @RequestParam("conf_end_date") String conferenceEndDate,
                              @RequestParam("conf_description") String conferenceDescription,
                              @RequestParam("conf_venue") String conferenceVenue,
-                             @RequestParam("conf_max_attendees") String conferenceMaxAttendees,
-                             @RequestParam("conf_organiser_name") String conferenceOrganiserName,
-                             @RequestParam("conf_organiser_contact_number") String conferenceOrganiserContactNumber,
-                             @RequestParam("conf_organiser_email") String conferenceOrganiserEmail) {
+                             @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
     Conference conference =
         new Conference(conferenceName,
             conferenceTopic,
@@ -56,12 +54,15 @@ public class ConferenceController {
             conferenceVenue,
             conferenceStartDate,
             conferenceEndDate,
-            Integer.parseInt(conferenceMaxAttendees),
-            conferenceOrganiserName,
-            conferenceOrganiserContactNumber,
-            conferenceOrganiserEmail);
+            Integer.parseInt(conferenceMaxAttendees));
     conferenceRepository.saveConference(conference);
-    return home();
+    return new ModelAndView("conferencehome");
   }
+
+    @RequestMapping(value = "view/{conferenceName}")
+    public ModelAndView view(@PathVariable String conferenceName) {
+        Conference thisConference = conferenceRepository.showConference(conferenceName);
+        return new ModelAndView("conferenceview","Conference", thisConference);
+    }
 
 }

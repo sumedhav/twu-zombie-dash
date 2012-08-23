@@ -25,16 +25,13 @@ public class ConferenceRepositoryTest {
   @Test
   public void shouldNotThrowErrorAndSaveConferenceToDatabase() throws Exception {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
-    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT, "","","","","","",0,"","","")).thenReturn(1);
+    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT, "","","","","","",0)).thenReturn(1);
     ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
     Conference conference = mock(Conference.class);
     when(conference.getDescription()).thenReturn("");
     when(conference.getEndDate()).thenReturn("");
     when(conference.getMaxAttendee()).thenReturn(0);
     when(conference.getName()).thenReturn("");
-    when(conference.getOrganiserContactNumber()).thenReturn("");
-    when(conference.getOrganiserEmail()).thenReturn("");
-    when(conference.getOrganiserName()).thenReturn("");
     when(conference.getStartDate()).thenReturn("");
     when(conference.getTopic()).thenReturn("");
     when(conference.getVenue()).thenReturn("");
@@ -78,9 +75,6 @@ public class ConferenceRepositoryTest {
         firstResult.put("start_date", dateFormat.parse("2012-06-07"));
         firstResult.put("end_date", dateFormat.parse("2012-06-07"));
         firstResult.put("max_attendee",0);
-        firstResult.put("organiser_name","");
-        firstResult.put("organiser_contact_no","");
-        firstResult.put("organiser_email","");
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();
         secondResult.put("name", "");
@@ -90,9 +84,6 @@ public class ConferenceRepositoryTest {
         secondResult.put("start_date", dateFormat.parse("2012-06-07"));
         secondResult.put("end_date", dateFormat.parse("2012-06-07"));
         secondResult.put("max_attendee", 0);
-        secondResult.put("organiser_name", "");
-        secondResult.put("organiser_contact_no", "");
-        secondResult.put("organiser_email", "");
         resultBlock.add(secondResult);
         return resultBlock;
       }

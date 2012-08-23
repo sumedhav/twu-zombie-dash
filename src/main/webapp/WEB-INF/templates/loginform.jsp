@@ -1,4 +1,7 @@
 <html>
+<head>
+    <title>Zombie Dash : Login</title>
+</head>
 <body onload='document.loginForm.Username.focus();'>
     <h1>
         <center>Login</center>
@@ -11,7 +14,7 @@
             <tr>
                 <td>
                     <p>
-                        <img align="right" src="${pageContext.request.contextPath}/static/images/Zombie-Dash.jpg"/>
+                        <img align="right" src="${pageContext.request.contextPath}/static/images/ZombieDash.jpg"/>
                     </p>
                 </td>
                 <td>
@@ -31,7 +34,7 @@
                             <td><input path="password" type ="password" name = "Password" /></td>
                         </tr>
                         <tr>
-                            <td><input type="submit" value="Submit" /></td>
+                            <td><input type="submit" value="Submit" name = "Submit"/></td>
                         </tr>
                     </table>
                 </td>

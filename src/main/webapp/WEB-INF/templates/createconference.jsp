@@ -43,21 +43,6 @@
             </tr>
 
             <tr>
-                <td>Organiser Name:</td>
-                <td><input type='text' name='conf_organiser_name' />
-                </td>
-            </tr>
-            <tr>
-                <td>Organiser Contact No:</td>
-                <td><input type='text' name='conf_organiser_contact_number' />
-                </td>
-            </tr>
-            <tr>
-                <td>Organiser Email Address:</td>
-                <td><input type='text' name='conf_organiser_email' />
-                </td>
-            </tr>
-            <tr>
                 <td>Max Number Of Attendees:</td>
                 <td><input type='text' name='conf_max_attendees' />
                 </td>
