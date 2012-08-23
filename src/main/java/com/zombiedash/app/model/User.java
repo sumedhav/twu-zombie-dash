@@ -1,16 +1,25 @@
 package com.zombiedash.app.model;
 
 public class User implements java.io.Serializable {
-    String userName;
-    String password;
+    private String userName;
+    private String password;
     private Role userRole;
     private String name;
+    private String email;
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
         this.userRole = Role.GAME_DESIGNER;
         this.name = "Mr. Mysterious";
+    }
+
+    public User(String userName, String password, Role userRole, String name, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.userRole = userRole;
+        this.name = name;
+        this.email = email;
     }
 
     public boolean authenticate(String userName, String password) {
@@ -21,10 +30,6 @@ public class User implements java.io.Serializable {
 
     public Role getUserRole() {
         return userRole;
-    }
-
-    public void setUserRole(Role role) {
-        this.userRole = role;
     }
 
     @Override
@@ -41,9 +46,8 @@ public class User implements java.io.Serializable {
 
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        if (userRole != user.userRole) return false;
+        return userRole == user.userRole;
 
-        return true;
     }
 
     @Override
@@ -68,5 +72,9 @@ public class User implements java.io.Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

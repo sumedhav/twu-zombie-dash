@@ -1,6 +1,7 @@
 package com.zombiedash.app.service;
 
 
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.repository.UserRepository;
 import org.junit.Test;
@@ -12,12 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.isNotNull;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -66,11 +63,11 @@ public class UserServiceTest {
 
     @Test
     public void shouldCreateNewUser() {
-        User user = new User("designer", "password");
+        User user = new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com");
         given(userRepository.createUser(user)).willReturn(true);
 
         UserService userService = new UserService(userRepository);
-        Boolean userCreated = userService.createUser("designer", "password");
+        Boolean userCreated = userService.createUser(new User("designer", "password", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
         assertThat(userCreated, is(true));
     }

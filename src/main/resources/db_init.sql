@@ -26,9 +26,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users(username varchar(20) NOT NULL PRIMARY KEY,
                 password varchar(40) NOT NULL,
                 role number(1) NOT NULL,
-                name varchar(100) NOT NULL);
+                name varchar(30) NOT NULL,
+                email varchar(100) NOT NULL);
 
-INSERT INTO users VALUES('admin','Welcome1',0,'Administrator');
+INSERT INTO users VALUES('admin','Welcome1',0,'Administrator','admin@zombie.com');
 
 
 

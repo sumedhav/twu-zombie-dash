@@ -31,8 +31,7 @@ public class UserService {
         return userRepository.retrieveUser(username);
     }
 
-    public boolean createUser(String username, String password) {
-        User user = new User(username, password);
+    public boolean createUser(User user) {
         return userRepository.createUser(user);
     }
 }
