@@ -21,6 +21,13 @@
           return true;
         }
       }
+
+      function confirmCancel() {
+        if(confirm("ARE YOU SURE YOU WANT TO LEAVE?")) {
+          location.replace("/zombie/conference/user/homepage/");
+        }
+      }
+
     </script>
 </head>
 <body class="home">
@@ -43,6 +50,10 @@
     </c:forEach>
     <div>
       <input type="submit" value="SUBMIT" />
+    </div>
+    <div>
+      <input type="button" value="CANCEL"
+      onclick="return confirmCancel()" />
     </div>
   </form>
 </body>
