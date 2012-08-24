@@ -34,14 +34,14 @@ public class UserRepositoryIntegrationTest {
     public void shouldRetrieveUser() {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         User result = userRepository.retrieveUser("admin");
-        assertThat(result, is(new User("admin", "Welcome1")));
+        assertThat(result, is(new User("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com")));
     }
 
     @Test
     public void shouldRetrieveAllUsers() {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         List<User> result = userRepository.retrieveAllUsers();
-        assertThat(result.get(0), is(new User("admin", "Welcome1")));
+        assertThat(result.get(0), is(new User("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com")));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class UserRepositoryIntegrationTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         userRepository.createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
         User designer = userRepository.retrieveUser("designer");
-        assertThat(designer, is(new User("designer", "password1", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
+        assertThat(designer, is(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com")));
     }
 
     @Test(expected = DataIntegrityViolationException.class)
@@ -57,6 +57,6 @@ public class UserRepositoryIntegrationTest {
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         userRepository.createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
         User designer = userRepository.retrieveUser("");
-        assertThat(designer, is(new User("", "password1", Role.GAME_DESIGNER, "Mr.Right", "right@rightmail.com")));
+        assertThat(designer, is(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com")));
     }
 }

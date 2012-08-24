@@ -23,7 +23,7 @@ public class UsersController {
 
     @RequestMapping(value = "")
     public ModelAndView listUsers() {
-        return new ModelAndView("listusers","Users", userService.getAllUsers());
+        return new ModelAndView("listusers", "Users", userService.getAllUsers());
     }
 
     @RequestMapping(value = "create/")

@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,7 +43,10 @@ public class UserRepository {
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
                 return new User(resultSet.getString("username"),
-                        resultSet.getString("password"));
+                        resultSet.getString("password"),
+                        Role.generateRole(resultSet.getString("role")),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"));
             }
         });
     }
@@ -54,7 +58,10 @@ public class UserRepository {
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
                 return new User(resultSet.getString("username"),
-                        resultSet.getString("password"));
+                        resultSet.getString("password"),
+                        Role.generateRole(resultSet.getString("role")),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"));
             }
         });
         return userList.get(0);
@@ -64,7 +71,7 @@ public class UserRepository {
         Integer result = jdbcTemplate.update(INSERT_USER,
                 user.getUserName(),
                 user.getPassword(),
-                user.getRole(),
+                user.getRoleVal(),
                 user.getName(),
                 user.getEmail()
                 );

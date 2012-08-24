@@ -37,7 +37,7 @@ public class User implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "Username: " + userName + ", Password: " + password;
+        return "Username: " + userName + ", Password: " + password + ", Role: " + userRole + ", Name: " + name + ", Email: " + email;
     }
 
     @Override
@@ -47,10 +47,13 @@ public class User implements java.io.Serializable {
 
         User user = (User) o;
 
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        return userRole == user.userRole;
+        if (userRole != user.userRole) return false;
 
+        return true;
     }
 
     @Override
@@ -58,6 +61,8 @@ public class User implements java.io.Serializable {
         int result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
@@ -69,7 +74,11 @@ public class User implements java.io.Serializable {
         return password;
     }
 
-    public Integer getRole() {
+    public Role getRole(){
+        return userRole;
+    }
+
+    public Integer getRoleVal() {
         return userRole.getVal();
     }
 
