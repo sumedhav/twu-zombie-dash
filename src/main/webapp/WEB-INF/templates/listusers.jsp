@@ -4,10 +4,17 @@
 
 <t:wrapper>
     <h1>Users</h1>
-    <ul>
+    <table>
+    <tr>
+        <td>Name</td>
+        <td>Role</td>
+    </tr>
     <c:forEach var="user" items="${Users}">
-    <li><c:out value="${user}"/></li>
+    <tr>
+        <td><a href=""><c:out value="${user.name}"/></a></td>
+        <td><c:out value="${user.role}"/></td>
+    </tr>
     </c:forEach>
-    </ul>
+    </table>
     <input type="submit" value="Create User" onclick="location.href='create/'" />
 </t:wrapper>

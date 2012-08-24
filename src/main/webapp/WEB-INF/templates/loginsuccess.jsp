@@ -11,7 +11,6 @@ pageEncoding="ISO-8859-1"%>
 <html>
     <head>
         <title>Zombie Dash : Welcome</title>
-
     </head>
     <body>
         <h1> Zombie Dash <h1>
@@ -31,8 +30,7 @@ pageEncoding="ISO-8859-1"%>
                 <td>
                     <table>
                         <tr>
-                            <td><a href= "${pageContext.request.contextPath}/zombie/login/Logout" id="logout">LOG OUT</a>
-                            </td>
+                            <td><a href= "${pageContext.request.contextPath}/zombie/login/Logout" id="logout">LOG OUT</a></td>
                         </tr>
                         <tr>
                             <td><a href="" id="changepassword">CHANGE PASSWORD</a></td>
