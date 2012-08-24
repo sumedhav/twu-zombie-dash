@@ -6,45 +6,45 @@
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
 	<h3>Create Conference: Enter Details</h3>
-	 <h4> <FONT color="red">${ErrorString}</FONT></h4>
+	 <h4> <FONT color="red">${model.errorString}</FONT></h4>
 
 	<form name='conferenceCreationForm' action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method='POST'>
 
 		<table>
 			<tr>
 				<td>Conference Name:</td>
-				<td><input type='text' name='conf_name' value=''>
+				<td><input type='text' name='conf_name' value=${model.name}>
 				</td>
 			</tr>
 			<tr>
                 <td>Topic:</td>
-                <td><input type='text' name='conf_topic' />
+                <td><input type='text' name='conf_topic' value=${model.topic}>
                 </td>
             </tr>
             <tr>
                 <td>Start Date:</td>
-                <td><input type='text' name='conf_start_date' />
+                <td><input type='text' name='conf_start_date' value=${model.startDate}> <FONT color="red">${model.dateError}</FONT>
                 </td>
             </tr>
             <tr>
                 <td>End Date:</td>
-                <td><input type='text' name='conf_end_date' />
+                <td><input type='text' name='conf_end_date' value=${model.endDate}> <FONT color="red">${model.dateError}</FONT>
                 </td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><input type='text' name='conf_description' width = 1000/>
+                <td><input type='text' name='conf_description' width = 1000 value=${model.description}>
                 </td>
             </tr>
             <tr>
                 <td>Venue:</td>
-                <td><input type='text' name='conf_venue' />
+                <td><input type='text' name='conf_venue' value=${model.venue}>
                 </td>
             </tr>
 
             <tr>
                 <td>Max Number Of Attendees:</td>
-                <td><input type='text' name='conf_max_attendees' />
+                <td><input type='text' name='conf_max_attendees' value=${model.maxAttendees}> <FONT color="red">${model.numberError}</FONT>
                 </td>
             </tr>
 			<tr>

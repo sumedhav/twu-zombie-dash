@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS zombie_users;
 
 CREATE TABLE zombie_users(username varchar(20) NOT NULL PRIMARY KEY CHECK(username NOT LIKE ''),
                 password varchar(40) NOT NULL,
-                role number(1) NOT NULL,
+                role integer NOT NULL,
                 name varchar(30) NOT NULL,
                 email varchar(100) NOT NULL);
 
