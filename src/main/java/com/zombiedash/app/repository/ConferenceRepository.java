@@ -14,9 +14,9 @@ import java.util.Map;
 
 @Repository
 public class ConferenceRepository {
-    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO Conference values (?,?,?,?,?,?,?)";
-    public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM Conference WHERE name = ?";
-    public static final String SQL_CONFERENCE_SELECT_ALL = "SELECT * FROM Conference";
+    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO zombie_conference values (?,?,?,?,?,?,?)";
+    public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM zombie_conference WHERE name = ?";
+    public static final String SQL_CONFERENCE_SELECT_ALL = "SELECT * FROM zombie_conference";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
