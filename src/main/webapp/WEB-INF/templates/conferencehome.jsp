@@ -1,14 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<meta http-equiv="REFRESH" content="1;url=${pageContext.request.contextPath}/zombie/admin/conference/home">
 <html>
   <body>
      <h1>
         <center>CONFERENCE INFORMATION</center>
      </h1>
          <form commandName="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/createConference" method = "GET">
-      <input type="submit" value="CLICK TO CREATE CONFERENCE" />
+      <input type="submit" value="CLICK TO CREATE CONFERENCE"/>
 
 
       <t:wrapper>
