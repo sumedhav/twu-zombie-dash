@@ -11,14 +11,7 @@ pageEncoding="ISO-8859-1"%>
 <html>
     <head>
         <title>Zombie Dash : Welcome</title>
-        <script type="text/javascript">
-        function invalidateSession()
-        {
-            session = request.getSession();
-            session.removeAttribute("username");
-            session.invalidate();
-         }
-        </script>
+
     </head>
     <body>
         <h1> Zombie Dash <h1>
@@ -28,21 +21,21 @@ pageEncoding="ISO-8859-1"%>
                 <td style="width:1000px">
                     <table>
                         <tr>
-                            <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/home">CONFERENCES</a></td>
+                            <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/home" id="conferences">CONFERENCES</a></td>
                         </tr>
                         <tr>
-                            <td><a href="${pageContext.request.contextPath}/zombie/admin/users/">USERS</a></td>
+                            <td><a href="${pageContext.request.contextPath}/zombie/admin/users/" id="users">USERS</a></td>
                         </tr>
                     </table>
                 </td>
                 <td>
                     <table>
                         <tr>
-                            <td><a href="" onclick = "invalidateSession()">LOG OUT</a>
+                            <td><a href= "${pageContext.request.contextPath}/zombie/login/Logout" id="logout">LOG OUT</a>
                             </td>
                         </tr>
                         <tr>
-                            <td><a href="">CHANGE PASSWORD</a></td>
+                            <td><a href="" id="changepassword">CHANGE PASSWORD</a></td>
                         </tr>
                     </table>
                 </td>

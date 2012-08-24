@@ -7,8 +7,8 @@
         <center>Login</center>
     </h1>
     <form name="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
-        <div style="color:red; text-align:center">
-        ${messageToBeDisplayed}
+        <div style="color:red; text-align:center" id="messagetobedisplayed">
+            ${messageToBeDisplayed}
         </div>
         <table align="center">
             <tr>

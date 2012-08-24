@@ -20,7 +20,7 @@
           </ul>
       </t:wrapper>
 
- <a href="${pageContext.request.contextPath}/zombie/login/LoginForm">Back</a>
+ <a href="${pageContext.request.contextPath}/zombie/login/HomePage">Back</a>
 
   </body>
 </html>
