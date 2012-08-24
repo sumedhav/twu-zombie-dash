@@ -11,14 +11,6 @@ pageEncoding="ISO-8859-1"%>
 <html>
     <head>
         <title>Zombie Dash : Welcome</title>
-        <script type="text/javascript">
-        function invalidateSession()
-        {
-            session = request.getSession();
-            session.removeAttribute("username");
-            session.invalidate();
-         }
-        </script>
     </head>
     <body>
         <h1> Zombie Dash <h1>
@@ -38,7 +30,7 @@ pageEncoding="ISO-8859-1"%>
                 <td>
                     <table>
                         <tr>
-                            <td><a href="" onclick = "invalidateSession()">LOG OUT</a>
+                            <td><a href="">LOG OUT</a>
                             </td>
                         </tr>
                         <tr>
