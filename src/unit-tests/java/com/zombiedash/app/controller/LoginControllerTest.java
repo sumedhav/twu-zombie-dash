@@ -38,7 +38,7 @@ public class LoginControllerTest {
         ModelAndView modelAndView = new LoginController(userService).processForm("admin", "Welcome1", new MockHttpServletRequest());
         RedirectView redirectView = (RedirectView)modelAndView.getView();
 
-        assertThat(redirectView.getUrl() ,equalTo("/zombie/login/HomePage"));
+        assertThat(redirectView.getUrl() ,equalTo("HomePage"));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class LoginControllerTest {
         ModelAndView modelAndView = new LoginController(userService).processForm("admin1","Welcome1", new MockHttpServletRequest());
         RedirectView redirectView = (RedirectView) modelAndView.getView();
 
-        assertThat(redirectView.getUrl(), equalTo("/zombie/login/LoginForm"));
+        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class LoginControllerTest {
         ModelAndView modelAndView = new LoginController(userService).redirectToLoginFormOnClickingLogout(new MockHttpServletRequest());
         RedirectView redirectView = (RedirectView) modelAndView.getView();
 
-        assertThat(redirectView.getUrl(), equalTo("/zombie/login/LoginForm"));
+        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
     }
 
     @Test
@@ -73,6 +73,6 @@ public class LoginControllerTest {
         ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists(request, new MockHttpServletResponse());
         RedirectView redirectView = (RedirectView) modelAndView.getView();
 
-        assertThat(redirectView.getUrl(), equalTo("/zombie/login/LoginForm"));
+        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
     }
 }
