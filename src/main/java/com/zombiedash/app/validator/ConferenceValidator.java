@@ -32,14 +32,13 @@ public class ConferenceValidator {
     return true;
   }
 
-  public boolean isValidDate(String startDate, String endDate, Map<String, String> model) {
+  public boolean isValidDate(String date, Map<String, String> model, String errorName) {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     dateFormat.setLenient(false);
     try {
-      return (null != dateFormat.parse(startDate)) &&
-          (null != dateFormat.parse(endDate));
+      return (null != dateFormat.parse(date));
     } catch (ParseException e) {
-      model.put("dateError", "Date must be in yyyy-MM-dd format");
+      model.put(errorName, "Date must be in yyyy-MM-dd format");
       return false;
     }
   }

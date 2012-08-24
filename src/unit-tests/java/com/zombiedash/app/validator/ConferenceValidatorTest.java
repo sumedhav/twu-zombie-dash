@@ -65,7 +65,7 @@ public class ConferenceValidatorTest {
   @Test
   public void invalidDatesShouldReturnFalse() {
     ConferenceValidator conferenceValidator = new ConferenceValidator();
-    boolean expectedTruthValue = conferenceValidator.isValidDate("monday","tuesday",new HashMap<String, String>());
+    boolean expectedTruthValue = conferenceValidator.isValidDate("monday",new HashMap<String, String>(), "dateError");
     assertThat(expectedTruthValue,is(equalTo(false)));
   }
 
@@ -73,15 +73,15 @@ public class ConferenceValidatorTest {
   public void invalidDatesShouldMutateModelParameterWithErrorString() {
     ConferenceValidator conferenceValidator = new ConferenceValidator();
     Map<String,String> model = new HashMap<String, String>();
-    conferenceValidator.isValidDate("monday","2012-03-04",model);
-    assertThat(model.size(),is(equalTo(1)));
+    conferenceValidator.isValidDate("2012-03-0",model, "dateError");
+    assertThat(model.size(), is(equalTo(1)));
     assertThat(model.get("dateError"), is(equalTo("Date must be in yyyy-MM-dd format")));
   }
 
   @Test
   public void validDatesShouldReturnTrue() {
     ConferenceValidator conferenceValidator = new ConferenceValidator();
-    boolean expectedTruthValue = conferenceValidator.isValidDate("2012-03-04", "2012-03-04", new HashMap<String, String>());
+    boolean expectedTruthValue = conferenceValidator.isValidDate("2012-03-04", new HashMap<String, String>(), "dateError");
     assertThat(expectedTruthValue, is(equalTo(true)));
   }
 }
