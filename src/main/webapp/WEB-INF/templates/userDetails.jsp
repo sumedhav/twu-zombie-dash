@@ -27,7 +27,7 @@
     </tr>
     <tr>
             <td><input type="button" value="Edit Details"/></td>
-            <td><input type="button" value="Delete User"/></td>
+            <td><input type="button" value="Delete User" onclick="location.href='${pageContext.request.contextPath}/zombie/admin/users/deleteuser/${User.userName}'"/></td>
             <td><input type="button" value="Back" onClick="javascript: history.go(-1)"/></td>
      </tr>
 </t:wrapper>

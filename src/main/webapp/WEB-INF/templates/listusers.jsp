@@ -11,7 +11,7 @@
     </tr>
     <c:forEach var="user" items="${Users}">
     <tr>
-        <td><a href="${pageContext.request.contextPath}/zombie/admin/users/${user.userName}"><c:out value="${user.name}"/></a></td>
+        <td><a href="${pageContext.request.contextPath}/zombie/admin/users/display/${user.userName}"><c:out value="${user.name}"/></a></td>
         <td><c:out value="${user.role}"/></td>
     </tr>
     </c:forEach>

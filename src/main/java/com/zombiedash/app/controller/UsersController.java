@@ -55,8 +55,22 @@ public class UsersController {
         return new ModelAndView("errorPage");
     }
 
-    @RequestMapping(value = "/{userName}")
+    @RequestMapping(value = "/display/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
         return new ModelAndView("userDetails", "User", userService.getUser(userName));
+    }
+
+    @RequestMapping(value = "/deleteuser/{username}", method = RequestMethod.GET)
+    public ModelAndView processDeleteUser(@PathVariable("username") String username) {
+        ModelAndView modelAndView ;
+
+        try{
+            userService.deleteUser(username);
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users");
+        }catch (Exception e){
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
+        }
+
+        return modelAndView;
     }
 }
