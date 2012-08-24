@@ -13,9 +13,8 @@ import java.util.List;
 
 @Repository
 public class QuestionRepository {
-    private static final String SELECT_ALL_QUESTIONS = "select * from Question";
-    private static final String SELECT_ALL_VALID_OPTIONS = "select option.question_id,option.text,option.correct  from Question,Option where question.Id = ? and question.Id=option.question_Id";
-    private static final String INSERT_QUESTIONS= "insert into question (id,text) values (?,?) ";
+    private static final String SELECT_ALL_QUESTIONS = "select * from zombie_question";
+    private static final String SELECT_ALL_VALID_OPTIONS = "select zombie_option.question_id,zombie_option.text,zombie_option.correct  from zombie_question,zombie_option where zombie_question.Id = ? and zombie_question.Id=zombie_option.question_Id";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -59,11 +58,11 @@ public class QuestionRepository {
     }
     private void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
-                "insert into Question (ID,Text) values(%d, '%s')", id, text));
+                "insert into zombie_question (ID,Text) values(%d, '%s')", id, text));
     }
 
     private void givenAnOptionFor(int questionId, int optionId, String text, boolean correct) {
-        jdbcTemplate.execute(String.format("insert into Option (id,question_id,text,correct) " +
+        jdbcTemplate.execute(String.format("insert into zombie_option (id,question_id,text,correct) " +
                 "values (%d, %d, '%s', %b)",
                 optionId, questionId, text, correct));
     }

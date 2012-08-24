@@ -14,10 +14,10 @@ import java.util.List;
 @Repository
 public class UserRepository {
     private JdbcTemplate jdbcTemplate;
-    private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM users where role = ?";
-    private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM users where username = ?";
-    private static final String RETRIEVE_ALL_USERS = "SELECT * FROM users";
-    private static final String INSERT_USER = "INSERT INTO users values (?,?,?,?,?)";
+    private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM zombie_users where role = ?";
+    private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM zombie_users where username = ?";
+    private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
+    private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
