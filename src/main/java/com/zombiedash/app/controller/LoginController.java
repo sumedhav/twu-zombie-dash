@@ -47,9 +47,9 @@ public class LoginController {
                 modelAndView.addObject("username",username);
                 HttpSession session = request.getSession(true);
                 session.setAttribute("username", username);
-                modelAndView.setView(new RedirectView("/zombie/login/HomePage"));
+                modelAndView.setView(new RedirectView("HomePage"));
             } catch (Exception e) {
-                modelAndView.setView(new RedirectView("/zombie/login/LoginForm"));
+                modelAndView.setView(new RedirectView("LoginForm"));
                 modelAndView.addObject("errorMessage", "Unauthorized");
                 messageToBeDisplayed = "You have entered an invalid Username or Password!!";
             } finally {
@@ -67,7 +67,7 @@ public class LoginController {
             modelAndView.setViewName("loginsuccess");
             return modelAndView;
         }
-        modelAndView.setView(new RedirectView("/zombie/login/LoginForm"));
+        modelAndView.setView(new RedirectView("LoginForm"));
         return modelAndView;
     }
 
@@ -76,7 +76,7 @@ public class LoginController {
         HttpSession session = request.getSession(true);
         session.invalidate();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new RedirectView("/zombie/login/LoginForm"));
+        modelAndView.setView(new RedirectView("LoginForm"));
         modelAndView.addObject("messageToBeDisplayed", "Logout");
         messageToBeDisplayed = "You have been logged out successfully!!";
         return modelAndView;
