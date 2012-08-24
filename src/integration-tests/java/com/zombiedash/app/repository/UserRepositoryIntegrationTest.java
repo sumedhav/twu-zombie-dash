@@ -2,6 +2,7 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,14 @@ public class UserRepositoryIntegrationTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Before
+    public void setUp() throws Exception {
+        jdbcTemplate.execute("DELETE zombie_users");
+    }
+
     @Test
     public void shouldCheckIfAdminUserIsRetrieved() throws Exception{
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         User adminUser = userRepository.retrieveAdminUser();
         assertTrue(adminUser.authenticate("admin", "Welcome1"));
@@ -32,6 +39,7 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void shouldRetrieveUser() {
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         User result = userRepository.retrieveUser("admin");
         assertThat(result, is(new User("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com")));
@@ -39,9 +47,12 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void shouldRetrieveAllUsers() {
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
         UserRepository userRepository = new UserRepository(jdbcTemplate);
         List<User> result = userRepository.retrieveAllUsers();
         assertThat(result.get(0), is(new User("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com")));
+        assertThat(result.get(1), is(new User("beta", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com")));
     }
 
     @Test

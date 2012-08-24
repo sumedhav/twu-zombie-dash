@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zombiedash.app.test.matchers.UserMatcher.isAUserWithUsername;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -56,9 +57,9 @@ public class UsersControllerTest {
     public void shouldCreateAnUser() {
         UsersController usersController = new UsersController(userService);
         ModelAndView modelAndView = usersController.createUserSubmit("designer", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService, times(1)).createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        verify(userService).createUser(argThat(isAUserWithUsername("designer")));
 
-        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/"));
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users"));
     }
 
     @Test
@@ -68,7 +69,26 @@ public class UsersControllerTest {
         ModelAndView modelAndView = usersController.createUserSubmit("", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
         verify(userService, times(1)).createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
 
-        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage/"));
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage"));
+    }
+
+    @Test
+    public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
+        UsersController usersController = new UsersController(userService);
+        ModelAndView modelAndView = usersController.showUserDetails("admin");
+        assertThat(modelAndView.getViewName(), is("userDetails"));
+    }
+
+    @Test
+    public void shouldRetrieveUserDetails() throws Exception {
+        User expectedUser = new User("admin", "password1", Role.ADMIN, "nick", "email@email.com");
+        when(userService.getUser(anyString())).thenReturn(expectedUser);
+
+        UsersController usersController = new UsersController(userService);
+        ModelAndView result = usersController.showUserDetails("admin");
+        User actualUser = (User) result.getModel().get("User");
+
+        assertThat(actualUser, is(expectedUser));
     }
 
 }

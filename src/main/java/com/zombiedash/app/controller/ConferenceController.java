@@ -64,13 +64,14 @@ public class ConferenceController {
     boolean validDataFlag = conferenceValidator.isValidNumber(conferenceMaxAttendees, model);
     validDataFlag &= conferenceValidator.isNotEmpty(conferenceName, conferenceTopic, conferenceDescription,
         conferenceVenue, conferenceStartDate, conferenceEndDate, conferenceMaxAttendees, model);
-    validDataFlag &= conferenceValidator.isValidDate(conferenceStartDate, conferenceEndDate, model);
+    validDataFlag &= conferenceValidator.isValidDate(conferenceStartDate, model, "startDateError");
+    validDataFlag &= conferenceValidator.isValidDate(conferenceEndDate, model, "endDateError");
 
     if (validDataFlag) {
       Conference conference = new Conference(conferenceName, conferenceTopic, conferenceDescription,
           conferenceVenue, conferenceStartDate, conferenceEndDate, Integer.parseInt(conferenceMaxAttendees));
       conferenceRepository.saveConference(conference);
-      return new ModelAndView("conferencehome");
+      return home();
     } else {
       return new ModelAndView("createconference", "model", model);
     }

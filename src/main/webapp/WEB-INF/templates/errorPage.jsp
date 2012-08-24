@@ -6,7 +6,7 @@
     <p align="center">Oops!! Something went wrong. Your last request could not be completed.</p>
     </div>
     <div>
-    <p align="center"><a href="${pageContext.request.contextPath}/zombie/admin/users/">Go Back To Users Page</a></p>
+    <p align="center"><a href="${pageContext.request.contextPath}/zombie/admin/users">Go Back To Users Page</a></p>
     </div>
 
 </t:wrapper>

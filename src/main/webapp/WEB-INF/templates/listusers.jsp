@@ -11,10 +11,10 @@
     </tr>
     <c:forEach var="user" items="${Users}">
     <tr>
-        <td><a href=""><c:out value="${user.name}"/></a></td>
+        <td><a href="${pageContext.request.contextPath}/zombie/admin/users/${user.userName}"><c:out value="${user.name}"/></a></td>
         <td><c:out value="${user.role}"/></td>
     </tr>
     </c:forEach>
     </table>
-    <input type="submit" value="Create User" onclick="location.href='create/'" />
+    <input type="submit" value="Create User" onclick="location.href='${pageContext.request.contextPath}/zombie/admin/users/create'" />
 </t:wrapper>
