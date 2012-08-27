@@ -2,6 +2,15 @@
 <html>
 <head>
 <title>Create Conference Page</title>
+<script type="text/javascript">
+
+    function confirmCancel() {
+        if(confirm("Are you sure you want to leave this page?")) {
+            location.replace("${pageContext.request.contextPath}/zombie/admin/conference/home");
+        }
+    }
+
+</script>
 
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
@@ -52,10 +61,11 @@
 					value="Save" />
 				</td>
 			</tr>
+            <td>
+                <input type="button" value="Cancel"
+                       onclick="return confirmCancel()"/>
+            </td>
 			<tr>
-				<td colspan='2'><input name="cancel" type="reset"
-				    value="Cancel"/>
-				</td>
 			</tr>
 		</table>
 

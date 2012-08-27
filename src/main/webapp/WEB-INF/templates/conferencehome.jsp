@@ -4,7 +4,7 @@
 <html>
   <body>
      <h1>
-        <center>CONFERENCE INFORMATION</center>
+        <center>Conference Information</center>
      </h1>
          <form commandName="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/createConference" method = "GET">
       <input type="submit" value="CLICK TO CREATE CONFERENCE"/>
@@ -13,9 +13,17 @@
       <t:wrapper>
           <h1>Conferences</h1>
           <ul>
-          <c:forEach var="conference" items="${Conferences}">
-          <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}">${conference}</a>
-          </c:forEach>
+              <ol>
+                  <c:forEach var="conference" items="${Conferences}">
+                      <div>
+                          <li>
+                          <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}">${conference}</a>
+                          </li>
+                      </div>
+
+                  </c:forEach>
+              </ol>
+
           </ul>
       </t:wrapper>
 

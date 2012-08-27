@@ -26,7 +26,7 @@ public class ConferenceValidator {
         startDate.isEmpty() ||
         endDate.isEmpty() ||
         maxAttendee.isEmpty()) {
-      model.put("errorString", "ALL FIELDS ARE COMPULSORY");
+      model.put("errorString", "All fields are compulsory");
       return false;
     }
     return true;

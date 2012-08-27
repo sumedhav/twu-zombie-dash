@@ -6,9 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +48,6 @@ public class ConferenceRepository {
     public List<Conference> showAllConferences() {
         List<Map<String,Object>> conferenceSQLCollection = jdbcTemplate.queryForList(SQL_CONFERENCE_SELECT_ALL);
         ArrayList<Conference> conferences = new ArrayList<Conference>();
-        SimpleDateFormat dateFormatYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
         for (Map<String, Object> resultRow : conferenceSQLCollection) {
             conferences.add(
                     new Conference(
@@ -58,8 +55,8 @@ public class ConferenceRepository {
                             (String) resultRow.get("topic"),
                             (String) resultRow.get("description"),
                             (String) resultRow.get("venue"),
-                            dateFormatYYYYMMDD.format((Date) resultRow.get("start_date")),
-                            dateFormatYYYYMMDD.format((Date) resultRow.get("end_date")),
+                            (String) resultRow.get("start_date"),
+                            (String) resultRow.get("end_date"),
                             (Integer) resultRow.get("max_attendee")));
         }
         return conferences;
