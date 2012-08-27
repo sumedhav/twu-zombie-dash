@@ -67,7 +67,7 @@ public class LoginController {
             modelAndView.setViewName("loginsuccess");
             return modelAndView;
         }
-        modelAndView.setView(new RedirectView("LoginForm"));
+        modelAndView=new ModelAndView("redirect:/zombie/login/LoginForm");
         return modelAndView;
     }
 
@@ -75,8 +75,7 @@ public class LoginController {
     public ModelAndView redirectToLoginFormOnClickingLogout(HttpServletRequest request ) {
         HttpSession session = request.getSession(true);
         session.invalidate();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setView(new RedirectView("LoginForm"));
+        ModelAndView modelAndView = new ModelAndView("redirect:/zombie/login/LoginForm");
         modelAndView.addObject("messageToBeDisplayed", "Logout");
         messageToBeDisplayed = "You have been logged out successfully!!";
         return modelAndView;
