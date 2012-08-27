@@ -75,4 +75,19 @@ public class UserTest {
         User user1 = new User("user", "Welcome1", Role.GAME_DESIGNER, "Name", "abcl@.com");
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowRuntimeExceptionIfUsernameHasWhitespaceInTheBeginning() throws Exception {
+        User user1 = new User(" user", "Welcome1", Role.GAME_DESIGNER, "Name", "abcl@abcl.com");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowRuntimeExceptionIfUsernameHasWhitespaceInTheMiddle() throws Exception {
+        User user2 = new User("us  er", "Welcome1", Role.GAME_DESIGNER, "Name", "abcl@abcl.com");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowRuntimeExceptionIfUsernameHasWhitespaceInTheMiddleAndEnd() throws Exception {
+        User user3 = new User("us  er ", "Welcome1", Role.GAME_DESIGNER, "Name", "abcl@abcl.com");
+    }
 }

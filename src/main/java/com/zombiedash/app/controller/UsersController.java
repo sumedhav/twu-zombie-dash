@@ -44,13 +44,17 @@ public class UsersController {
             userService.createUser(user);
             modelAndView = new ModelAndView("redirect:/zombie/admin/users");
         }
+        catch (IllegalArgumentException excp){
+            modelAndView = new ModelAndView("errorPage");
+            modelAndView.addObject("validationMessage", excp.getMessage());
+        }
         catch(Exception excp){
             modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/errorPage")
     public ModelAndView processError(){
         return new ModelAndView("errorPage");
     }
