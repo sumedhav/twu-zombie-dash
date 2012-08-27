@@ -59,7 +59,7 @@ public class ConferenceValidatorTest {
     Map<String, String> model = new HashMap<String, String>();
     conferenceValidator.isNotEmpty("", "", "", "", "", "", "", model);
     assertThat(model.size(), is(equalTo(1)));
-    assertThat(model.get("errorString"), is(equalTo("ALL FIELDS ARE COMPULSORY")));
+    assertThat(model.get("errorString"), is(equalTo("All fields are compulsory")));
   }
 
   @Test

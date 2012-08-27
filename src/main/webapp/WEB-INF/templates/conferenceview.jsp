@@ -7,7 +7,7 @@
     <link type="text/css" href="/static/css/main.css" rel="stylesheet">
 </head>
 <body>
-    <h2>CONFERENCE INFORMATION</h2>
+    <h2>Conference Information</h2>
     <table class="table">
         <tr>
             <th>Conference Name:</th>

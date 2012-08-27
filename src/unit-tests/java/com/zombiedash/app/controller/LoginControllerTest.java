@@ -50,9 +50,7 @@ public class LoginControllerTest {
     @Test
     public void shouldRedirectToLoginPageOnLogout() throws Exception{
         ModelAndView modelAndView = new LoginController(userService).redirectToLoginFormOnClickingLogout(new MockHttpServletRequest());
-        RedirectView redirectView = (RedirectView) modelAndView.getView();
-
-        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
+        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
     }
 
     @Test
@@ -68,8 +66,7 @@ public class LoginControllerTest {
     public void shouldRedirectToLoginPageIfSessionIsInValid() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists(request, new MockHttpServletResponse());
-        RedirectView redirectView = (RedirectView) modelAndView.getView();
 
-        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
+        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
     }
 }
