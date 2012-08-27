@@ -1,7 +1,6 @@
 package com.zombiedash.app.service;
 
 
-import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.repository.UserRepository;
 import org.junit.Test;
@@ -13,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -24,9 +24,13 @@ public class UserServiceTest {
 
     @Test
     public void shouldAuthenticateAndReturnUserForCorrectCredentials() throws Exception {
-        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        User user = mock(User.class);
+        given(userRepository.retrieveAdminUser()).willReturn(user);
+        given(user.authenticate("admin", "Welcome1")).willReturn(true);
+
         UserService userService = new UserService(userRepository);
-        assertNotNull(userService.authenticateAndReturnUser("admin", "Welcome1"));
+
+        assertThat(userService.authenticateAndReturnUser("admin", "Welcome1"), sameInstance(user));
     }
 
     @Test (expected = Exception.class)
@@ -53,34 +57,38 @@ public class UserServiceTest {
     @Test
     public void shouldListUsers() {
         List list = new ArrayList<User>();
-        list.add(new User("admin", "password1"));
-        list.add(new User("user", "password1"));
+        User admin = mock(User.class);
+        User user = mock(User.class);
+
+        list.add(admin);
+        list.add(user);
         given(userRepository.retrieveAllUsers()).willReturn(list);
 
         UserService userService = new UserService(userRepository);
         List<User> result = userService.getAllUsers();
 
-        assertThat(result.get(0), is(new User("admin", "password1")));
-        assertThat(result.get(1), is(new User("user", "password1")));
+        assertThat(result.get(0), sameInstance(admin));
+        assertThat(result.get(1), sameInstance(user));
     }
 
     @Test
     public void shouldGetUser() {
-        given(userRepository.retrieveUser("user")).willReturn(new User("user", "password1"));
+        User user = mock(User.class);
+        given(userRepository.retrieveUser("user")).willReturn(user);
 
         UserService userService = new UserService(userRepository);
         User result = userService.getUser("user");
 
-        assertThat(result, is(new User("user", "password1")));
+        assertThat(result, sameInstance(user));
     }
 
     @Test
     public void shouldCreateNewUser() {
-        User user = new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com");
+        User user = mock(User.class);
         given(userRepository.createUser(user)).willReturn(true);
 
         UserService userService = new UserService(userRepository);
-        Boolean userCreated = userService.createUser(new User("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        Boolean userCreated = userService.createUser(user);
 
         assertThat(userCreated, is(true));
     }

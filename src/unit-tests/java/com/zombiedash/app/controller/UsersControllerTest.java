@@ -1,8 +1,10 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.error.ValidationMessagesMap;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
+import org.hamcrest.core.IsSame;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,22 +15,25 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zombiedash.app.test.matchers.UserMatcher.isAUserWithUsername;
+import static com.zombiedash.app.test.matchers.UserMatcher.isAUserWith;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsersControllerTest {
     @Mock
     UserService userService;
+    @Mock   @SuppressWarnings("unused")
+    private ValidationMessagesMap validationMessagesMap;
     private UsersController usersController;
 
     @Before
     public void setUp() throws Exception {
-        usersController = new UsersController(userService);
+        usersController = new UsersController(userService, validationMessagesMap);
     }
 
     @Test
@@ -59,19 +64,30 @@ public class UsersControllerTest {
 
     @Test
     public void shouldCreateAnUser() {
-        ModelAndView modelAndView = usersController.createUserSubmit("designer", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService).createUser(argThat(isAUserWithUsername("designer")));
+        ModelAndView modelAndView = usersController.createUser("designer", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
+        verify(userService).createUser(argThat(isAUserWith("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")));
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users"));
     }
 
     @Test
     public void shouldDisplayErrorPageIfCredentialValidationFails() {
-        doThrow(new RuntimeException()).when(userService).createUser((User) anyObject());
-        ModelAndView modelAndView = usersController.createUserSubmit("", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
-        verify(userService, times(1)).createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com"));
+        doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")));
+        ModelAndView modelAndView = usersController.createUser("", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage"));
+    }
+
+    @Test
+    public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid(){
+        when(validationMessagesMap.getMessageFor("invalidUserName")).thenReturn("invalid user name");
+        ModelAndView modelAndView = usersController.createUser(" ", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
+        assertThat(modelAndView.getViewName(), is(equalTo("createuser")));
+        assertThat(modelAndView.getModel().get("validationMessage").toString(), is("invalid user name"));
+        assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
+        assertThat(modelAndView.getModel().get("model").toString(),
+        is(equalTo("{username= , password=password1, role=GameDesigner, name=MR.Right, email=right@gmail.com}")));
+
     }
 
     @Test
@@ -82,18 +98,17 @@ public class UsersControllerTest {
 
     @Test
     public void shouldRetrieveUserDetails() throws Exception {
-        User expectedUser = new User("admin", "password1", Role.ADMIN, "nick", "email@email.com");
-        when(userService.getUser(anyString())).thenReturn(expectedUser);
+        User expectedUser = mock(User.class);
+        when(userService.getUser("admin")).thenReturn(expectedUser);
 
         ModelAndView result = usersController.showUserDetails("admin");
-        User actualUser = (User) result.getModel().get("User");
 
-        assertThat(actualUser, is(expectedUser));
+        assertThat((User) result.getModel().get("User"), IsSame.sameInstance(expectedUser));
     }
 
     @Test
     public void shouldRedirectToDeleteLogicWhenDeleteButtonIsPressed() throws Exception {
-        usersController.processDeleteUser(anyString());
-        verify(userService).deleteUser(anyString());
+        usersController.processDeleteUser("test.username");
+        verify(userService).deleteUser("test.username");
     }
 }
