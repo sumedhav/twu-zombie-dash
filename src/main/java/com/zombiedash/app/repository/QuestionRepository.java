@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class QuestionRepository {
     private static final String SELECT_ALL_QUESTIONS = "select * from zombie_question";
-    private static final String SELECT_ALL_VALID_OPTIONS = "select zombie_option.question_id,zombie_option.text,zombie_option.correct  from zombie_question,zombie_option where zombie_question.Id = ? and zombie_question.Id=zombie_option.question_Id";
+    private static final String SELECT_ALL_VALID_OPTIONS = "select zombie_option.question_id,zombie_option.text,zombie_option.correct from zombie_question,zombie_option where zombie_question.Id = ? and zombie_question.Id=zombie_option.question_Id";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -28,7 +28,14 @@ public class QuestionRepository {
         return jdbcTemplate.query(SELECT_ALL_VALID_OPTIONS,arg, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-                Boolean correct=resultSet.getString("correct").equalsIgnoreCase("true")?true:false;
+                Boolean correct;
+                String correctnessValue=resultSet.getString("correct");
+                if(correctnessValue.equalsIgnoreCase("true")||correctnessValue.equalsIgnoreCase("t")){
+                    correct=true;
+                }
+                else {
+                    correct=false;
+                }
                 return new Option(Integer.parseInt(resultSet.getString("question_Id")),
                         resultSet.getString("Text"), correct);
             }
