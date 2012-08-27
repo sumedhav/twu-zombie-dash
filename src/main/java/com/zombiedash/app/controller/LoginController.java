@@ -47,9 +47,9 @@ public class LoginController {
                 modelAndView.addObject("username",username);
                 HttpSession session = request.getSession(true);
                 session.setAttribute("username", username);
-                modelAndView.setView(new RedirectView("HomePage"));
+                modelAndView = new ModelAndView("redirect:/zombie/login/HomePage");
             } catch (Exception e) {
-                modelAndView.setView(new RedirectView("LoginForm"));
+                modelAndView = new ModelAndView("redirect:/zombie/login/LoginForm");
                 modelAndView.addObject("errorMessage", "Unauthorized");
                 messageToBeDisplayed = "You have entered an invalid Username or Password!!";
             } finally {
