@@ -1,12 +1,17 @@
 package com.zombiedash.app.web.page.tests;
 
 
+import com.example.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -36,6 +41,28 @@ public class TriviaGamePageTest {
         assertThat(elements.get(existingQnCount + 1).getText(), equalTo("Is it lunch time?"));
     }
 
+    @Ignore
+    @Test
+    public void shouldGoTOHomePageWhenClickedOkOnAlertBox() {
+
+        WebServer webServer=new WebServer(1234);
+        WebDriver webDriver =(WebDriver) new FirefoxDriver();
+        try {
+            webServer.start();
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        webDriver.get("http://localhost:1234/zombie/conference/user/game");
+        assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+
+        WebElement cancel = webDriver.findElement(By.name("cancel"));
+        cancel.click();
+        Alert alert=webDriver.switchTo().alert();
+        alert.accept();
+        assertThat(webDriver.getTitle(), is("Customer Home"));
+        webServer.stop();
+    }
+
     private void initializeQuestionsAndOptions() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         testDataTemplate = new TriviaGameTestDataCreationTemplate(jdbcTemplate);
@@ -54,6 +81,4 @@ public class TriviaGamePageTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         return new TriviaGameTestDataCreationTemplate(jdbcTemplate).getNumberOfExistingQuestionsInDatabase();
     }
-
-
 }

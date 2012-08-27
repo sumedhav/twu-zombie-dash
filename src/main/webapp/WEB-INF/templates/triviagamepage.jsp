@@ -49,11 +49,11 @@
       </table>
     </c:forEach>
     <div>
-      <input type="submit" value="SUBMIT" />
+      <input type="submit" value="SUBMIT" name="submit"/>
     </div>
     <div>
       <input type="button" value="CANCEL"
-      onclick="return confirmCancel()" />
+      onclick="return confirmCancel()" name="cancel"/>
     </div>
   </form>
 </body>
