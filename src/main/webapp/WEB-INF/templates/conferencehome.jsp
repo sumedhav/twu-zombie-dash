@@ -13,9 +13,17 @@
       <t:wrapper>
           <h1>Conferences</h1>
           <ul>
-          <c:forEach var="conference" items="${Conferences}">
-          <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}">${conference}</a>
-          </c:forEach>
+              <ol>
+                  <c:forEach var="conference" items="${Conferences}">
+                      <div>
+                          <li>
+                          <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}">${conference}</a>
+                          </li>
+                      </div>
+
+                  </c:forEach>
+              </ol>
+
           </ul>
       </t:wrapper>
 
