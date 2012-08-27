@@ -1,0 +1,37 @@
+div {
+    margin-top: 1%;
+
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    width: auto;
+    border:2px solid;
+    padding: 2px 2px;
+    
+}
+
+h1, h3{
+    margin-left: 5%;
+}
+
+#Logout{
+    position: absolute;
+    left:70%;
+    top:10%;    
+}
+
+#Conferences, #Users{
+   position: relative;
+   left:5%;
+   top:5em;
+   
+}
+
+#Users{
+    margin-top: 1em;
+}    
+    
+
+

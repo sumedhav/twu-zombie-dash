@@ -27,7 +27,7 @@ public class LoginLogoutTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
 
-        WebElement logoutElement = browser.findElement(By.id("logout"));
+        WebElement logoutElement = browser.findElement(By.id("Logout"));
         logoutElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));

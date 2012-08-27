@@ -11,34 +11,20 @@ pageEncoding="ISO-8859-1"%>
 <html>
     <head>
         <title>Zombie Dash : Welcome</title>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/homePage.css" />
     </head>
     <body>
         <h1> Zombie Dash <h1>
         <h3> Welcome ${username} !!</h3>
-        <table>
-            <tr>
-                <td style="width:1000px">
-                    <table>
-                        <tr>
-                            <td><a href="${pageContext.request.contextPath}/zombie/admin/conference/home" id="conferences">CONFERENCES</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="${pageContext.request.contextPath}/zombie/admin/users/" id="users">USERS</a></td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <tr>
-                            <td><a href= "${pageContext.request.contextPath}/zombie/login/Logout" id="logout">LOG OUT</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="" id="changepassword">CHANGE PASSWORD</a></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+        <div>
+            <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/zombie/login/Logout" >Logout</a>
+        </div>
+        <div>
+            <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home">Conferences</a>
+        </div>
+        <div>
+            <a name="Users" id="Users" href="${pageContext.request.contextPath}/zombie/admin/users/" > Users </a>
+        </div>
 
     </body>
 </html>
