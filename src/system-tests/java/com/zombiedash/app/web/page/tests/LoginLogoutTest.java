@@ -32,7 +32,7 @@ public class LoginLogoutTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
 
-        WebElement messageElement = browser.findElement(By.id("messagetobedisplayed"));
+        WebElement messageElement = browser.findElement(By.id("message_to_be_displayed"));
 
         assertThat(messageElement.getText(), is("You have been logged out successfully!!"));
 
