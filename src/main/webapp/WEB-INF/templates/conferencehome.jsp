@@ -4,7 +4,7 @@
 <html>
   <body>
      <h1>
-        <center>CONFERENCE INFORMATION</center>
+        <center>Conference Information</center>
      </h1>
          <form commandName="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/createConference" method = "GET">
       <input type="submit" value="CLICK TO CREATE CONFERENCE"/>
