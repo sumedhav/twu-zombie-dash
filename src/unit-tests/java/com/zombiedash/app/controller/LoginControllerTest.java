@@ -36,26 +36,21 @@ public class LoginControllerTest {
         User user = mock(User.class);
         given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
         ModelAndView modelAndView = new LoginController(userService).processForm("admin", "Welcome1", new MockHttpServletRequest());
-        RedirectView redirectView = (RedirectView)modelAndView.getView();
 
-        assertThat(redirectView.getUrl() ,equalTo("HomePage"));
+        assertThat(modelAndView.getViewName() ,equalTo("redirect:/zombie/login/HomePage"));
     }
 
     @Test
     public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated() throws Exception{
         given(userService.authenticateAndReturnUser(anyString(), anyString())).willThrow(Exception.class);
         ModelAndView modelAndView = new LoginController(userService).processForm("admin1","Welcome1", new MockHttpServletRequest());
-        RedirectView redirectView = (RedirectView) modelAndView.getView();
-
-        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
+        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
     }
 
     @Test
     public void shouldRedirectToLoginPageOnLogout() throws Exception{
         ModelAndView modelAndView = new LoginController(userService).redirectToLoginFormOnClickingLogout(new MockHttpServletRequest());
-        RedirectView redirectView = (RedirectView) modelAndView.getView();
-
-        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
+        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
     }
 
     @Test
@@ -71,8 +66,7 @@ public class LoginControllerTest {
     public void shouldRedirectToLoginPageIfSessionIsInValid() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists(request, new MockHttpServletResponse());
-        RedirectView redirectView = (RedirectView) modelAndView.getView();
 
-        assertThat(redirectView.getUrl(), equalTo("LoginForm"));
+        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
     }
 }
