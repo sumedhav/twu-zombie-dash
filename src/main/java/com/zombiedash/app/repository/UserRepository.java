@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class UserRepository {
     private JdbcTemplate jdbcTemplate;
-    private static final String RETRIEVE_USER_ROW = "SELECT username, password FROM zombie_users where role = ?";
+    private static final String RETRIEVE_USER_ROW = "SELECT * FROM zombie_users where role = ?";
     private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM zombie_users where username = ?";
     private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
     private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
@@ -26,44 +26,17 @@ public class UserRepository {
 
     public User retrieveAdminUser() throws Exception{
         Object[] adminRoleArg = new Object[]{0};
-        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_ROW, adminRoleArg, new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-
-                return new User(resultSet.getString("username"),
-                        resultSet.getString("password"));
-            }
-        });
+        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_ROW, adminRoleArg, userMapper());
         return userList.get(0);
     }
 
     public List<User> retrieveAllUsers() {
-        return jdbcTemplate.query(RETRIEVE_ALL_USERS, new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-
-                return new User(resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        Role.generateRole(resultSet.getString("role")),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"));
-            }
-        });
+        return jdbcTemplate.query(RETRIEVE_ALL_USERS, userMapper());
     }
 
     public User retrieveUser(String username) {
         Object[] arg = new Object[]{username};
-        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-
-                return new User(resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        Role.generateRole(resultSet.getString("role")),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"));
-            }
-        });
+        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
         return userList.get(0);
     }
 
@@ -82,5 +55,19 @@ public class UserRepository {
     public void deleteUser(String username){
         if(username.equals("admin")) throw new RuntimeException("Cannot Delete Admin user.");
         jdbcTemplate.execute("DELETE FROM zombie_users WHERE username = '" + username + "'");
+    }
+
+    private RowMapper userMapper() {
+        return new RowMapper() {
+            @Override
+            public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+
+                return new User(resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        Role.generateRole(resultSet.getString("role")),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"));
+            }
+        };
     }
 }
