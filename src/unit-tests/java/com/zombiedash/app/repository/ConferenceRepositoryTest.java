@@ -65,15 +65,14 @@ public class ConferenceRepositoryTest {
     when(jdbcTemplate.queryForList(ConferenceRepository.SQL_CONFERENCE_SELECT_ALL)).thenAnswer(new Answer<List<Map<String, Object>>>() {
       @Override
       public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
         HashMap<String,Object> firstResult = new HashMap<String, Object>();
         firstResult.put("name", "Java");
         firstResult.put("topic","Java");
         firstResult.put("description","Java");
         firstResult.put("venue","here");
-        firstResult.put("start_date", dateFormat.parse("2012-06-07"));
-        firstResult.put("end_date", dateFormat.parse("2012-06-07"));
+        firstResult.put("start_date","2012-06-07");
+          firstResult.put("end_date","2012-06-07");
         firstResult.put("max_attendee",1);
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();
@@ -81,8 +80,8 @@ public class ConferenceRepositoryTest {
         secondResult.put("topic", "Java");
         secondResult.put("description", "Java");
         secondResult.put("venue", "here");
-        secondResult.put("start_date", dateFormat.parse("2012-06-07"));
-        secondResult.put("end_date", dateFormat.parse("2012-06-07"));
+        secondResult.put("start_date","2012-06-07");
+        secondResult.put("end_date","2012-06-07");
         secondResult.put("max_attendee", 1);
         resultBlock.add(secondResult);
         return resultBlock;
