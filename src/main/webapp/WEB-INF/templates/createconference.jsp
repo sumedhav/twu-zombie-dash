@@ -23,12 +23,12 @@
             </tr>
             <tr>
                 <td>Start Date:</td>
-                <td><input type='text' name='conf_start_date' value=${model.startDate}> <FONT color="red">${model.dateError}</FONT>
+                <td><input type='text' name='conf_start_date' value=${model.startDate}> <FONT color="red">${model.startDateError}</FONT>
                 </td>
             </tr>
             <tr>
                 <td>End Date:</td>
-                <td><input type='text' name='conf_end_date' value=${model.endDate}> <FONT color="red">${model.dateError}</FONT>
+                <td><input type='text' name='conf_end_date' value=${model.endDate}> <FONT color="red">${model.endDateError}</FONT>
                 </td>
             </tr>
             <tr>

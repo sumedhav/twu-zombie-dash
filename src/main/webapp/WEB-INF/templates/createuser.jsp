@@ -6,7 +6,7 @@
     <div id="errorMessageDiv">
     ${errorMessage}
     </div>
-    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create/submit/">
+    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create/submit">
     <p>Username: <input name="username" type="text"  /> </p>
     <p>Password: <input name="password" type="text"  /> </p>
     <p>Name: <input name="name" type="text"  /> </p>

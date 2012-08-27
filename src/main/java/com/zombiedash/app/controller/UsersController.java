@@ -5,13 +5,14 @@ import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/admin/users/")
+@RequestMapping("/admin/users")
 public class UsersController {
 
     private UserService userService;
@@ -26,12 +27,12 @@ public class UsersController {
         return new ModelAndView("listusers", "Users", userService.getAllUsers());
     }
 
-    @RequestMapping(value = "create/")
+    @RequestMapping(value = "/create")
     public ModelAndView createUser() {
         return new ModelAndView("createuser");
     }
 
-    @RequestMapping(value = "create/submit/", method = RequestMethod.POST)
+    @RequestMapping(value = "/create/submit", method = RequestMethod.POST)
     public ModelAndView createUserSubmit(@RequestParam("username") String username,
                                          @RequestParam("password") String password,
                                          @RequestParam("role") String role,
@@ -41,18 +42,35 @@ public class UsersController {
         try{
             User user = new User(username, password, Role.generateRole(role), name, email);
             userService.createUser(user);
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users/");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users");
         }
         catch(Exception excp){
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage/");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/errorPage/", method = RequestMethod.GET)
+    @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
     public ModelAndView processError(){
         return new ModelAndView("errorPage");
     }
 
+    @RequestMapping(value = "/display/{userName}")
+    public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
+        return new ModelAndView("userDetails", "User", userService.getUser(userName));
+    }
 
+    @RequestMapping(value = "/deleteuser/{username}", method = RequestMethod.GET)
+    public ModelAndView processDeleteUser(@PathVariable("username") String username) {
+        ModelAndView modelAndView ;
+
+        try{
+            userService.deleteUser(username);
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users");
+        }catch (Exception e){
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
+        }
+
+        return modelAndView;
+    }
 }
