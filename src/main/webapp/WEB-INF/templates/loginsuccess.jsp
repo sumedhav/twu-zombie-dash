@@ -12,7 +12,7 @@ pageEncoding="ISO-8859-1"%>
     <head>
         <title>Zombie Dash : Welcome</title>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/homePage.css" />
-        <link type="text/css" href="${pageContext.request.contextPath}/static/css/font.css" rel="stylesheet">
+        <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
     </head>
     <body>
         <h1> Zombie Dash <h1>
