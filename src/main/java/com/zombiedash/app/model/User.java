@@ -12,7 +12,7 @@ public class User implements java.io.Serializable {
     }
 
     public User(String userName, String password, Role userRole, String name, String email) {
-        if(userName.matches("([a-zA-Z0-9]*\\s[a-zA-Z0-9]*)+")) throw new IllegalArgumentException("invalidUserName");
+        if(!userName.matches("([a-zA-Z0-9]){5,40}")) throw new IllegalArgumentException("invalidUserName");
         if(!password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$")) throw new IllegalArgumentException("invalidPassword");
         if(!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) throw  new IllegalArgumentException("invalidEmail");
         this.userName = userName;

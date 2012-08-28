@@ -71,11 +71,11 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void shouldDisplayErrorPageIfCredentialValidationFails() {
-        doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")));
-        ModelAndView modelAndView = usersController.createUser("", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
+    public void shouldDisplayErrorPageForUnExpectedException() {
+        doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", "password1", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")));
+        ModelAndView modelAndView = usersController.createUser("username", "password1", "GameDesigner", "MR.Right", "right@gmail.com");
 
-        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/errorPage"));
+        assertThat(modelAndView.getViewName(), is("errorPage"));
     }
 
     @Test

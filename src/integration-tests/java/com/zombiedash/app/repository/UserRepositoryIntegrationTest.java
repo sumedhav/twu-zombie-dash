@@ -52,10 +52,10 @@ public class UserRepositoryIntegrationTest {
     @Test
     public void shouldRetrieveAllUsers() {
         jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
-        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta123', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
         List<User> result = userRepository.retrieveAllUsers();
         assertThat(result.get(0), isAUserWith("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com"));
-        assertThat(result.get(1), isAUserWith("beta", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
+        assertThat(result.get(1), isAUserWith("beta123", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
     }
 
     @Test
@@ -68,15 +68,10 @@ public class UserRepositoryIntegrationTest {
 
     @Test
     public void shouldLookUpAuthenticationCredentialsAndReturnUsernameIfFound() throws Exception {
-        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
-        User actualUser = userRepository.getUser("beta", "password1");
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta123', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
+        User actualUser = userRepository.getUser("beta123", "password1");
 
-        assertThat(actualUser, isAUserWith("beta", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
-    }
-
-    @Test(expected = DataIntegrityViolationException.class)
-    public void shouldNotAllowEmptyUserName(){
-        userRepository.createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
+        assertThat(actualUser, isAUserWith("beta123", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
     }
 
     @Test
