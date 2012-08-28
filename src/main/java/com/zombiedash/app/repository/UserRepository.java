@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
+
 @Repository
 public class UserRepository {
     private JdbcTemplate jdbcTemplate;
@@ -25,23 +27,18 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public User retrieveAdminUser() throws Exception{
-        Object[] adminRoleArg = new Object[]{0};
-        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_ROW, adminRoleArg, userMapper());
-        return userList.get(0);
-    }
-
     public List<User> retrieveAllUsers() {
         return jdbcTemplate.query(RETRIEVE_ALL_USERS, userMapper());
     }
 
     public User getUser(String username){
         List<User> userList = retrieveAllUsersWithUserName(username);
+        if(userList.size() == 0) throw new RuntimeException("Username not found");
         return userList.get(0);
     }
 
     public User getUser(String username, String password) throws Exception {
-        Object[] arg = new Object[]{username, password};
+        Object[] arg = new Object[]{username, md5Hex(password)};
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
         if(userList.size() == 0) throw new Exception("Invalid user credentials");
         return userList.get(0);
@@ -52,10 +49,10 @@ public class UserRepository {
         return jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
     }
 
-    public Boolean createUser(User user){
+    public Boolean createUser(User user, String password){
         Integer result = jdbcTemplate.update(INSERT_USER,
                 user.getUserName(),
-                user.getPassword(),
+                md5Hex(password),
                 user.getRoleVal(),
                 user.getName(),
                 user.getEmail()
@@ -75,7 +72,6 @@ public class UserRepository {
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
                 return new User(resultSet.getString("username"),
-                        resultSet.getString("password"),
                         Role.generateRole(resultSet.getString("role")),
                         resultSet.getString("name"),
                         resultSet.getString("email"));
@@ -83,8 +79,8 @@ public class UserRepository {
         };
     }
 
-    public boolean userNameExists(User user) {
-        List<User> users = retrieveAllUsersWithUserName(user.getUserName());
+    public boolean userNameExists(String username) {
+        List<User> users = retrieveAllUsersWithUserName(username);
         return users.size()!=0;
     }
 }

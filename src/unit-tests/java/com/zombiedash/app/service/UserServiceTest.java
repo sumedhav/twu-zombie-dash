@@ -88,10 +88,10 @@ public class UserServiceTest {
     @Test
     public void shouldCreateNewUser() {
         User user = mock(User.class);
-        given(userRepository.createUser(user)).willReturn(true);
+        given(userRepository.createUser(user, "password1")).willReturn(true);
 
         UserService userService = new UserService(userRepository);
-        Boolean userCreated = userService.createUser(user);
+        Boolean userCreated = userService.createUser(user, "password1");
 
         assertThat(userCreated, is(true));
     }
@@ -99,10 +99,11 @@ public class UserServiceTest {
     @Test (expected = IllegalArgumentException.class)
     public void shouldNotCreateUserIfUserAlreadyExists() throws Exception {
         User user = mock(User.class);
-        given(userRepository.userNameExists(user)).willReturn(true);
+        given(user.getUserName()).willReturn("username");
+        given(userRepository.userNameExists("username")).willReturn(true);
 
         UserService userService = new UserService(userRepository);
-        userService.createUser(user);
+        userService.createUser(user, "password1");
         thrown.expectMessage("userNameAlreadyExists");
     }
 }
