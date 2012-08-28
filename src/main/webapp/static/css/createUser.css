@@ -34,6 +34,10 @@ form div{
 }
 
 #cancel{
+    text-decoration:none;
+    background:none;
     margin-right:30%;
-    padding:0 0.5em
+    font-size:16px;
+    border: 2px solid;
+    padding:0 0.5em;
 }
