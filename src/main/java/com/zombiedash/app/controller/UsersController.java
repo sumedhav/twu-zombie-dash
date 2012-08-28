@@ -42,10 +42,10 @@ public class UsersController {
 
     @RequestMapping(value = "/create", method = POST)
     public ModelAndView createUser(@RequestParam("username") String username,
-                                   @RequestParam("password") String password,
                                    @RequestParam("role") String role,
                                    @RequestParam("name") String name,
-                                   @RequestParam("email") String email) {
+                                   @RequestParam("email") String email,
+                                   @RequestParam("password") String password) {
         ModelAndView modelAndView;
 
         ModelMap modelMap  = new ModelMap();
@@ -56,8 +56,9 @@ public class UsersController {
         modelMap.put("email", email);
 
         try{
-            User user = new User(username, password, Role.generateRole(role), name, email);
-            userService.createUser(user);
+            User user = new User(username, Role.generateRole(role), name, email);
+            if(!password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$")) throw new IllegalArgumentException("invalidPassword");
+            userService.createUser(user, password);
             modelAndView = new ModelAndView("redirect:/zombie/admin/users");
         }
         catch (IllegalArgumentException exception){

@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>Zombie Dash : Login</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/loginPage.css" />
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/loginPage.css" />
 </head>
 <body onload='document.loginForm.Username.focus();'>
     <h1>

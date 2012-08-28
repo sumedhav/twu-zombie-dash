@@ -1,0 +1,35 @@
+h3{
+    margin-left:5%;
+}
+
+table{
+    margin-left:5%;
+}
+
+td{
+    padding-right:20%;
+}
+
+#edit_details{
+    margin-left:3%;
+    padding:0 0.5em;
+}
+
+#delete_user{
+    margin-left:3%;
+    padding:0 0.5em;
+}
+
+#back_user_details{
+    margin-left:3%;
+    width:10em;
+    padding: 0 2em;
+}
+
+#edit_delete_back_buttons{
+    text-align:center;
+    width:30em;
+    float:right;
+    margin-top:5%;
+    margin-right:30%;
+}

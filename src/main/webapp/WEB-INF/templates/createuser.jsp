@@ -5,8 +5,8 @@
 <html>
 <head>
     <title>Zombie Dash : Create User</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 </head>
 <body>
@@ -45,7 +45,7 @@
             </select>
         </div>
 
-        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel(${pageContext.request.contextPath})" />
+        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}')" />
         <input id="submit" name="submit" type="submit" value="Save" />
     </form>
 </body>

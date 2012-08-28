@@ -8,11 +8,7 @@ ul{
 #conference_creation{
     display:block;
     margin:5% 5%;
-    border: 2px solid;
-    text-decoration: none;
-    color:black;
     width:15em;
-    text-align:center;
 }
 
 #existing_conferences{
@@ -21,18 +17,13 @@ ul{
 }
 
 #existing_conference_name{
-    text-decoration:none;
-    color:black;
+    border:none;
     display:block;
     margin-top:3%;
 }
 
 #back_conference_home{
     float:right;
-    text-decoration:none;
-    color:black;
-    border: 2px solid;
-    text-align:center;
     width:4em;
     margin-right: 30%;
     margin-top:5%;
