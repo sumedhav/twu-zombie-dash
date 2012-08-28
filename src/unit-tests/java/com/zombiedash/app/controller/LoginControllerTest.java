@@ -7,12 +7,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
@@ -55,18 +52,8 @@ public class LoginControllerTest {
 
     @Test
     public void shouldRedirectToHomePageIfSessionIsValid() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.getSession().setAttribute("username", "dummy");
-        ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists(request, new MockHttpServletResponse());
-
-        assertThat(modelAndView.getViewName(), is("loginsuccess"));
+        ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists();
+        assertThat(modelAndView.getViewName(), equalTo("loginsuccess"));
     }
 
-    @Test
-    public void shouldRedirectToLoginPageIfSessionIsInValid() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView modelAndView = new LoginController(userService).redirectToHomePageIfSessionPersists(request, new MockHttpServletResponse());
-
-        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
-    }
 }

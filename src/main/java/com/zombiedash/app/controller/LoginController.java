@@ -1,20 +1,17 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.service.UserService;
-import org.openqa.jetty.jetty.servlet.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
 
 @Controller
 @RequestMapping("/login")
@@ -40,7 +37,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
-    public ModelAndView processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, HttpServletRequest request) {
+    public ModelAndView processForm(@RequestParam("j_username") String username, @RequestParam("j_password") String password, HttpServletRequest request) {
             ModelAndView modelAndView = new ModelAndView();
             try {
                 userService.authenticateAndReturnUser(username,password);
@@ -58,17 +55,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "HomePage", method = RequestMethod.GET)
-    public ModelAndView redirectToHomePageIfSessionPersists(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Cache-Control","no-cache");
-        response.setHeader("Cache-Control","no-store");
-        ModelAndView modelAndView = new ModelAndView();
-        HttpSession session = request.getSession(true);
-        if(session.getAttribute("username")!=null) {
-            modelAndView.setViewName("loginsuccess");
-            return modelAndView;
-        }
-        modelAndView=new ModelAndView("redirect:/zombie/login/LoginForm");
-        return modelAndView;
+    public ModelAndView redirectToHomePageIfSessionPersists() {
+      ModelAndView modelAndView = new ModelAndView();
+      modelAndView.setViewName("loginsuccess");
+      return modelAndView;
     }
 
     @RequestMapping(value = "Logout", method = RequestMethod.GET)
