@@ -1,3 +1,7 @@
+*{
+    font-family: Comic Sans MS;
+}
+
 #login_page{
     float:center;
     margin: 0% 20%;
@@ -16,6 +20,9 @@
   
 }
 
+label:hover{
+    cursor:pointer;
+}
 
 #login_form label{
     font-weight: bold;

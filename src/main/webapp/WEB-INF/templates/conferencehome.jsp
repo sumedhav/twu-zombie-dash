@@ -1,33 +1,34 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
-  <body>
-     <h1>
-        <center>Conference Information</center>
-     </h1>
-         <form commandName="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/createConference" method = "GET">
-      <input type="submit" value="CLICK TO CREATE CONFERENCE"/>
+    <head>
+        <title>Zombie Dash : Conference Home</title>
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceHome.css"/>
+    </head>
+      <body>
+          <h1>Zombie Dash</h1>
 
+          <div>
+            <a href="${pageContext.request.contextPath}/zombie/admin/conference/createConference" name="conference_creation" id="conference_creation">Create New Conference</a>
+          </div>
 
-      <t:wrapper>
-          <h1>Conferences</h1>
-          <ul>
-              <ol>
-                  <c:forEach var="conference" items="${Conferences}">
-                      <div>
-                          <li>
-                          <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}">${conference}</a>
-                          </li>
-                      </div>
+          <div name="existing_conferences" id="existing_conferences">
+            Existing Conferences
+          </div>
 
-                  </c:forEach>
-              </ol>
+          <div>
+              <ul>
+                      <c:forEach var="conference" items="${Conferences}">
+                          <div>
+                              <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}" name="existing_conference_name" id="existing_conference_name">${conference}</a>
+                          </div>
+                      </c:forEach>
+              </ul>
+          </div>
 
-          </ul>
-      </t:wrapper>
-
- <a href="${pageContext.request.contextPath}/zombie/login/HomePage">Back</a>
-
-  </body>
+          <div>
+              <a href="${pageContext.request.contextPath}/zombie/login/HomePage" name="back_conference_home" id="back_conference_home">Back</a>
+          </div>
+    </body>
 </html>

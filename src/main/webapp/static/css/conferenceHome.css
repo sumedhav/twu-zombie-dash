@@ -1,0 +1,50 @@
+*{
+    font-family: Comic Sans MS;
+}
+
+h1{
+    margin-left: 5%;
+    margin-top:1%;
+}
+
+ul{
+    border: 1px solid;
+    display: inline-block;
+    margin:1% 5%;
+    padding:1em 1em;
+}
+
+#conference_creation{
+    display:block;
+    margin:5% 5%;
+    border: 2px solid;
+    text-decoration: none;
+    color:black;
+    width:15em;
+    text-align:center;
+}
+
+#existing_conferences{
+    margin-left:5%;
+    font-weight: bold;
+}
+
+#existing_conference_name{
+    text-decoration:none;
+    color:black;
+    display:block;
+    margin-top:3%;
+}
+
+#back_conference_home{
+    float:right;
+    text-decoration:none;
+    color:black;
+    border: 2px solid;
+    text-align:center;
+    width:4em;
+    margin-right: 30%;
+    margin-top:5%;
+}
+
+        
