@@ -1,10 +1,8 @@
+DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
 CREATE TABLE zombie_question (ID INT PRIMARY KEY,
                        Text varchar(50) NOT NULL);
 
-insert into zombie_question values (15, 'Where is Red Fort');
-insert into zombie_question values (2, 'Is it lunch time?');
-DROP TABLE IF EXISTS zombie_option;
 CREATE TABLE zombie_option(
             ID INT,
             QUESTION_ID int NOT NULL,
@@ -12,11 +10,6 @@ CREATE TABLE zombie_option(
             correct BOOLEAN,
             PRIMARY KEY (ID,QUESTION_ID),
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID));
-insert into zombie_option values (1,15,  'Delhi', true);
-insert into zombie_option values (2,15,  'Paris', false);
-insert into zombie_option values (3,15,  'New York', false);
-insert into zombie_option values (4, 2, 'I bet it is', true);
-insert into zombie_option values (5, 2, 'No thanks, fasting at the moment', false);
 
 DROP TABLE IF EXISTS zombie_conference;
 
