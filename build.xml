@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <project name="app" default="build" basedir=".">
 
+    <property environment="env"/>
+    <property name="env.DISPLAY" value=":0" />
+
     <property name="src.dir" location="src/main"/>
     <property name="unit.test.dir" location="src/unit-tests"/>
     <property name="integration.test.dir" location="src/integration-tests"/>
