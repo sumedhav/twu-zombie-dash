@@ -15,17 +15,20 @@
 
     <div name="error_message_div" id="error_message_div" style="color:red">
         ${validationMessage}
+        ${allFieldsAreMandatory}
     </div>
     <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create">
 
         <div>
             <label for="username">Username:</label>
-            <input name="username" id="username" type="text" value="${model.username}"/>
+            <input name="userName" id="username" type="text" value="${model.username}"/>
+            <FONT color="red">${invalidUserName}</FONT>
         </div>
 
         <div>
             <label for="password">Password: </label>
             <input name="password" id="password" type="text" value="${model.password}" />
+            <FONT color="red">${invalidPassword}</FONT>
         </div>
 
         <div>
@@ -36,6 +39,7 @@
         <div>
             <label for="email">Email: </label>
             <input name="email" id="email" type="text" value="${model.email}"/>
+            <FONT color="red">${invalidEmail}</FONT>
         </div>
 
         <div>

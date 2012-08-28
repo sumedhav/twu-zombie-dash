@@ -11,8 +11,6 @@ public class User implements java.io.Serializable {
     }
 
     public User(String userName, Role userRole, String name, String email) {
-        if(!userName.matches("([a-zA-Z0-9]){5,40}")) throw new IllegalArgumentException("invalidUserName");
-        if(!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) throw  new IllegalArgumentException("invalidEmail");
         this.userName = userName;
         this.userRole = userRole;
         this.name = name;

@@ -1,6 +1,7 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.error.ValidationMessagesMap;
+import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
@@ -64,7 +65,7 @@ public class UsersControllerTest {
 
     @Test
     public void shouldCreateAnUser() {
-        ModelAndView modelAndView = usersController.createUser("designer", "GameDesigner", "MR.Right", "right@gmail.com", "password1");
+        ModelAndView modelAndView = usersController.createUser(new UserForm("designer", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
         verify(userService).createUser(argThat(isAUserWith("designer", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")), eq("password1"));
 
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users"));
@@ -73,7 +74,7 @@ public class UsersControllerTest {
     @Test
     public void shouldDisplayErrorPageForUnExpectedException() {
         doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")), eq("password1"));
-        ModelAndView modelAndView = usersController.createUser("username", "GameDesigner", "MR.Right", "right@gmail.com", "password1");
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
 
         assertThat(modelAndView.getViewName(), is("errorPage"));
     }
@@ -81,9 +82,9 @@ public class UsersControllerTest {
     @Test
     public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid(){
         when(validationMessagesMap.getMessageFor("invalidUserName")).thenReturn("invalid user name");
-        ModelAndView modelAndView = usersController.createUser(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1");
+        ModelAndView modelAndView = usersController.createUser(new UserForm(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
         assertThat(modelAndView.getViewName(), is(equalTo("createuser")));
-        assertThat(modelAndView.getModel().get("validationMessage").toString(), is("invalid user name"));
+        assertThat(modelAndView.getModel().get("invalidUserName").toString(), is("invalid user name"));
         assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
         assertThat(modelAndView.getModel().get("model").toString(),
         is(equalTo("{username= , password=password1, role=GameDesigner, name=MR.Right, email=right@gmail.com}")));
@@ -115,16 +116,16 @@ public class UsersControllerTest {
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasNoNumbers() throws Exception {
-        ModelAndView modelAndView = usersController.createUser("username", "GameDesigner", "Name", "email@email.com", "password");
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "password"));
         assertThat(modelAndView.getViewName(), is("createuser"));    }
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasNoAlphabets() throws Exception {
-        ModelAndView modelAndView = usersController.createUser("username", "GameDesigner", "Name", "email@email.com", "13248343");
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "13248343"));
         assertThat(modelAndView.getViewName(), is("createuser"));    }
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasLessThanSixCharacters() throws Exception {
-        ModelAndView modelAndView = usersController.createUser("username", "GameDesigner", "Name", "email@email.com", "p23w");
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "p23w"));
         assertThat(modelAndView.getViewName(), is("createuser"));    }
 }

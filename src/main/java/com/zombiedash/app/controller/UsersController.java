@@ -1,18 +1,18 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.error.ValidationMessagesMap;
-import com.zombiedash.app.model.Role;
+import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -41,35 +41,34 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/create", method = POST)
-    public ModelAndView createUser(@RequestParam("username") String username,
-                                   @RequestParam("role") String role,
-                                   @RequestParam("name") String name,
-                                   @RequestParam("email") String email,
-                                   @RequestParam("password") String password) {
+    public ModelAndView createUser(UserForm userForm) {
         ModelAndView modelAndView;
-
-        ModelMap modelMap  = new ModelMap();
-        modelMap.put("username", username);
-        modelMap.put("password", password);
-        modelMap.put("role", role);
-        modelMap.put("name", name);
-        modelMap.put("email", email);
-
-        try{
-            User user = new User(username, Role.generateRole(role), name, email);
-            if(!password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$")) throw new IllegalArgumentException("invalidPassword");
-            userService.createUser(user, password);
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users");
-        }
-        catch (IllegalArgumentException exception){
+        userForm.validate();
+        if (userForm.hasErrors()) {
             modelAndView = new ModelAndView("createuser");
-            modelAndView.addObject("model", modelMap);
-            modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
-        }
-        catch(Exception excp){
-            modelAndView = new ModelAndView("errorPage");
+            modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
+            populateErrorsIntoModelAndView(modelAndView, userForm.getErrorCodes());
+        } else {
+            try {
+                User user = userForm.createUser();
+                userService.createUser(user, userForm.getPassword());
+                modelAndView = new ModelAndView("redirect:/zombie/admin/users");
+            } catch (IllegalArgumentException exception) {
+                modelAndView = new ModelAndView("createuser");
+                modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
+                modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
+            } catch (Exception excp) {
+                modelAndView = new ModelAndView("errorPage");
+            }
         }
         return modelAndView;
+    }
+
+    private void populateErrorsIntoModelAndView(ModelAndView modelAndView, List<String> errorCodesList) {
+        for (String errorCode : errorCodesList) {
+            modelAndView.addObject(errorCode, validationMessagesMap.getMessageFor(errorCode));
+        }
+
     }
 
     @RequestMapping(value = "/display/{userName}")
@@ -79,12 +78,12 @@ public class UsersController {
 
     @RequestMapping(value = "/deleteuser/{username}", method = RequestMethod.GET)
     public ModelAndView processDeleteUser(@PathVariable("username") String username) {
-        ModelAndView modelAndView ;
+        ModelAndView modelAndView;
 
-        try{
+        try {
             userService.deleteUser(username);
             modelAndView = new ModelAndView("redirect:/zombie/admin/users");
-        }catch (Exception e){
+        } catch (Exception e) {
             modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
         }
 
