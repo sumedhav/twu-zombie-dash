@@ -52,6 +52,7 @@ public class TriviaGamePageTest {
             e.printStackTrace();
         }
         webDriver.get("http://localhost:1234/zombie/conference/user/game");
+
         assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
 
         WebElement cancel = webDriver.findElement(By.name("cancel"));
