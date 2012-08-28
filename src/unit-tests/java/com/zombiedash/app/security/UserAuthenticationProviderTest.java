@@ -31,7 +31,8 @@ public class UserAuthenticationProviderTest {
     Authentication authentication = mock(Authentication.class);
     when(authentication.getPrincipal()).thenReturn("admin");
     when(authentication.getCredentials()).thenReturn("bad password");
-    UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider(userService);
+    UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider();
+    userAuthenticationProvider.setUserService(userService);
     userAuthenticationProvider.authenticate(authentication);
   }
 
@@ -50,7 +51,8 @@ public class UserAuthenticationProviderTest {
     Authentication authentication = mock(Authentication.class);
     when(authentication.getPrincipal()).thenReturn("admin");
     when(authentication.getCredentials()).thenReturn("correct password");
-    UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider(userService);
+    UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider();
+    userAuthenticationProvider.setUserService(userService);
     Authentication authenticatedUser = userAuthenticationProvider.authenticate(authentication);
     assertThat((String) authenticatedUser.getPrincipal(), is(equalTo("admin")));
     assertThat((String) authenticatedUser.getCredentials(),is(equalTo("correct password")));
