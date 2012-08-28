@@ -6,11 +6,8 @@
 <head>
     <title>Zombie Dash : Create User</title>
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
-<<<<<<< HEAD
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
-=======
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
->>>>>>> a11d347627ae551c05efce8d2dc6e1cd4aaf8f18
 </head>
 <body>
     <h1>Zombie Dash</h1>
