@@ -3,28 +3,7 @@
 <head>
 <title>Create Conference Page</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-<script type="text/javascript">
-
-    function confirmCancel() {
-        if(confirm("Are you sure you want to leave this page?")) {
-            location.replace("${pageContext.request.contextPath}/zombie/admin/conference/home");
-        }
-    }
-
-    function limitNumOfCharsInField(field, maxNumChars, errorName) {
-       if (field.value.length > maxNumChars) {
-            field.value = field.value.substring(0, maxNumChars);
-            var pre = "Trying to exceed the max number (";
-            var post = ") of characters";
-            var message = pre + maxNumChars + post;
-            $(errorName).html(message);
-       }
-        else {
-           $(errorName).html("");
-       }
-    }
-
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
 
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
@@ -38,8 +17,8 @@
 				<td>Conference name:</td>
 				<td>
 
-                    <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name,100,'#nameExceedError');" value=${model.name}> </textarea>
-
+                    <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name,100,'#nameExceedError');"
+                              rows="1" cols="20">${model.name}</textarea>
                     <label id="nameExceedError" style="color:#FF0000"></label>
                     <FONT color="red">${model.nameFieldMissing}</FONT>
 				</td>
@@ -47,7 +26,8 @@
 			</tr>
 			<tr>
                 <td>Topic:</td>
-                <td><textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic,100,'#topicExceedError');" value=${model.topic}> </textarea>
+                <td><textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic,100,'#topicExceedError');"
+                              rows="1" cols="20">${model.topic}</textarea>
                     <label id="topicExceedError" style="color:#FF0000"></label>
                     <FONT color="red">${model.topicFieldMissing}</FONT>
                 </td>
@@ -64,7 +44,8 @@
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');" value=${model.description}> </textarea>
+                <td><textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
+                              rows="1" cols="20">${model.description}</textarea>
                     <label id="descriptionExceedError" style="color:#FF0000"></label>
                     <FONT color="red">${model.descriptionFieldMissing}</FONT>
                 </td>
@@ -73,7 +54,7 @@
             <tr>
                 <td>Venue:</td>
                 <td><textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
-                              rows="1" cols="25" value=${model.venue}></textarea>
+                              rows="1" cols="20">${model.venue}</textarea>
                     <label id="venueExceedError" style="color:#FF0000"></label>
                     <FONT color="red">${model.venueFieldMissing}</FONT>
                 </td>
@@ -91,7 +72,7 @@
             </tr>
             <td>
                 <input type="button" value="Cancel"
-                       onclick="return confirmCancel()"/>
+                       onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
             </td>
             <tr>
 			</tr>
