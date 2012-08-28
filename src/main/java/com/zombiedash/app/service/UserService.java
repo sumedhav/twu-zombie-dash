@@ -32,6 +32,7 @@ public class UserService {
     }
 
     public boolean createUser(User user) {
+        if(userRepository.userNameExists(user)) throw new IllegalArgumentException("userNameAlreadyExists");
         return userRepository.createUser(user);
     }
 
