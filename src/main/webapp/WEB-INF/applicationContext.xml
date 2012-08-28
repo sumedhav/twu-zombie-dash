@@ -27,6 +27,7 @@
 
     <jdbc:initialize-database data-source="dataSource" enabled="${db.initialize}">
         <jdbc:script location="classpath:db_init.sql"/>
+        <jdbc:script location="classpath:setUpManualTestData.sql"/>
     </jdbc:initialize-database>
 
 
