@@ -72,7 +72,7 @@
             </tr>
             <td>
                 <input type="button" value="Cancel"
-                       onclick="return confirmCancel()"/>
+                       onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
             </td>
             <tr>
 			</tr>
