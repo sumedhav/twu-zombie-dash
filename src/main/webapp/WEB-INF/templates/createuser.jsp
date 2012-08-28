@@ -5,8 +5,8 @@
 <html>
 <head>
     <title>Zombie Dash : Create User</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
 </head>
 <body>
     <h1>Zombie Dash</h1>
@@ -44,7 +44,7 @@
             </select>
         </div>
 
-        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="javascript: history.go(-1)" />
+        <a id="cancel" name="cancel" href="" onClick="javascript: history.go(-1)">Cancel</a>
         <input id="submit" name="submit" type="submit" value="Save" />
     </form>
 </body>

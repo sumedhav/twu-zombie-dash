@@ -3,10 +3,7 @@ div {
 }
 
 a{
-    text-decoration: none;
-    color: black;
     width: auto;
-    border:2px solid;
     padding: 2px 2px;
 }
 
@@ -17,14 +14,15 @@ h3{
 #Logout{
     position: absolute;
     left:70%;
-    top:10%;    
+    top:10%;
+    width:6em;
 }
 
 #Conferences, #Users{
-   position: relative;
-   left:5%;
-   top:5em;
-   
+   width: 8em;
+   margin-top:5%;
+   margin-left:5%;
+   display:block;
 }
 
 #Users{
