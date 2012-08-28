@@ -1,0 +1,63 @@
+a{
+    border:none;
+}
+
+h3{
+    margin-left:5%;
+    margin-top:5%
+}
+
+table#user_list_table {
+    margin-left:5%;
+}
+    
+table{
+    border-collapse:collapse;
+}
+
+table tr#user_list_table_heading{
+    border-bottom: 1px solid black;
+}    
+
+table#user_list_table{
+    border-bottom:1px solid;
+}
+    
+table#user_list_table tr{
+    border-right: 1px solid;
+    border-left: 1px solid;
+
+}
+
+table#user_list_table tr#user_list_table_heading{
+    border-right:none;
+    border-left:none;
+}
+
+table#user_list_table #username_value{
+    text-decoration:underline;
+}
+    
+table#user_list_table td{
+    padding-right:2em;
+    padding-left:2em
+}
+        
+#create_user{
+    border: 2px solid;
+    display: block;
+    width: 10em;
+    margin-top: 5%;
+    margin-left:5%;
+}
+
+#back_user_home{
+    float:right;
+    margin-top:5%;
+    margin-right:30%;
+    border:2px solid;
+    display: block;
+    width:7em;        
+}
+
+
