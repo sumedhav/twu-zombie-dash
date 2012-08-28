@@ -1,24 +1,52 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 
-<t:wrapper>
-    <h1>User Details</h1>
-    <div id="errorMessageDiv" style="color:red">
-    ${validationMessage}
+<html>
+<head>
+    <title>Zombie Dash : Create User</title>
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
+</head>
+<body>
+    <h1>Zombie Dash</h1>
+    <h3>Users : Create New</h3>
+
+    <div name="error_message_div" id="error_message_div" style="color:red">
+        ${validationMessage}
     </div>
     <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create">
-    <p>Username: <input name="username" type="text" value="${model.username}"  /> </p>
-    <p>Password: <input name="password" type="text" value="${model.password}" /> </p>
-    <p>Name: <input name="name" type="text"  value="${model.name}"/> </p>
-    <p>Email: <input name="email" type="text" value="${model.email}"/> </p>
-    <p>Role:
-    <select name="role">
-    <option value="GameDesigner">Game Designer</option>
-    </select>
-    </p>
-    <input type="submit" value="Save" />
-    <input type="button" value="Cancel" onclick="return confirmCancel(${pageContext.request.contextPath})"/>
+
+        <div>
+            <label for="username">Username:</label>
+            <input name="username" id="username" type="text" value="${model.username}"/>
+        </div>
+
+        <div>
+            <label for="password">Password: </label>
+            <input name="password" id="password" type="text" value="${model.password}" />
+        </div>
+
+        <div>
+            <label for="name">Name: </label>
+            <input name="name" id="name" type="text"  value="${model.name}"/>
+        </div>
+
+        <div>
+            <label for="email">Email: </label>
+            <input name="email" id="email" type="text" value="${model.email}"/>
+        </div>
+
+        <div>
+            <label for="role">Role:</label>
+            <select name="role" id="role">
+                <option value="GameDesigner">Game Designer</option>
+            </select>
+        </div>
+
+        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel(${pageContext.request.contextPath})" />
+        <input id="submit" name="submit" type="submit" value="Save" />
     </form>
-</t:wrapper>
+</body>
+</html>

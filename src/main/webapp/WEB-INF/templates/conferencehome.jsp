@@ -5,7 +5,7 @@
     <head>
         <title>Zombie Dash : Conference Home</title>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceHome.css"/>
-        <link type="text/css" href="${pageContext.request.contextPath}/static/css/font.css" rel="stylesheet">
+        <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
     </head>
       <body>
           <h1>Zombie Dash</h1>

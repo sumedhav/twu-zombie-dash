@@ -1,0 +1,30 @@
+h3{
+    margin-left:5%;
+}
+
+form {
+    margin-left:5%;
+}
+
+label{
+    float:left;
+    width:10em;
+}
+
+form div{
+    margin-top:1%;
+}
+
+#submit, #cancel{
+    float:right;
+    margin-top:5%;
+}
+
+#submit{
+    margin-right:3%;
+}
+
+#cancel{
+    margin-right:30%;
+}
+
