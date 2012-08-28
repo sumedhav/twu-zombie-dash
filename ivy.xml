@@ -57,5 +57,7 @@
         <dependency org="com.google.guava" name="guava" rev="r08" />
         <dependency org="org.json" name="json" rev="20090211"/>
         <dependency org="org.apache.commons" name="commons-exec" rev="1.1"/>
+        <dependency org="org.springframework.security" name="spring-security-config" rev="3.0.2.RELEASE"/>
+        <dependency org="org.springframework.security" name="spring-security-web" rev="3.0.2.RELEASE"/>
     </dependencies>
 </ivy-module>

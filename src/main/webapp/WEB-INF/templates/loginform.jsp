@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <title>Zombie Dash : Login</title>
@@ -8,7 +9,7 @@
     <h1>
         <center>Login</center>
     </h1>
-    <form name="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
+    <form name="loginForm" action="<c:url value='j_spring_security_check' />" method = "POST">
 
         <div id="login_page">
 
@@ -27,7 +28,7 @@
                 </div>
 
                 <div>
-                    <input type="text" name="Username" id="Username" />
+                    <input type="text" name="j_username" id="Username" />
                 </div>
 
                 <div>
@@ -35,7 +36,7 @@
                 </div>
 
                 <div>
-                    <input type="password" name="Password" id="Password"/>
+                    <input type="password" name="j_password" id="Password"/>
                 </div>
 
                 <div>
