@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
+
 <t:wrapper>
     <h1>User Details</h1>
     <div id="errorMessageDiv" style="color:red">
@@ -17,6 +19,6 @@
     </select>
     </p>
     <input type="submit" value="Save" />
-    <input type="button" value="Cancel" onClick="javascript: history.go(-1)" />
+    <input type="button" value="Cancel" onclick="return confirmCancel(${pageContext.request.contextPath})"/>
     </form>
 </t:wrapper>
