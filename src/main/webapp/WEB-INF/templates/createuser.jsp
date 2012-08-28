@@ -8,7 +8,7 @@
     </div>
     <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create">
     <p>Username: <input name="username" type="text" value="${model.username}"  /> </p>
-    <p>Password: <input name="password" type="password" value="${model.password}" /> </p>
+    <p>Password: <input name="password" type="text" value="${model.password}" /> </p>
     <p>Name: <input name="name" type="text"  value="${model.name}"/> </p>
     <p>Email: <input name="email" type="text" value="${model.email}"/> </p>
     <p>Role:
