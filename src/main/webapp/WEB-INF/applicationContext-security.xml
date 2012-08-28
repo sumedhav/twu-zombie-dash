@@ -7,7 +7,7 @@
 
 
     <http auto-config='true'>
-        <intercept-url pattern="/zombie/login/LoginForm" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/zombie/login/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/**" access="ROLE_ADMIN"/>
         <form-login login-page = "/zombie/login/LoginForm"
                     default-target-url='/zombie/login/HomePage'
