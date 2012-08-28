@@ -37,7 +37,7 @@ CREATE TABLE zombie_users(username varchar(20) NOT NULL PRIMARY KEY CHECK(userna
                 name varchar(30) NOT NULL,
                 email varchar(100) NOT NULL);
 
-INSERT INTO zombie_users VALUES('admin','Welcome1',0,'Administrator','admin@zombie.com');
+INSERT INTO zombie_users VALUES('admin','b56e0b4ea4962283bee762525c2d490f',0,'Administrator','admin@zombie.com');
 
 
 

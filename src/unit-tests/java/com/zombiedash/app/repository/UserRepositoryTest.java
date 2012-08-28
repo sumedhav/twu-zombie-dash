@@ -26,9 +26,9 @@ public class UserRepositoryTest {
 
     @Test
     public void shouldCheckIfUserExists() throws Exception {
-        List listOfUsers = new ArrayList(){{add(new User("username","password1"));}};
+        List listOfUsers = new ArrayList(){{add(new User("username"));}};
         when(jdbcTemplate.query(anyString(),any(Object[].class), any(RowMapper.class))).thenReturn(listOfUsers);
-        boolean result = userRepository.userNameExists(new User("username", "password1"));
+        boolean result = userRepository.userNameExists("username");
         assertThat(result, is(true));
     }
 
@@ -36,7 +36,7 @@ public class UserRepositoryTest {
     public void shouldCheckIfUserDoesNotExist() throws Exception {
         List listOfUsers = new ArrayList();
         when(jdbcTemplate.query(anyString(),any(Object[].class), any(RowMapper.class))).thenReturn(listOfUsers);
-        boolean result = userRepository.userNameExists(new User("username", "password1"));
+        boolean result = userRepository.userNameExists("username");
         assertThat(result, is(false));
     }
 }
