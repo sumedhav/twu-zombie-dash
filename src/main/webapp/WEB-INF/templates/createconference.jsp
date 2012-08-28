@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Create Conference Page</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 
     function confirmCancel() {
@@ -10,15 +11,18 @@
         }
     }
 
-    function limitNameField(field, limitCount, limitNum) {
-        if (field.value.length > limitNum) {
-            field.value = field.value.substring(0,limitNum);
-        }
+    function limitNumOfCharsInField(field, maxNumChars, errorName) {
+       if (field.value.length > maxNumChars) {
+            field.value = field.value.substring(0, maxNumChars);
+            var pre = "Trying to exceed the max number (";
+            var post = ") of characters";
+            var message = pre + maxNumChars + post;
+            $(errorName).html(message);
+       }
         else {
-           limitCount.value = limitNum - field.value.length;
-        }
+           $(errorName).html("");
+       }
     }
-
 
 </script>
 
@@ -32,54 +36,68 @@
 		<table>
 			<tr>
 				<td>Conference name:</td>
-				<td><input type='text' name='conf_name' value=${model.name} > <FONT color="red">${model.nameFieldMissing}</FONT>
+				<td>
+
+                    <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name,100,'#nameExceedError');" value=${model.name}> </textarea>
+
+                    <label id="nameExceedError" style="color:#FF0000"></label>
+                    <FONT color="red">${model.nameFieldMissing}</FONT>
 				</td>
 
 			</tr>
 			<tr>
                 <td>Topic:</td>
-                <td><input type='text' name='conf_topic' value=${model.topic}> <FONT color="red">${model.topicFieldMissing}</FONT>
+                <td><textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic,100,'#topicExceedError');" value=${model.topic}> </textarea>
+                    <label id="topicExceedError" style="color:#FF0000"></label>
+                    <FONT color="red">${model.topicFieldMissing}</FONT>
                 </td>
             </tr>
             <tr>
-                <td>Start date:</td>
-                <td><input type='text' name='conf_start_date' value=${model.startDate}> <FONT color="red">${model.startDateFieldMissing}</FONT> <FONT color="red">${model.startDateError}</FONT>
+                <td>Start date (yyyy-mm-dd):</td>
+                <td><input type='text' name='conf_start_date' size="28" value=${model.startDate}> <FONT color="red">${model.startDateFieldMissing}</FONT> <FONT color="red">${model.startDateError}</FONT>
                 </td>
             </tr>
             <tr>
-                <td>End date:</td>
-                <td><input type='text' name='conf_end_date' value=${model.endDate}> <FONT color="red">${model.endDateFieldMissing}</FONT> <FONT color="red">${model.endDateError}</FONT>
+                <td>End date (yyyy-mm-dd):</td>
+                <td><input type='text' name='conf_end_date' size="28" value=${model.endDate}> <FONT color="red">${model.endDateFieldMissing}</FONT> <FONT color="red">${model.endDateError}</FONT>
                 </td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><input type='text' name='conf_description' width = 1000 value=${model.description}> <FONT color="red">${model.descriptionFieldMissing}</FONT>
+                <td><textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');" value=${model.description}> </textarea>
+                    <label id="descriptionExceedError" style="color:#FF0000"></label>
+                    <FONT color="red">${model.descriptionFieldMissing}</FONT>
                 </td>
             </tr>
+
             <tr>
                 <td>Venue:</td>
-                <td><input type='text' name='conf_venue' value=${model.venue}>  <FONT color="red">${model.venueFieldMissing}</FONT>
+                <td><textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
+                              rows="1" cols="25" value=${model.venue}></textarea>
+                    <label id="venueExceedError" style="color:#FF0000"></label>
+                    <FONT color="red">${model.venueFieldMissing}</FONT>
                 </td>
             </tr>
 
             <tr>
                 <td>Max no. of attendees:</td>
-                <td><input type='text' name='conf_max_attendees' value=${model.maxAttendees}> <FONT color="red">${model.maxAttendeesFieldMissing}</FONT> <FONT color="red">${model.numberError}</FONT>
+                <td><input type='text' name='conf_max_attendees' size="28" value=${model.maxAttendees}> <FONT color="red">${model.maxAttendeesFieldMissing}</FONT> <FONT color="red">${model.numberError}</FONT>
                 </td>
             </tr>
 			<tr>
 				<td colspan='2'><input name="save" type="submit"
 					value="Save" />
 				</td>
-			</tr>
+            </tr>
             <td>
                 <input type="button" value="Cancel"
                        onclick="return confirmCancel()"/>
             </td>
-			<tr>
+            <tr>
 			</tr>
 		</table>
 
 	</form>
+
 </body>
 </html>

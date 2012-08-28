@@ -61,7 +61,7 @@ public class ConferenceController {
     model.put("maxAttendees", conferenceMaxAttendees);
 
     ConferenceValidator conferenceValidator = new ConferenceValidator();
-    boolean validDataFlag = conferenceValidator.isDataValid(model);
+    boolean validDataFlag = conferenceValidator.isValidData(model);
 
     if (validDataFlag) {
       Conference conference = new Conference(conferenceName, conferenceTopic, conferenceDescription,
