@@ -30,7 +30,7 @@
         </tr>
         </table>
         <div name="edit_delete_back_buttons" id="edit_delete_back_buttons">
-            <a name="edit_details" id="edit_details" href="" value="Edit Details">Edit Details</a>
+            <!--<a name="edit_details" id="edit_details" href="" value="Edit Details">Edit Details</a>-->
             <a name="delete_user" id="delete_user" href="${pageContext.request.contextPath}/zombie/admin/users/deleteuser/${User.userName}">Delete User</a>
             <a name="back_user_details" id="back_user_details" href="${pageContext.request.contextPath}/zombie/admin/users">Back</a>
         </div>
