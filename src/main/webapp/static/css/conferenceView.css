@@ -1,0 +1,33 @@
+table{
+    text-align:left;
+}
+    
+h1{
+    margin-left:5%;
+    margin-top:1%;
+}
+        
+h3{
+    margin:auto;
+    width:18%;
+    text-decoration: underline;
+    font-size: 1.5em;
+    margin-bottom: 1%;
+}
+
+th{
+    padding-right: 4em;
+    padding-bottom: 1em;
+}
+        
+#back_conference_view{
+    float:right;
+    text-decoration:none;
+    color:black;
+    border: 2px solid;
+    width: 4em;
+    text-align:center;
+    margin-top: 5%;
+    margin-right: 30%;
+}
+
