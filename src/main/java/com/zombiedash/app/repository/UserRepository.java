@@ -36,8 +36,7 @@ public class UserRepository {
     }
 
     public User getUser(String username){
-        Object[] arg = new Object[]{username};
-        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
+        List<User> userList = retrieveAllUsersWithUserName(username);
         return userList.get(0);
     }
 
@@ -46,6 +45,11 @@ public class UserRepository {
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
         if(userList.size() == 0) throw new Exception("Invalid user credentials");
         return userList.get(0);
+    }
+
+    private List<User> retrieveAllUsersWithUserName(String username) {
+        Object[] arg = new Object[]{username};
+        return jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
     }
 
     public Boolean createUser(User user){
@@ -77,5 +81,10 @@ public class UserRepository {
                         resultSet.getString("email"));
             }
         };
+    }
+
+    public boolean userNameExists(User user) {
+        List<User> users = retrieveAllUsersWithUserName(user.getUserName());
+        return users.size()!=0;
     }
 }

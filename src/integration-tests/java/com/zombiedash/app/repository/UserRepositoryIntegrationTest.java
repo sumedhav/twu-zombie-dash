@@ -45,7 +45,7 @@ public class UserRepositoryIntegrationTest {
     @Test
     public void shouldRetrieveUser() {
         jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
-        User result = retrieveUserByUsername("admin");
+        User result = userRepository.getUser("admin");
         assertThat(result, isAUserWith("admin", "Welcome1", Role.ADMIN, "Administrator", "admin@zombie.com"));
     }
 

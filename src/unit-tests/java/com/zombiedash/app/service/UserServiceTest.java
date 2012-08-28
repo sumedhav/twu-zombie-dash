@@ -3,7 +3,9 @@ package com.zombiedash.app.service;
 
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.repository.UserRepository;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,6 +23,8 @@ import static org.mockito.Mockito.mock;
 public class UserServiceTest {
     @Mock
     UserRepository userRepository;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldAuthenticateAndReturnUserForCorrectCredentials() throws Exception {
@@ -92,4 +96,13 @@ public class UserServiceTest {
         assertThat(userCreated, is(true));
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void shouldNotCreateUserIfUserAlreadyExists() throws Exception {
+        User user = mock(User.class);
+        given(userRepository.userNameExists(user)).willReturn(true);
+
+        UserService userService = new UserService(userRepository);
+        userService.createUser(user);
+        thrown.expectMessage("userNameAlreadyExists");
+    }
 }

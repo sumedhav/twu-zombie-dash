@@ -1,45 +1,51 @@
 <html>
 <head>
     <title>Zombie Dash : Login</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/loginPage.css" />
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/font.css" rel="stylesheet">
 </head>
 <body onload='document.loginForm.Username.focus();'>
     <h1>
         <center>Login</center>
     </h1>
     <form name="loginForm" action="${pageContext.request.contextPath}/zombie/login/Authenticate" method = "POST">
-        <div style="color:red; text-align:center" id="messagetobedisplayed">
-            ${messageToBeDisplayed}
+
+        <div id="login_page">
+
+            <div id="Zombie_img">
+                <img src="${pageContext.request.contextPath}/static/images/ZombieDash.jpg"/>
+            </div>
+
+            <div id="login_form">
+
+                <div id="message_to_be_displayed">
+                    ${messageToBeDisplayed}
+                </div>
+
+                <div>
+                    <label for="Username">Username:</label>
+                </div>
+
+                <div>
+                    <input type="text" name="Username" id="Username" />
+                </div>
+
+                <div>
+                    <label for="Password">Password: </label>
+                </div>
+
+                <div>
+                    <input type="password" name="Password" id="Password"/>
+                </div>
+
+                <div>
+                    <input type="submit" value="Login" name="Submit" id="Submit"/>
+                </div>
+
+            </div>
+
         </div>
-        <table align="center">
-            <tr>
-                <td>
-                    <p>
-                        <img align="right" src="${pageContext.request.contextPath}/static/images/ZombieDash.jpg"/>
-                    </p>
-                </td>
-                <td>
-                    <table style="margin-left:50">
-                        <tr>
-                            <td>Username:<FONT color="red"><form:errors
-                            path="username" /></FONT></td>
-                        </tr>
-                        <tr>
-                            <td><input path="username" type = "text" name = "Username" /></td>
-                        </tr>
-                        <tr>
-                            <td>Password:<FONT color="red"><form:errors
-                            path="password" /></FONT></td>
-                        </tr>
-                        <tr>
-                            <td><input path="password" type ="password" name = "Password" /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="submit" value="Submit" name = "Submit"/></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+
     </form>
 </body>
 </html>

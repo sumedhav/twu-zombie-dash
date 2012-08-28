@@ -4,11 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <link type="text/css" href="/static/css/main.css" rel="stylesheet">
+    <title>Zombie Dash : Conference Information</title>
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceView.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/font.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Conference Information</h2>
-    <table class="table">
+    <h1>Zombie Dash</h1>
+    <h3>Conference Information</h3>
+    <table class="table" align="center">
         <tr>
             <th>Conference Name:</th>
             <td>${Conference.name}</td>
@@ -38,7 +41,7 @@
             <td>${Conference.maxAttendee}</td>
         </tr>
     </table>
-    <a href="${pageContext.request.contextPath}/zombie/admin/conference/home">Back</a>
+    <a href="${pageContext.request.contextPath}/zombie/admin/conference/home" name="back_conference_view" id="back_conference_view">Back</a>
 </body>
 
 </html>
