@@ -66,7 +66,7 @@ public class UsersController {
             modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
         }
         catch(Exception excp){
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
+            modelAndView = new ModelAndView("errorPage");
         }
         return modelAndView;
     }

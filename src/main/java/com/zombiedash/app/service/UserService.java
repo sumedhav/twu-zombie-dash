@@ -18,20 +18,19 @@ public class UserService {
     }
 
     public User authenticateAndReturnUser(String username, String password) throws Exception {
-        User admin = userRepository.retrieveAdminUser();
-        if(admin.authenticate(username, password)) return admin;
-        throw new Exception();
+        return userRepository.getUser(username, password);
     }
 
     public List getAllUsers() {
         return userRepository.retrieveAllUsers();
     }
 
-    public User getUser(String username) {
-        return userRepository.retrieveUser(username);
+    public User getUser(String username){
+        return userRepository.getUser(username);
     }
 
     public boolean createUser(User user) {
+        if(userRepository.userNameExists(user)) throw new IllegalArgumentException("userNameAlreadyExists");
         return userRepository.createUser(user);
     }
 

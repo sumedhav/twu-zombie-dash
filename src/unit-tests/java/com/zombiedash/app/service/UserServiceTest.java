@@ -3,7 +3,9 @@ package com.zombiedash.app.service;
 
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.repository.UserRepository;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,37 +23,38 @@ import static org.mockito.Mockito.mock;
 public class UserServiceTest {
     @Mock
     UserRepository userRepository;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldAuthenticateAndReturnUserForCorrectCredentials() throws Exception {
-        User user = mock(User.class);
-        given(userRepository.retrieveAdminUser()).willReturn(user);
-        given(user.authenticate("admin", "Welcome1")).willReturn(true);
+        User admin = mock(User.class);
+        given(userRepository.getUser("admin", "Welcome1")).willReturn(admin);
 
         UserService userService = new UserService(userRepository);
 
-        assertThat(userService.authenticateAndReturnUser("admin", "Welcome1"), sameInstance(user));
+        assertThat(userService.authenticateAndReturnUser("admin", "Welcome1"), sameInstance(admin));
     }
 
     @Test (expected = Exception.class)
     public void shouldNotAuthenticateAndReturnNullForIncorrectPassword() throws Exception {
-        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        given(userRepository.getUser("admin", "Welcome2")).willThrow(new Exception());
         UserService userService = new UserService(userRepository);
         userService.authenticateAndReturnUser("admin", "Welcome2");
     }
 
     @Test (expected = Exception.class)
     public void shouldNotAuthenticateAndReturnNullForIncorrectUserName() throws Exception {
-        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        given(userRepository.getUser("sdfjbdvj", "Welcome1")).willThrow(new Exception());
         UserService userService = new UserService(userRepository);
-        userService.authenticateAndReturnUser("admefhvjin", "Welcome1");
+        userService.authenticateAndReturnUser("sdfjbdvj", "Welcome1");
     }
 
     @Test (expected = Exception.class)
     public void shouldNotAuthenticateAndReturnNullForIncorrectCredentials() throws Exception {
-        given(userRepository.retrieveAdminUser()).willReturn(new User("admin", "Welcome1"));
+        given(userRepository.getUser("admigfsdgnf", "Welcomdfgrfjgre1")).willThrow(new Exception());
         UserService userService = new UserService(userRepository);
-        userService.authenticateAndReturnUser("admefhvjin", "Welcomdfgrfjgre1");
+        userService.authenticateAndReturnUser("admigfsdgnf", "Welcomdfgrfjgre1");
     }
 
     @Test
@@ -74,7 +77,7 @@ public class UserServiceTest {
     @Test
     public void shouldGetUser() {
         User user = mock(User.class);
-        given(userRepository.retrieveUser("user")).willReturn(user);
+        given(userRepository.getUser("user")).willReturn(user);
 
         UserService userService = new UserService(userRepository);
         User result = userService.getUser("user");
@@ -93,4 +96,13 @@ public class UserServiceTest {
         assertThat(userCreated, is(true));
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void shouldNotCreateUserIfUserAlreadyExists() throws Exception {
+        User user = mock(User.class);
+        given(userRepository.userNameExists(user)).willReturn(true);
+
+        UserService userService = new UserService(userRepository);
+        userService.createUser(user);
+        thrown.expectMessage("userNameAlreadyExists");
+    }
 }
