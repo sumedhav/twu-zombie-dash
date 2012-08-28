@@ -17,11 +17,7 @@ th{
         
 #back_conference_view{
     float:right;
-    text-decoration:none;
-    color:black;
-    border: 2px solid;
     width: 4em;
-    text-align:center;
     margin-top: 5%;
     margin-right: 30%;
 }

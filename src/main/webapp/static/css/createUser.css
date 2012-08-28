@@ -21,10 +21,23 @@ form div{
 }
 
 #submit{
+    text-decoration:none;
     margin-right:3%;
+    background:none;
+    font-size:16px;
+    border: 2px solid;
+    padding: 0em 1em;
+}
+
+#submit:hover{
+    cursor:pointer;
 }
 
 #cancel{
+    text-decoration:none;
+    background:none;
     margin-right:30%;
+    font-size:16px;
+    border: 2px solid;
+    padding:0 0.5em;
 }
-

@@ -5,8 +5,8 @@
 <html>
 <head>
     <title>Zombie Dash : Conference Information</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceView.css" rel="stylesheet">
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceView.css" rel="stylesheet">
 </head>
 <body>
     <h1>Zombie Dash</h1>
