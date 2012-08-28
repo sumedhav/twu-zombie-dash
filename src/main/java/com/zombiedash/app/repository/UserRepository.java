@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
+import static org.apache.commons.codec.digest.DigestUtils.sha512Hex;
 
 @Repository
 public class UserRepository {
@@ -38,7 +38,7 @@ public class UserRepository {
     }
 
     public User getUser(String username, String password) throws Exception {
-        Object[] arg = new Object[]{username, md5Hex(password)};
+        Object[] arg = new Object[]{username, sha512Hex(password)};
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
         if(userList.size() == 0) throw new Exception("Invalid user credentials");
         return userList.get(0);
@@ -52,7 +52,7 @@ public class UserRepository {
     public Boolean createUser(User user, String password){
         Integer result = jdbcTemplate.update(INSERT_USER,
                 user.getUserName(),
-                md5Hex(password),
+                sha512Hex(password),
                 user.getRoleVal(),
                 user.getName(),
                 user.getEmail()
