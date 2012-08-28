@@ -48,7 +48,7 @@
             </select>
         </div>
 
-        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel(${pageContext.request.contextPath})" />
+        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}')" />
         <input id="submit" name="submit" type="submit" value="Save" />
     </form>
 </body>
