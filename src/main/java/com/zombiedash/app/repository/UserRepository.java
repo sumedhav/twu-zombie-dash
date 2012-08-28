@@ -16,6 +16,7 @@ public class UserRepository {
     private JdbcTemplate jdbcTemplate;
     private static final String RETRIEVE_USER_ROW = "SELECT * FROM zombie_users where role = ?";
     private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM zombie_users where username = ?";
+    private static final String RETRIEVE_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM zombie_users where username = ? and password = ?";
     private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
     private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
 
@@ -34,9 +35,16 @@ public class UserRepository {
         return jdbcTemplate.query(RETRIEVE_ALL_USERS, userMapper());
     }
 
-    public User retrieveUser(String username) {
+    public User getUser(String username){
         Object[] arg = new Object[]{username};
         List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
+        return userList.get(0);
+    }
+
+    public User getUser(String username, String password) throws Exception {
+        Object[] arg = new Object[]{username, password};
+        List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
+        if(userList.size() == 0) throw new Exception("Invalid user credentials");
         return userList.get(0);
     }
 

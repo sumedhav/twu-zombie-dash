@@ -22,10 +22,6 @@ public class User implements java.io.Serializable {
         this.email = email;
     }
 
-    public boolean authenticate(String userName, String password) {
-        return userName.equals(this.userName) && password.equals(this.password);
-    }
-
     public Role getUserRole() {
         return userRole;
     }

@@ -66,6 +66,14 @@ public class UserRepositoryIntegrationTest {
         assertThat(actualUser, isAUserWith("designer", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
     }
 
+    @Test
+    public void shouldLookUpAuthenticationCredentialsAndReturnUsernameIfFound() throws Exception {
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta', 'password1', 1, 'Game Designer 1', 'gm1@zombie.com')");
+        User actualUser = userRepository.getUser("beta", "password1");
+
+        assertThat(actualUser, isAUserWith("beta", "password1", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
+    }
+
     @Test(expected = DataIntegrityViolationException.class)
     public void shouldNotAllowEmptyUserName(){
         userRepository.createUser(new User("", "password1", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
