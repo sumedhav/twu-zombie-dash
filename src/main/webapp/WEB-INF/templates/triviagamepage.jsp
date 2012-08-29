@@ -4,6 +4,10 @@
 <html>
 <head>
   <title>Welcome to Trivia Game!</title>
+
+   <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
+   <link type="text/css" href="${pageContext.request.contextPath}/static/css/triviaGamePage.css" rel="stylesheet">
+
     <script>
       function validate(numQns){
         var radios = document.getElementsByTagName('input');
@@ -34,7 +38,7 @@
   <h2>Welcome YAHYA to JAVA CONFERENCE</h2>
   <form method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result" onSubmit="return validate(${fn:length(questions)})">
     <c:forEach var="question" items="${questions}" varStatus="questionStatus">
-    <h3>${question.text}</h3>
+    <div class="question">${question.text}</div>
       <table>
       <tr>
         <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
@@ -49,11 +53,10 @@
       </table>
     </c:forEach>
     <div>
-      <input type="submit" value="SUBMIT" name="submit"/>
+      <input type="submit" value="submit" name="submit" id="submit_button"/>
     </div>
     <div>
-      <input type="button" value="CANCEL"
-      onclick="return confirmCancel()" name="cancel"/>
+      <input type="button" value="cancel" onclick="return confirmCancel()" name="cancel" id="cancel_button"/>
     </div>
   </form>
 </body>

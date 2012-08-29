@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS zombie_users;
 CREATE TABLE zombie_users(username varchar(40) NOT NULL PRIMARY KEY CHECK(username NOT LIKE ''),
                 password varchar(40) NOT NULL,
                 role integer NOT NULL,
-                name varchar(30) NOT NULL,
+                name varchar(40) NOT NULL,
                 email varchar(100) NOT NULL);
 
 INSERT INTO zombie_users VALUES('admin','b56e0b4ea4962283bee762525c2d490f',0,'Administrator','admin@zombie.com');
