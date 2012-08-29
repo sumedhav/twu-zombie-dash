@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Zombie Dash : Login</title>
+<<<<<<< HEAD
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/loginPage.css" />
 </head>
@@ -42,11 +43,8 @@
                 <div>
                     <input type="submit" value="Login" name="Submit" id="Submit"/>
                 </div>
-
             </div>
-
         </div>
-
-    </form>
+    </div>
 </body>
 </html>

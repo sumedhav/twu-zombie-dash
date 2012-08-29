@@ -16,6 +16,7 @@ public class LoginLogoutTest {
 
     @Test
     public void shouldGoToAdminLoginSuccessPageIfUserIsAdmin() throws Exception {
+
         WebServer webServer=new WebServer(1234);
         try {
             webServer.start();
@@ -34,6 +35,7 @@ public class LoginLogoutTest {
         WebElement submitElement = driver.findElement(By.id("Submit"));
         submitElement.submit();
         assertThat(driver.getTitle(), is("Zombie Dash : Welcome"));
+
 
         WebElement logoutElement = driver.findElement(By.id("Logout"));
         logoutElement.click();
@@ -59,6 +61,7 @@ public class LoginLogoutTest {
         passwordElement.sendKeys("12Welcome1");
 
         WebElement submitElement = browser.findElement(By.id("Submit"));
+
         submitElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
