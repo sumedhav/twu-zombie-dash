@@ -4,6 +4,7 @@
 
 <html>
     <body>
-        result is <c:out value="${score}"/></li>
+    <h3>Test Completed</h3>
+        Your score is ${obtainedScore} out of ${maxScore}.
     </body>
 </html>

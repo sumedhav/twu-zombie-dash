@@ -36,7 +36,7 @@ public class TriviaGamePageTest {
 
         List<WebElement> elements = browser.findElements(By.cssSelector(".question"));
         assertThat(elements.size(), is(existingQnCount + 2));
-        assertThat(elements.get(existingQnCount + 0).getText(), equalTo("Where is Red Fort"));
+        assertThat(elements.get(existingQnCount).getText(), equalTo("Where is Red Fort"));
         assertThat(elements.get(existingQnCount + 1).getText(), equalTo("Is it lunch time?"));
     }
 
@@ -45,22 +45,66 @@ public class TriviaGamePageTest {
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() {
 
         WebServer webServer=new WebServer(1234);
-        WebDriver webDriver =(WebDriver) new FirefoxDriver();
+        WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        webDriver.get("http://localhost:1234/zombie/conference/user/game");
-        assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+            webDriver.get("http://localhost:1234/zombie/conference/user/game");
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
 
-        WebElement cancel = webDriver.findElement(By.name("cancel"));
-        cancel.click();
-        Alert alert=webDriver.switchTo().alert();
-        alert.accept();
-        assertThat(webDriver.getTitle(), is("Customer Home"));
-        webServer.stop();
-        webDriver.close();
+            WebElement cancel = webDriver.findElement(By.name("cancel"));
+            cancel.click();
+            Alert alert=webDriver.switchTo().alert();
+            alert.accept();
+            assertThat(webDriver.getTitle(), is("Customer Home"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            webServer.stop();
+            webDriver.close();
+        }
+    }
+
+    @Test
+    public void shouldStayOnSamePageIfCancelIsClickedOnAlertBox() {
+
+        WebServer webServer=new WebServer(1234);
+        WebDriver webDriver = new FirefoxDriver();
+        try {
+            webServer.start();
+            webDriver.get("http://localhost:1234/zombie/conference/user/game");
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+
+            WebElement cancel = webDriver.findElement(By.name("cancel"));
+            cancel.click();
+            Alert alert=webDriver.switchTo().alert();
+            alert.dismiss();
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            webServer.stop();
+            webDriver.close();
+        }
+    }
+
+    @Test
+    public void shouldAllowOnlyOneAnswerForAQuestion() throws Exception {
+        Browser browser = Application.browser();
+        browser.open("/zombie/conference/user/game");
+        List<WebElement> radioButtons = browser.findElements(By.name("question_1"));
+        for (WebElement radioButton : radioButtons) {
+            radioButton.click();
+        }
+        int numberOfSelections = 0;
+        for (WebElement radioButton : radioButtons) {
+            if(radioButton.isSelected()){
+                numberOfSelections++;
+            }
+        }
+        assertThat(numberOfSelections, is(1));
+
     }
 
     private void initializeQuestionsAndOptions() {

@@ -41,8 +41,8 @@ public class TriviaGameController {
         for(question_id=1;question_id<=questionRepository.listAllQuestions().size();question_id++){
             userAnswers.add(params.get("question_"+question_id));
         }
-
-        modelAndView.addObject("score",resultService.calculateScore(userAnswers));
+        modelAndView.addObject("maxScore", userAnswers.size());
+        modelAndView.addObject("obtainedScore",resultService.calculateScore(userAnswers));
         return modelAndView;
 }
 }
