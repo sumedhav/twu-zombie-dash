@@ -71,7 +71,7 @@
                                 <label class="control-label align-left" for="ConferenceDescription">Description:</label>
                                 <div class="controls">
                                  <textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
-                                        placeholder="enter description">${model.description}</textarea>
+                                        placeholder="enter conference description">${model.description}</textarea>
                                      <span class="error inline-help">${model.descriptionFieldMissing}</span>
                                      <span id="descriptionExceedError" class="error inline-help">${model.descriptionError}</span>
                                  </div>
@@ -82,7 +82,7 @@
                                 <label class="control-label align-left" for="ConferenceTopic">Venue:</label>
                                 <div class="controls">
                                     <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
-                                          placeholder="enter topic">${model.venue}</textarea>
+                                          placeholder="enter conference venue">${model.venue}</textarea>
                                        <span class="error inline-help">${model.venueFieldMissing}</span>
                                        <span id="venueExceedError" class="error inline-help">${model.venueError}</span>
                                 </div>
@@ -91,7 +91,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceTopic">Max no. of attendees:</label>
                                 <div class="controls">
-                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no." value=${model.maxAttendees}>
+                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees" value=${model.maxAttendees}>
                                        <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
                                        <span class="error inline-help">${model.numberError}</span>
                                 </div>

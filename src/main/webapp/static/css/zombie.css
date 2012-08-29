@@ -27,6 +27,14 @@ input[type="text"], input[type="password"] {
     font-size:20px;
 }
 
+.conferenceList{
+    border: 1px solid;
+    display: inline-block;
+    padding:15px;
+    margin-bottom: 50px;
+    font-size:20px;
+}
+
 .form-message {
     padding-left: 50px;
 }

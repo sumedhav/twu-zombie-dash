@@ -4,32 +4,40 @@
 <html>
     <head>
         <title>Zombie Dash : Conference Home</title>
-        <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/conferenceHome.css"/>
+        <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
     </head>
       <body>
-          <h1>Zombie Dash</h1>
+         <div class="container">
+             <h1 class="pageTitle">
+                 <div>Zombie Dash</div>
+             </h1>
 
-          <div>
-            <a href="${pageContext.request.contextPath}/zombie/admin/conference/createConference" name="conference_creation" id="conference_creation">Create New Conference</a>
-          </div>
+             <div class="sectionTitle">
+                <a href="${pageContext.request.contextPath}/zombie/admin/conference/createConference" name="conference_creation"
+                    id="conference_creation" class="btn btn-primary">Create New Conference
+                </a>
+             </div>
 
-          <div name="existing_conferences" id="existing_conferences">
-            Existing Conferences
-          </div>
+              <div name="existing_conferences" id="existing_conferences" class="sectionTitle">
+                Existing Conferences
+              </div>
 
-          <div>
-              <ul>
+              <div class="conferenceList">
+                  <ol>
                       <c:forEach var="conference" items="${Conferences}">
-                          <div>
-                              <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}" name="existing_conference_name" id="existing_conference_name">${conference}</a>
-                          </div>
+                          <li>
+                              <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}"
+                              name="existing_conference_name" id="existing_conference_name">${conference} </a>
+                          </li>
                       </c:forEach>
-              </ul>
-          </div>
+                  </ol>
+              </div>
 
-          <div>
-              <a href="${pageContext.request.contextPath}/zombie/login/HomePage" name="back_conference_home" id="back_conference_home">Back</a>
-          </div>
+              <div>
+                  <a href="${pageContext.request.contextPath}/zombie/login/HomePage"
+                  name="back_conference_home" id="back_conference_home" class="btn btn-primary offset8" >Back</a>
+              </div>
+         </div>
     </body>
 </html>
