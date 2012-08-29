@@ -15,6 +15,7 @@ public class LoginLogoutTest {
     public void shouldGoToAdminLoginSuccessPageIfUserIsAdmin() throws Exception {
         Browser browser = Application.browser();
         browser.open("/zombie/login/LoginForm");
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
 
         WebElement usernameElement = browser.findElement(By.id("username"));
         usernameElement.sendKeys("admin");

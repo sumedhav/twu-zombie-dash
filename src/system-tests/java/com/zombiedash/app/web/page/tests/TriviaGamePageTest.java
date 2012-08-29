@@ -55,6 +55,7 @@ public class TriviaGamePageTest {
             cancel.click();
             Alert alert=webDriver.switchTo().alert();
             alert.accept();
+            Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Customer Home"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,6 +80,7 @@ public class TriviaGamePageTest {
             cancel.click();
             Alert alert=webDriver.switchTo().alert();
             alert.dismiss();
+            Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
         } catch (Exception e) {
             e.printStackTrace();
