@@ -17,11 +17,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User authenticateAndReturnUser(String username, String password) throws Exception {
+    public User authenticateAndReturnUser(String username, String password) {
         return userRepository.getUser(username, password);
     }
 
-    public List getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.retrieveAllUsers();
     }
 

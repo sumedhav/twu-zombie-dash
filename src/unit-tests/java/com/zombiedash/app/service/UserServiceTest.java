@@ -59,7 +59,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldListUsers() {
-        List list = new ArrayList<User>();
+        List<User> list = new ArrayList<User>();
         User admin = mock(User.class);
         User user = mock(User.class);
 
