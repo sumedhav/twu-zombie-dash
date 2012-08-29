@@ -22,25 +22,25 @@
         <div>
             <label for="username">Username:</label>
             <input name="userName" id="username" type="text" value="${model.username}"/>
-            <FONT color="red">${invalidUserName}</FONT>
+            <FONT color="red" id="invalid_user_name">${invalidUserName}</FONT>
         </div>
 
         <div>
             <label for="password">Password: </label>
             <input name="password" id="password" type="text" value="${model.password}" />
-            <FONT color="red">${invalidPassword}</FONT>
+            <FONT color="red" id="invalid_password">${invalidPassword}</FONT>
         </div>
 
         <div>
             <label for="name">Name: </label>
             <input name="name" id="name" type="text"  value="${model.name}"/>
-            <FONT color="red">${invalidName}</FONT>
+            <FONT color="red" id="invalid_name">${invalidName}</FONT>
         </div>
 
         <div>
             <label for="email">Email: </label>
             <input name="email" id="email" type="text" value="${model.email}"/>
-            <FONT color="red">${invalidEmail}</FONT>
+            <FONT color="red" id="invalid_email">${invalidEmail}</FONT>
         </div>
 
         <div>

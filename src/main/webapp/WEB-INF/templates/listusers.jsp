@@ -16,9 +16,9 @@
                 <th>Name</th>
                 <th>Role</th>
             </tr>
-            <c:forEach var="user" items="${Users}">
+            <c:forEach var="user" items="${Users}" varStatus = "userStatus">
                 <tr>
-                    <td><a href="${pageContext.request.contextPath}/zombie/admin/users/display/${user.userName}" id="username_value" name="username_value"><c:out value="${user.name}"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/zombie/admin/users/display/${user.userName}" id="username_value_${userStatus.count}" name="username_value"><c:out value="${user.name}"/></a></td>
                     <td><c:out value="${user.role}"/></td>
                 </tr>
             </c:forEach>
