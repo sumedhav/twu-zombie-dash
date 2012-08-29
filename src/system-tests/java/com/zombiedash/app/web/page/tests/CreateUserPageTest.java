@@ -105,7 +105,7 @@ public class CreateUserPageTest {
     }
 
     @Test
-    public void shouldGoToHomePageWhenClickedOkOnAlertBox() {
+    public void shouldGoToUserListPageWhenClickedOkOnAlertBox() {
 
         WebServer webServer=new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
@@ -129,7 +129,7 @@ public class CreateUserPageTest {
     }
 
     @Test
-    public void shouldGoToHomePageWhenClickedCancelOnAlertBox() {
+    public void shouldRemainOnCreateUserPageWhenClickedCancelOnAlertBox() {
 
         WebServer webServer=new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();

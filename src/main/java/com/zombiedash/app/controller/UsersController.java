@@ -71,6 +71,11 @@ public class UsersController {
 
     }
 
+    @RequestMapping(value = "/errorPage", method = GET)
+    public ModelAndView showErrorPage() {
+        return new ModelAndView("errorPage");
+    }
+
     @RequestMapping(value = "/display/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
         return new ModelAndView("userDetails", "User", userService.getUser(userName));
