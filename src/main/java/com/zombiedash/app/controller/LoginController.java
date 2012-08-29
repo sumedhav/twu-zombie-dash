@@ -40,7 +40,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "Authenticate", method = RequestMethod.POST)
-    public ModelAndView processForm(@RequestParam("Username") String username, @RequestParam("Password") String password, HttpServletRequest request) {
+    public ModelAndView processForm(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
             ModelAndView modelAndView = new ModelAndView();
             try {
                 userService.authenticateAndReturnUser(username,password);

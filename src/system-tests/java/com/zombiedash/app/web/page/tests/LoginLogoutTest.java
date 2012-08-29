@@ -16,13 +16,13 @@ public class LoginLogoutTest {
         Browser browser = Application.browser();
         browser.open("/zombie/login/LoginForm");
 
-        WebElement usernameElement = browser.findElement(By.name("Username"));
+        WebElement usernameElement = browser.findElement(By.id("username"));
         usernameElement.sendKeys("admin");
 
-        WebElement passwordElement = browser.findElement(By.name("Password"));
+        WebElement passwordElement = browser.findElement(By.id("password"));
         passwordElement.sendKeys("Welcome1");
 
-        WebElement submitElement = browser.findElement(By.name("Submit"));
+        WebElement submitElement = browser.findElement(By.tagName("button"));
         submitElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
@@ -43,13 +43,13 @@ public class LoginLogoutTest {
         Browser browser = Application.browser();
         browser.open("/zombie/login/LoginForm");
 
-        WebElement usernameElement = browser.findElement(By.name("Username"));
+        WebElement usernameElement = browser.findElement(By.name("username"));
         usernameElement.sendKeys("admin1");
 
-        WebElement passwordElement = browser.findElement(By.name("Password"));
+        WebElement passwordElement = browser.findElement(By.name("password"));
         passwordElement.sendKeys("12Welcome1");
 
-        WebElement submitElement = browser.findElement(By.name("Submit"));
+        WebElement submitElement = browser.findElement(By.tagName("button"));
         submitElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
