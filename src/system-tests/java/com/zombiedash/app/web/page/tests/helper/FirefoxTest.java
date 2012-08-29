@@ -2,7 +2,6 @@ package com.zombiedash.app.web.page.tests.helper;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -15,7 +14,6 @@ private WebDriver firefox;
     firefox = new FirefoxDriver();
   }
 
-  @Ignore
   @Test
   public void shouldFindGoogle() {
     firefox.get("http://www.google.com");
