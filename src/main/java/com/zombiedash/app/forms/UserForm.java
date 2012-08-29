@@ -49,13 +49,14 @@ public class UserForm {
     public List validate() {
         if(isEmpty(userName)||isEmpty(password)||isEmpty(role)||isEmpty(name)||isEmpty(email))
             errorCodes.add("allFieldsAreMandatory") ;
-        if(!password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$"))
+        if(isEmpty(password) || !password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$"))
             errorCodes.add("invalidPassword");
-        if(!userName.matches("([a-zA-Z0-9]){5,40}"))
+        if(isEmpty(userName) || !userName.matches("([a-zA-Z0-9]){5,40}"))
             errorCodes.add("invalidUserName");
-        if(!email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+        if(isEmpty(email) || !email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
             errorCodes.add("invalidEmail");
-
+        if(isEmpty(name)|| !(name.length()<=40))
+            errorCodes.add("invalidName");
         return errorCodes;
     }
 

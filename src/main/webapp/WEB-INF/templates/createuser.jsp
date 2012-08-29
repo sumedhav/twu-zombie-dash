@@ -34,6 +34,7 @@
         <div>
             <label for="name">Name: </label>
             <input name="name" id="name" type="text"  value="${model.name}"/>
+            <FONT color="red">${invalidName}</FONT>
         </div>
 
         <div>

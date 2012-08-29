@@ -15,7 +15,7 @@ public class UserFormTest {
 
     @Test
     public void shouldReturnAnErrorMessageIfAnyFieldIsEmpty () throws Exception {
-        UserForm userForm = new UserForm("",null,"name","email@email.com","password1");
+        UserForm userForm = new UserForm("",null,"name","email@email.com",null);
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("allFieldsAreMandatory") ));
     }
@@ -70,6 +70,14 @@ public class UserFormTest {
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidPassword")));
 
+    }
+
+
+    @Test
+    public void shouldReturnInvalidNameErrorWhenNameExceedsUpperLimit() {
+        UserForm userForm = new UserForm("username","role","qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","email@email.com", "password134234fsd");
+        List<String> result = userForm.validate();
+        assertThat(result.get(0),is(equalTo("invalidName")));
     }
 
     @Test
