@@ -6,6 +6,7 @@
         <title>Zombie Dash : User Details</title>
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/userView.css" rel="stylesheet">
+        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/delete_user.js"></script>
     </head>
 
     <body>
@@ -30,8 +31,7 @@
         </tr>
         </table>
         <div name="edit_delete_back_buttons" id="edit_delete_back_buttons">
-            <!--<a name="edit_details" id="edit_details" href="" value="Edit Details">Edit Details</a>-->
-            <a name="delete_user" id="delete_user" href="${pageContext.request.contextPath}/zombie/admin/users/deleteuser/${User.userName}">Delete User</a>
+            <input name="delete_user" id="delete_user" type="button" value="Delete User" onClick="return deleteUser('${pageContext.request.contextPath}','${User.userName}')"/>
             <a name="back_user_details" id="back_user_details" href="${pageContext.request.contextPath}/zombie/admin/users">Back</a>
         </div>
     </body>

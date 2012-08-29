@@ -16,8 +16,13 @@ table td{
 }
 
 #delete_user{
+    border: 2px solid;
+    background:none;
     margin-left:3%;
-    padding:0 0.5em;
+    font-size:16px;
+    margin-left:3%;
+    width: 10em
+    padding:0 2em;
 }
 
 #back_user_details{
