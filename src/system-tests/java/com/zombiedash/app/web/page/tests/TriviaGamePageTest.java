@@ -5,6 +5,7 @@ import com.example.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -89,6 +90,27 @@ public class TriviaGamePageTest {
             webServer.stop();
             webDriver.close();
         }
+    }
+
+    @Test@Ignore
+    public void shouldDisplayResultPageWithScoreWhenAllQuestionsAreAnsweredAndSubmitted() throws Exception {
+        Browser browser = Application.browser();
+        browser.open("/zombie/conference/user/game");
+//        List<WebElement> questions = browser.findElements(By.className("question"));
+//        for (WebElement question : questions) {
+//            List<WebElement> options = question.findElements(By.className("options"));
+//            options.get(0).click();
+//        }
+
+//            List<WebElement> options = browser.findElements(By.name("question_"+1));
+//            options.get(0).click();
+//        List<WebElement> optionsForSecond = browser.findElements(By.name("question_"+2));
+//            optionsForSecond.get(0).click();
+
+        WebElement submitButton = browser.findElement(By.id("submit_button"));
+        submitButton.click();
+        assertThat(browser.getPageTitle(), is(""));
+//        assertThat(browser.findElement(By.id("obtainedScore")).getText(), IsNot.not(""));
     }
 
     @Test
