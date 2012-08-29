@@ -35,7 +35,7 @@ public class TriviaGamePageTest {
         browser.open("/zombie/conference/user/game");
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
 
-        List<WebElement> elements = browser.findElements(By.cssSelector("h3"));
+        List<WebElement> elements = browser.findElements(By.cssSelector(".question"));
         assertThat(elements.size(), is(existingQnCount + 2));
         assertThat(elements.get(existingQnCount + 0).getText(), equalTo("Where is Red Fort"));
         assertThat(elements.get(existingQnCount + 1).getText(), equalTo("Is it lunch time?"));

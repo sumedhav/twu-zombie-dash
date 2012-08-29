@@ -1,0 +1,47 @@
+h2{
+    margin-top:3%;
+    margin-left:5%;
+}
+
+div.question{
+    margin-left:5%;
+    margin-top:5%;
+}
+
+table{
+    margin-top:1%;
+    margin-left:5%;
+}
+
+table td{
+    padding-right:7em;
+    padding-top: 2em;
+}
+
+
+label:hover{
+    cursor:pointer;
+}
+
+form input#submit_button, form input#cancel_button{
+    background:none;
+    text-decoration:none;
+    border:2px solid;
+    width:7em;
+    text-transform:capitalize;
+    text-align:center;
+}
+
+form input#submit_button{
+    margin-top:5%;
+    float:right;
+    margin-right:30%;
+}
+
+form input#cancel_button{
+    margin-top:2%;
+    float:right;
+    margin-right:30%;
+    clear:both;
+}
+
