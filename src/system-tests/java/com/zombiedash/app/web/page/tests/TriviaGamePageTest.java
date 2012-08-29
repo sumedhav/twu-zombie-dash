@@ -5,7 +5,6 @@ import com.example.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -41,7 +40,7 @@ public class TriviaGamePageTest {
         assertThat(elements.get(existingQnCount + 1).getText(), equalTo("Is it lunch time?"));
     }
 
-    @Ignore
+
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() {
 
@@ -61,6 +60,7 @@ public class TriviaGamePageTest {
         alert.accept();
         assertThat(webDriver.getTitle(), is("Customer Home"));
         webServer.stop();
+        webDriver.close();
     }
 
     private void initializeQuestionsAndOptions() {
