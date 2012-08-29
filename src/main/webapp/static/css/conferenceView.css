@@ -1,13 +1,15 @@
 table{
     text-align:left;
+    margin-left: 40%;
 }
 
-h3{
-    margin:auto;
-    width:18%;
-    text-decoration: underline;
+h3 {
     font-size: 1.5em;
-    margin-bottom: 1%;
+    margin-left: 40%;
+    text-align: center;
+    text-decoration: underline;
+    width: 13em;
+    margin-top: 5%;
 }
 
 th{

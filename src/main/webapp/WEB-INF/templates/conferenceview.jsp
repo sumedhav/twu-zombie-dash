@@ -11,7 +11,7 @@
 <body>
     <h1>Zombie Dash</h1>
     <h3>Conference Information</h3>
-    <table class="table" align="center">
+    <table class="table">
         <tr>
             <th>Conference Name:</th>
             <td>${Conference.name}</td>
