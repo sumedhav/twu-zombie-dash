@@ -5,78 +5,117 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
 
+<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
+
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
-	<h3>Create Conference: Enter Details</h3>
-	 <h4> <FONT color="red">${model.errorString}</FONT></h4>
+	 <div class="container">
+             <h1 class="pageTitle">
+                 <div>Zombie Dash</div>
+             </h1>
+          	<div class="sectionTitle">Create Conference: Enter Details</div>
+             <div class="control-group">
+                  <div id="message_to_be_displayed" class="form-message error">
+                      ${model.errorString}
+                  </div>
+             </div>
 
-	<form name='conferenceCreationForm' action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method='POST'>
 
-		<table>
-			<tr>
-				<td>Conference name:</td>
-				<td>
 
-                    <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name,100,'#nameExceedError');"
-                              rows="1" cols="20">${model.name}</textarea>
-                    <label id="nameExceedError" style="color:#FF0000"></label>
-                    <FONT color="red">${model.nameFieldMissing}</FONT>
-				</td>
+             <div class="row-fluid">
+                 <div class="span12">
+                     <form id="conferenceForm" class="form-horizontal" name="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method = "POST">
 
-			</tr>
-			<tr>
-                <td>Topic:</td>
-                <td><textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic,100,'#topicExceedError');"
-                              rows="1" cols="20">${model.topic}</textarea>
-                    <label id="topicExceedError" style="color:#FF0000"></label>
-                    <FONT color="red">${model.topicFieldMissing}</FONT>
-                </td>
-            </tr>
-            <tr>
-                <td>Start date (yyyy-mm-dd):</td>
-                <td><input type='text' name='conf_start_date' size="28" value=${model.startDate}> <FONT color="red">${model.startDateFieldMissing}</FONT> <FONT color="red">${model.startDateError}</FONT>
-                </td>
-            </tr>
-            <tr>
-                <td>End date (yyyy-mm-dd):</td>
-                <td><input type='text' name='conf_end_date' size="28" value=${model.endDate}> <FONT color="red">${model.endDateFieldMissing}</FONT> <FONT color="red">${model.endDateError}</FONT>
-                </td>
-            </tr>
-            <tr>
-                <td>Description:</td>
-                <td><textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
-                              rows="1" cols="20">${model.description}</textarea>
-                    <label id="descriptionExceedError" style="color:#FF0000"></label>
-                    <FONT color="red">${model.descriptionFieldMissing}</FONT>
-                </td>
-            </tr>
+                         <div class="control-group">
+                             <label class="control-label align-left" for="ConferenceName">Conference name:</label>
+                             <div class="controls">
+                                <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
+                                   placeholder="enter conference name">${model.name}</textarea>
+                                <span class="error inline-help">${model.nameFieldMissing}</span>
+                                <span id="nameExceedError" class="error inline-help" style="color:#FF0000"></span>
+                             </div>
+                         </div>
 
-            <tr>
-                <td>Venue:</td>
-                <td><textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
-                              rows="1" cols="20">${model.venue}</textarea>
-                    <label id="venueExceedError" style="color:#FF0000"></label>
-                    <FONT color="red">${model.venueFieldMissing}</FONT>
-                </td>
-            </tr>
+                         <div class="control-group">
+                              <label class="control-label align-left" for="ConferenceTopic">Topic:</label>
+                              <div class="controls">
+                                 <textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
+                                     placeholder="enter conference topic">${model.topic}</textarea>
+                                 <span class="error inline-help">${model.topicFieldMissing}</span>
+                                 <span id="topicExceedError" class="error inline-help" style="color:#FF0000"></span>
+                              </div>
+                          </div>
 
-            <tr>
-                <td>Max no. of attendees:</td>
-                <td><input type='text' name='conf_max_attendees' size="28" value=${model.maxAttendees}> <FONT color="red">${model.maxAttendeesFieldMissing}</FONT> <FONT color="red">${model.numberError}</FONT>
-                </td>
-            </tr>
-			<tr>
-				<td colspan='2'><input name="save" type="submit"
-					value="Save" />
-				</td>
-            </tr>
-            <td>
-                <input type="button" value="Cancel"
-                       onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
-            </td>
-            <tr>
-			</tr>
-		</table>
+                          <div class="control-group">
+                                <label class="control-label align-left" for="ConferenceStartDate">Start date:</label>
+                                <div class="controls">
+                                 <input type='text' name='conf_start_date' size="28" placeholder="yyyy-mm-dd" value=${model.startDate} >
+                                 <span class="error inline-help">${model.startDateFieldMissing}</span>
+                                 <span class="error inline-help">${model.startDateError}</span>
+                                </div>
+                          </div>
+
+                          <div class="control-group">
+                                <label class="control-label align-left" for="ConferenceEndDate"> End date:</label>
+                               <div class="controls">
+                                <input type='text' name='conf_end_date' size="28" placeholder="yyyy-mm-dd" value=${model.endDate}>
+                                 <span class="error inline-help">${model.endDateFieldMissing}</span>
+                                  <span class="error inline-help">${model.endDateError}</span>
+
+                                </div>
+                          </div>
+
+
+                          <div class="control-group">
+                                <label class="control-label align-left" for="ConferenceDescription">Description:</label>
+                                <div class="controls">
+                                 <textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
+                                        placeholder="enter description">${model.description}</textarea>
+                                     <span class="error inline-help">${model.descriptionFieldMissing}</span>
+                                     <span id="descriptionExceedError" class="error inline-help">${model.descriptionError}</span>
+                                 </div>
+                          </div>
+
+
+                          <div class="control-group">
+                                <label class="control-label align-left" for="ConferenceTopic">Venue:</label>
+                                <div class="controls">
+                                    <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
+                                          placeholder="enter topic">${model.venue}</textarea>
+                                       <span class="error inline-help">${model.venueFieldMissing}</span>
+                                       <span id="venueExceedError" class="error inline-help">${model.venueError}</span>
+                                </div>
+                          </div>
+
+                          <div class="control-group">
+                                <label class="control-label align-left" for="ConferenceTopic">Max no. of attendees:</label>
+                                <div class="controls">
+                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no." value=${model.maxAttendees}>
+                                       <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
+                                       <span class="error inline-help">${model.numberError}</span>
+                                </div>
+                          </div>
+
+
+                         <div class="control-group">
+                              <div class="controls offset6" >
+                                 <button type="submit" class="btn btn-primary">Save</button>
+                              </div>
+                          </div>
+
+                         <div class="control-group">
+                            <div class="controls offset6">
+                            <input type="button" value="Cancel" class="btn btn-primary"
+                               onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
+                            </div>
+                        </div>
+
+                     </form>
+                 </div>
+             </div>
+         </div>
+
 
 	</form>
 
