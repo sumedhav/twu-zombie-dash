@@ -31,21 +31,21 @@ public class LoginControllerTest {
         assertThat(modelAndView.getViewName(), equalTo("loginform"));
     }
 
-    @Test
-    public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() throws Exception {
-        User user = mock(User.class);
-        given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
-        ModelAndView modelAndView = new LoginController(userService).processForm("admin", "Welcome1", new MockHttpServletRequest());
-
-        assertThat(modelAndView.getViewName() ,equalTo("redirect:/zombie/login/HomePage"));
-    }
-
-    @Test
-    public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated() throws Exception{
-        given(userService.authenticateAndReturnUser(anyString(), anyString())).willThrow(Exception.class);
-        ModelAndView modelAndView = new LoginController(userService).processForm("admin1","Welcome1", new MockHttpServletRequest());
-        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
-    }
+//    @Test
+//    public void  shouldForwardToLoginSuccessIfUserSuccessfullyAuthenticated() throws Exception {
+//        User user = mock(User.class);
+//        given(userService.authenticateAndReturnUser(anyString(), anyString())).willReturn(user);
+//        ModelAndView modelAndView = new LoginController(userService).processForm("admin", "Welcome1", new MockHttpServletRequest());
+//
+//        assertThat(modelAndView.getViewName() ,equalTo("redirect:/zombie/login/HomePage"));
+//    }
+//
+//    @Test
+//    public void shouldForwardToLoginFormIfUserUnsuccessfullyAuthenticated() throws Exception{
+//        given(userService.authenticateAndReturnUser(anyString(), anyString())).willThrow(Exception.class);
+//        ModelAndView modelAndView = new LoginController(userService).processForm("admin1","Welcome1", new MockHttpServletRequest());
+//        assertThat(modelAndView.getViewName(), equalTo("redirect:/zombie/login/LoginForm"));
+//    }
 
     @Test
     public void shouldRedirectToLoginPageOnLogout() throws Exception{
