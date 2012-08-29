@@ -34,7 +34,7 @@ public class ConferenceValidator {
             model.put(errorName,"Must be a current or future date");
             return false;
         } catch (ParseException e) {
-            if (!rawDate.isEmpty()) model.put(errorName, "Must be in yyyy-mm-dd format");
+            if (!rawDate.isEmpty()) model.put(errorName, "Must be valid date in yyyy-mm-dd format");
             return false;
         }
     }
