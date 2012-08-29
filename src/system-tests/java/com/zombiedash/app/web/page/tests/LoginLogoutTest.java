@@ -16,22 +16,20 @@ public class LoginLogoutTest {
         Browser browser = Application.browser();
         browser.open("/zombie/login/LoginForm");
 
-        WebElement usernameElement = browser.findElement(By.name("Username"));
+        WebElement usernameElement = browser.findElement(By.id("Username"));
         usernameElement.sendKeys("admin");
 
-        WebElement passwordElement = browser.findElement(By.name("Password"));
+        WebElement passwordElement = browser.findElement(By.id("Password"));
         passwordElement.sendKeys("Welcome1");
 
-        WebElement submitElement = browser.findElement(By.name("Submit"));
+        WebElement submitElement = browser.findElement(By.id("Submit"));
         submitElement.click();
-
         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
 
         WebElement logoutElement = browser.findElement(By.id("Logout"));
         logoutElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
-
         WebElement messageElement = browser.findElement(By.id("message_to_be_displayed"));
 
         assertThat(messageElement.getText(), is("You have been logged out successfully!!"));
@@ -43,13 +41,13 @@ public class LoginLogoutTest {
         Browser browser = Application.browser();
         browser.open("/zombie/login/LoginForm");
 
-        WebElement usernameElement = browser.findElement(By.name("Username"));
+        WebElement usernameElement = browser.findElement(By.id("Username"));
         usernameElement.sendKeys("admin1");
 
-        WebElement passwordElement = browser.findElement(By.name("Password"));
+        WebElement passwordElement = browser.findElement(By.id("Password"));
         passwordElement.sendKeys("12Welcome1");
 
-        WebElement submitElement = browser.findElement(By.name("Submit"));
+        WebElement submitElement = browser.findElement(By.id("Submit"));
         submitElement.click();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));

@@ -1,0 +1,278 @@
+Index: src/main/webapp/static/css/loginPage.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#login_page{\n    float:center;\n    margin: 0% 20%;\n}\n    \n#login_page img{\n    float: left;\n    width: 50%;\n \n}\n        \n#login_page #login_form{\n    float:right;\n    margin-top: 5%;\n    width:40%;\n  \n}\n\nlabel:hover{\n    cursor:pointer;\n}\n\n#login_form label{\n    font-weight: bold;\n}\n              \n#login_form #Submit{\n    margin-top:2em;\n    width:20%\n}\n\n#message_to_be_displayed {\n    color:red;\n    font-weight:bold;\n    margin-bottom:2%;\n    width:80%;\n}\n
+===================================================================
+--- src/main/webapp/static/css/loginPage.css	(date 1346155146000)
++++ src/main/webapp/static/css/loginPage.css	(revision )
+@@ -13,7 +13,6 @@
+     float:right;
+     margin-top: 5%;
+     width:40%;
+-  
+ }
+ 
+ label:hover{
+Index: src/main/java/com/zombiedash/app/security/UserAuthenticationProvider.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zombiedash.app.security;\n\nimport com.zombiedash.app.service.UserService;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.security.authentication.AuthenticationProvider;\nimport org.springframework.security.authentication.BadCredentialsException;\nimport org.springframework.security.authentication.UsernamePasswordAuthenticationToken;\nimport org.springframework.security.core.Authentication;\nimport org.springframework.security.core.AuthenticationException;\nimport org.springframework.security.core.GrantedAuthority;\n\npublic class UserAuthenticationProvider implements AuthenticationProvider{\n  private UserService userService;\n\n  @Autowired\n  public void setUserService(UserService userService) {\n    this.userService = userService;\n  }\n\n  @Override\n  public Authentication authenticate(Authentication authentication) throws AuthenticationException {\n    try {\n      userService.authenticateAndReturnUser((String) authentication.getPrincipal(),(String) authentication.getCredentials());\n      return new UsernamePasswordAuthenticationToken(\n          authentication.getPrincipal(),\n          authentication.getCredentials(),\n          new GrantedAuthority[] {new GrantedAuthority() {\n            @Override\n            public String getAuthority() {\n              return \"ROLE_ADMIN\";\n            }\n          }});\n    } catch (Exception e) {\n      throw new BadCredentialsException(\"Bad User Credentials.\");\n    }\n\n  }\n\n  @Override\n  public boolean supports(Class<?> aClass) {\n    return true;\n  }\n}\n
+===================================================================
+--- src/main/java/com/zombiedash/app/security/UserAuthenticationProvider.java	(date 1346155146000)
++++ src/main/java/com/zombiedash/app/security/UserAuthenticationProvider.java	(revision )
+@@ -9,6 +9,9 @@
+ import org.springframework.security.core.AuthenticationException;
+ import org.springframework.security.core.GrantedAuthority;
+ 
++import java.util.Arrays;
++import java.util.List;
++
+ public class UserAuthenticationProvider implements AuthenticationProvider{
+   private UserService userService;
+ 
+@@ -21,15 +24,17 @@
+   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+     try {
+       userService.authenticateAndReturnUser((String) authentication.getPrincipal(),(String) authentication.getCredentials());
+-      return new UsernamePasswordAuthenticationToken(
+-          authentication.getPrincipal(),
+-          authentication.getCredentials(),
+-          new GrantedAuthority[] {new GrantedAuthority() {
++      List<GrantedAuthority> grantedAuthority = Arrays.asList(new GrantedAuthority[] {new GrantedAuthority() {
+             @Override
+             public String getAuthority() {
+-              return "ROLE_ADMIN";
++                return "ROLE_ADMIN";
+             }
+-          }});
++        }});
++
++      return new UsernamePasswordAuthenticationToken(
++          authentication.getPrincipal(),
++          authentication.getCredentials(), grantedAuthority
++          );
+     } catch (Exception e) {
+       throw new BadCredentialsException("Bad User Credentials.");
+     }
+Index: src/main/webapp/WEB-INF/templates/loginform.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><%@ taglib prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\"%>\n<html>\n<head>\n    <title>Zombie Dash : Login</title>\n    <link type=\"text/css\" href=\"${pageContext.request.contextPath}/static/css/commonPatterns.css\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"${pageContext.request.contextPath}/static/css/loginPage.css\" />\n</head>\n<body onload='document.loginForm.Username.focus();'>\n    <h1>\n        <center>Login</center>\n    </h1>\n    <form name=\"loginForm\" action=\"<c:url value='j_spring_security_check' />\" method = \"POST\">\n\n        <div id=\"login_page\">\n\n            <div id=\"Zombie_img\">\n                <img src=\"${pageContext.request.contextPath}/static/images/ZombieDash.jpg\"/>\n            </div>\n\n            <div id=\"login_form\">\n\n                <div id=\"message_to_be_displayed\">\n                    ${messageToBeDisplayed}\n                </div>\n\n                <div>\n                    <label for=\"Username\">Username:</label>\n                </div>\n\n                <div>\n                    <input type=\"text\" name=\"j_username\" id=\"Username\" />\n                </div>\n\n                <div>\n                    <label for=\"Password\">Password: </label>\n                </div>\n\n                <div>\n                    <input type=\"password\" name=\"j_password\" id=\"Password\"/>\n                </div>\n\n                <div>\n                    <input type=\"submit\" value=\"Login\" name=\"Submit\" id=\"Submit\"/>\n                </div>\n\n            </div>\n\n        </div>\n\n    </form>\n</body>\n</html>
+===================================================================
+--- src/main/webapp/WEB-INF/templates/loginform.jsp	(date 1346155146000)
++++ src/main/webapp/WEB-INF/templates/loginform.jsp	(revision )
+@@ -2,7 +2,7 @@
+ <html>
+ <head>
+     <title>Zombie Dash : Login</title>
+-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
++    <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet"/>
+     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/loginPage.css" />
+ </head>
+ <body onload='document.loginForm.Username.focus();'>
+\ No newline at end of file
+Index: src/system-tests/java/com/zombiedash/app/web/Application.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zombiedash.app.web;\r\n\r\nimport com.zombiedash.app.jetty.WebServer;\r\nimport com.zombiedash.app.web.Browser;\r\nimport org.apache.commons.dbcp.BasicDataSource;\r\nimport org.apache.commons.lang.StringUtils;\r\nimport org.apache.commons.lang.Validate;\r\n\r\nimport java.net.ServerSocket;\r\n\r\npublic class Application {\r\n\r\n    private static Application instance;\r\n\r\n    private WebServer server;\r\n    private Browser browser;\r\n\r\n    public static Browser open(String url) {\r\n        return browser().open(url);\r\n    }\r\n\r\n    public static Browser browser() {\r\n        Browser browser = instance().browser;\r\n        Validate.notNull(browser, \"Application has not started succesfully. Please check earlier failed tests.\");\r\n        return browser;\r\n    }\r\n\r\n    private static Application instance() {\r\n        if (instance != null) {\r\n            return instance;\r\n        }\r\n        try {\r\n            int port = findFreePort();\r\n            instance = new Application();\r\n            registerShutdownHook();\r\n            instance.start(port);\r\n            return instance;\r\n\r\n        } catch (Exception e) {\r\n            throw new RuntimeException(\"Application startup failed\", e);\r\n        }\r\n    }\r\n\r\n    private static int findFreePort() throws Exception {\r\n        ServerSocket socket = new ServerSocket(0);\r\n        int port = socket.getLocalPort();\r\n        socket.close();\r\n        return port;\r\n    }\r\n\r\n    private static void registerShutdownHook() {\r\n        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));\r\n    }\r\n\r\n    private void start(int port) throws Exception {\r\n        boolean testWithFirefox = Boolean.getBoolean(\"test.with.firefox\");\r\n        String hostAddress = System.getProperty(\"test.with.host.address\");\r\n\r\n        setSystemProperty(\"controlm.queue.provider\", \"none\");\r\n        setSystemProperty(\"icc.service.provider\", \"local\");\r\n\r\n        if (StringUtils.isBlank(hostAddress)) {\r\n            server = new WebServer(port).start();\r\n            hostAddress = \"http://localhost:\" + port;\r\n            browser = new Browser(hostAddress, testWithFirefox);\r\n        } else {\r\n            browser = new Browser(hostAddress, testWithFirefox);\r\n        }\r\n    }\r\n\r\n    private void setSystemProperty(String key, String value) {\r\n        if (System.getProperty(key) == null) {\r\n            System.setProperty(key, value);\r\n        }\r\n    }\r\n\r\n    private void stop() {\r\n        if (browser != null) {\r\n            browser.stop();\r\n        }\r\n        if (server != null) {\r\n            server.stop();\r\n        }\r\n    }\r\n\r\n    private static class ShutdownHook implements Runnable {\r\n        public void run() {\r\n            instance.stop();\r\n        }\r\n    }\r\n\r\n    public static BasicDataSource setupDataSource(){\r\n        BasicDataSource dataSource = new BasicDataSource();\r\n        dataSource.setDriverClassName(\"org.h2.Driver\");\r\n        dataSource.setUrl(\"jdbc:h2:mem:db1\");\r\n        dataSource.setUsername(\"sa\");\r\n        return dataSource;\r\n    }\r\n}\r\n
+===================================================================
+--- src/system-tests/java/com/zombiedash/app/web/Application.java	(date 1346155146000)
++++ src/system-tests/java/com/zombiedash/app/web/Application.java	(revision )
+@@ -1,7 +1,6 @@
+ package com.zombiedash.app.web;
+ 
+ import com.zombiedash.app.jetty.WebServer;
+-import com.zombiedash.app.web.Browser;
+ import org.apache.commons.dbcp.BasicDataSource;
+ import org.apache.commons.lang.StringUtils;
+ import org.apache.commons.lang.Validate;
+Index: src/main/webapp/WEB-INF/applicationContext-security.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<beans:beans xmlns=\"http://www.springframework.org/schema/security\"\n             xmlns:beans=\"http://www.springframework.org/schema/beans\"\n             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n             xsi:schemaLocation=\"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd\n                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd\">\n\n\n    <http auto-config='true'>\n        <intercept-url pattern=\"/zombie/login/LoginForm\" access=\"IS_AUTHENTICATED_ANONYMOUSLY\"/>\n        <intercept-url pattern=\"/**\" access=\"ROLE_ADMIN\"/>\n        <form-login login-page = \"/zombie/login/LoginForm\"\n                    default-target-url='/zombie/login/HomePage'\n                    always-use-default-target='true'/>\n    </http>\n\n    <authentication-manager>\n        <authentication-provider ref=\"UserAuthenticationProvider\"/>\n    </authentication-manager>\n    <beans:bean id=\"UserAuthenticationProvider\" class=\"com.zombiedash.app.security.UserAuthenticationProvider\"/>\n\n\n</beans:beans>
+===================================================================
+--- src/main/webapp/WEB-INF/applicationContext-security.xml	(date 1346155146000)
++++ src/main/webapp/WEB-INF/applicationContext-security.xml	(revision )
+@@ -2,8 +2,8 @@
+ <beans:beans xmlns="http://www.springframework.org/schema/security"
+              xmlns:beans="http://www.springframework.org/schema/beans"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+-                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
++             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
++                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+ 
+ 
+     <http auto-config='true'>
+\ No newline at end of file
+Index: ivy.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><ivy-module version=\"2.0\">\n\n    <info organisation=\"com.example.app\" module=\"app\" />\n\n    <configurations>\n        <conf name=\"jetty\" />\n        <conf name=\"runtime\" />\n        <conf name=\"buildtime\" />\n        <conf name=\"tomcat\"/>\n    </configurations>\n\n    <dependencies>\n        <dependency org=\"org.mortbay.jetty\" name=\"jetty\" rev=\"6.1.22\" conf=\"jetty->*\">\n            <exclude name=\"servlet-api\" />\n        </dependency>\n\n        <dependency org=\"org.mortbay.jetty\" name=\"jsp-2.1-glassfish\" rev=\"2.1.v20100127\" conf=\"jetty->*\">\n            <exclude name=\"servlet-api\" />\n        </dependency>\n\n        <dependency org=\"junit\" name=\"junit\" rev=\"4.10\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.mockito\" name=\"mockito-all\" rev=\"1.9.5-rc1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.hamcrest\" name=\"hamcrest-all\" rev=\"1.3\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.test\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"javax.servlet\" name=\"servlet-api\" rev=\"2.5\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.freemarker\" name=\"freemarker\" rev=\"2.3.16\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.asm\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.beans\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.context\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.context.support\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.core\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.expression\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.jdbc\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.transaction\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.web\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.springframework\" name=\"org.springframework.web.servlet\" rev=\"3.0.2.RELEASE\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"com.h2database\" name=\"h2\" rev=\"1.3.168\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"com.h2database\" name=\"h2\" rev=\"1.3.168\" transitive=\"false\" conf=\"tomcat->*\" />\n        <dependency org=\"postgresql\" name=\"postgresql\" rev=\"9.1-901.jdbc4\" conf=\"tomcat->*\" />\n        <!--<dependency org=\"org.apache.santuario\" name=\"xmlsec\" rev=\"1.4.3\" transitive=\"false\" conf=\"runtime->*\" />-->\n        <dependency org=\"org.slf4j\" name=\"slf4j-api\" rev=\"1.6.1\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"org.slf4j\" name=\"slf4j-jcl\" rev=\"1.6.1\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"commons-logging\" name=\"commons-logging\" rev=\"1.1.1\" transitive=\"false\" conf=\"runtime->*\" />\n        <dependency org=\"commons-lang\" name=\"commons-lang\" rev=\"2.4\" transitive=\"false\" conf=\"buildtime,runtime->*\" />\n        <dependency org=\"commons-dbcp\" name=\"commons-dbcp\" rev=\"1.3\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"commons-pool\" name=\"commons-pool\" rev=\"1.5\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-java\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-firefox-driver\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-api\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-htmlunit-driver\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-server\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-remote-driver\" rev=\"2.24.1\" transitive=\"false\" conf=\"buildtime->*\" />\n        <dependency org=\"org.seleniumhq.selenium\" name=\"selenium-parent\" rev=\"2.24.1\"/>\n        <dependency org=\"net.sourceforge.htmlunit\" name=\"htmlunit\" rev=\"2.10\"/>\n        <dependency org=\"javax.servlet\" name=\"jstl\" rev=\"1.2\" conf=\"tomcat->*\"/>\n        <dependency org=\"commons-dbcp\" name=\"commons-dbcp\" rev=\"1.3\" transitive=\"false\" conf=\"tomcat->*\" />\n        <dependency org=\"com.google.guava\" name=\"guava\" rev=\"r08\" />\n        <dependency org=\"org.json\" name=\"json\" rev=\"20090211\"/>\n        <dependency org=\"org.apache.commons\" name=\"commons-exec\" rev=\"1.1\"/>\n        <dependency org=\"org.springframework.security\" name=\"spring-security-config\" rev=\"3.0.2.RELEASE\"/>\n        <dependency org=\"org.springframework.security\" name=\"spring-security-web\" rev=\"3.0.2.RELEASE\"/>\n    </dependencies>\n</ivy-module>\n
+===================================================================
+--- ivy.xml	(date 1346155146000)
++++ ivy.xml	(revision )
+@@ -38,26 +38,27 @@
+         <dependency org="com.h2database" name="h2" rev="1.3.168" transitive="false" conf="tomcat->*" />
+         <dependency org="postgresql" name="postgresql" rev="9.1-901.jdbc4" conf="tomcat->*" />
+         <!--<dependency org="org.apache.santuario" name="xmlsec" rev="1.4.3" transitive="false" conf="runtime->*" />-->
+-        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" transitive="false" conf="runtime->*" />
+-        <dependency org="org.slf4j" name="slf4j-jcl" rev="1.6.1" transitive="false" conf="runtime->*" />
++    <dependency org="org.slf4j" name="slf4j-api" rev="1.5.6" transitive="false" conf="runtime->*" />
++    <dependency org="org.slf4j" name="slf4j-jcl" rev="1.5.6" transitive="false" conf="runtime->*" />
+-        <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="runtime->*" />
+-        <dependency org="commons-lang" name="commons-lang" rev="2.4" transitive="false" conf="buildtime,runtime->*" />
+-        <dependency org="commons-dbcp" name="commons-dbcp" rev="1.3" transitive="false" conf="buildtime->*" />
+-        <dependency org="commons-pool" name="commons-pool" rev="1.5" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-htmlunit-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-server" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
+-        <dependency org="org.seleniumhq.selenium" name="selenium-parent" rev="2.24.1"/>
+-        <dependency org="net.sourceforge.htmlunit" name="htmlunit" rev="2.10"/>
+-        <dependency org="javax.servlet" name="jstl" rev="1.2" conf="tomcat->*"/>
+-        <dependency org="commons-dbcp" name="commons-dbcp" rev="1.3" transitive="false" conf="tomcat->*" />
+-        <dependency org="com.google.guava" name="guava" rev="r08" />
+-        <dependency org="org.json" name="json" rev="20090211"/>
+-        <dependency org="org.apache.commons" name="commons-exec" rev="1.1"/>
++    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="runtime->*" />
++    <dependency org="commons-lang" name="commons-lang" rev="2.4" transitive="false" conf="buildtime,runtime->*" />
++    <dependency org="commons-dbcp" name="commons-dbcp" rev="1.3" transitive="false" conf="buildtime->*" />
++    <dependency org="commons-pool" name="commons-pool" rev="1.5" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-htmlunit-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-server" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.24.1" transitive="false" conf="buildtime->*" />
++    <dependency org="org.seleniumhq.selenium" name="selenium-parent" rev="2.24.1"/>
++    <dependency org="net.sourceforge.htmlunit" name="htmlunit" rev="2.10"/>
++    <dependency org="javax.servlet" name="jstl" rev="1.2" conf="tomcat->*"/>
++    <dependency org="commons-dbcp" name="commons-dbcp" rev="1.3" transitive="false" conf="tomcat->*" />
++    <dependency org="com.google.guava" name="guava" rev="r08" />
++    <dependency org="org.json" name="json" rev="20090211"/>
++    <dependency org="org.apache.commons" name="commons-exec" rev="1.1"/>
+-        <dependency org="org.springframework.security" name="spring-security-config" rev="3.0.2.RELEASE"/>
+-        <dependency org="org.springframework.security" name="spring-security-web" rev="3.0.2.RELEASE"/>
++        <dependency org="org.springframework.security" name="spring-security-config" rev="3.1.0.RELEASE"/>
++        <dependency org="org.springframework.security" name="spring-security-web" rev="3.1.0.RELEASE"/>
++        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.25.0" conf="buildtime->*"/>
+     </dependencies>
+ </ivy-module>
+Index: src/system-tests/java/com/zombiedash/app/web/page/tests/LoginLogoutTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zombiedash.app.web.page.tests;\n\nimport com.zombiedash.app.web.Application;\nimport com.zombiedash.app.web.Browser;\nimport org.junit.Test;\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebElement;\n\nimport static org.hamcrest.MatcherAssert.assertThat;\nimport static org.hamcrest.Matchers.is;\n\npublic class LoginLogoutTest {\n\n    @Test\n    public void shouldGoToAdminLoginSuccessPageIfUserIsAdmin() throws Exception {\n        Browser browser = Application.browser();\n        browser.open(\"/zombie/login/LoginForm\");\n\n        WebElement usernameElement = browser.findElement(By.name(\"Username\"));\n        usernameElement.sendKeys(\"admin\");\n\n        WebElement passwordElement = browser.findElement(By.name(\"Password\"));\n        passwordElement.sendKeys(\"Welcome1\");\n\n        WebElement submitElement = browser.findElement(By.name(\"Submit\"));\n        submitElement.click();\n\n        assertThat(browser.getPageTitle(), is(\"Zombie Dash : Welcome\"));\n\n        WebElement logoutElement = browser.findElement(By.id(\"Logout\"));\n        logoutElement.click();\n\n        assertThat(browser.getPageTitle(), is(\"Zombie Dash : Login\"));\n\n        WebElement messageElement = browser.findElement(By.id(\"message_to_be_displayed\"));\n\n        assertThat(messageElement.getText(), is(\"You have been logged out successfully!!\"));\n\n    }\n\n    @Test\n    public void shouldStayInLoginFormIfLoginUnsuccessful() throws Exception {\n        Browser browser = Application.browser();\n        browser.open(\"/zombie/login/LoginForm\");\n\n        WebElement usernameElement = browser.findElement(By.name(\"Username\"));\n        usernameElement.sendKeys(\"admin1\");\n\n        WebElement passwordElement = browser.findElement(By.name(\"Password\"));\n        passwordElement.sendKeys(\"12Welcome1\");\n\n        WebElement submitElement = browser.findElement(By.name(\"Submit\"));\n        submitElement.click();\n\n        assertThat(browser.getPageTitle(), is(\"Zombie Dash : Login\"));\n    }\n}\n
+===================================================================
+--- src/system-tests/java/com/zombiedash/app/web/page/tests/LoginLogoutTest.java	(date 1346155146000)
++++ src/system-tests/java/com/zombiedash/app/web/page/tests/LoginLogoutTest.java	(revision )
+@@ -16,22 +16,20 @@
+         Browser browser = Application.browser();
+         browser.open("/zombie/login/LoginForm");
+ 
+-        WebElement usernameElement = browser.findElement(By.name("Username"));
++        WebElement usernameElement = browser.findElement(By.id("Username"));
+         usernameElement.sendKeys("admin");
+ 
+-        WebElement passwordElement = browser.findElement(By.name("Password"));
++        WebElement passwordElement = browser.findElement(By.id("Password"));
+         passwordElement.sendKeys("Welcome1");
+ 
+-        WebElement submitElement = browser.findElement(By.name("Submit"));
++        WebElement submitElement = browser.findElement(By.id("Submit"));
+         submitElement.click();
+-
+         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
+ 
+         WebElement logoutElement = browser.findElement(By.id("Logout"));
+         logoutElement.click();
+ 
+         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
+-
+         WebElement messageElement = browser.findElement(By.id("message_to_be_displayed"));
+ 
+         assertThat(messageElement.getText(), is("You have been logged out successfully!!"));
+@@ -43,13 +41,13 @@
+         Browser browser = Application.browser();
+         browser.open("/zombie/login/LoginForm");
+ 
+-        WebElement usernameElement = browser.findElement(By.name("Username"));
++        WebElement usernameElement = browser.findElement(By.id("Username"));
+         usernameElement.sendKeys("admin1");
+ 
+-        WebElement passwordElement = browser.findElement(By.name("Password"));
++        WebElement passwordElement = browser.findElement(By.id("Password"));
+         passwordElement.sendKeys("12Welcome1");
+ 
+-        WebElement submitElement = browser.findElement(By.name("Submit"));
++        WebElement submitElement = browser.findElement(By.id("Submit"));
+         submitElement.click();
+ 
+         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
+Index: src/system-tests/java/com/zombiedash/app/web/Browser.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zombiedash.app.web;\r\n\r\n\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.firefox.FirefoxDriver;\r\nimport org.openqa.selenium.htmlunit.HtmlUnitDriver;\r\n\r\nimport java.util.List;\r\n\r\npublic class Browser {\r\n\r\n    private final boolean javascriptEnabled;\r\n    private final String hostAddress;\r\n    private final WebDriver driver;\r\n\r\n    public Browser(String hostAddress, boolean testWithFirefox) {\r\n        this.hostAddress = hostAddress;\r\n        if (testWithFirefox) {\r\n            this.driver = (WebDriver) new FirefoxDriver();\r\n            this.javascriptEnabled = true;\r\n        } else {\r\n            this.driver = new HtmlUnitDriver();\r\n            this.javascriptEnabled = false;\r\n        }\r\n    }\r\n\r\n    public Browser open(String url) {\r\n        if (url.startsWith(\"/\")) {\r\n            driver.get(hostAddress + url);\r\n        } else {\r\n            driver.get(url);\r\n        }\r\n        return this;\r\n    }\r\n\r\n    public String getHostAddress() {\r\n        return hostAddress;\r\n    }\r\n\r\n    public String getCurrentUrl() {\r\n        return driver.getCurrentUrl();\r\n    }\r\n\r\n    public boolean isJavascriptEnabled() {\r\n        return javascriptEnabled;\r\n    }\r\n\r\n    public WebElement findElement(By selector) {\r\n        return driver.findElement(selector);\r\n    }\r\n\r\n    public List<WebElement> findElements(By selector) {\r\n        return driver.findElements(selector);\r\n    }\r\n\r\n    public String getPageTitle() {\r\n        return driver.getTitle();\r\n    }\r\n\r\n    public String getPageSource() {\r\n        return driver.getPageSource();\r\n    }\r\n\r\n    public String getBodyClass() {\r\n        return findElement(By.tagName(\"body\")).getAttribute(\"class\");\r\n    }\r\n\r\n    public void stop() {\r\n        try {\r\n            driver.quit();\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n}\r\n
+===================================================================
+--- src/system-tests/java/com/zombiedash/app/web/Browser.java	(date 1346155146000)
++++ src/system-tests/java/com/zombiedash/app/web/Browser.java	(revision )
+@@ -6,6 +6,8 @@
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.firefox.FirefoxDriver;
+ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
++import org.openqa.selenium.support.ui.ExpectedCondition;
++import org.openqa.selenium.support.ui.WebDriverWait;
+ 
+ import java.util.List;
+ 
+@@ -47,8 +49,12 @@
+         return javascriptEnabled;
+     }
+ 
+-    public WebElement findElement(By selector) {
+-        return driver.findElement(selector);
++    public WebElement findElement(final By selector) {
++        return new WebDriverWait(driver, 10).until(new ExpectedCondition<WebElement>(){
++            @Override
++            public WebElement apply(WebDriver d) {
++                return d.findElement(selector);
++            }});
+     }
+ 
+     public List<WebElement> findElements(By selector) {
+Index: src/system-tests/java/com/zombiedash/app/web/page/tests/TriviaGamePageTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zombiedash.app.web.page.tests;\n\n\nimport com.example.app.jetty.WebServer;\nimport com.zombiedash.app.web.Application;\nimport com.zombiedash.app.web.Browser;\nimport com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;\nimport org.junit.Ignore;\nimport org.junit.Test;\nimport org.openqa.selenium.Alert;\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.firefox.FirefoxDriver;\nimport org.springframework.jdbc.core.JdbcTemplate;\n\nimport java.util.List;\n\nimport static org.hamcrest.CoreMatchers.equalTo;\nimport static org.hamcrest.CoreMatchers.is;\nimport static org.junit.Assert.assertThat;\n\npublic class TriviaGamePageTest {\n\n    private TriviaGameTestDataCreationTemplate testDataTemplate;\n\n    @Test\n    public void shouldDisplayGameQuestions() {\n\n        Browser browser = Application.browser();\n\n        int existingQnCount = getNumberOfExistingQuestionsInDatabase();\n        initializeQuestionsAndOptions();\n\n        browser.open(\"/zombie/conference/user/game\");\n        assertThat(browser.getPageTitle(), is(\"Welcome to Trivia Game!\"));\n\n        List<WebElement> elements = browser.findElements(By.cssSelector(\"h3\"));\n        assertThat(elements.size(), is(existingQnCount + 2));\n        assertThat(elements.get(existingQnCount + 0).getText(), equalTo(\"Where is Red Fort\"));\n        assertThat(elements.get(existingQnCount + 1).getText(), equalTo(\"Is it lunch time?\"));\n    }\n\n    @Ignore\n    @Test\n    public void shouldGoTOHomePageWhenClickedOkOnAlertBox() {\n\n        WebServer webServer=new WebServer(1234);\n        WebDriver webDriver =(WebDriver) new FirefoxDriver();\n        try {\n            webServer.start();\n        } catch (Exception e) {\n            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.\n        }\n        webDriver.get(\"http://localhost:1234/zombie/conference/user/game\");\n        assertThat(webDriver.getTitle(), is(\"Welcome to Trivia Game!\"));\n\n        WebElement cancel = webDriver.findElement(By.name(\"cancel\"));\n        cancel.click();\n        Alert alert=webDriver.switchTo().alert();\n        alert.accept();\n        assertThat(webDriver.getTitle(), is(\"Customer Home\"));\n        webServer.stop();\n    }\n\n    private void initializeQuestionsAndOptions() {\n        JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());\n        testDataTemplate = new TriviaGameTestDataCreationTemplate(jdbcTemplate);\n\n        testDataTemplate.givenAQuestionWith(100, \"Where is Red Fort\");\n        testDataTemplate.givenAnOptionFor(100, 1, \"Delhi\", true);\n        testDataTemplate.givenAnOptionFor(100, 2, \"Paris\", false);\n        testDataTemplate.givenAnOptionFor(100, 3, \"New York\", false);\n\n        testDataTemplate.givenAQuestionWith(200, \"Is it lunch time?\");\n        testDataTemplate.givenAnOptionFor(200, 4, \"I bet it is\", true);\n        testDataTemplate.givenAnOptionFor(200, 5, \"No thanks, fasting at the moment\", false);\n    }\n\n    private int getNumberOfExistingQuestionsInDatabase() {\n        JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());\n        return new TriviaGameTestDataCreationTemplate(jdbcTemplate).getNumberOfExistingQuestionsInDatabase();\n    }\n}\n
+===================================================================
+--- src/system-tests/java/com/zombiedash/app/web/page/tests/TriviaGamePageTest.java	(date 1346155146000)
++++ src/system-tests/java/com/zombiedash/app/web/page/tests/TriviaGamePageTest.java	(revision )
+@@ -50,7 +50,7 @@
+         try {
+             webServer.start();
+         } catch (Exception e) {
+-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
++            e.printStackTrace();
+         }
+         webDriver.get("http://localhost:1234/zombie/conference/user/game");
+         assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));

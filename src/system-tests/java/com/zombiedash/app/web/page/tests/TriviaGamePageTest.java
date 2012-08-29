@@ -50,7 +50,7 @@ public class TriviaGamePageTest {
         try {
             webServer.start();
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         webDriver.get("http://localhost:1234/zombie/conference/user/game");
         assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
