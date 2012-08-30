@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ public class Browser {
     public Browser(String hostAddress, boolean testWithFirefox) {
         this.hostAddress = hostAddress;
         if (testWithFirefox) {
-            this.driver = (WebDriver) new FirefoxDriver();
+            this.driver = new FirefoxDriver();
             this.javascriptEnabled = true;
         } else {
             this.driver = new HtmlUnitDriver();
@@ -38,20 +39,8 @@ public class Browser {
         return this;
     }
 
-    public String getHostAddress() {
-        return hostAddress;
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    public boolean isJavascriptEnabled() {
-        return javascriptEnabled;
-    }
-
     public WebElement findElement(final By selector) {
-      return new WebDriverWait(driver, 5).until(new Function<WebDriver, WebElement>() {
+      return new WebDriverWait(driver, 5).until(new ExpectedCondition<WebElement>(){
         @Override
         public WebElement apply(@Nullable WebDriver webDriver) {
           return driver.findElement(selector);
@@ -60,7 +49,7 @@ public class Browser {
     }
 
     public List<WebElement> findElements(final By selector) {
-      return new WebDriverWait(driver, 5).until(new Function<WebDriver, List<WebElement>>() {
+      return new WebDriverWait(driver, 5).until(new ExpectedCondition<List<WebElement>>() {
         @Override
         public List<WebElement> apply(@Nullable WebDriver webDriver) {
           return driver.findElements(selector);
@@ -69,21 +58,14 @@ public class Browser {
     }
 
     public String getPageTitle() {
-        return driver.getTitle();
-    }
-
-    public String getPageSource() {
-        return driver.getPageSource();
-    }
-
-    public String getBodyClass() {
-        return new WebDriverWait(driver,5).until(new Function<WebDriver, String>() {
-          @Override
-          public String apply(@Nullable WebDriver webDriver) {
-            return findElement(By.tagName("body")).getAttribute("class");
-          }
+        return new WebDriverWait(driver, 5).until(new ExpectedCondition<String>() {
+            @Override
+            public String apply(@Nullable WebDriver webDriver) {
+                return driver.findElement(By.tagName("title")).getText();
+            }
         });
     }
+
 
     public void stop() {
         try {
