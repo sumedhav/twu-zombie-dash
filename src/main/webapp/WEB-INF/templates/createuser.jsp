@@ -34,8 +34,7 @@
                      <div class="control-group">
                           <label class="control-label align-left" for="username">Username:</label>
                           <div class="controls">
-                             <input type="text" name="userName" id="username" value="${model.username}"
-                             placeholder="enter username"/>
+                            <textarea name="userName" id="username" type="text" placeholder="enter username">${model.username}</textarea>
                              <span class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
                           </div>
                      </div>
@@ -43,8 +42,7 @@
                     <div class="control-group">
                            <label class="control-label align-left" for="password">Password:</label>
                            <div class="controls">
-                              <input type="text" name="password" id="password" value="${model.password}"
-                                                           placeholder="enter password"/>
+                             <textarea name="password" id="password" type="text" placeholder="enter password">${model.password}</textarea>
                              <span class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
                            </div>
                     </div>
@@ -52,8 +50,7 @@
                     <div class="control-group">
                             <label class="control-label align-left" for="name">Name:</label>
                             <div class="controls">
-                            <input type="text" name="name" id="name" value="${model.name}"
-                                          placeholder="enter name"/>
+                              <textarea name="name" id="name" type="text" placeholder="enter name">${model.name}</textarea>
                               <span class="error inline-help" style="color:#FF0000">${invalidName}</span>
                             </div>
                     </div>
@@ -62,8 +59,7 @@
                      <div class="control-group">
                          <label class="control-label align-left" for="email">Email:</label>
                          <div class="controls">
-                         <input type="text" name="email" id="email" value="${model.email}"
-                                           placeholder="enter email"/>
+                            <textarea name="email" id="email" type="text" placeholder="enter email">${model.email}</textarea>
                             <span class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
                          </div>
                      </div>
