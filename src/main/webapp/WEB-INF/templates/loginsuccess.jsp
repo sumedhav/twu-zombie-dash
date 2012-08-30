@@ -9,23 +9,31 @@ pageEncoding="ISO-8859-1"%>
 
 
 <html>
-    <head>
-        <title>Zombie Dash : Welcome</title>
-        <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/homePage.css" />
-    </head>
-    <body>
-        <h1> Zombie Dash <h1>
-        <h3> Welcome ${username} !!</h3>
-        <div>
-            <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/zombie/login/Logout" >Logout</a>
-        </div>
-        <div>
-            <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home">Conferences</a>
-        </div>
-        <div>
-            <a name="Users" id="Users" href="${pageContext.request.contextPath}/zombie/admin/users/" > Users </a>
-        </div>
+     <head>
+            <title>Zombie Dash : Welcome</title>
+            <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
+     </head>
+          <body>
+             <div class="container">
+                 <h1 class="pageTitle">
+                     <div>Zombie Dash</div>
+                 </h1>
+                 <h3>
+                     Welcome ${username} !!
+                 </h3>
+                    <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/zombie/login/Logout" class="btn btn-primary offset10" >Logout</a>
 
-    </body>
+                 <div>
+                    <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home" class="btn btn-primary">Conferences</a>
+                 </div>
+                    <br>
+                    </br>
+                 <div>
+                    <a name="Users" id="Users" href="${pageContext.request.contextPath}/zombie/admin/users/" class="btn btn-primary" > Users </a>
+                 </div>
+             </div>
+          </body>
 </html>
+
+

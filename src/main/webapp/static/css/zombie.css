@@ -52,11 +52,11 @@ input[type="text"], input[type="password"] {
 }
 
 .table th{
-    width: 30%
+    width: 30%;
 }
 
 .table td{
-    width: 70%
+    width: 70%;
 }
 
 #loginForm {
