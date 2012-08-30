@@ -1,8 +1,6 @@
 package com.zombiedash.app.forms;
 
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
@@ -78,6 +76,12 @@ public class UserFormTest {
         UserForm userForm = new UserForm("username","role","qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidName")));
+    }
+    @Test
+    public void shouldReturnInvalidNameErrorWhenNameIsOnlyWhiteSpaces() {
+        UserForm userForm = new UserForm("username","role","         ","email@email.com", "password134234fsd");
+        List<String> result = userForm.validate();
+        assertThat(result.get(0),is(equalTo("allFieldsAreMandatory")));
     }
 
     @Test

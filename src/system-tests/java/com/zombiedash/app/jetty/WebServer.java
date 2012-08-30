@@ -9,7 +9,7 @@ public class WebServer {
 
     public WebServer(int port) {
         jetty = new Server(port);
-        jetty.addHandler(new WebAppContext("src/main/webapp", "/"));
+        jetty.addHandler(new WebAppContext("src/main/webapp", "/app"));
     }
 
     public WebServer start() throws Exception {

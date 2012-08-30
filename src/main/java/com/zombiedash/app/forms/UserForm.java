@@ -48,6 +48,7 @@ public class UserForm {
     }
 
     public List<String> validate() {
+        name= name.trim();
         if(isEmpty(userName)||isEmpty(password)||isEmpty(role)||isEmpty(name)||isEmpty(email))
             errorCodes.add("allFieldsAreMandatory") ;
         if(isEmpty(password) || !password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$"))
