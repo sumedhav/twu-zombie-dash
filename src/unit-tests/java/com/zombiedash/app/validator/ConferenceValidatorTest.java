@@ -59,7 +59,7 @@ public class ConferenceValidatorTest {
     public void invalidDatesShouldMutateModelParameterWithErrorString() {
         conferenceValidator.isValidDate("2012-03-0",model,"dateError");
         assertThat(model.size(), is(equalTo(1)));
-        assertThat(model.get("dateError"), is(equalTo("Must be in yyyy-mm-dd format")));
+        assertThat(model.get("dateError"), is(equalTo("Must be valid date in yyyy-mm-dd format")));
     }
 
     @Test
