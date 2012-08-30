@@ -75,7 +75,6 @@ public class ConferenceController {
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            modelAndView.addObject("errorMessage",e.getMessage());
             modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/home");
             modelAndView.addObject("returnToPrevPageMessage","Go back to conference home page");
             return modelAndView;
