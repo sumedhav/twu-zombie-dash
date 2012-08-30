@@ -3,7 +3,6 @@ package com.zombiedash.app.web;
 import com.zombiedash.app.jetty.WebServer;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 
 import java.net.ServerSocket;
 
@@ -14,23 +13,24 @@ public class Application {
     private WebServer server;
     private Browser statelessBrowser;
     private Browser firefoxBrowser;
+    private String serverName;
+    private int port;
+
+    private Application(String serverName, int port) {
+        this.serverName = serverName;
+        this.port = port;
+    }
 
     public static Browser open(String url) {
         return statelessBrowser().open(url);
     }
 
     public static Browser statelessBrowser() {
-        return browser(true);
+        return instance().getStatelessBrowser();
     }
 
     public static Browser javascriptEnabledBrowser() {
-        return browser(false);
-    }
-
-    private static Browser browser(boolean stateless) {
-        Browser browser = stateless ? instance().statelessBrowser : instance().firefoxBrowser;
-        Validate.notNull(browser, "Application has not started succesfully. Please check earlier failed tests.");
-        return browser;
+        return instance().getFirefoxBrowser();
     }
 
     private static Application instance() {
@@ -39,9 +39,10 @@ public class Application {
         }
         try {
             int port = findFreePort();
-            instance = new Application();
+            String hostAddress = getHostAddress();
+            instance = new Application(hostAddress, port);
             registerShutdownHook();
-            instance.start(port);
+            instance.start();
             return instance;
 
         } catch (Exception e) {
@@ -56,25 +57,27 @@ public class Application {
         return port;
     }
 
-    private static void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));
-    }
-
-    private void start(int port) throws Exception {
+    private static String getHostAddress() throws Exception {
         String hostAddress = System.getProperty("test.with.host.address");
 
         setSystemProperty("controlm.queue.provider", "none");
         setSystemProperty("icc.service.provider", "local");
 
         if (StringUtils.isBlank(hostAddress)) {
-            server = new WebServer(port).start();
-            hostAddress = "http://localhost:" + port;
+            hostAddress = "http://localhost:";
         }
-        statelessBrowser = new Browser(hostAddress, false);
-        firefoxBrowser = new Browser(hostAddress, true);
+        return hostAddress;
     }
 
-    private void setSystemProperty(String key, String value) {
+    private static void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));
+    }
+
+    private void start() throws Exception {
+        server = new WebServer(port).start();
+    }
+
+    private static void setSystemProperty(String key, String value) {
         if (System.getProperty(key) == null) {
             System.setProperty(key, value);
         }
@@ -87,6 +90,18 @@ public class Application {
         if (server != null) {
             server.stop();
         }
+    }
+
+    public Browser getStatelessBrowser() {
+        if (statelessBrowser != null) return statelessBrowser;
+        statelessBrowser = new Browser(serverName + port, false);
+        return statelessBrowser;
+    }
+
+    public Browser getFirefoxBrowser() {
+        if (firefoxBrowser != null) return firefoxBrowser;
+        firefoxBrowser = new Browser(serverName + port, true);
+        return firefoxBrowser;
     }
 
     private static class ShutdownHook implements Runnable {
