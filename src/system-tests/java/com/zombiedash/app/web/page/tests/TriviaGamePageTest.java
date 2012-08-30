@@ -76,12 +76,15 @@ public class TriviaGamePageTest {
             webDriver.get("http://localhost:1234/zombie/conference/user/game");
             assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
 
+            WebElement optionElement = webDriver.findElement(By.id("option_1_1"));
+            optionElement.click();
             WebElement cancel = webDriver.findElement(By.name("cancel"));
             cancel.click();
             Alert alert = webDriver.switchTo().alert();
             alert.dismiss();
             Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+            assertThat(optionElement.isSelected(), is(true));
         } finally {
             webServer.stop();
             webDriver.close();
@@ -106,13 +109,14 @@ public class TriviaGamePageTest {
             Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Results Page"));
             assertThat(webDriver.findElement(By.id("obtainedScore")).getText(), IsNot.not(""));
+            assertThat(webDriver.findElement(By.id("maxScore")).getText(), IsNot.not(""));
         } finally {
             webServer.stop();
             webDriver.close();
         }
     }
     @Test
-    public void shouldDisplayAlertWhenNotAllQuestionsAreAnsweredANdStayOnSamePage() throws Exception {
+    public void shouldDisplayAlertWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
         WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
