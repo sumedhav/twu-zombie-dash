@@ -12,9 +12,10 @@ import java.util.Map;
 
 @Repository
 public class ConferenceRepository {
-    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO zombie_conference values (?,?,?,?,?,?,?)";
-    public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM zombie_conference WHERE name = ?";
+    public static final String SQL_CONFERENCE_INSERT = "INSERT INTO zombie_conference values (?,?,?,?,?,?,?,?)";
+    public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM zombie_conference WHERE ID = ?";
     public static final String SQL_CONFERENCE_SELECT_ALL = "SELECT * FROM zombie_conference";
+    public static final String SQL_CONFERENCE_NUM_ENTRIES = "SELECT COUNT (*) FROM zombie_conference";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -23,7 +24,9 @@ public class ConferenceRepository {
     }
 
     public Integer saveConference(Conference conference) {
+        int id = jdbcTemplate.queryForInt(SQL_CONFERENCE_NUM_ENTRIES) + 1;
         return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
+                id,
                 conference.getName(),
                 conference.getTopic(),
                 conference.getDescription(),
@@ -33,16 +36,17 @@ public class ConferenceRepository {
                 conference.getMaxAttendee());
     }
 
-    public Conference showConference(String conferenceName) {
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceName);
+    public Conference showConference(int conferenceID) {
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceID);
         rowSet.first();
-        return new Conference(rowSet.getString(1),
+        return new Conference(rowSet.getInt(1),
                 rowSet.getString(2),
                 rowSet.getString(3),
                 rowSet.getString(4),
                 rowSet.getString(5),
                 rowSet.getString(6),
-                rowSet.getInt(7));
+                rowSet.getString(7),
+                rowSet.getInt(8));
     }
 
     public List<Conference> showAllConferences() {
@@ -51,6 +55,7 @@ public class ConferenceRepository {
         for (Map<String, Object> resultRow : conferenceSQLCollection) {
             conferences.add(
                     new Conference(
+                            (Integer) resultRow.get("id"),
                             (String) resultRow.get("name"),
                             (String) resultRow.get("topic"),
                             (String) resultRow.get("description"),

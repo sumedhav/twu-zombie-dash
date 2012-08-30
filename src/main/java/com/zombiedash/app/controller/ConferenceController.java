@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,7 @@ import java.util.Map;
 @RequestMapping("/admin/conference")
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
+    private static final int DUMMY_ID = -1;
 
     private Map<String,String> model = new HashMap<String, String>();
 
@@ -39,11 +39,11 @@ public class ConferenceController {
     @RequestMapping(value = "home",method = RequestMethod.GET)
     public ModelAndView home() {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
-        List<String> conferenceNames = new ArrayList<String>();
-        for (Conference conference : conferenceList) {
-            conferenceNames.add(conference.getName());
-        }
-        return new ModelAndView("conferencehome","Conferences", conferenceNames);
+//        List<String> conferenceNames = new ArrayList<String>();
+//        for (Conference conference : conferenceList) {
+//            conferenceNames.add(conference.getName());
+//        }
+        return new ModelAndView("conferencehome","Conferences", conferenceList);
     }
 
     @RequestMapping(value = "submit", method = RequestMethod.POST)
@@ -75,7 +75,7 @@ public class ConferenceController {
             boolean validDataFlag = conferenceValidator.isValidData(model);
 
             if (validDataFlag) {
-                Conference conference = new Conference(conferenceName, conferenceTopic, conferenceDescription,
+                Conference conference = new Conference(DUMMY_ID,conferenceName, conferenceTopic, conferenceDescription,
                         conferenceVenue, conferenceStartDate, conferenceEndDate, Integer.parseInt(conferenceMaxAttendees));
                 conferenceRepository.saveConference(conference);
                 return home();
@@ -90,9 +90,9 @@ public class ConferenceController {
         }
     }
 
-    @RequestMapping(value = "view/{conferenceName}")
-    public ModelAndView view(@PathVariable String conferenceName) {
-        Conference thisConference = conferenceRepository.showConference(conferenceName);
+    @RequestMapping(value = "view/{conferenceId}")
+    public ModelAndView view(@PathVariable int conferenceId) {
+        Conference thisConference = conferenceRepository.showConference(conferenceId);
         return new ModelAndView("conferenceview","Conference", thisConference);
     }
 

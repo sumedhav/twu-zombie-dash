@@ -7,8 +7,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +23,9 @@ public class ConferenceRepositoryTest {
   @Test
   public void shouldNotThrowErrorAndSaveConferenceToDatabase() throws Exception {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
-    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT, "","","","","","",0)).thenReturn(1);
+    when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES)).thenReturn(0);
+    int id = jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES) + 1;
+    when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,id,"","","","","","",0)).thenReturn(1);
     ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
     Conference conference = mock(Conference.class);
     when(conference.getDescription()).thenReturn("");
@@ -43,19 +43,19 @@ public class ConferenceRepositoryTest {
   public void shouldReadConferenceFromDatabase() {
 
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
-    when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,"java"))
+    when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1))
         .thenAnswer(new Answer<SqlRowSet>() {
           @Override
           public SqlRowSet answer(InvocationOnMock invocation) throws Throwable {
             SqlRowSet sqlRowSet = mock(SqlRowSet.class);
             when(sqlRowSet.getString(anyInt())).thenReturn("java");
-            when(sqlRowSet.getString(6)).thenReturn("2012-06-07");
+            when(sqlRowSet.getString(7)).thenReturn("2012-06-07");
             when(sqlRowSet.getInt(anyInt())).thenReturn(1);
             return sqlRowSet;
           }
         });
     ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-    Conference actualConference = conferenceRepository.showConference("java");
+    Conference actualConference = conferenceRepository.showConference(1);
     assertThat(actualConference.getEndDate(),is(equalTo("2012-06-07")));
   }
 
@@ -67,6 +67,7 @@ public class ConferenceRepositoryTest {
       public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
         List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
         HashMap<String,Object> firstResult = new HashMap<String, Object>();
+        firstResult.put("id",1);
         firstResult.put("name", "Java");
         firstResult.put("topic","Java");
         firstResult.put("description","Java");
@@ -76,6 +77,7 @@ public class ConferenceRepositoryTest {
         firstResult.put("max_attendee",1);
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();
+        secondResult.put("id",2);
         secondResult.put("name", "Java");
         secondResult.put("topic", "Java");
         secondResult.put("description", "Java");
