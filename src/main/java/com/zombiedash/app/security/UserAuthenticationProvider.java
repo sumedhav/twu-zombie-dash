@@ -24,16 +24,17 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     try {
       userService.authenticateAndReturnUser((String) authentication.getPrincipal(),(String) authentication.getCredentials());
-      List<GrantedAuthority> grantedAuthority = Arrays.asList(new GrantedAuthority[] {new GrantedAuthority() {
+        List<? extends GrantedAuthority> grantedAuthorities = Arrays.asList(new GrantedAuthority() {
             @Override
             public String getAuthority() {
                 return "ROLE_ADMIN";
             }
-        }});
+        });
 
       return new UsernamePasswordAuthenticationToken(
           authentication.getPrincipal(),
-          authentication.getCredentials(), grantedAuthority
+          authentication.getCredentials(),
+              grantedAuthorities
           );
     } catch (Exception e) {
       throw new BadCredentialsException("Bad User Credentials.");

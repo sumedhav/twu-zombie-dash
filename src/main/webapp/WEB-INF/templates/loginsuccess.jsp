@@ -18,7 +18,7 @@ pageEncoding="ISO-8859-1"%>
         <h1> Zombie Dash <h1>
         <h3> Welcome ${username} !!</h3>
         <div>
-            <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/zombie/login/Logout" >Logout</a>
+            <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" >Logout</a>
         </div>
         <div>
             <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home">Conferences</a>

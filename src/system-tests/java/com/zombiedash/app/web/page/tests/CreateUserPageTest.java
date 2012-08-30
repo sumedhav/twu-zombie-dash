@@ -15,26 +15,16 @@ public class CreateUserPageTest {
     @Test
     public void shouldDisplayErrorMessageWhenAnyFieldIsEmpty() {
         Browser browser = Application.browser();
-        browser.open("/zombie/admin/users/create");
+        browser.open("/app/zombie/admin/users/create");
 
-        WebElement usernameElement = browser.findElement(By.id("username"));
-        usernameElement.sendKeys("");
+        browser.findElement(By.id("username")).sendKeys("admin");
+        browser.findElement(By.id("password")).sendKeys("Welcome1");
+        browser.findElement(By.tagName("button")).click();
 
-        WebElement passwordElement = browser.findElement(By.id("password"));
-        passwordElement.sendKeys("");
+        browser.findElement(By.id("submit")).click();
 
-        WebElement nameElement = browser.findElement(By.id("name"));
-        nameElement.sendKeys("");
+        WebElement messageElement = browser.findElement(By.name("error_message_div"));
 
-        WebElement emailElement = browser.findElement(By.id("email"));
-        emailElement.sendKeys("");
-
-        WebElement saveElement = browser.findElement(By.id("submit"));
-        saveElement.click();
-
-         WebElement messageElement = browser.findElement(By.name("error_message_div"));
-
-         assertThat(messageElement.getText(), is("All fields are mandatory."));
-      //  assertThat(browser.getPageTitle(),is("Zombie Dash : Create User"));
+        assertThat(messageElement.getText(), is("All fields are mandatory."));
     }
 }
