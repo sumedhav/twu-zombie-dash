@@ -1,52 +1,47 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.web.Application;
-import com.zombiedash.app.web.Browser;
-import org.junit.Ignore;
+import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@Ignore("WIP: need to implement common login behaviour")
-public class UsersPageTest {
-
+public class UsersPageTest extends BasePageTest {
+    @Before
+    public void setupSession()
+    {
+        browser= BrowserSessionBuilder
+                .newStatelessSession()
+                .loggedInAsAdmin()
+                .build()
+                .open("/app/zombie/admin/users-management");
+    }
     @Test
     public void shouldGoToCreateUserPageWhenClickedOnCreateNewUserButton() throws Exception {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users");
 
-        WebElement createUserElement = browser.findElement(By.id("create_user"));
-        createUserElement.click();
+        browser.findElement(By.id("create_user"))
+                .click();
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
     }
 
-    @Ignore
     @Test
     public void shouldGoToHomePageWhenClickedOnBackButton() throws Exception {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users");
-
-        WebElement createUserElement = browser.findElement(By.id("back_user_home"));
-        createUserElement.click();
-        assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
+        browser.findElement(By.id("back_user_home"))
+                .click();
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
     }
 
     @Test
     public void shouldGoToUserDetailsPageOnClickingThatUserLink() throws Exception {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users");
 
-        WebElement userElement = browser.findElement(By.id("username_value_1"));
-        String nameOfSelectedUser = userElement.getText();
-        userElement.click();
+        String nameOfSelectedUser = browser.findElement(By.id("username_value_1")).getText();
+        browser.findElement(By.id("username_value_1")).click();
         assertThat(browser.getPageTitle(), is("Zombie Dash : User Details"));
 
-        WebElement nameElement = browser.findElement(By.id("name_value"));
-        assertThat(nameElement.getText(), is(equalTo(nameOfSelectedUser)));
+        assertThat(browser.findElement(By.id("name_value")).getText(), is(equalTo(nameOfSelectedUser)));
     }
 
 
