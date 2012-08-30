@@ -1,3 +1,4 @@
+//Responsibility: Intercept requests from create user page and delegate to appropriate page
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.error.ValidationMessagesMap;
@@ -57,7 +58,7 @@ public class UsersController {
                 modelAndView = new ModelAndView("createuser");
                 modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
                 modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
-            } catch (Exception excp) {
+            } catch (Exception e) {
                 modelAndView = new ModelAndView("errorPage");
             }
         }

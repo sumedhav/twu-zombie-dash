@@ -1,12 +1,15 @@
 package com.zombiedash.app.web;
 
 
+import com.google.common.base.Function;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Browser {
@@ -47,12 +50,22 @@ public class Browser {
         return javascriptEnabled;
     }
 
-    public WebElement findElement(By selector) {
-        return driver.findElement(selector);
+    public WebElement findElement(final By selector) {
+      return new WebDriverWait(driver, 5).until(new Function<WebDriver, WebElement>() {
+        @Override
+        public WebElement apply(@Nullable WebDriver webDriver) {
+          return driver.findElement(selector);
+        }
+      });
     }
 
-    public List<WebElement> findElements(By selector) {
-        return driver.findElements(selector);
+    public List<WebElement> findElements(final By selector) {
+      return new WebDriverWait(driver, 5).until(new Function<WebDriver, List<WebElement>>() {
+        @Override
+        public List<WebElement> apply(@Nullable WebDriver webDriver) {
+          return driver.findElements(selector);
+        }
+      });
     }
 
     public String getPageTitle() {

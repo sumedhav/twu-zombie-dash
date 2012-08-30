@@ -1,3 +1,4 @@
+//Responsibility: Validate a User and pass around as a bean
 package com.zombiedash.app.forms;
 
 import com.zombiedash.app.model.Role;
@@ -22,7 +23,7 @@ public class UserForm {
     @Setter
     private String email;
 
-    List errorCodes = new ArrayList();
+    private List<String> errorCodes = new ArrayList<String>();
 
     public UserForm(String userName, String role, String name, String email, String password){
         this.userName = userName;
@@ -46,7 +47,7 @@ public class UserForm {
        return new User(userName, Role.generateRole(role), name, email);
     }
 
-    public List validate() {
+    public List<String> validate() {
         if(isEmpty(userName)||isEmpty(password)||isEmpty(role)||isEmpty(name)||isEmpty(email))
             errorCodes.add("allFieldsAreMandatory") ;
         if(isEmpty(password) || !password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$"))

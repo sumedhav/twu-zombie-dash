@@ -25,10 +25,10 @@
 
               <div class="conferenceList">
                   <ol>
-                      <c:forEach var="conference" items="${Conferences}">
+                      <c:forEach var="conference" items="${Conferences}" varStatus="confStatus">
                           <li>
                               <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}"
-                              name="existing_conference_name" id="existing_conference_name">${conference} </a>
+                              name="existing_conference_name" id="existing_conference_name_${confStatus.count}">${conference} </a>
                           </li>
                           <br>
                           </br>
