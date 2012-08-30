@@ -33,16 +33,13 @@ public class ConferenceController {
     public ModelAndView createConference() {
         ModelAndView modelAndView = new ModelAndView("createconference");
         modelAndView.addObject("model", model);
+        model.clear();
         return modelAndView;
     }
 
     @RequestMapping(value = "home",method = RequestMethod.GET)
     public ModelAndView home() {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
-//        List<String> conferenceNames = new ArrayList<String>();
-//        for (Conference conference : conferenceList) {
-//            conferenceNames.add(conference.getName());
-//        }
         return new ModelAndView("conferencehome","Conferences", conferenceList);
     }
 
@@ -91,9 +88,16 @@ public class ConferenceController {
     }
 
     @RequestMapping(value = "view/{conferenceId}")
-    public ModelAndView view(@PathVariable int conferenceId) {
-        Conference thisConference = conferenceRepository.showConference(conferenceId);
-        return new ModelAndView("conferenceview","Conference", thisConference);
+    public ModelAndView view(@PathVariable String conferenceId) {
+        try{
+            Conference thisConference = conferenceRepository.showConference(Integer.parseInt(conferenceId));
+            return new ModelAndView("conferenceview","Conference", thisConference);
+        } catch (Exception e) {
+            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
+            modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/home");
+            modelAndView.addObject("returnToPrevPageMessage","Go back to conference home page");
+            return modelAndView;
+        }
     }
 
 }
