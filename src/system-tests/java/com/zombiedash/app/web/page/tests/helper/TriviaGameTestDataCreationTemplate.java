@@ -9,6 +9,11 @@ public class TriviaGameTestDataCreationTemplate {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public void clearTables(){
+        jdbcTemplate.execute("DELETE zombie_option");
+        jdbcTemplate.execute("DELETE zombie_question");
+    }
+
     public void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
                 "insert into zombie_question (ID,Text) values(%d, '%s')", id, text));
@@ -20,7 +25,4 @@ public class TriviaGameTestDataCreationTemplate {
                 optionId, questionId, text, correct));
     }
 
-    public int getNumberOfExistingQuestionsInDatabase() {
-        return jdbcTemplate.queryForInt(String.format("select count(*) from zombie_question"));
-    }
 }
