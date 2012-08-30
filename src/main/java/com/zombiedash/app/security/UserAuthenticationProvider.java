@@ -37,7 +37,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
               grantedAuthorities
           );
     } catch (Exception e) {
-      throw new BadCredentialsException("Bad User Credentials.");
+      throw new BadCredentialsException("Username and password are wrong");
     }
 
   }
