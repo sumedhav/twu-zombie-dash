@@ -8,6 +8,6 @@ public class BasePageTest {
 
     @After
     public void closeBrowser() {
-        browser.stop();
+//        browser.stop();
     }
 }
