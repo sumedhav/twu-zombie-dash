@@ -1,5 +1,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -15,6 +16,7 @@
         <div class="control-group">
             <div id="message_to_be_displayed" class="form-message error">
                 ${messageToBeDisplayed}
+                ${SPRING_SECURITY_LAST_EXCEPTION.message}
             </div>
         </div>
         <div class="span6">

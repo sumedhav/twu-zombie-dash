@@ -39,5 +39,11 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "fail", method = RequestMethod.GET)
+    public ModelAndView showLoginFailPage () {
+        ModelAndView modelAndView = new ModelAndView("loginform");
+        modelAndView.addObject("messageToBeDisplayed", "User and password are wrong");
+        return modelAndView;
+    }
 
 }
