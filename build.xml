@@ -57,6 +57,7 @@
                 <formatter type="xml"/>
                 <batchtest todir="${test.report.dir}">
                     <fileset dir="@{testdir}/java">
+                        <exclude name="**/BasePageTest.java"/>
                         <include name="**/*Test.java"/>
                     </fileset>
                 </batchtest>

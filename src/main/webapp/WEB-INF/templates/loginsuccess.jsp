@@ -22,7 +22,7 @@ pageEncoding="ISO-8859-1"%>
                  <h3>
                      Welcome ${username} !!
                  </h3>
-                    <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/zombie/login/Logout" class="btn btn-primary offset10" >Logout</a>
+                    <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" class="btn btn-primary offset10" >Logout</a>
 
                  <div>
                     <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home" class="btn btn-primary">Conferences</a>

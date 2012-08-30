@@ -55,10 +55,6 @@ input[type="text"], input[type="password"] {
     width: 30%;
 }
 
-.table td{
-    width: 70%;
-}
-
 #loginForm {
     padding: 30px 0px;
 }
