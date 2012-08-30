@@ -36,26 +36,26 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="matcher" class="com.zombiedash.app.matcher.CaseInsensitivePathMatcher"/>
+    <!--<bean id="matcher" class="com.zombiedash.app.matcher.CaseInsensitivePathMatcher"/>-->
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="pathMatcher" ref="matcher"/>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
+        <!--<property name="pathMatcher" ref="matcher"/>-->
+    <!--</bean>-->
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="pathMatcher" ref="matcher"/>
-        <property name="webBindingInitializer">
-            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer"/>
-        </property>
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
-            </list>
-        </property>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+        <!--<property name="pathMatcher" ref="matcher"/>-->
+        <!--<property name="webBindingInitializer">-->
+            <!--<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer"/>-->
+        <!--</property>-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.FormHttpMessageConverter"/>-->
+                <!--<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
-    <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+    <!--<bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>-->
 </beans>

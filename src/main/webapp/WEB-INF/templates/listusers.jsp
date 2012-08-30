@@ -18,13 +18,13 @@
             </tr>
             <c:forEach var="user" items="${Users}" varStatus = "userStatus">
                 <tr>
-                    <td><a href="${pageContext.request.contextPath}/zombie/admin/users/display/${user.userName}" id="username_value_${userStatus.count}" name="username_value"><c:out value="${user.name}"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/zombie/admin/user/${user.userName}" id="username_value_${userStatus.count}" name="username_value"><c:out value="${user.name}"/></a></td>
                     <td><c:out value="${user.role}"/></td>
                 </tr>
             </c:forEach>
         </table>
         <div>
-            <a name="create_user" id="create_user" href="${pageContext.request.contextPath}/zombie/admin/users/create">Create New User</a>
+            <a name="create_user" id="create_user" href="${pageContext.request.contextPath}/zombie/admin/user/create">Create New User</a>
         </div>
         <div>
             <a href="${pageContext.request.contextPath}/zombie/login/HomePage" name="back_user_home" id="back_user_home">Back</a>

@@ -17,7 +17,7 @@
         ${validationMessage}
         ${allFieldsAreMandatory}
     </div>
-    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/users/create">
+    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
 
         <div>
             <label for="username">Username:</label>

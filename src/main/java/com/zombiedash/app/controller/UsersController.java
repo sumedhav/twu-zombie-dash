@@ -19,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/admin/users")
+@RequestMapping("/admin")
 public class UsersController {
 
     private UserService userService;
@@ -31,17 +31,17 @@ public class UsersController {
         this.validationMessagesMap = validationMessagesMap;
     }
 
-    @RequestMapping(value = "")
+    @RequestMapping(value = "/users-management")
     public ModelAndView listUsers() {
         return new ModelAndView("listusers", "Users", userService.getAllUsers());
     }
 
-    @RequestMapping(value = "/create", method = GET)
+    @RequestMapping(value = "/user/create", method = GET)
     public ModelAndView createUser() {
         return new ModelAndView("createuser");
     }
 
-    @RequestMapping(value = "/create", method = POST)
+    @RequestMapping(value = "/user/create", method = POST)
     public ModelAndView createUser(UserForm userForm) {
         ModelAndView modelAndView;
         userForm.validate();
@@ -53,13 +53,13 @@ public class UsersController {
             try {
                 User user = userForm.createUser();
                 userService.createUser(user, userForm.getPassword());
-                modelAndView = new ModelAndView("redirect:/zombie/admin/users");
+                modelAndView = new ModelAndView("redirect:/zombie/admin/users-management");
             } catch (IllegalArgumentException exception) {
                 modelAndView = new ModelAndView("createuser");
                 modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
                 modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
             } catch (Exception e) {
-                modelAndView = new ModelAndView("errorPage");
+                modelAndView = new ModelAndView("errorpage");
             }
         }
         return modelAndView;
@@ -72,14 +72,14 @@ public class UsersController {
 
     }
 
-    @RequestMapping(value = "/errorPage", method = GET)
+    @RequestMapping(value = "/user/error", method = GET)
     public ModelAndView showErrorPage() {
-        return new ModelAndView("errorPage");
+        return new ModelAndView("errorpage");
     }
 
-    @RequestMapping(value = "/display/{userName}")
+    @RequestMapping(value = "/user/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
-        return new ModelAndView("userDetails", "User", userService.getUser(userName));
+        return new ModelAndView("userdetails", "User", userService.getUser(userName));
     }
 
     @RequestMapping(value = "/deleteuser/{username}", method = RequestMethod.GET)
@@ -88,9 +88,9 @@ public class UsersController {
 
         try {
             userService.deleteUser(username);
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users-management");
         } catch (Exception e) {
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users/errorPage");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/user/error");
         }
 
         return modelAndView;

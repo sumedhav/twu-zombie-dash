@@ -69,7 +69,7 @@ public class UsersControllerTest {
     UserForm userForm = mock(UserForm.class);
     when(userForm.hasErrors()).thenReturn(false);
     ModelAndView modelAndView = usersController.createUser(userForm);
-    assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users"));
+    assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users-management"));
   }
 
   @Test
@@ -77,8 +77,9 @@ public class UsersControllerTest {
     doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR.Right", "right@gmail.com")), eq("password1"));
     ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
 
-    assertThat(modelAndView.getViewName(), is("errorPage"));
+    assertThat(modelAndView.getViewName(), is("errorpage"));
   }
+
 
   @Test
   public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid(){
@@ -95,7 +96,7 @@ public class UsersControllerTest {
   @Test
   public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
     ModelAndView modelAndView = usersController.showUserDetails("admin");
-    assertThat(modelAndView.getViewName(), is("userDetails"));
+    assertThat(modelAndView.getViewName(), is("userdetails"));
   }
 
   @Test
