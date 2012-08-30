@@ -57,7 +57,7 @@ public class UserForm {
             errorCodes.add("invalidUserName");
         if(isEmpty(email) || !email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
             errorCodes.add("invalidEmail");
-        if(isEmpty(name)|| !(name.length()<=40))
+        if(isEmpty(name)|| !(name.length()<=40) || !name.matches("[a-zA-Z ]+"))
             errorCodes.add("invalidName");
         return errorCodes;
     }

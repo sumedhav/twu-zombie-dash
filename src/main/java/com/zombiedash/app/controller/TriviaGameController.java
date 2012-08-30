@@ -34,11 +34,11 @@ public class TriviaGameController {
 
     @RequestMapping(value = "result", method = RequestMethod.POST)
     public ModelAndView showResultsPage(@RequestParam Map<String, String> params) {
-
+        int noOfQuestionsInRepository=questionRepository.listAllQuestions().size();
         ModelAndView modelAndView = new ModelAndView("result");
         List<String> userAnswers=new ArrayList<String>();
         int question_id;
-        for(question_id=1;question_id<=questionRepository.listAllQuestions().size();question_id++){
+        for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){
             userAnswers.add(params.get("question_"+question_id));
         }
         modelAndView.addObject("maxScore", userAnswers.size());
