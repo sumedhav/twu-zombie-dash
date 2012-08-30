@@ -26,16 +26,20 @@ public class ConferenceValidator {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         try {
+            String [] datesData = rawDate.split("-");
             Date date = dateFormat.parse(rawDate);
             Date currentDate = new Date();
-            System.out.println(date);
+
+            if( datesData[0].length()!=4 || datesData[1].length()!=2|| datesData[2].length()!=2) {
+                throw new ParseException("Invalid year/month/day format", 1);
+            }
+
             if (currentDate.before(date) || dateFormat.format(currentDate).equals(rawDate)) {
                 return true;
             }
             model.put(errorName,"Must be a current or future date");
             return false;
         } catch (ParseException e) {
-            System.out.println("EXCEPTION:"+ rawDate);
             if (!rawDate.isEmpty()) model.put(errorName, "Must be valid date in yyyy-mm-dd format");
             return false;
         }
@@ -86,4 +90,5 @@ public class ConferenceValidator {
             }
         }
     }
+
 }

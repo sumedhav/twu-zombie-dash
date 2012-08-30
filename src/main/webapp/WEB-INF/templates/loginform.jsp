@@ -1,3 +1,6 @@
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Zombie Dash : Login</title>
@@ -9,6 +12,11 @@
         <h1 class="pageTitle">
             <div>Login</div>
         </h1>
+        <div class="control-group">
+            <div id="message_to_be_displayed" class="form-message error">
+                ${messageToBeDisplayed}
+            </div>
+        </div>
         <div class="span6">
             <img src="${pageContext.request.contextPath}/static/images/ZombieDash.jpg"/>
         </div>
@@ -32,11 +40,6 @@
                     <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div id="message_to_be_displayed" class="form-message error">
-                            ${messageToBeDisplayed}
                         </div>
                     </div>
                 </form>

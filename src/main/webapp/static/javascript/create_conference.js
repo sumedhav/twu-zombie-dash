@@ -17,3 +17,17 @@ function limitNumOfCharsInField(field, maxNumChars, errorName) {
         $(errorName).html("");
     }
 }
+
+function createCalendar(element) {
+  var d = new Date();
+  $(element).datepick({dateFormat: 'yyyy-mm-dd', alignment: 'bottomLeft', minDate: '#d', showOnFocus: false, showTrigger: '#calImg', clear: false});
+}
+
+$(document).ready(function() {
+  createCalendar("#conf_start_date");
+  createCalendar("#conf_end_date");
+})
+
+
+
+

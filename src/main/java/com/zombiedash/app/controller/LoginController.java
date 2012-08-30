@@ -32,4 +32,12 @@ public class LoginController {
       return new ModelAndView("loginsuccess");
     }
 
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public ModelAndView showLoginPageWithLogoutMessage () {
+        ModelAndView modelAndView = new ModelAndView("loginform");
+        modelAndView.addObject("messageToBeDisplayed", "Successful logout");
+        return modelAndView;
+    }
+
+
 }

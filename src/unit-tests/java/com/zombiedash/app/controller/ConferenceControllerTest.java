@@ -39,6 +39,6 @@ public class ConferenceControllerTest {
     ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
     ConferenceController conferenceController = new ConferenceController(conferenceRepository);
     ModelAndView actualModel = conferenceController.submit("NotNull", "", "NotNull", "NotNull", "NotNull", "NotNull", "1");
-    assertThat(actualModel.getViewName(), is(equalTo("createconference")));
+    assertThat(actualModel.getViewName(), is(equalTo("redirect:/zombie/admin/conference/createConference")));
   }
 }
