@@ -35,7 +35,7 @@
                           <label class="control-label align-left" for="username">Username:</label>
                           <div class="controls">
                             <textarea name="userName" id="username" type="text" placeholder="enter username">${model.username}</textarea>
-                             <span class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
+                             <span id="invalid_user_name" class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
                           </div>
                      </div>
 
@@ -43,7 +43,7 @@
                            <label class="control-label align-left" for="password">Password:</label>
                            <div class="controls">
                              <textarea name="password" id="password" type="text" placeholder="enter password">${model.password}</textarea>
-                             <span class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
+                             <span id="invalid_password" class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
                            </div>
                     </div>
 
@@ -51,7 +51,7 @@
                             <label class="control-label align-left" for="name">Name:</label>
                             <div class="controls">
                               <textarea name="name" id="name" type="text" placeholder="enter name">${model.name}</textarea>
-                              <span class="error inline-help" style="color:#FF0000">${invalidName}</span>
+                              <span id="invalid_name" class="error inline-help" style="color:#FF0000">${invalidName}</span>
                             </div>
                     </div>
 
@@ -60,7 +60,7 @@
                          <label class="control-label align-left" for="email">Email:</label>
                          <div class="controls">
                             <textarea name="email" id="email" type="text" placeholder="enter email">${model.email}</textarea>
-                            <span class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
+                            <span id="invalid_email" class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
                          </div>
                      </div>
 
