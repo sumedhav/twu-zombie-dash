@@ -107,7 +107,7 @@ public class CreateUserPageTest {
     @Test
     public void shouldGoToUserListPageWhenClickedOkOnAlertBox() {
 
-        WebServer webServer=new WebServer(1234);
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -116,13 +116,12 @@ public class CreateUserPageTest {
 
             WebElement cancel = webDriver.findElement(By.name("cancel"));
             cancel.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.accept();
             Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : User List"));
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             webServer.stop();
             webDriver.close();
         }
@@ -131,7 +130,7 @@ public class CreateUserPageTest {
     @Test
     public void shouldRemainOnCreateUserPageWhenClickedCancelOnAlertBox() {
 
-        WebServer webServer=new WebServer(1234);
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -143,15 +142,14 @@ public class CreateUserPageTest {
 
             WebElement cancel = webDriver.findElement(By.name("cancel"));
             cancel.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.dismiss();
             assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : Create User"));
 
-            assertThat(userNameElement.getAttribute("value"),is(equalTo("username")));
+            assertThat(userNameElement.getAttribute("value"), is(equalTo("username")));
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             webServer.stop();
             webDriver.close();
         }

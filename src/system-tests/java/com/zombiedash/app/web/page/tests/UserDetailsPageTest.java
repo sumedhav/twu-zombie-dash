@@ -28,8 +28,8 @@ public class UserDetailsPageTest {
     }
 
     @Test
-    public void shouldRemainOnUserDetailsPageWhenClickedCancelOnAlertBox(){
-        WebServer webServer=new WebServer(1234);
+    public void shouldRemainOnUserDetailsPageWhenClickedCancelOnAlertBox() {
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -38,14 +38,13 @@ public class UserDetailsPageTest {
 
             WebElement deleteElement = webDriver.findElement(By.id("delete_user"));
             deleteElement.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.dismiss();
             Thread.sleep(3000);
             Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : User Details"));
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             webServer.stop();
             webDriver.close();
         }
@@ -54,7 +53,7 @@ public class UserDetailsPageTest {
     @Test
     public void shouldDeleteUserWhenClickedOkOnAlertBox() {
 
-        WebServer webServer=new WebServer(1234);
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -80,15 +79,14 @@ public class UserDetailsPageTest {
 
             WebElement deleteElement = webDriver.findElement(By.id("delete_user"));
             deleteElement.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.accept();
             Thread.sleep(3000);
             Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : User List"));
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             webServer.stop();
             webDriver.close();
         }

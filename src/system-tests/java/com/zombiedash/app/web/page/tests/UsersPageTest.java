@@ -25,7 +25,7 @@ public class UsersPageTest {
 
     @Ignore
     @Test
-    public void  shouldGoToHomePageWhenClickedOnBackButton() throws Exception {
+    public void shouldGoToHomePageWhenClickedOnBackButton() throws Exception {
         Browser browser = Application.browser();
         browser.open("/zombie/admin/users");
 

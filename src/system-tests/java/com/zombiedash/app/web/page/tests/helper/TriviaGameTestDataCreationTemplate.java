@@ -19,6 +19,7 @@ public class TriviaGameTestDataCreationTemplate {
                 "values (%d, %d, '%s', %b)",
                 optionId, questionId, text, correct));
     }
+
     public int getNumberOfExistingQuestionsInDatabase() {
         return jdbcTemplate.queryForInt(String.format("select count(*) from zombie_question"));
     }

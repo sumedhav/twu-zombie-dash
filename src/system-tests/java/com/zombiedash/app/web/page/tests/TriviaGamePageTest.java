@@ -5,7 +5,7 @@ import com.example.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
-import org.junit.Ignore;
+import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -43,9 +43,9 @@ public class TriviaGamePageTest {
 
 
     @Test
-    public void shouldGoTOHomePageWhenClickedOkOnAlertBox() {
+    public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
 
-        WebServer webServer=new WebServer(1234);
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -54,23 +54,22 @@ public class TriviaGamePageTest {
 
             WebElement cancel = webDriver.findElement(By.name("cancel"));
             cancel.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.accept();
             Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Customer Home"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
+        } catch (Exception exception) {
+            throw exception;
+        } finally {
             webServer.stop();
             webDriver.close();
         }
     }
 
     @Test
-    public void shouldStayOnSamePageIfCancelIsClickedOnAlertBox() {
+    public void shouldStayOnSamePageIfCancelIsClickedOnAlertBox() throws Exception {
 
-        WebServer webServer=new WebServer(1234);
+        WebServer webServer = new WebServer(1234);
         WebDriver webDriver = new FirefoxDriver();
         try {
             webServer.start();
@@ -79,38 +78,74 @@ public class TriviaGamePageTest {
 
             WebElement cancel = webDriver.findElement(By.name("cancel"));
             cancel.click();
-            Alert alert=webDriver.switchTo().alert();
+            Alert alert = webDriver.switchTo().alert();
             alert.dismiss();
             Thread.sleep(3000);
             assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
+        } catch (Exception exception) {
+            throw exception;
+        } finally {
             webServer.stop();
             webDriver.close();
         }
     }
 
-    @Test@Ignore
+    @Test
     public void shouldDisplayResultPageWithScoreWhenAllQuestionsAreAnsweredAndSubmitted() throws Exception {
-        Browser browser = Application.browser();
-        browser.open("/zombie/conference/user/game");
-//        List<WebElement> questions = browser.findElements(By.className("question"));
-//        for (WebElement question : questions) {
-//            List<WebElement> options = question.findElements(By.className("options"));
-//            options.get(0).click();
-//        }
-
-//            List<WebElement> options = browser.findElements(By.name("question_"+1));
-//            options.get(0).click();
-//        List<WebElement> optionsForSecond = browser.findElements(By.name("question_"+2));
-//            optionsForSecond.get(0).click();
-
-        WebElement submitButton = browser.findElement(By.id("submit_button"));
-        submitButton.click();
-        assertThat(browser.getPageTitle(), is(""));
-//        assertThat(browser.findElement(By.id("obtainedScore")).getText(), IsNot.not(""));
+        WebServer webServer = new WebServer(1234);
+        WebDriver webDriver = new FirefoxDriver();
+        try {
+            webServer.start();
+            webDriver.get("http://localhost:1234/zombie/conference/user/game");
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+            List<WebElement> questions = webDriver.findElements(By.className("question"));
+            for (int questionNumber = 1; questionNumber <= questions.size(); questionNumber++) {
+                List<WebElement> options = webDriver.findElements(By.name("question_" + questionNumber));
+                options.get(0).click();
+            }
+            WebElement submitButton = webDriver.findElement(By.id("submit_button"));
+            submitButton.click();
+            Thread.sleep(3000);
+            assertThat(webDriver.getTitle(), is("Results Page"));
+            assertThat(webDriver.findElement(By.id("obtainedScore")).getText(), IsNot.not(""));
+        } catch (Exception exception) {
+            throw exception;
+        } finally {
+            webServer.stop();
+            webDriver.close();
+        }
+    }
+    @Test
+    public void shouldDisplayAlertWhenNotAllQuestionsAreAnsweredANdStayOnSamePage() throws Exception {
+        WebServer webServer = new WebServer(1234);
+        WebDriver webDriver = new FirefoxDriver();
+        try {
+            webServer.start();
+            webDriver.get("http://localhost:1234/zombie/conference/user/game");
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+            List<WebElement> questions = webDriver.findElements(By.className("question"));
+            for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
+                List<WebElement> options = webDriver.findElements(By.name("question_" + questionNumber));
+                options.get(0).click();
+            }
+            WebElement submitButton = webDriver.findElement(By.id("submit_button"));
+            submitButton.click();
+            Alert alert=webDriver.switchTo().alert();
+            Thread.sleep(3000);
+            assertThat(alert.getText(),IsNot.not(""));
+            alert.accept();
+            assertThat(webDriver.getTitle(), is("Welcome to Trivia Game!"));
+            for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
+                List<WebElement> options = webDriver.findElements(By.name("question_" + questionNumber));
+                assertThat(options.get(0).isSelected(),is(true));
+            }
+            assertThat(webDriver.findElement(By.name("question_"+questions.size())).isSelected(),is(false));
+        } catch (Exception exception) {
+            throw exception;
+        } finally {
+            webServer.stop();
+            webDriver.close();
+        }
     }
 
     @Test
@@ -123,7 +158,7 @@ public class TriviaGamePageTest {
         }
         int numberOfSelections = 0;
         for (WebElement radioButton : radioButtons) {
-            if(radioButton.isSelected()){
+            if (radioButton.isSelected()) {
                 numberOfSelections++;
             }
         }
