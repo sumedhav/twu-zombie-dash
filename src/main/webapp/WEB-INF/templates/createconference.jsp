@@ -106,7 +106,7 @@
 
                          <div class="control-group">
                             <div class="controls offset6">
-                            <input type="button" id="submit" value="Cancel" class="btn btn-primary"
+                            <input type="button" id="cancel" value="Cancel" class="btn btn-primary"
                                onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
                             </div>
                         </div>
