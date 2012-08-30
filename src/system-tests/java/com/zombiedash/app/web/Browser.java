@@ -1,7 +1,6 @@
 package com.zombiedash.app.web;
 
 
-import com.google.common.base.Function;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,6 +49,16 @@ public class Browser {
       });
     }
 
+    public Browser inputTextOn(String id, String text) {
+        this.findElement(By.id(id)).sendKeys(text);
+        return this;
+    }
+
+    public Browser clickOn(String id) {
+        this.findElement(By.id(id)).click();
+        return this;
+    }
+
     public List<WebElement> findElements(final By selector) {
       return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<List<WebElement>>() {
         @Override
@@ -60,14 +69,8 @@ public class Browser {
     }
 
     public String getPageTitle() {
-        return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<String>() {
-            @Override
-            public String apply(@Nullable WebDriver webDriver) {
-                return driver.findElement(By.tagName("title")).getText();
-            }
-        });
+        return this.findElement(By.tagName("title")).getText();
     }
-
 
     public void stop() {
         try {
@@ -77,7 +80,13 @@ public class Browser {
         }
     }
 
-    public WebDriver.TargetLocator switchTo() {
-        return driver.switchTo();
+    public Browser alertOk() {
+        this.driver.switchTo().alert().accept();
+        return this;
+    }
+
+    public Browser alertCancel() {
+        driver.switchTo().alert().dismiss();
+        return this;
     }
 }
