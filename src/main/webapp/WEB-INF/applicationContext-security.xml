@@ -12,6 +12,7 @@
         <intercept-url pattern="/zombie/conference/user/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/**" access="ROLE_ADMIN"/>
         <form-login login-page = "/zombie/login/LoginForm" default-target-url='/zombie/login/HomePage'/>
+        <logout logout-success-url="/zombie/login/LoginForm"/>
     </http>
 
     <authentication-manager>
