@@ -1,3 +1,4 @@
+//Responsibility: Hold the contents of a user domain object
 package com.zombiedash.app.model;
 
 public class User implements java.io.Serializable {
