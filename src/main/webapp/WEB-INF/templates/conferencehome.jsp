@@ -23,13 +23,22 @@
                 Existing Conferences
               </div>
 
+<<<<<<< HEAD
               <div class="conferenceList">
                   <ol>
-                      <c:forEach var="conference" items="${Conferences}">
+                      <c:forEach var="conference" items="${Conferences}" varStatus="confStatus">
                           <li>
                               <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}"
-                              name="existing_conference_name" id="existing_conference_name">${conference} </a>
+                              name="existing_conference_name" id="existing_conference_name_${confStatus.count}">${conference} </a>
                           </li>
+=======
+          <div>
+              <ul>
+                      <c:forEach var="conference" items="${Conferences}" varStatus="confStatus">
+                          <div>
+                              <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}" name="existing_conference_name" id="existing_conference_name_${confStatus.count}">${conference}</a>
+                          </div>
+>>>>>>> [Charles,Khushal,Nicole] Create conference page redirects to general error page upon any unexpected exception. Functional tests added to create and view conference stories
                       </c:forEach>
                   </ol>
               </div>
