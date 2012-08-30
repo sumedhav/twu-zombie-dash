@@ -18,6 +18,8 @@ public class Browser {
     private final String hostAddress;
     private final WebDriver driver;
 
+    private final static int TIMEOUT= 30;
+
     public Browser(String hostAddress, boolean testWithFirefox) {
         this.hostAddress = hostAddress;
         if (testWithFirefox) {
@@ -39,7 +41,7 @@ public class Browser {
     }
 
     public WebElement findElement(final By selector) {
-      return new WebDriverWait(driver, 5).until(new ExpectedCondition<WebElement>(){
+      return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<WebElement>(){
         @Override
         public WebElement apply(@Nullable WebDriver webDriver) {
           return driver.findElement(selector);
@@ -58,7 +60,7 @@ public class Browser {
     }
 
     public List<WebElement> findElements(final By selector) {
-      return new WebDriverWait(driver, 5).until(new ExpectedCondition<List<WebElement>>() {
+      return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<List<WebElement>>() {
         @Override
         public List<WebElement> apply(@Nullable WebDriver webDriver) {
           return driver.findElements(selector);
@@ -67,7 +69,7 @@ public class Browser {
     }
 
     public String getPageTitle() {
-        return new WebDriverWait(driver, 5).until(new ExpectedCondition<String>() {
+        return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<String>() {
             @Override
             public String apply(@Nullable WebDriver webDriver) {
                 return driver.findElement(By.tagName("title")).getText();
