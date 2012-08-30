@@ -4,9 +4,11 @@
 <title>Create Conference Page</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
-
-<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
+<!--<link type="text/css" href="${pageContext.request.contextPath}/static/css/jquery.datepick.css" rel="stylesheet"/>-->
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
 
 </head>
 <body onload='document.conferenceCreationForm.conf_name.focus();'>
@@ -14,14 +16,15 @@
              <h1 class="pageTitle">
                  <div>Zombie Dash</div>
              </h1>
+             <div style="display: none;">
+                 <img id="calImg" width="25" height="25" src="${pageContext.request.contextPath}/static/images/Calendar.jpg" alt="Popup" class="trigger">
+             </div>
           	<div class="sectionTitle">Create Conference: Enter Details</div>
              <div class="control-group">
                   <div id="message_to_be_displayed" class="form-message error">
                       ${model.errorString}
                   </div>
              </div>
-
-
 
              <div class="row-fluid">
                  <div class="span12">
@@ -50,7 +53,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceStartDate">Start date:</label>
                                 <div class="controls">
-                                 <input type='text' name='conf_start_date' size="28" placeholder="yyyy-mm-dd" value=${model.startDate} >
+                                 <input type='text' id="conf_start_date" name='conf_start_date' placeholder="yyyy-mm-dd" onFocus="javascript" value=${model.startDate} >
                                  <span class="error inline-help">${model.startDateFieldMissing}</span>
                                  <span class="error inline-help">${model.startDateError}</span>
                                 </div>
@@ -59,7 +62,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceEndDate"> End date:</label>
                                <div class="controls">
-                                <input type='text' name='conf_end_date' size="28" placeholder="yyyy-mm-dd" value=${model.endDate}>
+                                <input type='text' id="conf_end_date" name='conf_end_date' placeholder="yyyy-mm-dd" onFocus="javascript" value=${model.endDate}>
                                  <span class="error inline-help">${model.endDateFieldMissing}</span>
                                   <span class="error inline-help">${model.endDateError}</span>
 

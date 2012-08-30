@@ -55,8 +55,6 @@ public class ConferenceController {
         conferenceTopic = conferenceTopic.trim();
         conferenceDescription = conferenceDescription.trim();
         conferenceVenue = conferenceVenue.trim();
-        conferenceStartDate = conferenceStartDate.trim();
-        conferenceEndDate = conferenceEndDate.trim();
         conferenceMaxAttendees = conferenceMaxAttendees.trim();
 
         Map<String,String> model = new HashMap<String, String>();
