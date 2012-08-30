@@ -6,7 +6,6 @@ import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
 import org.hamcrest.core.IsNot;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,8 +49,7 @@ public class TriviaGamePageTest extends BasePageTest {
 
         WebElement cancel = browser.findElement(By.name("cancel"));
         cancel.click();
-        Alert alert = browser.switchTo().alert();
-        alert.accept();
+        browser.alertOk();
         assertThat(browser.getPageTitle(), is("Customer Home"));
     }
 
@@ -67,8 +65,8 @@ public class TriviaGamePageTest extends BasePageTest {
         optionElement.click();
         WebElement cancel = browser.findElement(By.name("cancel"));
         cancel.click();
-        Alert alert = browser.switchTo().alert();
-        alert.dismiss();
+        browser.alertCancel();
+
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         assertThat(optionElement.isSelected(), is(true));
     }
@@ -105,9 +103,7 @@ public class TriviaGamePageTest extends BasePageTest {
         }
         WebElement submitButton = browser.findElement(By.id("submit_button"));
         submitButton.click();
-        Alert alert=browser.switchTo().alert();
-        assertThat(alert.getText(), IsNot.not(""));
-        alert.accept();
+        browser.alertOk();
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
             List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));

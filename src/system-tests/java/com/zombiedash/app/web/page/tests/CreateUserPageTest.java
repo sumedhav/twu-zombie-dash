@@ -1,45 +1,27 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.jetty.WebServer;
-import com.zombiedash.app.web.Application;
-import com.zombiedash.app.web.Browser;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Ignore;
+import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 
-@Ignore("WIP: need to implement common login behaviour")
-public class CreateUserPageTest {
-
+public class CreateUserPageTest extends BasePageTest {
+    @Before
+    public void startSession() {
+        browser = BrowserSessionBuilder.newStatelessSession()
+                .loggedInAsAdmin()
+                .build()
+                .open("/app/zombie/admin/user/create");
+    }
     @Test
     public void shouldDisplayErrorMessageWhenAnyFieldIsEmpty() {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users/create");
-
-        WebElement usernameElement = browser.findElement(By.id("username"));
-        usernameElement.sendKeys("");
-
-        WebElement passwordElement = browser.findElement(By.id("password"));
-        passwordElement.sendKeys("");
-
-        WebElement nameElement = browser.findElement(By.id("name"));
-        nameElement.sendKeys("");
-
-        WebElement emailElement = browser.findElement(By.id("email"));
-        emailElement.sendKeys("");
-
-        WebElement saveElement = browser.findElement(By.id("submit"));
-        saveElement.click();
+        browser.findElement(By.id("submit")).click();
 
         WebElement messageElement = browser.findElement(By.name("error_message_div"));
 
@@ -48,23 +30,11 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldDisplayRespectiveErrorMessagesWhenAnyFieldsAreInvalid() {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users/create");
-
-        WebElement usernameElement = browser.findElement(By.id("username"));
-        usernameElement.sendKeys("pass");
-
-        WebElement passwordElement = browser.findElement(By.id("password"));
-        passwordElement.sendKeys("pass w");
-
-        WebElement nameElement = browser.findElement(By.id("name"));
-        nameElement.sendKeys("qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg");
-
-        WebElement emailElement = browser.findElement(By.id("email"));
-        emailElement.sendKeys("ndkdnkn@dlm");
-
-        WebElement saveElement = browser.findElement(By.id("submit"));
-        saveElement.click();
+        browser.inputTextOn("username", "pass")
+                .inputTextOn("password", "pass w")
+                .inputTextOn("name", "qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg")
+                .inputTextOn("email", "ndkdnkn@dlm")
+                .clickOn("submit");
 
         WebElement invalidUserNameElement = browser.findElement(By.id("invalid_user_name"));
         assertThat(invalidUserNameElement.getText(), is("The Username must have 5-40 alphanumeric characters and no whitespaces."));
@@ -81,101 +51,51 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldSaveNewUserWhenAllFieldsAreValid() {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users/create");
-
-        WebElement usernameElement = browser.findElement(By.id("username"));
-        usernameElement.sendKeys("username");
-
-        WebElement passwordElement = browser.findElement(By.id("password"));
-        passwordElement.sendKeys("password123");
-
-        WebElement nameElement = browser.findElement(By.id("name"));
-        nameElement.sendKeys("yahya");
-
-        WebElement emailElement = browser.findElement(By.id("email"));
-        emailElement.sendKeys("email@email.com");
-
-        WebElement saveElement = browser.findElement(By.id("submit"));
-        saveElement.click();
+        browser.inputTextOn("username", "username")
+                .inputTextOn("password", "password123")
+                .inputTextOn("name", "yahya")
+                .inputTextOn("email", "email@email.com")
+                .clickOn("submit");
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
         WebElement userListElement = browser.findElement(By.id("username_value_2"));
         assertThat(userListElement.getText(), is(equalTo("yahya")));
-
     }
 
     @Test
     public void shouldGoToUserListPageWhenClickedOkOnAlertBox() {
+        browser = BrowserSessionBuilder.newJavascriptEnabledSession()
+                .loggedInAsAdmin()
+                .build()
+                .open("/app/zombie/admin/user/create");
 
-        WebServer webServer = new WebServer(1234);
-        WebDriver webDriver = new FirefoxDriver();
-        try {
-            webServer.start();
-            webDriver.get("http://localhost:1234/zombie/admin/users/create");
-            Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : Create User"));
+        browser.findElement(By.name("cancel")).click();
+        browser.alertOk();
 
-            WebElement cancel = webDriver.findElement(By.name("cancel"));
-            cancel.click();
-            Alert alert = webDriver.switchTo().alert();
-            alert.accept();
-            Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : User List"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            webServer.stop();
-            webDriver.close();
-        }
+        assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
     }
 
     @Test
     public void shouldRemainOnCreateUserPageWhenClickedCancelOnAlertBox() {
+        browser = BrowserSessionBuilder.newJavascriptEnabledSession()
+                .loggedInAsAdmin()
+                .build()
+                .open("/app/zombie/admin/user/create");
 
-        WebServer webServer = new WebServer(1234);
-        WebDriver webDriver = new FirefoxDriver();
-        try {
-            webServer.start();
-            webDriver.get("http://localhost:1234/zombie/admin/users/create");
-            Assert.assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : Create User"));
+        browser.findElement(By.name("cancel")).click();
+        browser.alertCancel();
 
-            WebElement userNameElement = webDriver.findElement(By.id("username"));
-            userNameElement.sendKeys("username");
-
-            WebElement cancel = webDriver.findElement(By.name("cancel"));
-            cancel.click();
-            Alert alert = webDriver.switchTo().alert();
-            alert.dismiss();
-            assertThat(webDriver.getTitle(), CoreMatchers.is("Zombie Dash : Create User"));
-
-            assertThat(userNameElement.getAttribute("value"), is(equalTo("username")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            webServer.stop();
-            webDriver.close();
-        }
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
     }
 
     @Test
     public void shouldDisplayErrorMessageWhenUserNameAlreadyExists() {
-        Browser browser = Application.statelessBrowser();
-        browser.open("/zombie/admin/users/create");
-
-        WebElement usernameElement = browser.findElement(By.id("username"));
-        usernameElement.sendKeys("admin");
-
-        WebElement passwordElement = browser.findElement(By.id("password"));
-        passwordElement.sendKeys("password123");
-
-        WebElement nameElement = browser.findElement(By.id("name"));
-        nameElement.sendKeys("yahya");
-
-        WebElement emailElement = browser.findElement(By.id("email"));
-        emailElement.sendKeys("email@email.com");
-
-        WebElement saveElement = browser.findElement(By.id("submit"));
-        saveElement.click();
+        browser.inputTextOn("username", "admin")
+                .inputTextOn("password", "password123")
+                .inputTextOn("name", "yahya")
+                .inputTextOn("email", "email@email.com")
+                .clickOn("submit");
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
 
