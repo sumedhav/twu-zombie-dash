@@ -50,12 +50,12 @@ public class Browser {
     }
 
     public Browser inputTextOn(String id, String text) {
-        driver.findElement(By.id(id)).sendKeys(text);
+        this.findElement(By.id(id)).sendKeys(text);
         return this;
     }
 
     public Browser clickOn(String id) {
-        driver.findElement(By.id(id)).click();
+        this.findElement(By.id(id)).click();
         return this;
     }
 
@@ -69,12 +69,7 @@ public class Browser {
     }
 
     public String getPageTitle() {
-        return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<String>() {
-            @Override
-            public String apply(@Nullable WebDriver webDriver) {
-                return driver.findElement(By.tagName("title")).getText();
-            }
-        });
+        return this.findElement(By.tagName("title")).getText();
     }
 
     public void stop() {
