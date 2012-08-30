@@ -4,7 +4,6 @@ package com.zombiedash.app.web.page.tests;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,9 +23,7 @@ public class TriviaGamePageTest extends BasePageTest {
     @Test
     public void shouldDisplayGameQuestions() {
 
-        browser = BrowserSessionBuilder.newStatelessSession().build();
-        initializeQuestionsAndOptions();
-        browser.open(TRIVIA_GAME_URL);
+        initializeStatelessBrowserAndSetUpData();
 
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
 
@@ -35,8 +32,6 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(elements.get(0).getText(), equalTo("Where is Red Fort"));
         assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
     }
-
-
 
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
@@ -75,8 +70,8 @@ public class TriviaGamePageTest extends BasePageTest {
         browser.clickOn("submit_button");
 
         assertThat(browser.getPageTitle(), is("Results Page"));
-        assertThat(browser.findElement(By.id("obtainedScore")).getText(), IsNot.not(""));
-        assertThat(browser.findElement(By.id("maxScore")).getText(), IsNot.not(""));
+        assertThat(browser.findElement(By.id("obtainedScore")).getText(), is(String.valueOf(questions.size())));
+        assertThat(browser.findElement(By.id("maxScore")).getText(), is(String.valueOf(questions.size())));
     }
 
     @Test
@@ -103,9 +98,7 @@ public class TriviaGamePageTest extends BasePageTest {
 
     @Test
     public void shouldAllowOnlyOneAnswerForAQuestion() throws Exception {
-        browser = BrowserSessionBuilder.newStatelessSession().build();
-        initializeQuestionsAndOptions();
-        browser.open(TRIVIA_GAME_URL);
+        initializeStatelessBrowserAndSetUpData();
 
         List<WebElement> radioButtons = browser.findElements(By.name("question_1"));
         for (WebElement radioButton : radioButtons) {
@@ -137,6 +130,12 @@ public class TriviaGamePageTest extends BasePageTest {
 
     private void initializeJavaScriptBrowserAndSetUpData() {
         browser = BrowserSessionBuilder.newJavascriptEnabledSession().build();
+        initializeQuestionsAndOptions();
+        browser.open(TRIVIA_GAME_URL);
+    }
+
+    private void initializeStatelessBrowserAndSetUpData() {
+        browser = BrowserSessionBuilder.newStatelessSession().build();
         initializeQuestionsAndOptions();
         browser.open(TRIVIA_GAME_URL);
     }

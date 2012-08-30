@@ -2,6 +2,7 @@ package com.zombiedash.app.model;
 
 
 public class Conference {
+  private int id;
   private String name;
   private String topic;
   private String description;
@@ -10,13 +11,15 @@ public class Conference {
   private String endDate;
   private int maxAttendee;
 
-  public Conference(String name,
+  public Conference(int id,
+                    String name,
                     String topic,
                     String description,
                     String venue,
                     String startDate,
                     String endDate,
                     Integer maxAttendee) {
+    this.id = id;
     this.name = name;
     this.topic = topic;
     this.description = description;
@@ -24,6 +27,10 @@ public class Conference {
     this.startDate = startDate;
     this.endDate = endDate;
     this.maxAttendee = maxAttendee;
+  }
+
+  public int getId() {
+      return id;
   }
 
   public String getName() {

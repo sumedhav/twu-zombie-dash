@@ -28,8 +28,8 @@
                   <ol>
                       <c:forEach var="conference" items="${Conferences}" varStatus="confStatus">
                           <li>
-                              <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference}"
-                              name="existing_conference_name" id="existing_conference_name_${confStatus.count}">${conference} </a>
+                                  <a href="${pageContext.request.contextPath}/zombie/admin/conference/view/${conference.id}"
+                                  name="existing_conference_id" id="existing_conference_id_${confStatus.count}">${conference.name}</a>
                           </li>
                           <br>
                           </br>
