@@ -5,6 +5,7 @@ import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+@Ignore("WIP: need to remove instantiation of FirefoxDriver")
 public class UserDetailsPageTest {
 
     @Test

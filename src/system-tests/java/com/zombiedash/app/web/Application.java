@@ -1,7 +1,6 @@
 package com.zombiedash.app.web;
 
 import com.zombiedash.app.jetty.WebServer;
-import com.zombiedash.app.web.Browser;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;

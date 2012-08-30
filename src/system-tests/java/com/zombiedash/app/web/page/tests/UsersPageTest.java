@@ -11,6 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+@Ignore("WIP: need to implement common login behaviour")
 public class UsersPageTest {
 
     @Test
