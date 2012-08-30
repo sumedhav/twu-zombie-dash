@@ -1,6 +1,6 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.example.app.jetty.WebServer;
+import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import org.hamcrest.CoreMatchers;
@@ -21,7 +21,7 @@ public class UserDetailsPageTest {
 
     @Test
     public void shouldGoToUserDetailsPageOnClickingBack() throws Exception {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/display/admin");
 
         WebElement backElement = browser.findElement(By.id("back_user_details"));
