@@ -27,6 +27,13 @@ input[type="text"], input[type="password"] {
     font-size:20px;
 }
 
+.conferenceViewSectionTitle{
+    margin-bottom:50px;
+    font-weight:bold;
+    font-size:20px;
+    text-align:center;
+}
+
 .conferenceList{
     border: 1px solid;
     display: inline-block;
@@ -42,6 +49,14 @@ input[type="text"], input[type="password"] {
 .error {
     color:red;
     font-weight:bold;
+}
+
+.table th{
+    width: 30%;
+}
+
+.table td{
+    width: 70%;
 }
 
 #loginForm {

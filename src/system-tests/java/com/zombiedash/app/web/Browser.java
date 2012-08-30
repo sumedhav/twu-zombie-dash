@@ -77,7 +77,12 @@ public class Browser {
     }
 
     public String getBodyClass() {
-        return findElement(By.tagName("body")).getAttribute("class");
+        return new WebDriverWait(driver,5).until(new Function<WebDriver, String>() {
+          @Override
+          public String apply(@Nullable WebDriver webDriver) {
+            return findElement(By.tagName("body")).getAttribute("class");
+          }
+        });
     }
 
     public void stop() {
