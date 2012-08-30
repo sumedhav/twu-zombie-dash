@@ -35,6 +35,10 @@
                    <div>
                        <a name="create_user" id="create_user" href="${pageContext.request.contextPath}/zombie/admin/user/create" class="btn btn-primary">Create New User</a>
                    </div>
+                   <br>
+                   </br>
+                   <br>
+                   </br>
                    <div>
                        <a href="${pageContext.request.contextPath}/zombie/login/HomePage" name="back_user_home" id="back_user_home" class="btn btn-primary offset11">Back</a>
                    </div>

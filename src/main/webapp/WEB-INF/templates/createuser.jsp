@@ -2,56 +2,87 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <html>
 <head>
-    <title>Zombie Dash : Create User</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/createUser.css" rel="stylesheet">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
+<title>Zombie Dash : Create User</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
+<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
+
 </head>
-<body>
-    <h1>Zombie Dash</h1>
-    <h3>Users : Create New</h3>
+<body >
+ <div class="container">
+         <h1 class="pageTitle">
+             <div>Zombie Dash</div>
+         </h1>
+         <h3>Create New User</h3>
 
-    <div name="error_message_div" id="error_message_div" style="color:red">
-        ${validationMessage}
-        ${allFieldsAreMandatory}
-    </div>
-    <form id="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
+         <div class="control-group">
+            <div name="error_message_div" id="error_message_div" style="color:red">
+                ${validationMessage}
+                ${allFieldsAreMandatory}
+            </div>
+         </div>
 
-        <div>
-            <label for="username">Username:</label>
-            <input name="userName" id="username" type="text" value="${model.username}"/>
-            <FONT color="red" id="invalid_user_name">${invalidUserName}</FONT>
-        </div>
 
-        <div>
-            <label for="password">Password: </label>
-            <input name="password" id="password" type="text" value="${model.password}" />
-            <FONT color="red" id="invalid_password">${invalidPassword}</FONT>
-        </div>
+         <div class="row-fluid">
+             <div class="span12">
+                 <form id="userDetails" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
 
-        <div>
-            <label for="name">Name: </label>
-            <input name="name" id="name" type="text"  value="${model.name}"/>
-            <FONT color="red" id="invalid_name">${invalidName}</FONT>
-        </div>
+                     <div class="control-group">
+                          <label class="control-label align-left" for="username">Username:</label>
+                          <div class="controls">
+                            <textarea name="userName" id="username" type="text" placeholder="enter username">${model.username}</textarea>
+                             <span class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
+                          </div>
+                     </div>
 
-        <div>
-            <label for="email">Email: </label>
-            <input name="email" id="email" type="text" value="${model.email}"/>
-            <FONT color="red" id="invalid_email">${invalidEmail}</FONT>
-        </div>
+                    <div class="control-group">
+                           <label class="control-label align-left" for="password">Password:</label>
+                           <div class="controls">
+                             <textarea name="password" id="password" type="text" placeholder="enter password">${model.password}</textarea>
+                             <span class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
+                           </div>
+                    </div>
 
-        <div>
-            <label for="role">Role:</label>
-            <select name="role" id="role">
-                <option value="GameDesigner">Game Designer</option>
-            </select>
-        </div>
+                    <div class="control-group">
+                            <label class="control-label align-left" for="name">Name:</label>
+                            <div class="controls">
+                              <textarea name="name" id="name" type="text" placeholder="enter name">${model.name}</textarea>
+                              <span class="error inline-help" style="color:#FF0000">${invalidName}</span>
+                            </div>
+                    </div>
 
-        <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}')" />
-        <input id="submit" name="submit" type="submit" value="Save" />
-    </form>
+
+                     <div class="control-group">
+                         <label class="control-label align-left" for="email">Email:</label>
+                         <div class="controls">
+                            <textarea name="email" id="email" type="text" placeholder="enter email">${model.email}</textarea>
+                            <span class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
+                         </div>
+                     </div>
+
+                     <div class="control-group">
+                        <label class="control-label align-left" for="role">Role:</label>
+                        <div class="controls">
+                        <select name="role" id="role">
+                            <option value="GameDesigner">Game Designer</option>
+                        </select>
+                        </div>
+                     </div>
+
+                     <div class="control-group">
+                        <div class="controls offset6" >
+                             <input id="submit" name="submit" type="submit" value="Save"  class="btn btn-primary" />&nbsp &nbsp
+                            <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}')" class="btn btn-primary"/>
+                        </div>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+</form>
 </body>
 </html>
