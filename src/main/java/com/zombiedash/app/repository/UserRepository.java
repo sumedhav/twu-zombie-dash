@@ -5,13 +5,13 @@ import com.zombiedash.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
-import static org.apache.commons.codec.digest.DigestUtils.md5Hex;
 
 @Repository
 public class UserRepository {
@@ -20,6 +20,8 @@ public class UserRepository {
   private static final String RETRIEVE_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM zombie_users where username = ? and password = ?";
   private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
   private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
+  private PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
+  public final static Object SALT = null;
 
   @Autowired
   public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -37,7 +39,7 @@ public class UserRepository {
   }
 
   public User getUser(String username, String password){
-    Object[] arg = new Object[]{username, md5Hex(password)};
+    Object[] arg = new Object[]{username, passwordEncoder.encodePassword(password, SALT)};
     List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
     if(userList.size() == 0) throw new IllegalArgumentException("Invalid user credentials");
     return userList.get(0);
@@ -46,7 +48,7 @@ public class UserRepository {
   public Boolean createUser(User user, String password){
     Integer result = jdbcTemplate.update(INSERT_USER,
         user.getUserName(),
-        md5Hex(password),
+        passwordEncoder.encodePassword(password, SALT),
         user.getRoleVal(),
         user.getName(),
         user.getEmail()
