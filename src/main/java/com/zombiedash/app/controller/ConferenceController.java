@@ -51,6 +51,14 @@ public class ConferenceController {
                                @RequestParam("conf_end_date") String conferenceEndDate,
                                @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
 
+        conferenceName = conferenceName.trim();
+        conferenceTopic = conferenceTopic.trim();
+        conferenceDescription = conferenceDescription.trim();
+        conferenceVenue = conferenceVenue.trim();
+        conferenceStartDate = conferenceStartDate.trim();
+        conferenceEndDate = conferenceEndDate.trim();
+        conferenceMaxAttendees = conferenceMaxAttendees.trim();
+
         Map<String,String> model = new HashMap<String, String>();
         model.put("name",conferenceName);
         model.put("topic",conferenceTopic);

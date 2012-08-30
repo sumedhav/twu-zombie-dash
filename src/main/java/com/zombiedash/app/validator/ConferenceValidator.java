@@ -28,12 +28,14 @@ public class ConferenceValidator {
         try {
             Date date = dateFormat.parse(rawDate);
             Date currentDate = new Date();
+            System.out.println(date);
             if (currentDate.before(date) || dateFormat.format(currentDate).equals(rawDate)) {
                 return true;
             }
             model.put(errorName,"Must be a current or future date");
             return false;
         } catch (ParseException e) {
+            System.out.println("EXCEPTION:"+ rawDate);
             if (!rawDate.isEmpty()) model.put(errorName, "Must be valid date in yyyy-mm-dd format");
             return false;
         }

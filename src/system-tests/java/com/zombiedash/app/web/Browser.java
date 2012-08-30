@@ -93,4 +93,7 @@ public class Browser {
         }
     }
 
+    public WebDriver.TargetLocator switchTo() {
+        return driver.switchTo();
+    }
 }
