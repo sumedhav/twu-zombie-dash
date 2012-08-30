@@ -1,7 +1,7 @@
 package com.zombiedash.app.web.page.tests;
 
 
-import com.example.app.jetty.WebServer;
+import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
@@ -29,7 +29,7 @@ public class TriviaGamePageTest {
     @Test
     public void shouldDisplayGameQuestions() {
 
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
 
         int existingQnCount = getNumberOfExistingQuestionsInDatabase();
         initializeQuestionsAndOptions();
@@ -148,7 +148,7 @@ public class TriviaGamePageTest {
 
     @Test
     public void shouldAllowOnlyOneAnswerForAQuestion() throws Exception {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/conference/user/game");
         List<WebElement> radioButtons = browser.findElements(By.name("question_1"));
         for (WebElement radioButton : radioButtons) {

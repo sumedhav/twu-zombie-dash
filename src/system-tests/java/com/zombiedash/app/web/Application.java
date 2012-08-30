@@ -12,14 +12,23 @@ public class Application {
     private static Application instance;
 
     private WebServer server;
-    private Browser browser;
+    private Browser statelessBrowser;
+    private Browser firefoxBrowser;
 
     public static Browser open(String url) {
-        return browser().open(url);
+        return statelessBrowser().open(url);
     }
 
-    public static Browser browser() {
-        Browser browser = instance().browser;
+    public static Browser statelessBrowser() {
+        return browser(true);
+    }
+
+    public static Browser javascriptEnabledBrowser() {
+        return browser(false);
+    }
+
+    private static Browser browser(boolean stateless) {
+        Browser browser = stateless ? instance().statelessBrowser : instance().firefoxBrowser;
         Validate.notNull(browser, "Application has not started succesfully. Please check earlier failed tests.");
         return browser;
     }
@@ -52,7 +61,6 @@ public class Application {
     }
 
     private void start(int port) throws Exception {
-        boolean testWithFirefox = Boolean.getBoolean("test.with.firefox");
         String hostAddress = System.getProperty("test.with.host.address");
 
         setSystemProperty("controlm.queue.provider", "none");
@@ -61,10 +69,9 @@ public class Application {
         if (StringUtils.isBlank(hostAddress)) {
             server = new WebServer(port).start();
             hostAddress = "http://localhost:" + port;
-            browser = new Browser(hostAddress, testWithFirefox);
-        } else {
-            browser = new Browser(hostAddress, testWithFirefox);
         }
+        statelessBrowser = new Browser(hostAddress, false);
+        firefoxBrowser = new Browser(hostAddress, true);
     }
 
     private void setSystemProperty(String key, String value) {
@@ -74,8 +81,8 @@ public class Application {
     }
 
     private void stop() {
-        if (browser != null) {
-            browser.stop();
+        if (statelessBrowser != null) {
+            statelessBrowser.stop();
         }
         if (server != null) {
             server.stop();

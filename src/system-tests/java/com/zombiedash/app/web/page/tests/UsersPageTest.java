@@ -16,7 +16,7 @@ public class UsersPageTest {
 
     @Test
     public void shouldGoToCreateUserPageWhenClickedOnCreateNewUserButton() throws Exception {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users");
 
         WebElement createUserElement = browser.findElement(By.id("create_user"));
@@ -27,7 +27,7 @@ public class UsersPageTest {
     @Ignore
     @Test
     public void shouldGoToHomePageWhenClickedOnBackButton() throws Exception {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users");
 
         WebElement createUserElement = browser.findElement(By.id("back_user_home"));
@@ -37,7 +37,7 @@ public class UsersPageTest {
 
     @Test
     public void shouldGoToUserDetailsPageOnClickingThatUserLink() throws Exception {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users");
 
         WebElement userElement = browser.findElement(By.id("username_value_1"));

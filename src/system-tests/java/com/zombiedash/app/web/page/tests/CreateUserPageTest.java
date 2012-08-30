@@ -1,6 +1,6 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.example.app.jetty.WebServer;
+import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import org.hamcrest.CoreMatchers;
@@ -23,7 +23,7 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldDisplayErrorMessageWhenAnyFieldIsEmpty() {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/create");
 
         WebElement usernameElement = browser.findElement(By.id("username"));
@@ -48,7 +48,7 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldDisplayRespectiveErrorMessagesWhenAnyFieldsAreInvalid() {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/create");
 
         WebElement usernameElement = browser.findElement(By.id("username"));
@@ -81,7 +81,7 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldSaveNewUserWhenAllFieldsAreValid() {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/create");
 
         WebElement usernameElement = browser.findElement(By.id("username"));
@@ -159,7 +159,7 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldDisplayErrorMessageWhenUserNameAlreadyExists() {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/create");
 
         WebElement usernameElement = browser.findElement(By.id("username"));
