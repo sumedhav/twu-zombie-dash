@@ -22,6 +22,8 @@ import java.util.Map;
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
 
+    private Map<String,String> model = new HashMap<String, String>();
+
     @Autowired
     public ConferenceController(ConferenceRepository conferenceRepository) {
         this.conferenceRepository = conferenceRepository;
@@ -29,7 +31,9 @@ public class ConferenceController {
 
     @RequestMapping(value = "createConference", method = RequestMethod.GET)
     public ModelAndView createConference() {
-        return new ModelAndView("createconference");
+        ModelAndView modelAndView = new ModelAndView("createconference");
+        modelAndView.addObject("model", model);
+        return modelAndView;
     }
 
     @RequestMapping(value = "home",method = RequestMethod.GET)
@@ -57,7 +61,6 @@ public class ConferenceController {
         conferenceVenue = conferenceVenue.trim();
         conferenceMaxAttendees = conferenceMaxAttendees.trim();
 
-        Map<String,String> model = new HashMap<String, String>();
         model.put("name",conferenceName);
         model.put("topic",conferenceTopic);
         model.put("startDate",conferenceStartDate);
@@ -77,7 +80,7 @@ public class ConferenceController {
                 conferenceRepository.saveConference(conference);
                 return home();
             } else {
-                return new ModelAndView("createconference", "model", model);
+                return new ModelAndView("redirect:/zombie/admin/conference/createConference");
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
