@@ -28,12 +28,13 @@ public class AuthenticationTest extends BasePageTest {
     }
 
     @Test
-    public void shouldStayInLoginFormIfLoginUnsuccessful() throws Exception {
+    public void shouldStayInLoginFormAndDisplayErrorMessageWhenLoginUnsuccessful() throws Exception {
         browser = BrowserSessionBuilder
                 .newStatelessSession()
                 .loggedInAs("noooo", "wrong!")
                 .build();
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
+        assertThat(browser.findElement(By.id("message_to_be_displayed")).getText(), is("The username or password you entered is incorrect"));
     }
 }
