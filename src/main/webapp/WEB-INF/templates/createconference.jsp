@@ -12,7 +12,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
 
 </head>
-<body onload='document.conferenceCreationForm.conf_name.focus();'>
+<body onload='document.conferenceForm.conf_name.focus();'>
 	 <div class="container">
              <h1 class="pageTitle">
                  <div>Zombie Dash</div>

@@ -13,7 +13,7 @@
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 
 </head>
-<body >
+<body onload='document.userDetails.userName.focus();'>
  <div class="container">
          <h1 class="pageTitle">
              <div>Zombie Dash</div>
@@ -30,7 +30,7 @@
 
          <div class="row-fluid">
              <div class="span12">
-                 <form id="userDetails" class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
+                 <form id="userDetails" class="form-horizontal" name="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
 
                      <div class="control-group">
                           <label class="control-label align-left" for="username">Username:</label>
