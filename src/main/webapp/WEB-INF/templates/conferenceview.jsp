@@ -20,31 +20,31 @@
                   <table class="table table-bordered">
                         <tr>
                             <th>Conference Name:</th>
-                            <td>${Conference.name}</td>
+                            <td><c:out value="${Conference.name}"/></td>
                         </tr>
                         <tr>
                             <th class = "topic">Topic:</th>
-                            <td>${Conference.topic}</td>
+                            <td><c:out value="${Conference.topic}"/></td>
                         </tr>
                         <tr>
                             <th>Conference start date:</th>
-                            <td>${Conference.startDate}</td>
+                            <td><c:out value="${Conference.startDate}"/></td>
                         </tr>
                         <tr>
                             <th>Conference end date:</th>
-                            <td>${Conference.endDate}</td>
+                            <td><c:out value="${Conference.endDate}"/></td>
                         </tr>
                         <tr>
                             <th>Description:</th>
-                            <td>${Conference.description}</td>
+                            <td><c:out value="${Conference.description}"/></td>
                         </tr>
                         <tr>
                             <th>Venue details:</th>
-                            <td>${Conference.venue}</td>
+                            <td><c:out value="${Conference.venue}"/></td>
                         </tr>
                         <tr>
                             <th>Max no. of attendees</th>
-                            <td>${Conference.maxAttendee}</td>
+                            <td><c:out value="${Conference.maxAttendee}"/></td>
                         </tr>
                     </table>
 

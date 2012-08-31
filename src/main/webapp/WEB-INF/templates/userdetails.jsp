@@ -19,19 +19,19 @@
           <table class="table table-bordered">
                 <tr>
                     <th name="username" id="username">Username:</th>
-                    <td name="username_value" id="username_value">${User.userName}</td>
+                    <td name="username_value" id="username_value"><c:out value="${User.userName}"/></td>
                 </tr>
                 <tr>
                     <th name="name" id="name">Name:</th>
-                    <td  name="name_value" id="name_value">${User.name}</td>
+                    <td  name="name_value" id="name_value"><c:out value="${User.name}"/></td>
                 </tr>
                 <tr>
                     <th name="role" id="role">Role:</th>
-                    <td  name="role_value" id="role_value">${User.role}</td>
+                    <td  name="role_value" id="role_value"><c:out value="${User.role}"/></td>
                 </tr>
                 <tr>
                     <th  name="email" id="email">Email:</th>
-                    <td  name="email_value" id="email_value">${User.email}</td>
+                    <td  name="email_value" id="email_value"><c:out value="${User.email}"/></td>
                 </tr>
             </table>
 
