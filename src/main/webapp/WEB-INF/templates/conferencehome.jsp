@@ -5,7 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Zombie Dash : Conference Home</title>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/encodeurl.js"></script>
         <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
     </head>
@@ -39,7 +38,7 @@
               </div>
 
               <div>
-                  <a href="${pageContext.request.contextPath}/zombie/login/HomePage"
+                  <a href="${pageContext.request.contextPath}/zombie/admin/home"
                   name="back_conference_home" id="back_conference_home" class="btn btn-primary offset8" >Back</a>
               </div>
          </div>

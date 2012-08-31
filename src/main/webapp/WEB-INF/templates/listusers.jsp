@@ -41,7 +41,7 @@
                    <br>
                    </br>
                    <div>
-                       <a href="${pageContext.request.contextPath}/zombie/login/HomePage" name="back_user_home" id="back_user_home" class="btn btn-primary offset11">Back</a>
+                       <a href="${pageContext.request.contextPath}/zombie/admin/home" name="back_user_home" id="back_user_home" class="btn btn-primary offset11">Back</a>
                    </div>
           </div>
     </body>

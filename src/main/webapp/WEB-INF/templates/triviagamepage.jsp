@@ -6,59 +6,50 @@
 <head>
   <title>Welcome to Trivia Game!</title>
 
-   <link type="text/css" href="${pageContext.request.contextPath}/static/css/commonPatterns.css" rel="stylesheet">
-   <link type="text/css" href="${pageContext.request.contextPath}/static/css/triviaGamePage.css" rel="stylesheet">
 
-    <script>
-      function validate(numQns){
-        var radios = document.getElementsByTagName('input');
-        var value=0;
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].type === 'radio' && radios[i].checked) {
-                value++;
-            }
-        }
-        if (value < numQns) {
-          alert("You need to answer all the questions!");
-          return false;
-          }
-        else {
-          return true;
-        }
-      }
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/trivia_game_logic.js"></script>
+<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 
-      function confirmCancel() {
-        if(confirm("ARE YOU SURE YOU WANT TO LEAVE?")) {
-          location.replace("${pageContext.request.contextPath}/zombie/conference/user/home/");
-        }
-      }
-
-    </script>
 </head>
-<body class="home">
-  <h2>Welcome YAHYA to JAVA CONFERENCE</h2>
-  <form method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result" onSubmit="return validate(${fn:length(questions)})">
-    <c:forEach var="question" items="${questions}" varStatus="questionStatus">
-    <div class="question">${question.text}</div>
-      <table>
-      <tr>
-        <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
-          <td>
-            <input class="options" name="question_${questionStatus.count}" value="${option.text}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" />
-            <label for="option_${questionStatus.count}_${optionStatus.count}">${option.text}</label>
-          </td>
-          <c:if test = '${(optionStatus.count) % 2 == 0}'></tr><tr>
-          </c:if>
-        </c:forEach>
-        </tr>
-      </table>
-    </c:forEach>
-    <div>
-      <input type="submit" value="submit" name="submit" id="submit_button"/>
-    </div>
-    <div>
-      <input type="button" value="cancel" onclick="return confirmCancel()" name="cancel" id="cancel_button"/>
-    </div>
-  </form>
+<body >
+ <div class="container">
+         <h1 class="pageTitle">
+             <div>Welcome USERNAME to CONFERENCE NAME</div>
+         </h1>
+
+         <div class="row-fluid">
+             <div class="span8">
+                 <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
+                 onSubmit="return validate(${fn:length(questions)})">
+
+                  <c:forEach var="question" items="${questions}" varStatus="questionStatus">
+                     <div class="question">${question.text}</div>
+                       <table class ="table1">
+                       <tr>
+                         <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
+                           <td>
+                             <input class="options" name="question_${questionStatus.count}" value="${option.text}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" >&nbsp ${option.text}</input>
+                           </td>
+                           <c:if test = '${(optionStatus.count) % 2 == 0}'></tr><tr>
+                           </c:if>
+                         </c:forEach>
+                         </tr>
+                       </table>
+                  </c:forEach>
+
+                   <br/>
+                   <br/>
+
+                   <div class="control-group">
+                    <div class="controls offset8" >
+                         <input type="submit" value="Submit" name="submit" id="submit_button"  class="btn btn-primary"/>&nbsp &nbsp
+                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}')" name="cancel" id="cancel_button" class="btn btn-primary"/>
+                    </div>
+                   </div>
+                 </form>
+             </div>
+         </div>
+ </div>
 </body>
 </html>
