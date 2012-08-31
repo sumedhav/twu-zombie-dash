@@ -5,3 +5,4 @@ lib/
 *.ipr
 *.iml
 .*DS_Store
+.idea/

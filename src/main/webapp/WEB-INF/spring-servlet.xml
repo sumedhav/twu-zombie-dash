@@ -22,4 +22,21 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <bean id="loginFormController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="loginform"/>
+    </bean>
+
+    <bean id="adminHomeController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="loginsuccess"/>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+                /login/LoginForm=loginFormController
+                /admin/home=adminHomeController
+            </value>
+        </property>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 </beans>
