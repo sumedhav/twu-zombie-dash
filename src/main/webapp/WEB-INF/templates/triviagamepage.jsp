@@ -19,7 +19,7 @@
          </h1>
 
          <div class="row-fluid">
-             <div class="span8">
+             <div class="span12">
                  <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
                  onSubmit="return validate(${fn:length(questions)})">
 
