@@ -100,8 +100,8 @@
                                 <label class="control-label align-left" for="ConferenceAttendees">Max no. of attendees:</label>
                                 <div class="controls">
                                     <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
-                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>">
-                                     onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  
+                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>"
+                                     onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  />
                                        <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
                                        <span class="error inline-help">${model.numberError}</span>
                                        <span id="maxAttendeesError" class="error inline-help"></span>
