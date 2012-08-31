@@ -1,13 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Create Conference Page</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
 <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
-<!--<link type="text/css" href="${pageContext.request.contextPath}/static/css/jquery.datepick.css" rel="stylesheet"/>-->
+<link type="text/css" href="${pageContext.request.contextPath}/static/css/custom.datepick.css" rel="stylesheet"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
 
 </head>
@@ -17,7 +18,7 @@
                  <div>Zombie Dash</div>
              </h1>
              <div style="display: none;">
-                 <img id="calImg" width="25" height="25" src="${pageContext.request.contextPath}/static/images/Calendar.jpg" alt="Popup" class="trigger">
+                 <img id="calImg" width="27" height="27" src="${pageContext.request.contextPath}/static/images/Calendar.jpg" alt="Popup" class="trigger">
              </div>
           	<div class="sectionTitle">Create Conference: Enter Details</div>
              <div class="control-group">

@@ -73,7 +73,7 @@ public class CreateUserPageTest {
         assertThat(invalidPasswordElement.getText(), is("The password must have 6-40 alphanumeric characters."));
 
         WebElement invalidNameElement = browser.findElement(By.id("invalid_name"));
-        assertThat(invalidNameElement.getText(), is("The name should not exceed 40 characters."));
+        assertThat(invalidNameElement.getText(), is("The name should not exceed 40 characters and should not contain digits,special characters."));
 
         WebElement invalidEmailElement = browser.findElement(By.id("invalid_email"));
         assertThat(invalidEmailElement.getText(), is("The email address is not valid (For eg: email@site.com)."));

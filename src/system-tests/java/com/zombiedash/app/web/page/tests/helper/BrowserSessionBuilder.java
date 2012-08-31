@@ -17,7 +17,7 @@ public class BrowserSessionBuilder {
     }
 
     public BrowserSessionBuilder loggedInAs(String user, String password) {
-        browser.open("/app/zombie/login/LoginForm");
+        browser.open("/app/zombie/login");
         browser.findElement(By.name("j_username")).sendKeys(user);
         browser.findElement(By.name("j_password")).sendKeys(password);
         browser.findElement(By.tagName("button")).click();

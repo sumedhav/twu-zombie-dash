@@ -20,7 +20,7 @@ function limitNumOfCharsInField(field, maxNumChars, errorName) {
 
 function createCalendar(element) {
   var d = new Date();
-  $(element).datepick({dateFormat: 'yyyy-mm-dd', alignment: 'bottomLeft', minDate: '#d', showOnFocus: false, showTrigger: '#calImg', clear: false});
+  $(element).datepick({dateFormat: 'yyyy-mm-dd', alignment: 'bottomLeft', minDate: '#d', showOnFocus: true, showTrigger: '#calImg', clear: false});
 }
 
 $(document).ready(function() {
