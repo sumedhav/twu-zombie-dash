@@ -51,6 +51,10 @@ input[type="text"], input[type="password"] {
     font-weight:bold;
 }
 
+.authentication-message {
+    text-align: center;
+}
+
 div.question{
     margin-top:5%;
     font-weight: bold;
@@ -66,6 +70,7 @@ div.question{
     padding-right:7em;
     padding-top: 2em;
 }
+
 
 #loginForm {
     padding: 30px 0px;

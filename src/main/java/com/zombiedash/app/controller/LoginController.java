@@ -32,14 +32,14 @@ public class LoginController {
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public ModelAndView showLoginPageWithLogoutMessage () {
         ModelAndView modelAndView = new ModelAndView("loginform");
-        modelAndView.addObject("messageToBeDisplayed", "Successful logout");
+        modelAndView.addObject("messageToBeDisplayed", "You have logged out successfully");
         return modelAndView;
     }
 
     @RequestMapping(value = "fail", method = RequestMethod.GET)
     public ModelAndView showLoginFailPage () {
         ModelAndView modelAndView = new ModelAndView("loginform");
-        modelAndView.addObject("messageToBeDisplayed", "User and password are wrong");
+        modelAndView.addObject("messageToBeDisplayed", "The username or password you entered is incorrect");
         return modelAndView;
     }
 
