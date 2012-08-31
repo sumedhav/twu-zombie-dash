@@ -1250,7 +1250,7 @@ $.extend(Datepicker.prototype, {
 			offset = {left: alignR, top: above};
 		}
 		else if (alignment == 'bottomLeft') {
-			offset = {left: alignL+237, top: below-50};
+			offset = {left: alignL+255, top: below-50};
 		}
 		else if (alignment == 'bottomRight') {
 			offset = {left: alignR, top: below};

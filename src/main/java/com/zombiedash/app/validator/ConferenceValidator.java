@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 public class ConferenceValidator {
-    public boolean isValidNumber(String conferenceMaxAttendees, Map<String, String> model) {
+    private boolean isValidNumber(String conferenceMaxAttendees, Map<String, String> model) {
         try {
             Integer theInt = Integer.parseInt(conferenceMaxAttendees);
             if (theInt > 0) return true;
@@ -22,7 +22,7 @@ public class ConferenceValidator {
         }
     }
 
-    public boolean isValidDate(String rawDate, Map<String, String> model, String errorName) {
+    private boolean isValidDate(String rawDate, Map<String, String> model, String errorName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         try {
@@ -45,7 +45,7 @@ public class ConferenceValidator {
         }
     }
 
-    public boolean isCompletedField(String field, Map<String, String> model, String fieldMissingErrorName) {
+    private boolean isCompletedField(String field, Map<String, String> model, String fieldMissingErrorName) {
         if (field.isEmpty()) {
             model.put(fieldMissingErrorName,"*");
             model.put("errorString","All (*) fields are compulsory");
@@ -72,7 +72,7 @@ public class ConferenceValidator {
     }
 
 
-    public boolean isEndAfterStartDate(String startDate, String endDate, Map<String, String> model, String endDateError) {
+    private boolean isEndAfterStartDate(String startDate, String endDate, Map<String, String> model, String endDateError) {
         boolean isValid = (isValidDate(startDate, model, "") && isValidDate(endDate, model, ""));
         if (!isValid){
             return false;
