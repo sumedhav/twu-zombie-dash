@@ -103,16 +103,11 @@
 
                          <div class="control-group">
                               <div class="controls offset6" >
-                                 <button id="submit" type="submit" class="btn btn-primary">Save</button>
+                                 <button id="submit" type="submit" class="btn btn-primary">Save</button>&nbsp
+                                  <input type="button" id="cancel" value="Cancel" class="btn btn-primary"
+                                      onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
                               </div>
                           </div>
-
-                         <div class="control-group">
-                            <div class="controls offset6">
-                            <input type="button" id="cancel" value="Cancel" class="btn btn-primary"
-                               onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
-                            </div>
-                        </div>
 
                      </form>
                  </div>
