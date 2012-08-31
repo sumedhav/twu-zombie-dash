@@ -35,8 +35,8 @@
                              <label class="control-label align-left" for="ConferenceName">Conference name:</label>
                              <div class="controls">
                                 <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
-                                    onkeydown="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
-                                   placeholder="enter conference name">${model.name}</textarea>
+                                   onkeydown="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
+                                   placeholder="enter conference name"><c:out value="${model.name}"/></textarea>
                                 <span class="error inline-help">${model.nameFieldMissing}</span>
                                 <span id="nameExceedError" class="error inline-help" style="color:#FF0000"></span>
                              </div>
@@ -46,9 +46,9 @@
                               <label class="control-label align-left" for="ConferenceTopic">Topic:</label>
                               <div class="controls">
                                  <textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
-                                    onkeydown="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
-                                     placeholder="enter conference topic">${model.topic}</textarea>
-                                  <span class="error inline-help">${model.nameFieldMissing}</span>
+                                     onkeydown="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
+                                     placeholder="enter conference topic"><c:out value="${model.topic}"/></textarea>
+                                 <span class="error inline-help">${model.topicFieldMissing}</span>
                                  <span id="topicExceedError" class="error inline-help" style="color:#FF0000"></span>
                               </div>
                           </div>
@@ -56,7 +56,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceStartDate">Start date:</label>
                                 <div class="controls">
-                                 <input type='text' id="conf_start_date" name='conf_start_date' placeholder="yyyy-mm-dd" onFocus="javascript" value=${model.startDate} >
+                                 <input type='text' id="conf_start_date" name='conf_start_date' placeholder="yyyy-mm-dd" onFocus="javascript" value="<c:out value="${model.startDate}"/>" >
                                  <span class="error inline-help">${model.startDateFieldMissing}</span>
                                  <span class="error inline-help">${model.startDateError}</span>
                                 </div>
@@ -65,7 +65,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceEndDate"> End date:</label>
                                <div class="controls">
-                                <input type='text' id="conf_end_date" name='conf_end_date' placeholder="yyyy-mm-dd" onFocus="javascript" value=${model.endDate}>
+                                <input type='text' id="conf_end_date" name='conf_end_date' placeholder="yyyy-mm-dd" onFocus="javascript" value="<c:out value="${model.endDate}"/>">
                                  <span class="error inline-help">${model.endDateFieldMissing}</span>
                                   <span class="error inline-help">${model.endDateError}</span>
 
@@ -77,8 +77,8 @@
                                 <label class="control-label align-left" for="ConferenceDescription">Description:</label>
                                 <div class="controls">
                                  <textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
-                                        onkeydown="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
-                                        placeholder="enter conference description">${model.description}</textarea>
+                                         onkeydown="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
+                                        placeholder="enter conference description"><c:out value="${model.description}"/></textarea>
                                      <span class="error inline-help">${model.descriptionFieldMissing}</span>
                                      <span id="descriptionExceedError" class="error inline-help">${model.descriptionError}</span>
                                  </div>
@@ -86,11 +86,11 @@
 
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceVenue">Venue:</label>
+                                <label class="control-label align-left" for="ConferenceTopic">Venue:</label>
                                 <div class="controls">
                                     <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
                                           onkeydown="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
-                                          placeholder="enter conference venue">${model.venue}</textarea>
+                                          placeholder="enter conference venue"><c:out value="${model.venue}"/></textarea>
                                        <span class="error inline-help">${model.venueFieldMissing}</span>
                                        <span id="venueExceedError" class="error inline-help">${model.venueError}</span>
                                 </div>
@@ -100,9 +100,8 @@
                                 <label class="control-label align-left" for="ConferenceAttendees">Max no. of attendees:</label>
                                 <div class="controls">
                                     <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
-                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"
-                                     onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"
-                                     value=${model.maxAttendees}>
+                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>">
+                                     onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  
                                        <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
                                        <span class="error inline-help">${model.numberError}</span>
                                        <span id="maxAttendeesError" class="error inline-help"></span>
