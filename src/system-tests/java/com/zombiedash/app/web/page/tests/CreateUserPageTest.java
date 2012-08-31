@@ -159,7 +159,7 @@ public class CreateUserPageTest {
 
     @Test
     public void shouldDisplayErrorMessageWhenUserNameAlreadyExists() {
-        Browser browser = Application.browser();
+        Browser browser = Application.statelessBrowser();
         browser.open("/zombie/admin/users/create");
 
         WebElement usernameElement = browser.findElement(By.id("username"));
