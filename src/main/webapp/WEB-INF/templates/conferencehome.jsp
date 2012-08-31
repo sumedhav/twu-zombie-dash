@@ -15,7 +15,7 @@
              </h1>
 
              <div class="sectionTitle">
-                <a href="${pageContext.request.contextPath}/zombie/admin/conference/createConference" name="conference_creation"
+                <a href="${pageContext.request.contextPath}/zombie/admin/conference/create" name="conference_creation"
                     id="conference_creation" class="btn btn-primary">Create New Conference
                 </a>
              </div>

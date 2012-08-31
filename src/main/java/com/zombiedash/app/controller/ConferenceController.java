@@ -30,7 +30,7 @@ public class ConferenceController {
         this.conferenceRepository = conferenceRepository;
     }
 
-    @RequestMapping(value = "createConference", method = RequestMethod.GET)
+    @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView createConference() {
         ModelAndView modelAndView = new ModelAndView("createconference");
         if (triedToSubmitFlag == 1) {
@@ -86,7 +86,7 @@ public class ConferenceController {
                 return home();
             } else {
                 triedToSubmitFlag = 1;
-                return new ModelAndView("redirect:/zombie/admin/conference/createConference","model",model);
+                return new ModelAndView("redirect:/zombie/admin/conference/create","model",model);
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
