@@ -11,12 +11,16 @@ function limitNumOfCharsInField(field, maxNumChars, errorName) {
         var pre = "Trying to exceed the max number (";
         var post = ") of characters";
         var message = pre + maxNumChars + post;
+        if(field.name==="conf_max_attendees") {
+                  var message = "Maximum number of attendees is 999999"
+        }
         $(errorName).html(message);
     }
     else {
         $(errorName).html("");
     }
 }
+
 
 function createCalendar(element) {
   var d = new Date();
