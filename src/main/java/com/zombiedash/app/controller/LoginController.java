@@ -21,7 +21,7 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "LoginForm", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showForm() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("loginform");
