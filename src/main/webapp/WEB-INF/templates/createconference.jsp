@@ -46,7 +46,7 @@
                               <div class="controls">
                                  <textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
                                      placeholder="enter conference topic">${model.topic}</textarea>
-                                 <span class="error inline-help">${model.topicFieldMissing}</span>
+                                  <span class="error inline-help">${model.nameFieldMissing}</span>
                                  <span id="topicExceedError" class="error inline-help" style="color:#FF0000"></span>
                               </div>
                           </div>
@@ -83,7 +83,7 @@
 
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceTopic">Venue:</label>
+                                <label class="control-label align-left" for="ConferenceVenue">Venue:</label>
                                 <div class="controls">
                                     <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
                                           placeholder="enter conference venue">${model.venue}</textarea>
@@ -93,11 +93,13 @@
                           </div>
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceTopic">Max no. of attendees:</label>
+                                <label class="control-label align-left" for="ConferenceAttendees">Max no. of attendees:</label>
                                 <div class="controls">
-                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees" value=${model.maxAttendees}>
+                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
+                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value=${model.maxAttendees}>
                                        <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
                                        <span class="error inline-help">${model.numberError}</span>
+                                       <span id="maxAttendeesError" class="error inline-help"></span>
                                 </div>
                           </div>
 
