@@ -97,7 +97,7 @@ public class ConferenceController {
         }
     }
 
-    @RequestMapping(value = "view/{conferenceId}")
+    @RequestMapping(value = "{conferenceId}")
     public ModelAndView view(@PathVariable String conferenceId) {
         try{
             Conference thisConference = conferenceRepository.showConference(Integer.parseInt(conferenceId));
