@@ -2,6 +2,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
+<head><title>Error Page</title>
+</head>
+<body>
 <t:wrapper>
     <div style="color:RED">
     <p align="center">Oops!! Something went wrong. Your last request could not be completed.</p>
@@ -12,3 +16,5 @@
     </div>
 
 </t:wrapper>
+</body>
+</html>

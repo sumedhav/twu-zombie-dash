@@ -44,5 +44,18 @@ public class UsersPageTest extends BasePageTest {
         assertThat(browser.findElement(By.id("name_value")).getText(), is(equalTo(nameOfSelectedUser)));
     }
 
+    @Test
+    public void shouldDisplayErrorWhenDeletingAdmin() {
+        browser.stop();
+        browser= BrowserSessionBuilder.
+                newJavascriptEnabledSession()
+                .loggedInAsAdmin()
+                .build()
+                .open("/app/zombie/admin/users-management");
+        browser.clickOn("username_value_1");
+        browser.clickOn("delete_user");
+        browser.alertOk();
+        assertThat(browser.getPageTitle(),is("Error Page"));
+    }
 
 }
