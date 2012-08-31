@@ -28,7 +28,7 @@ pageEncoding="ISO-8859-1"%>
 
 
                  <div>
-                    <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/home" class="btn btn-primary">Conferences</a>
+                    <a name="Conferences" id="Conferences" href="${pageContext.request.contextPath}/zombie/admin/conference/list" class="btn btn-primary">Conferences</a>
                  </div>
                     <br>
                     </br>

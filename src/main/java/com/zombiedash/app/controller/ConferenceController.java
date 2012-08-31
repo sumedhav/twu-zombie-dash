@@ -44,7 +44,7 @@ public class ConferenceController {
         }
     }
 
-    @RequestMapping(value = "home",method = RequestMethod.GET)
+    @RequestMapping(value = "list",method = RequestMethod.GET)
     public ModelAndView home() {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
         return new ModelAndView("conferencehome","Conferences", conferenceList);
@@ -91,7 +91,7 @@ public class ConferenceController {
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
             modelAndView.addObject("errorMessage",e.getMessage());
-            modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/home");
+            modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/list");
             modelAndView.addObject("returnToPrevPageMessage","Go back to conference home page");
             return modelAndView;
         }
@@ -104,7 +104,7 @@ public class ConferenceController {
             return new ModelAndView("conferenceview","Conference", thisConference);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/home");
+            modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/list");
             modelAndView.addObject("returnToPrevPageMessage","Go back to conference home page");
             return modelAndView;
         }

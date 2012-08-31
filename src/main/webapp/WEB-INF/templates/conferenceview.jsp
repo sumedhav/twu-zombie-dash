@@ -51,9 +51,9 @@
                     </div>
 
                     <div>
-                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/home" name="back_conference_view" id="back_conference_view" class="btn btn-primary offset11">Back</a>
+                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/list" name="back_conference_view" id="back_conference_view" class="btn btn-primary offset12">Back</a>
                     </div>
-            </div>
+
  </div>
 </body>
 </html>
