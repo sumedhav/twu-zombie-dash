@@ -3,12 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Page Not Found</title>
-    <app:stylesheet href="/static/css/main.css" />
+    <title>Zombie Dash : Page Not Found</title>
+    <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 </head>
-<body class="one-col error not-found">
-<div id="container">
-    404
-</div>
+<body>
+    <div id="container">
+        <h1 class="pageTitle">
+            <div>Zombie Dash</div>
+        </h1>
+        <div id="page_not_found">
+            Page Not Found. Enter correct URL.
+        </div>
+    </div>
 </body>
 </html>

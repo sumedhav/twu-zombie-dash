@@ -79,3 +79,10 @@ div.question{
 .container {
     width: 960px;
 }
+
+#page_not_found {
+    color: red;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
