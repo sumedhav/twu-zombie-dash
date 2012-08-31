@@ -5,7 +5,6 @@ import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
-import org.hamcrest.core.IsSame;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -95,18 +94,25 @@ public class UsersControllerTest {
 
   @Test
   public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
+    mockAdminUser();
     ModelAndView modelAndView = usersController.showUserDetails("admin");
     assertThat(modelAndView.getViewName(), is("userdetails"));
   }
 
   @Test
   public void shouldRetrieveUserDetails() throws Exception {
-    User expectedUser = mock(User.class);
-    when(userService.getUser("admin")).thenReturn(expectedUser);
-
+    mockAdminUser();
     ModelAndView result = usersController.showUserDetails("admin");
+    assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Administrator, userName=JohnnyBoy}")));
+  }
 
-    assertThat((User) result.getModel().get("User"), IsSame.sameInstance(expectedUser));
+  private void mockAdminUser() {
+    User user = mock(User.class);
+    when(user.getName()).thenReturn("John");
+    when(user.getRole()).thenReturn(Role.ADMIN);
+    when(user.getUserName()).thenReturn("JohnnyBoy");
+    when(user.getEmail()).thenReturn("John@me.com");
+    when(userService.getUser("admin")).thenReturn(user);
   }
 
   @Test

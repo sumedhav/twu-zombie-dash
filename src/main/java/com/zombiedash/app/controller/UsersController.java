@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -79,7 +80,13 @@ public class UsersController {
 
     @RequestMapping(value = "/user/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
-        return new ModelAndView("userdetails", "User", userService.getUser(userName));
+        User user = userService.getUser(userName);
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("userName",user.getUserName());
+        map.put("name",user.getName());
+        map.put("role",user.getRole().toString());
+        map.put("email",user.getEmail());
+        return new ModelAndView("userdetails", "User", map);
     }
 
     @RequestMapping(value = "/deleteuser/{username}", method = RequestMethod.GET)
