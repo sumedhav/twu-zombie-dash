@@ -22,8 +22,10 @@
 
          <div class="control-group">
             <div name="error_message_div" id="error_message_div" style="color:red">
+                <b>
                 ${validationMessage}
                 ${allFieldsAreMandatory}
+                </b>
             </div>
          </div>
 

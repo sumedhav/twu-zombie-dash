@@ -48,9 +48,12 @@
                     </table>
 
                     </div>
-                    <div class="controls offset12">
-                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/home" name="back_conference_view" id="back_conference_view" class="btn btn-primary">Back</a>
+
+                    <div>
+                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/home" name="back_conference_view" id="back_conference_view" class="btn btn-primary offset12">Back</a>
                     </div>
-            </body>
- </html>
+
+ </div>
+</body>
+</html>
 
