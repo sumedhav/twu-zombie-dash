@@ -12,6 +12,6 @@ public class ValidationMessagesMapTest {
     public void shouldGetAMessageForAKey() throws Exception {
         ValidationMessagesMap validationMessagesMap = new ValidationMessagesMap();
         String message = validationMessagesMap.getMessageFor("invalidUserName");
-        assertThat(message, is(equalTo("The Username must have 5-40 alphanumeric characters and no whitespaces.")));
+        assertThat(message, is(equalTo("Must have 5-40 alphanumeric characters and no whitespaces.")));
     }
 }

@@ -51,10 +51,31 @@ input[type="text"], input[type="password"] {
     font-weight:bold;
 }
 
+.authentication-message {
+    text-align: center;
+}
+
+div.question{
+    margin-top:5%;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 .table th{
     width: 30%;
 }
 
+
+.table1 td {
+    padding-right:7em;
+    padding-top: 2em;
+}
+
+
 #loginForm {
     padding: 30px 0px;
+}
+
+.container {
+    width: 960px;
 }

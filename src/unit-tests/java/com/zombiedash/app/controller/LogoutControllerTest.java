@@ -16,6 +16,6 @@ public class LogoutControllerTest {
         ModelAndView modelAndView = new LogoutController().logout();
 
         assertThat(modelAndView.getViewName(), equalTo("loginform"));
-        assertThat((String) modelAndView.getModel().get("messageToBeDisplayed"), equalTo("Successful logout"));
+        assertThat((String) modelAndView.getModel().get("messageToBeDisplayed"), equalTo("You have logged out successfully"));
     }
 }

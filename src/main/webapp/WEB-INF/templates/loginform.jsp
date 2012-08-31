@@ -14,7 +14,7 @@
             <div>Login</div>
         </h1>
         <div class="control-group">
-            <div id="message_to_be_displayed" class="form-message error">
+            <div id="message_to_be_displayed" class="authentication-message error">
                 ${messageToBeDisplayed}
                 ${SPRING_SECURITY_LAST_EXCEPTION.message}
             </div>

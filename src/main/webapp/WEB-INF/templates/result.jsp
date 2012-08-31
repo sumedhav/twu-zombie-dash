@@ -4,11 +4,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <title>
-    Results Page
-    </title>
+<head>
+    <title>Results Page</title>
+    <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
+</head>
+
     <body>
-    <h3>Test Completed</h3>
-        Your score is <b id="obtainedScore">${obtainedScore}</b> out of <b id="maxScore">${maxScore}</b>.
+         <div class="container">
+            <h1 class="pageTitle">
+                <div>Test Completed</div>
+            </h1>
+            <div class="sectionTitle">
+                Your score is <b id="obtainedScore">${obtainedScore}</b> out of <b id="maxScore">${maxScore}</b>.
+            </div>
+         </div>
     </body>
 </html>
