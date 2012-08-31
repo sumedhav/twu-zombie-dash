@@ -21,6 +21,7 @@ import java.util.Map;
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
     private static final int DUMMY_ID = -1;
+    private int triedToSubmitFlag = -1;
 
     private Map<String,String> model = new HashMap<String, String>();
 
@@ -32,9 +33,15 @@ public class ConferenceController {
     @RequestMapping(value = "createConference", method = RequestMethod.GET)
     public ModelAndView createConference() {
         ModelAndView modelAndView = new ModelAndView("createconference");
-        modelAndView.addObject("model", model);
-        model.clear();
-        return modelAndView;
+        if (triedToSubmitFlag == 1) {
+            modelAndView.addObject("model", model);
+            triedToSubmitFlag = -1;
+            return modelAndView;
+        }
+        else {
+            model.clear();
+            return modelAndView;
+        }
     }
 
     @RequestMapping(value = "home",method = RequestMethod.GET)
@@ -52,6 +59,7 @@ public class ConferenceController {
                                @RequestParam("conf_end_date") String conferenceEndDate,
                                @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
 
+        model.clear();
         conferenceName = conferenceName.trim();
         conferenceTopic = conferenceTopic.trim();
         conferenceDescription = conferenceDescription.trim();
@@ -77,7 +85,8 @@ public class ConferenceController {
                 conferenceRepository.saveConference(conference);
                 return home();
             } else {
-                return new ModelAndView("redirect:/zombie/admin/conference/createConference");
+                triedToSubmitFlag = 1;
+                return new ModelAndView("redirect:/zombie/admin/conference/createConference","model",model);
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
