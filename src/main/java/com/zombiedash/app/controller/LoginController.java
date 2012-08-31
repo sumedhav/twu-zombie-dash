@@ -9,9 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/login")
-
-
 public class LoginController {
     private UserService userService;
     private String messageToBeDisplayed = new String("");
@@ -21,13 +18,13 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public ModelAndView showForm() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("loginform");
         return modelAndView;
     }
-    @RequestMapping(value = "HomePage", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/home", method = RequestMethod.GET)
     public ModelAndView redirectToHomePageIfSessionPersists() {
       return new ModelAndView("loginsuccess");
     }
