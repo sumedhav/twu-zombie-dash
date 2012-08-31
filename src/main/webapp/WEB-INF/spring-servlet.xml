@@ -22,7 +22,7 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <bean id="loginFormController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+    <bean id="loginController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
         <property name="viewName" value="loginform"/>
     </bean>
 
@@ -33,7 +33,7 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <value>
-                /login/LoginForm=loginFormController
+                /login=loginController
                 /admin/home=adminHomeController
             </value>
         </property>
