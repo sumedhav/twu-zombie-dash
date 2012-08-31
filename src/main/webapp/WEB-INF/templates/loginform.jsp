@@ -8,7 +8,7 @@
     <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 </head>
-<body onload='document.loginForm.Username.focus();'>
+<body onload='document.loginForm.j_username.focus();'>
     <div class="container">
         <h1 class="pageTitle">
             <div>Login</div>
