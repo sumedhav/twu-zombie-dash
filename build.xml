@@ -12,9 +12,11 @@
     <property name="build.dir" location="build"/>
     <property name="compile.dir" location="${build.dir}/compile"/>
     <property name="report.dir" location="${build.dir}/report"/>
+    <property name="build.instrumented.dir" location="${build.dir}/cobertura"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
 
     <property name="test.report.dir" location="${report.dir}/test"/>
+    <property name="build.coverage.dir" location="${report.dir}/test/cobertura"/>
 
     <path id="common-classpath">
         <pathelement location="${unit.test.dir}/resources"/>
@@ -53,7 +55,20 @@
         <sequential>
             <mkdir dir="${test.report.dir}"/>
             <junit fork="yes" forkmode="once" failureproperty="unit.tests.failed" printsummary="yes">
-                <classpath refid="@{classpath}" />
+
+                <sysproperty key="net.sourceforge.cobertura.datafile"
+                             file="${basedir}/cobertura.ser" />
+
+                <classpath>
+                    <fileset dir="${build.instrumented.dir}"/>
+                </classpath>
+
+                <classpath>
+                    <fileset dir="build/compile"/>
+                </classpath>
+
+                <classpath refid="@{classpath}"/>
+
                 <formatter type="xml"/>
                 <batchtest todir="${test.report.dir}">
                     <fileset dir="@{testdir}/java">
@@ -72,6 +87,8 @@
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath location="bootstrap/ant/ant-contrib-1.0b3.jar"/>
     </taskdef>
+
+    <taskdef classpathref="common-classpath" resource="tasks.properties"/>
 
     <target name="fetch-libs" description="Fetch third-party libraries using ivy.">
         <property name="ivy.default.ivy.user.dir" value="${basedir}/../ivy"/>
@@ -112,7 +129,19 @@
             depends="run-system-tests-without-reporting, report-tests, check-failed-tests"
             description="Run system tests, report and halt if any test failed."/>
 
-    <target name="run-unit-tests-without-reporting" depends="make-jars">
+    <target name="instrument" depends="make-jars">
+        <delete dir="${build.instrumented.dir}" />
+        <delete file="cobertura.ser" />
+        <mkdir dir="${build.instrumented.dir}"/>
+        <cobertura-instrument todir="${build.instrumented.dir}">
+            <fileset dir="${compile.dir}">
+                <include name="${ant.project.name}.jar" />
+                <exclude name="*.tests.jar"/>
+            </fileset>
+        </cobertura-instrument>
+    </target>
+
+    <target name="run-unit-tests-without-reporting" depends="instrument" >
         <common-test-runner testdir="${unit.test.dir}" classpath="common-classpath"/>
     </target>
 
@@ -192,6 +221,12 @@
 
     <target name="get-build-number" unless="build.number">
         <input message="Build number?" addproperty="build.number"/>
+    </target>
+
+    <target name="coverage">
+        <delete dir="${build.coverage.dir}"/>
+        <mkdir dir="${build.coverage.dir}"/>
+        <cobertura-report  srcdir="${src.dir}/java" destdir="${build.coverage.dir}"/>
     </target>
 
 </project>
