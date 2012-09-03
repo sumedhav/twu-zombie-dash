@@ -73,7 +73,7 @@ public class UsersController {
 
     }
 
-    @RequestMapping(value = "/user/error", method = GET)
+    @RequestMapping(value = "/error", method = GET)
     public ModelAndView showErrorPage() {
         return new ModelAndView("errorpage");
     }
@@ -97,7 +97,7 @@ public class UsersController {
             userService.deleteUser(username);
             modelAndView = new ModelAndView("redirect:/zombie/admin/users-management");
         } catch (Exception e) {
-            modelAndView = new ModelAndView("redirect:/zombie/admin/user/error");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/error");
         }
 
         return modelAndView;
