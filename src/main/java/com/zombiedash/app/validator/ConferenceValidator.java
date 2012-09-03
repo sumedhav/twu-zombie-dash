@@ -12,12 +12,12 @@ public class ConferenceValidator {
             Integer theInt = Integer.parseInt(conferenceMaxAttendees);
             if (theInt > 0) return true;
             else {
-                model.put("numberError","Must be a positive integer");
+                model.put("numberError","Please enter a positive integer.");
                 return false;
             }
         } catch (NumberFormatException e) {
             if (!conferenceMaxAttendees.isEmpty())
-                model.put("numberError", "Must be a positive integer");
+                model.put("numberError", "Please enter a positive integer.");
             return false;
         }
     }
@@ -37,10 +37,10 @@ public class ConferenceValidator {
             if (currentDate.before(date) || dateFormat.format(currentDate).equals(rawDate)) {
                 return true;
             }
-            model.put(errorName,"Must be a current or future date");
+            model.put(errorName,"Please enter a current or future date.");
             return false;
         } catch (ParseException e) {
-            if (!rawDate.isEmpty()) model.put(errorName, "Must be valid date in yyyy-mm-dd format");
+            if (!rawDate.isEmpty()) model.put(errorName, "Enter a date in yyyy-mm-dd format.");
             return false;
         }
     }
@@ -48,7 +48,7 @@ public class ConferenceValidator {
     private boolean isCompletedField(String field, Map<String, String> model, String fieldMissingErrorName) {
         if (field.isEmpty()) {
             model.put(fieldMissingErrorName,"*");
-            model.put("errorString","All (*) fields are compulsory");
+            model.put("errorString","All (*) fields are mandatory");
             return false;
         }
         else return true;
@@ -83,7 +83,7 @@ public class ConferenceValidator {
                 Date start = dateFormat.parse(startDate);
                 Date end = dateFormat.parse(endDate);
                 if (end.after(start) || end.equals(start)) return true;
-                model.put(endDateError, "Must be on or after start date");
+                model.put(endDateError, "Please enter a date that is on or after start date.");
                 return false;
             } catch (ParseException e) {
                 return false;
