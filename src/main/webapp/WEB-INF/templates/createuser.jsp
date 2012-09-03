@@ -38,7 +38,7 @@
                           <label class="control-label align-left" for="username">Username:</label>
                           <div class="controls">
                             <input type="text" name="userName" id="username" value="<c:out value="${model.username}"/>" placeholder="enter username"/>
-                             <span class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
+                             <span id="invalid_user_name" class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
                           </div>
                      </div>
 
@@ -46,7 +46,7 @@
                            <label class="control-label align-left" for="password">Password:</label>
                            <div class="controls">
                            <input type="text" name="password" id="password" value="<c:out value="${model.password}"/>" placeholder="enter password"/>
-                             <span class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
+                             <span id="invalid_password" class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
                            </div>
                     </div>
 
@@ -54,7 +54,7 @@
                             <label class="control-label align-left" for="name">Name:</label>
                             <div class="controls">
                             <input type="text" name="name" id="name" value="<c:out value="${model.name}"/>" placeholder="enter name"/>
-                              <span class="error inline-help" style="color:#FF0000">${invalidName}</span>
+                              <span id="invalid_name" class="error inline-help" style="color:#FF0000">${invalidName}</span>
                             </div>
                     </div>
 
@@ -63,7 +63,7 @@
                          <label class="control-label align-left" for="email">Email:</label>
                          <div class="controls">
                           <input type="text" name="email" id="email" value="<c:out value="${model.email}"/>" placeholder="enter email"/>
-                            <span class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
+                            <span id="invalid_email" class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
                          </div>
                      </div>
 
