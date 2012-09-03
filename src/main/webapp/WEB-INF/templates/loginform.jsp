@@ -18,6 +18,9 @@
                 ${messageToBeDisplayed}
                 ${SPRING_SECURITY_LAST_EXCEPTION.message}
             </div>
+            <div id="logout_message" class="authentication-message information">
+                ${logoutMessage}
+            </div>
         </div>
         <div class="span6">
             <img src="${pageContext.request.contextPath}/static/images/ZombieDash.jpg"/>

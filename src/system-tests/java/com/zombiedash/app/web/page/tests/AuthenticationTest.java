@@ -24,7 +24,7 @@ public class AuthenticationTest extends BasePageTest {
         browser = BrowserSessionBuilder.newStatelessSession().loggedInAsAdmin().build();
         browser.findElement(By.id("Logout")).click();
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
-        assertThat(browser.findElement(By.id("message_to_be_displayed")).getText(), is("You have logged out successfully"));
+        assertThat(browser.findElement(By.id("logout_message")).getText(), is("You have logged out successfully"));
     }
 
     @Test

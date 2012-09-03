@@ -11,7 +11,7 @@ public class LogoutController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView logout() {
         ModelAndView modelAndView = new ModelAndView("loginform");
-        modelAndView.addObject("messageToBeDisplayed", "You have logged out successfully");
+        modelAndView.addObject("logoutMessage", "You have logged out successfully");
         return modelAndView;
     }
 }

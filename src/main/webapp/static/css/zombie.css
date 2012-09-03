@@ -86,3 +86,8 @@ div.question{
     font-size: 20px;
     font-weight: bold;
 }
+
+.information {
+    color:green;
+    font-weight:bold;
+}
