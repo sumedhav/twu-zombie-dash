@@ -37,7 +37,7 @@
 
             <div  class="controls offset9" name="edit_delete_back_buttons" id="edit_delete_back_buttons" >
                 <a  class="btn btn-primary" name="back_user_details" id="back_user_details"
-                     href="${pageContext.request.contextPath}/zombie/admin/users-management">Back</a> &nbsp
+                     href="${pageContext.request.contextPath}/zombie/admin/users/list">Back</a> &nbsp
                 <input name="delete_user" id="delete_user" type="button" value="Delete User"
                      onClick="return deleteUser('${pageContext.request.contextPath}','${User.userName}')"  class="btn btn-primary"/>
 

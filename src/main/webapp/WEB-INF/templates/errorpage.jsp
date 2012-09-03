@@ -12,7 +12,7 @@
     <p align="center">${validationMessage}</p>
     </div>
     <div>
-    <p align="center"><a href="${pageContext.request.contextPath}/zombie/admin/users-management">Go Back To Users Page</a></p>
+    <p align="center"><a href="${pageContext.request.contextPath}/zombie/admin/users/list">Go Back To Users Page</a></p>
     </div>
 
 </t:wrapper>

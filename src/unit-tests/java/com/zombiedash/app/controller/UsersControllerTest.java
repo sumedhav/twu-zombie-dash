@@ -68,7 +68,7 @@ public class UsersControllerTest {
     UserForm userForm = mock(UserForm.class);
     when(userForm.hasErrors()).thenReturn(false);
     ModelAndView modelAndView = usersController.createUser(userForm);
-    assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users-management"));
+    assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/list"));
   }
 
   @Test

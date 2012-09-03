@@ -17,7 +17,7 @@ public class UsersPageTest extends BasePageTest {
                 .newStatelessSession()
                 .loggedInAsAdmin()
                 .build()
-                .open("/app/zombie/admin/users-management");
+                .open("/app/zombie/admin/users/list");
     }
     @Test
     public void shouldGoToCreateUserPageWhenClickedOnCreateNewUserButton() throws Exception {
@@ -51,7 +51,7 @@ public class UsersPageTest extends BasePageTest {
                 newJavascriptEnabledSession()
                 .loggedInAsAdmin()
                 .build()
-                .open("/app/zombie/admin/users-management");
+                .open("/app/zombie/admin/users/list");
         browser.clickOn("username_value_1");
         browser.clickOn("delete_user");
         browser.alertOk();

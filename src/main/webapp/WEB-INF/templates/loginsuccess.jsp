@@ -33,7 +33,7 @@ pageEncoding="ISO-8859-1"%>
                     <br>
                     </br>
                  <div>
-                    <a name="Users" id="Users" href="${pageContext.request.contextPath}/zombie/admin/users-management" class="btn btn-primary" > Users </a>
+                    <a name="Users" id="Users" href="${pageContext.request.contextPath}/zombie/admin/users/list" class="btn btn-primary" > Users </a>
                  </div>
              </div>
           </body>

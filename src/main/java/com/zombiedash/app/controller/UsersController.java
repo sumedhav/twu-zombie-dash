@@ -32,7 +32,7 @@ public class UsersController {
         this.validationMessagesMap = validationMessagesMap;
     }
 
-    @RequestMapping(value = "/users-management")
+    @RequestMapping(value = "/users/list")
     public ModelAndView listUsers() {
         return new ModelAndView("listusers", "Users", userService.getAllUsers());
     }
@@ -54,7 +54,7 @@ public class UsersController {
             try {
                 User user = userForm.createUser();
                 userService.createUser(user, userForm.getPassword());
-                modelAndView = new ModelAndView("redirect:/zombie/admin/users-management");
+                modelAndView = new ModelAndView("redirect:/zombie/admin/users/list");
             } catch (IllegalArgumentException exception) {
                 modelAndView = new ModelAndView("createuser");
                 modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
@@ -78,7 +78,7 @@ public class UsersController {
         return new ModelAndView("errorpage");
     }
 
-    @RequestMapping(value = "/user/{userName}")
+    @RequestMapping(value = "/user/view/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
         User user = userService.getUser(userName);
         Map<String,String> map = new HashMap<String,String>();
@@ -95,7 +95,7 @@ public class UsersController {
 
         try {
             userService.deleteUser(username);
-            modelAndView = new ModelAndView("redirect:/zombie/admin/users-management");
+            modelAndView = new ModelAndView("redirect:/zombie/admin/users/list");
         } catch (Exception e) {
             modelAndView = new ModelAndView("redirect:/zombie/admin/error");
         }
