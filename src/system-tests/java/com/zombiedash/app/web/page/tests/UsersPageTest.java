@@ -42,7 +42,6 @@ public class UsersPageTest extends BasePageTest {
         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
     }
 
-    @Ignore
     @Test
     public void shouldGoToUserDetailsPageOnClickingThatUserLink() throws Exception {
         browser= BrowserSessionBuilder
@@ -51,7 +50,7 @@ public class UsersPageTest extends BasePageTest {
                 .build()
                 .open("/app/zombie/admin/user/create");
 
-        browser.inputTextOn("username","username")
+        browser.inputTextOn("username","username1")
                 .inputTextOn("password","password123")
                 .inputTextOn("name","yahya")
                 .inputTextOn("email","email@email.com").clickOn("submit");
