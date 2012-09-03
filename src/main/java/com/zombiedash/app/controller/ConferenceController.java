@@ -49,8 +49,7 @@ public class ConferenceController {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
         return new ModelAndView("conferencehome","Conferences", conferenceList);
     }
-
-    @RequestMapping(value = "submit", method = RequestMethod.POST)
+    @RequestMapping(value = "create", method = RequestMethod.POST)
     public ModelAndView submit(@RequestParam("conf_name") String conferenceName,
                                @RequestParam("conf_topic") String conferenceTopic,
                                @RequestParam("conf_description") String conferenceDescription,
@@ -83,7 +82,7 @@ public class ConferenceController {
                 Conference conference = new Conference(DUMMY_ID,conferenceName, conferenceTopic, conferenceDescription,
                         conferenceVenue, conferenceStartDate, conferenceEndDate, Integer.parseInt(conferenceMaxAttendees));
                 conferenceRepository.saveConference(conference);
-                return home();
+                return new ModelAndView("redirect:/zombie/admin/conference/list","model",model);
             } else {
                 triedToSubmitFlag = 1;
                 return new ModelAndView("redirect:/zombie/admin/conference/create","model",model);

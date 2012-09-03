@@ -29,7 +29,7 @@
 
              <div class="row-fluid">
                  <div class="span12">
-                     <form id="conferenceForm" class="form-horizontal" name="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/submit" method = "POST">
+                     <form id="conferenceForm" class="form-horizontal" name="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/create" method = "POST">
 
                          <div class="control-group">
                              <label class="control-label align-left" for="ConferenceName">Conference name:</label>
