@@ -58,7 +58,7 @@ public class UserRepositoryIntegrationTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldThrowRuntimeExceptionIfNoUserIsFound() {
-    userRepository.getUser("");
+    userRepository.getUser("wrongName");
   }
 
   @Test
@@ -72,8 +72,8 @@ public class UserRepositoryIntegrationTest {
   @Test(expected = IllegalArgumentException.class)
   public void shouldThrowInvalidArgumentExceptionIfCredentialsAreBad() {
     PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
-    jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', '" + passwordEncoder.encodePassword("password", UserRepository.SALT) + "', 1, '', '')");
-    userRepository.getUser("beta123", "password1");
+    jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', '" + passwordEncoder.encodePassword("correctPassword1", UserRepository.SALT) + "', 1, '', '')");
+    userRepository.getUser("beta123", "wrongPassword1");
   }
 
   @Test
@@ -109,7 +109,7 @@ public class UserRepositoryIntegrationTest {
   @Test
   public void nonexistentUsernameShouldReturnFalse() {
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', '', 0, '', '')");
-    Boolean usernameExistsFlag = userRepository.userNameExists("");
+    Boolean usernameExistsFlag = userRepository.userNameExists("wrongUsername");
     assertThat(usernameExistsFlag, is(equalTo(false)));
   }
 
