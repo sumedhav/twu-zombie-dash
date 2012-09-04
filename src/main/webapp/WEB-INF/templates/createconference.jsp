@@ -24,7 +24,7 @@
           	<div class="sectionTitle">Create Conference: Enter Details</div>
              <div class="control-group">
                   <div class="form-message">
-                      <b>All (<span class="error ">*</span>) fields are mandatory.</b>                  ${model.errorString}
+                      <b>All (<span class="error ">*</span>) fields are mandatory.</b>
                   </div>
              </div>
 
