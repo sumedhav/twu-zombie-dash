@@ -110,7 +110,6 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
 
-        WebElement messageElement = browser.findElement(By.name("error_message_div"));
-        assertThat(messageElement.getText(), is("Someone already has that username. Try another."));
+        assertThat(browser.getTextByName("error_message_div"), is("Someone already has that username. Try another."));
     }
 }
