@@ -54,6 +54,16 @@ public class Browser {
         return this;
     }
 
+    public String getTextByName(String name)
+    {
+        return this.findElement(By.name(name)).getText();
+    }
+
+    public String getTextById(String id)
+    {
+        return this.findElement(By.id(id)).getText();
+    }
+
     public Browser clickOn(String id) {
         this.findElement(By.id(id)).click();
         return this;
