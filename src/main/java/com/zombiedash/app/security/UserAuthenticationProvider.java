@@ -3,7 +3,6 @@ package com.zombiedash.app.security;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -22,7 +21,6 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    try {
       userService.authenticateAndReturnUser((String) authentication.getPrincipal(),(String) authentication.getCredentials());
         List<? extends GrantedAuthority> grantedAuthorities = Arrays.asList(new GrantedAuthority() {
             @Override
@@ -36,9 +34,6 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
           authentication.getCredentials(),
               grantedAuthorities
           );
-    } catch (Exception e) {
-      throw new BadCredentialsException("The username or password you entered is incorrect");
-    }
 
   }
 

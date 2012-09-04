@@ -1,6 +1,7 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Conference;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -20,9 +21,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ConferenceRepositoryTest {
-  @Test
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Before
+    public void setUp() throws Exception {
+        jdbcTemplate = mock(JdbcTemplate.class);
+    }
+
+    @Test
   public void shouldNotThrowErrorAndSaveConferenceToDatabase() throws Exception {
-    JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES)).thenReturn(0);
     int id = jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES) + 1;
     when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,id,"","","","","","",0)).thenReturn(1);
@@ -41,8 +49,6 @@ public class ConferenceRepositoryTest {
 
   @Test
   public void shouldReadConferenceFromDatabase() {
-
-    JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1))
         .thenAnswer(new Answer<SqlRowSet>() {
           @Override
@@ -61,7 +67,6 @@ public class ConferenceRepositoryTest {
 
   @Test
   public void shouldReadAllConferencesFromDatabase(){
-    JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     when(jdbcTemplate.queryForList(ConferenceRepository.SQL_CONFERENCE_SELECT_ALL)).thenAnswer(new Answer<List<Map<String, Object>>>() {
       @Override
       public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
@@ -73,7 +78,7 @@ public class ConferenceRepositoryTest {
         firstResult.put("description","Java");
         firstResult.put("venue","here");
         firstResult.put("start_date","2012-06-07");
-          firstResult.put("end_date","2012-06-07");
+        firstResult.put("end_date","2012-06-07");
         firstResult.put("max_attendee",1);
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();

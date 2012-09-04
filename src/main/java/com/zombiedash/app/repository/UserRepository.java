@@ -5,6 +5,7 @@ import com.zombiedash.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -15,13 +16,13 @@ import java.util.List;
 
 @Repository
 public class UserRepository {
-  private JdbcTemplate jdbcTemplate;
-  private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM zombie_users where username = ?";
-  private static final String RETRIEVE_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM zombie_users where username = ? and password = ?";
-  private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
-  private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
-  public static final Object SALT = null;
-  private PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
+    private JdbcTemplate jdbcTemplate;
+    private PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
+    private static final String RETRIEVE_USER_BY_USERNAME = "SELECT * FROM zombie_users where username = ?";
+    private static final String RETRIEVE_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM zombie_users where username = ? and password = ?";
+    private static final String RETRIEVE_ALL_USERS = "SELECT * FROM zombie_users";
+    private static final String INSERT_USER = "INSERT INTO zombie_users values (?,?,?,?,?)";
+    public static final Object SALT = null;
 
   @Autowired
   public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -41,7 +42,7 @@ public class UserRepository {
   public User getUser(String username, String password){
     Object[] arg = new Object[]{username, passwordEncoder.encodePassword(password,SALT)};
     List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
-    if(userList.size() == 0) throw new IllegalArgumentException("Invalid user credentials");
+    if(userList.size() == 0) throw new BadCredentialsException("The username or password you entered is incorrect");
     return userList.get(0);
   }
 

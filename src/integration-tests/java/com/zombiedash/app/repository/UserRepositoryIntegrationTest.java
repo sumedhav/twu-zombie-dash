@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
@@ -69,7 +70,7 @@ public class UserRepositoryIntegrationTest {
     assertThat(actualUser, isAUserWith("beta123", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = BadCredentialsException.class)
   public void shouldThrowInvalidArgumentExceptionIfCredentialsAreBad() {
     PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', '" + passwordEncoder.encodePassword("correctPassword1", UserRepository.SALT) + "', 1, '', '')");
