@@ -36,8 +36,8 @@ public class CreateUserPageTest extends BasePageTest {
     public void shouldDisplayErrorMessageWhenAnyFieldIsEmpty() {
         browser.clickOn("submit");
 
-        WebElement messageElement = browser.findElement(By.name("error_message_div"));
-        assertThat(messageElement.getText(), is("All fields are mandatory."));
+        WebElement messageElement = browser.findElement(By.id("username_field_empty"));
+        assertThat(messageElement.getText(), is("You can't leave this field empty."));
     }
 
     @Test

@@ -8,14 +8,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
 public class UserFormTest {
 
     @Test
-    public void shouldReturnAnErrorMessageIfAnyFieldIsEmpty () throws Exception {
-        UserForm userForm = new UserForm("",null,"name","email@email.com",null);
+    public void shouldReturnEmptyFieldErrorWhenUserNameIsEmpty() throws Exception {
+        UserForm userForm = new UserForm("","role","name","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
-        assertThat(result.get(0),is(equalTo("allFieldsAreMandatory") ));
+        assertThat(result.get(0),is(equalTo("usernameFieldEmpty")));
     }
 
     @Test
@@ -81,7 +80,7 @@ public class UserFormTest {
     public void shouldReturnInvalidNameErrorWhenNameIsOnlyWhiteSpaces() {
         UserForm userForm = new UserForm("username","role","         ","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
-        assertThat(result.get(0),is(equalTo("allFieldsAreMandatory")));
+        assertThat(result.get(0),is(equalTo("nameFieldEmpty")));
     }
 
     @Test

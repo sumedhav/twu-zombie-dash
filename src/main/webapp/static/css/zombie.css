@@ -92,3 +92,7 @@ div.question{
     color:green;
     font-weight:bold;
 }
+
+.field-missing {
+    padding-left: 25px;
+}

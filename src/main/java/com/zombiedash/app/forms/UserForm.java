@@ -49,17 +49,18 @@ public class UserForm {
 
     public List<String> validate() {
         name= name.trim();
-        if(isEmpty(userName)||isEmpty(password)||isEmpty(role)||isEmpty(name)||isEmpty(email))
-            errorCodes.add("allFieldsAreMandatory") ;
-        if(isEmpty(password) || !password.matches("(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$"))
-            errorCodes.add("invalidPassword");
-        if(isEmpty(userName) || !userName.matches("([a-zA-Z0-9]){5,40}"))
-            errorCodes.add("invalidUserName");
-        if(isEmpty(email) || !email.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
-            errorCodes.add("invalidEmail");
-        if(isEmpty(name)|| !(name.length()<=40) || !name.matches("[a-zA-Z ]+"))
-            errorCodes.add("invalidName");
+        validateField(userName, "usernameFieldEmpty","invalidUserName","([a-zA-Z0-9]){5,40}");
+        validateField(password, "passwordFieldEmpty", "invalidPassword", "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$");
+        validateField(email, "emailFieldEmpty", "invalidEmail", "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        validateField(name, "nameFieldEmpty", "invalidName", "([a-zA-Z ]){1,40}");
         return errorCodes;
+    }
+
+    private void validateField(String field, String emptyFieldMessage, String invalidFieldMessage, String matchCriteria) {
+        if(isEmpty(field))
+            errorCodes.add(emptyFieldMessage);
+        else if(!field.matches(matchCriteria))
+            errorCodes.add(invalidFieldMessage);
     }
 
     private boolean isEmpty(String field) {
