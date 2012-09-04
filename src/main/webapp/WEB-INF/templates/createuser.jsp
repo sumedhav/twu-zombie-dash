@@ -85,7 +85,7 @@
                      <div class="control-group">
                         <div class="controls offset6" >
                              <input id="submit" name="submit" type="submit" value="Save"  class="btn btn-primary" />&nbsp &nbsp
-                            <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}')" class="btn btn-primary"/>
+                            <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}','/zombie/admin/users/list')" class="btn btn-primary"/>
                         </div>
                      </div>
                  </form>

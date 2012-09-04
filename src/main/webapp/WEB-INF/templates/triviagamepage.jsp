@@ -8,6 +8,7 @@
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/trivia_game_logic.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 
@@ -44,7 +45,7 @@
                    <div class="control-group">
                     <div class="controls offset8" >
                          <input type="submit" value="Submit" name="submit" id="submit_button"  class="btn btn-primary"/>&nbsp &nbsp
-                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}')" name="cancel" id="cancel_button" class="btn btn-primary"/>
+                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/conference/user/home')" name="cancel" id="cancel_button" class="btn btn-primary"/>
                     </div>
                    </div>
                  </form>

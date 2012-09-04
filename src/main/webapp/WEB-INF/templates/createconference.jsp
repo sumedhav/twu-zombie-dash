@@ -6,6 +6,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create_conference.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/custom.datepick.css" rel="stylesheet"/>
@@ -113,7 +114,7 @@
                               <div class="controls offset6" >
                                  <button id="submit" type="submit" class="btn btn-primary">Save</button>&nbsp
                                   <input type="button" id="cancel" value="Cancel" class="btn btn-primary"
-                                      onclick="return confirmCancel('${pageContext.request.contextPath}')"/>
+                                      onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/admin/conference/list')"/>
                               </div>
                           </div>
 
