@@ -12,9 +12,11 @@
     <property name="build.dir" location="build"/>
     <property name="compile.dir" location="${build.dir}/compile"/>
     <property name="report.dir" location="${build.dir}/report"/>
+    <property name="build.instrumented.dir" location="${build.dir}/cobertura"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
 
     <property name="test.report.dir" location="${report.dir}/test"/>
+    <property name="build.coverage.dir" location="${report.dir}/test/cobertura"/>
 
     <path id="common-classpath">
         <pathelement location="${unit.test.dir}/resources"/>
@@ -28,8 +30,53 @@
         <fileset dir="lib/jetty/jar" excludes="ant-*.jar"/>
     </path>
 
-    <path id="system-classpath">
-        <path refid="common-classpath"/>
+    <path id="common-test-classpath">
+        <fileset dir="lib/buildtime/jar">
+            <include name="junit-4.10.jar"/>
+            <include name="mockito-all-1.9.5-rc1.jar"/>
+            <include name="hamcrest-all-1.3.jar"/>
+            <include name="org.springframework.test-*.jar"/>
+            <include name="commons-dbcp-1.3.jar"/>
+            <include name="commons-pool-1.5.jar"/>
+            <include name="servlet-api-2.5.jar"/>
+            <include name="selenium-*.jar"/>
+        </fileset>
+        <fileset dir="lib/runtime/jar"/>
+        <pathelement location="${src.dir}/resources"/>
+        <pathelement location="${unit.test.dir}/resources"/>
+        <pathelement location="${integration.test.dir}/resources"/>
+        <fileset dir="${compile.dir}">
+            <include name="*-unit-tests.jar"/>
+            <include name="*-int-tests.jar"/>
+            <include name="*-sys-tests.jar"/>
+        </fileset>
+    </path>
+
+    <path id="unit-int-test-classpath">
+        <path refid="common-test-classpath"/>
+        <fileset file="${compile.dir}/${ant.project.name}.jar"/>
+    </path>
+
+    <path id="system-test-classpath">
+        <path refid="common-test-classpath"/>
+        <fileset dir="lib/jetty/jar" excludes="ant-*.jar"/>
+        <fileset file="${compile.dir}/${ant.project.name}.jar"/>
+    </path>
+
+    <path id="cobertura-classpath">
+        <fileset dir="lib/buildtime/jar">
+            <include name="cobertura-1.9.4.1.jar"/>
+            <include name="log4j-1.2.9.jar"/>
+            <include name="asm-3.0.jar"/>
+            <include name="asm-tree-3.0.jar"/>
+            <include name="oro-2.0.8.jar"/>
+        </fileset>
+    </path>
+
+    <path id="test-coverage-classpath">
+        <path refid="common-test-classpath"/>
+        <path refid="cobertura-classpath"/>
+        <fileset dir="${build.instrumented.dir}"/>
     </path>
 
     <macrodef name="make-jar">
@@ -39,7 +86,7 @@
         <sequential>
             <mkdir dir="${compile.dir}/classes"/>
             <javac srcdir="@{srcdir}/java" destdir="${compile.dir}/classes" classpathref="@{classpath}"
-                   includeantruntime="no" debug="yes"/>
+            includeantruntime="no" debug="yes"/>
             <jar jarfile="${compile.dir}/@{jarfile}" basedir="${compile.dir}/classes">
                 <fileset dir="@{srcdir}/java" excludes="**/*.java"/>
             </jar>
@@ -53,7 +100,9 @@
         <sequential>
             <mkdir dir="${test.report.dir}"/>
             <junit fork="yes" forkmode="once" failureproperty="unit.tests.failed" printsummary="yes">
-                <classpath refid="@{classpath}" />
+
+                <classpath refid="@{classpath}"/>
+
                 <formatter type="xml"/>
                 <batchtest todir="${test.report.dir}">
                     <fileset dir="@{testdir}/java">
@@ -72,6 +121,8 @@
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath location="bootstrap/ant/ant-contrib-1.0b3.jar"/>
     </taskdef>
+
+    <taskdef resource="tasks.properties" classpathref="cobertura-classpath"/>
 
     <target name="fetch-libs" description="Fetch third-party libraries using ivy.">
         <property name="ivy.default.ivy.user.dir" value="${basedir}/../ivy"/>
@@ -93,7 +144,7 @@
         <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" classpath="common-classpath"/>
         <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-int-tests.jar"
                   classpath="common-classpath"/>
-        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-sys-tests.jar" classpath="system-classpath"/>
+        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-sys-tests.jar" classpath="common-classpath"/>
     </target>
 
     <target name="run-tests"
@@ -112,16 +163,32 @@
             depends="run-system-tests-without-reporting, report-tests, check-failed-tests"
             description="Run system tests, report and halt if any test failed."/>
 
+    <target name="instrument" depends="make-jars">
+        <delete dir="${build.instrumented.dir}" />
+        <delete file="cobertura.ser" />
+        <mkdir dir="${build.instrumented.dir}"/>
+        <cobertura-instrument todir="${build.instrumented.dir}">
+            <fileset dir="${compile.dir}">
+                <include name="${ant.project.name}.jar" />
+            </fileset>
+        </cobertura-instrument>
+    </target>
+
+    <target name="run-tests-with-coverage" depends="instrument" >
+        <common-test-runner testdir="${unit.test.dir}" classpath="test-coverage-classpath"/>
+        <common-test-runner testdir="${integration.test.dir}" classpath="test-coverage-classpath"/>
+    </target>
+
     <target name="run-unit-tests-without-reporting" depends="make-jars">
-        <common-test-runner testdir="${unit.test.dir}" classpath="common-classpath"/>
+        <common-test-runner testdir="${unit.test.dir}" classpath="unit-int-test-classpath"/>
     </target>
 
     <target name="run-integration-tests-without-reporting" depends="make-jars">
-        <common-test-runner testdir="${integration.test.dir}" classpath="common-classpath"/>
+        <common-test-runner testdir="${integration.test.dir}" classpath="unit-int-test-classpath"/>
     </target>
 
     <target name="run-system-tests-without-reporting" depends="make-jars">
-        <common-test-runner testdir="${system.test.dir}" classpath="system-classpath"/>
+        <common-test-runner testdir="${system.test.dir}" classpath="system-test-classpath"/>
     </target>
 
     <target name="report-tests" if="unit.tests.failed">
@@ -192,6 +259,12 @@
 
     <target name="get-build-number" unless="build.number">
         <input message="Build number?" addproperty="build.number"/>
+    </target>
+
+    <target name="coverage" depends="clean, instrument, run-tests-with-coverage">
+        <delete dir="${build.coverage.dir}"/>
+        <mkdir dir="${build.coverage.dir}"/>
+        <cobertura-report  srcdir="${src.dir}/java" destdir="${build.coverage.dir}"/>
     </target>
 
 </project>
