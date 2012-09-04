@@ -24,7 +24,7 @@ public class AttendeeRepositoryTest {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
     Attendee attendee = mock(Attendee.class);
-    Attendee attendee1 = attendeeRepository.saveAttendee(attendee);
+    Attendee attendee1 = attendeeRepository.saveAttendee(attendee, 0);
     assertThat(attendee1,is(equalTo(attendee)));
   }
 
@@ -33,19 +33,17 @@ public class AttendeeRepositoryTest {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     when(jdbcTemplate.query(anyString(), Matchers.any(Object[].class), Matchers.any(RowMapper.class)))
         .thenAnswer(new Answer<List<Attendee>>() {
-      @Override
-      public List<Attendee> answer(InvocationOnMock invocation) throws Throwable {
-        Attendee attendee = mock(Attendee.class);
-        when(attendee.getConference()).thenReturn("conference");
-        when(attendee.getUsername()).thenReturn("username");
-        ArrayList<Attendee> attendeeArrayList = new ArrayList<Attendee>();
-        attendeeArrayList.add(attendee);
-        return attendeeArrayList;
-      }
-    });
+          @Override
+          public List<Attendee> answer(InvocationOnMock invocation) throws Throwable {
+            Attendee attendee = mock(Attendee.class);
+            when(attendee.getUsername()).thenReturn("username");
+            ArrayList<Attendee> attendeeArrayList = new ArrayList<Attendee>();
+            attendeeArrayList.add(attendee);
+            return attendeeArrayList;
+          }
+        });
     AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
     Attendee attendee = attendeeRepository.getAttendee("username","conference");
     assertThat(attendee.getUsername(),is(equalTo("username")));
-    assertThat(attendee.getConference(),is(equalTo("conference")));
   }
 }

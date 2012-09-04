@@ -1,23 +1,26 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Attendee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class AttendeeRepository {
-  public static final String INSERT_INTO_ATTENDEE_VALUES = "insert into attendee values(?,?,?,?,?,?,?)";
-  public static final String SELECT_ATTENDEE = "SELECT * FROM attendee WHERE username= ? AND conference = ?";
+  public static final String INSERT_INTO_ATTENDEE_VALUES = "INSERT INTO zombie_attendees VALUES(?,?,?,?,?,?,?)";
+  public static final String SELECT_ATTENDEE = "SELECT * FROM zombie_attendees WHERE username= ? AND conference = ?";
   private JdbcTemplate jdbcTemplate;
+  @Autowired
   public AttendeeRepository(JdbcTemplate jdbcTemplate) {
-
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public Attendee saveAttendee(Attendee attendee) {
+  public Attendee saveAttendee(Attendee attendee, Integer conference_id) {
     jdbcTemplate.update(INSERT_INTO_ATTENDEE_VALUES,
         attendee.getUsername(),
         attendee.getPassword(),
@@ -25,7 +28,7 @@ public class AttendeeRepository {
         attendee.getEmail(),
         attendee.getDob(),
         attendee.getCountry(),
-        attendee.getConference());
+        conference_id);
     return attendee;
   }
 
@@ -40,7 +43,6 @@ public class AttendeeRepository {
             resultSet.getString("name"),
             resultSet.getString("email"),
             resultSet.getString("dob"),
-            resultSet.getString("conference"),
             resultSet.getString("country"));
       }
     });

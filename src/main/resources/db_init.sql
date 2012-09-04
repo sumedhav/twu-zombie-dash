@@ -31,6 +31,18 @@ CREATE TABLE zombie_users(username varchar(40) NOT NULL PRIMARY KEY CHECK(userna
                 name varchar(40) NOT NULL,
                 email varchar(100) NOT NULL);
 
+DROP TABLE IF EXISTS zombie_attendees;
+
+CREATE TABLE zombie_attendees(username varchar(40) NOT NULL CHECK(username NOT LIKE ''),
+                password varchar(128) NOT NULL,
+                name varchar(40) NOT NULL,
+                email varchar(100) NOT NULL,
+                dob varchar(10) NOT NULL,
+                country varchar(40) NOT NULL,
+                conference_ID INT NOT NULL,
+                PRIMARY KEY (username,conference_ID),
+                FOREIGN KEY (conference_ID) REFERENCES zombie_conference(ID));
+
 INSERT INTO zombie_users VALUES('admin','da07c08a2c2ef3710e688bff476a8a09d52d6d34b6ee3c41a4b1f58f2949792ef20079565ca0d78e2758b33b50a13c9829c08bdf670dc802e627f289364d203a',0,'Administrator','admin@zombie.com');
 
 
