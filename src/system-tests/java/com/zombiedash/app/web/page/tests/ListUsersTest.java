@@ -1,16 +1,11 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.repository.UserRepository;
 import com.zombiedash.app.web.Application;
-import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +18,8 @@ public class ListUsersTest extends BasePageTest {
     public void setupSession()
     {
         browser= BrowserSessionBuilder
-                .newStatelessSession()
+                .aBrowserSession()
+                .usingHttps()
                 .loggedInAsAdmin()
                 .build()
                 .open("/app/zombie/admin/users/list");

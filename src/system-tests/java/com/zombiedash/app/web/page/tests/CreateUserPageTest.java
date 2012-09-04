@@ -1,20 +1,13 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
-import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,10 +18,10 @@ import static org.hamcrest.Matchers.is;
 public class CreateUserPageTest extends BasePageTest {
 
     @Before
-    public void setupSession()
-    {
+    public void setupSession() {
         browser= BrowserSessionBuilder
-                .newStatelessSession()
+                .aBrowserSession()
+                .usingHttps()
                 .loggedInAsAdmin()
                 .build()
                 .open("/app/zombie/admin/user/create");
@@ -45,10 +38,10 @@ public class CreateUserPageTest extends BasePageTest {
     @Test
     public void shouldDisplayRespectiveErrorMessagesWhenAnyFieldsAreInvalid() {
 
-        browser.inputTextOn("username","pass")
-                .inputTextOn("password","pass w")
-                .inputTextOn("name","qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg")
-                .inputTextOn("email","ndkdnkn@dlm").clickOn("submit");
+        browser.inputTextOn("username", "pass")
+                .inputTextOn("password", "pass w")
+                .inputTextOn("name", "qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg")
+                .inputTextOn("email", "ndkdnkn@dlm").clickOn("submit");
 
 
         assertThat(browser.getTextById("invalid_user_name"), is("Username must have 5-40 alphanumeric characters and no whitespaces."));
@@ -62,51 +55,53 @@ public class CreateUserPageTest extends BasePageTest {
 
     @Test
     public void shouldSaveNewUserWhenAllFieldsAreValid() {
-        browser.inputTextOn("username","username")
-                .inputTextOn("password","password123")
-                .inputTextOn("name","yahya")
-                .inputTextOn("email","email@email.com").clickOn("submit");
+        browser.inputTextOn("username", "username")
+                .inputTextOn("password", "password123")
+                .inputTextOn("name", "yahya")
+                .inputTextOn("email", "email@email.com").clickOn("submit");
 
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
         assertThat(browser.getTextById("username_value_2"), is(equalTo("yahya")));
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
-        UserManager userManager = new UserManager(jdbcTemplate,"username");
+        UserManager userManager = new UserManager(jdbcTemplate, "username");
         userManager.deleteUser();
 
     }
 
     @Test
     public void shouldGoToUserListPageWhenClickedOkOnAlertBox() {
-        browser= BrowserSessionBuilder
-                .newJavascriptEnabledSession()
+        browser = BrowserSessionBuilder
+                .aBrowserSession()
+                .withJavascriptEnabled()
+                .usingHttps()
                 .loggedInAsAdmin()
                 .build()
                 .open("/app/zombie/admin/user/create");
         browser.clickOn("cancel").alertOk();
-        assertThat(browser.getPageTitle(),is("Zombie Dash : User List"));
+        assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
     }
 
     @Test
     public void shouldRemainOnCreateUserPageWhenClickedCancelOnAlertBox() {
         browser= BrowserSessionBuilder
-                .newJavascriptEnabledSession()
+                .aBrowserSession()
+                .withJavascriptEnabled()
+                .usingHttps()
                 .loggedInAsAdmin()
                 .build()
                 .open("/app/zombie/admin/user/create");
         browser.clickOn("cancel").alertCancel();
         assertThat(browser.getPageTitle(), CoreMatchers.is("Zombie Dash : Create User"));
-
-
     }
 
     @Test
     public void shouldDisplayErrorMessageWhenUserNameAlreadyExists() {
-        browser.inputTextOn("username","admin")
-                .inputTextOn("password","password123")
-                .inputTextOn("name","yahya")
-                .inputTextOn("email","email@email.com").clickOn("submit");
+        browser.inputTextOn("username", "admin")
+                .inputTextOn("password", "password123")
+                .inputTextOn("name", "yahya")
+                .inputTextOn("email", "email@email.com").clickOn("submit");
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
 

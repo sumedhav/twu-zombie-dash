@@ -6,10 +6,13 @@ import org.openqa.selenium.By;
 
 public class BrowserSessionBuilder {
     private boolean stateless = true;
+    private boolean httpsSession = false;
     private Browser browser;
+    private String user;
+    private String password;
 
-    private BrowserSessionBuilder(boolean stateless) {
-        browser = stateless ? Application.statelessBrowser() : Application.javascriptEnabledBrowser();
+    private BrowserSessionBuilder() {
+
     }
 
     public BrowserSessionBuilder loggedInAsAdmin() {
@@ -17,26 +20,37 @@ public class BrowserSessionBuilder {
     }
 
     public BrowserSessionBuilder loggedInAs(String user, String password) {
+        this.user = user;
+        this.password = password;
+        return this;
+    }
+
+    private void login(String user, String password) {
         browser.open("/app/zombie/login");
         browser.findElement(By.name("j_username")).sendKeys(user);
         browser.findElement(By.name("j_password")).sendKeys(password);
         browser.findElement(By.tagName("button")).click();
-        return this;
     }
 
     public Browser build() {
+        browser = stateless ? Application.statelessBrowser(httpsSession) : Application.javascriptEnabledBrowser(httpsSession);
+        if (user != null && password != null) {
+            login(user, password);
+        }
         return browser;
     }
 
-    public static BrowserSessionBuilder newStatelessSession() {
-        return new BrowserSessionBuilder(true);
+    public BrowserSessionBuilder withJavascriptEnabled() {
+        this.stateless = false;
+        return this;
     }
 
-    public static BrowserSessionBuilder newJavascriptEnabledSession() {
-        return new BrowserSessionBuilder(false);
+    public BrowserSessionBuilder usingHttps() {
+        this.httpsSession = true;
+        return this;
     }
 
-    private Browser getBrowser() {
-        return stateless ? Application.statelessBrowser() : Application.javascriptEnabledBrowser();
+    public static BrowserSessionBuilder aBrowserSession() {
+        return new BrowserSessionBuilder();
     }
 }

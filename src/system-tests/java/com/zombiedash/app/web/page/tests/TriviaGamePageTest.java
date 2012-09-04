@@ -22,7 +22,6 @@ public class TriviaGamePageTest extends BasePageTest {
 
     @Test
     public void shouldDisplayGameQuestions() {
-
         initializeStatelessBrowserAndSetUpData();
 
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
@@ -35,7 +34,6 @@ public class TriviaGamePageTest extends BasePageTest {
 
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
-
         initializeJavaScriptBrowserAndSetUpData();
         browser.clickOn("cancel_button")
                 .alertOk();
@@ -129,13 +127,13 @@ public class TriviaGamePageTest extends BasePageTest {
     }
 
     private void initializeJavaScriptBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.newJavascriptEnabledSession().build();
+        browser = BrowserSessionBuilder.aBrowserSession().withJavascriptEnabled().build();
         initializeQuestionsAndOptions();
         browser.open(TRIVIA_GAME_URL);
     }
 
     private void initializeStatelessBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.newStatelessSession().build();
+        browser = BrowserSessionBuilder.aBrowserSession().build();
         initializeQuestionsAndOptions();
         browser.open(TRIVIA_GAME_URL);
     }

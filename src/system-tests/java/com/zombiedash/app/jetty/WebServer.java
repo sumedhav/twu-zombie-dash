@@ -1,6 +1,7 @@
 package com.zombiedash.app.jetty;
 
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.security.SslSocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
 public class WebServer {
@@ -10,6 +11,17 @@ public class WebServer {
     public WebServer(int port) {
         jetty = new Server(port);
         jetty.addHandler(new WebAppContext("src/main/webapp", "/app"));
+    }
+
+    public void addSSLConnector(int port){
+        SslSocketConnector connector = new SslSocketConnector();
+        String currentKeyStorePath = System.getProperty("user.dir") + "/src/system-tests/resources/keystore";
+        connector.setKeystore(currentKeyStorePath);
+        connector.setKeyPassword("password");
+        connector.setTruststore(currentKeyStorePath);
+        connector.setTrustPassword("password");
+        connector.setPort(port);
+        jetty.addConnector(connector);
     }
 
     public WebServer start() throws Exception {
@@ -27,6 +39,7 @@ public class WebServer {
 
     public static void main(String[] args) throws Exception {
         final WebServer server = new WebServer(8080);
+        server.addSSLConnector(8443);
         server.start();
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {

@@ -4,6 +4,7 @@ import com.zombiedash.app.jetty.WebServer;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Application {
@@ -15,22 +16,24 @@ public class Application {
     private Browser firefoxBrowser;
     private String serverName;
     private int port;
+    private int sslPort;
 
-    private Application(String serverName, int port) {
+    private Application(String serverName) {
         this.serverName = serverName;
-        this.port = port;
+        try {
+            this.port = findFreePort();
+            this.sslPort = findFreePort();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static Browser open(String url) {
-        return statelessBrowser().open(url);
+    public static Browser statelessBrowser(boolean useHttps) {
+        return instance().getStatelessBrowser(useHttps);
     }
 
-    public static Browser statelessBrowser() {
-        return instance().getStatelessBrowser();
-    }
-
-    public static Browser javascriptEnabledBrowser() {
-        return instance().getFirefoxBrowser();
+    public static Browser javascriptEnabledBrowser(boolean useHttps) {
+        return instance().getFirefoxBrowser(useHttps);
     }
 
     private static Application instance() {
@@ -38,9 +41,8 @@ public class Application {
             return instance;
         }
         try {
-            int port = findFreePort();
-            String hostAddress = getHostAddress();
-            instance = new Application(hostAddress, port);
+            String hostAddress = getHostname();
+            instance = new Application(hostAddress);
             registerShutdownHook();
             instance.start();
             return instance;
@@ -50,23 +52,23 @@ public class Application {
         }
     }
 
-    private static int findFreePort() throws Exception {
+    private int findFreePort() throws IOException {
         ServerSocket socket = new ServerSocket(0);
         int port = socket.getLocalPort();
         socket.close();
         return port;
     }
 
-    private static String getHostAddress() throws Exception {
-        String hostAddress = System.getProperty("test.with.host.address");
+    private static String getHostname() throws Exception {
+        String hostname = System.getProperty("test.with.host.address");
 
         setSystemProperty("controlm.queue.provider", "none");
         setSystemProperty("icc.service.provider", "local");
 
-        if (StringUtils.isBlank(hostAddress)) {
-            hostAddress = "http://localhost:";
+        if (StringUtils.isBlank(hostname)) {
+            hostname = "localhost";
         }
-        return hostAddress;
+        return hostname;
     }
 
     private static void registerShutdownHook() {
@@ -74,7 +76,9 @@ public class Application {
     }
 
     private void start() throws Exception {
-        server = new WebServer(port).start();
+        server = new WebServer(port);
+        server.addSSLConnector(sslPort);
+        server.start();
     }
 
     private static void setSystemProperty(String key, String value) {
@@ -92,15 +96,21 @@ public class Application {
         }
     }
 
-    public Browser getStatelessBrowser() {
+    public Browser getStatelessBrowser(boolean useHttps) {
         if (statelessBrowser != null) return statelessBrowser;
-        statelessBrowser = new Browser(serverName + port, false);
+        statelessBrowser = new Browser(getAddress(useHttps), false);
         return statelessBrowser;
     }
 
-    public Browser getFirefoxBrowser() {
+    private String getAddress(boolean useHttps) {
+        String protocol = useHttps ? "https://" : "http://";
+        int port = useHttps ? this.sslPort : this.port;
+        return protocol + serverName + ":" + port;
+    }
+
+    public Browser getFirefoxBrowser(boolean useHttps) {
         if (firefoxBrowser != null) return firefoxBrowser;
-        firefoxBrowser = new Browser(serverName + port, true);
+        firefoxBrowser = new Browser(getAddress(useHttps), true);
         return firefoxBrowser;
     }
 

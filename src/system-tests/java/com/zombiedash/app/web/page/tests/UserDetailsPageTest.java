@@ -3,8 +3,8 @@ package com.zombiedash.app.web.page.tests;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.UserManager;
-import org.junit.*;
-import org.openqa.selenium.By;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +18,9 @@ public class UserDetailsPageTest extends BasePageTest {
     public void setupSession()
     {
         browser= BrowserSessionBuilder
-                .newJavascriptEnabledSession()
+                .aBrowserSession()
+                .usingHttps()
+                .withJavascriptEnabled()
                 .loggedInAsAdmin()
                 .build();
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
@@ -28,6 +30,7 @@ public class UserDetailsPageTest extends BasePageTest {
         browser.open("/app/zombie/admin/user/view/username1");
 
     }
+
     @Test
     public void shouldGoToUserDetailsPageOnClickingBack() throws Exception {
         browser.clickOn("back_user_details");

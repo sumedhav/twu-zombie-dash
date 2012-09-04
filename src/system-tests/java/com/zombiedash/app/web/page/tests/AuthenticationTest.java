@@ -12,7 +12,8 @@ public class AuthenticationTest extends BasePageTest {
     @Test
     public void shouldGoToAdminLoginSuccessPageIfUserIsAdmin() throws Exception {
         browser = BrowserSessionBuilder
-                .newStatelessSession()
+                .aBrowserSession()
+                .usingHttps()
                 .loggedInAsAdmin()
                 .build();
 
@@ -21,7 +22,11 @@ public class AuthenticationTest extends BasePageTest {
 
     @Test
     public void shouldGoToLoginPageAfterLogout() {
-        browser = BrowserSessionBuilder.newStatelessSession().loggedInAsAdmin().build();
+        browser = BrowserSessionBuilder
+                .aBrowserSession()
+                .usingHttps()
+                .loggedInAsAdmin()
+                .build();
         browser.findElement(By.id("Logout")).click();
         assertThat(browser.getPageTitle(), is("Zombie Dash : Login"));
         assertThat(browser.findElement(By.id("logout_message")).getText(), is("You have logged out successfully"));
@@ -30,7 +35,8 @@ public class AuthenticationTest extends BasePageTest {
     @Test
     public void shouldStayInLoginFormAndDisplayErrorMessageWhenLoginUnsuccessful() throws Exception {
         browser = BrowserSessionBuilder
-                .newStatelessSession()
+                .aBrowserSession()
+                .usingHttps()
                 .loggedInAs("noooo", "wrong!")
                 .build();
 
