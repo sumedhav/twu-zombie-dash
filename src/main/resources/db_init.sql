@@ -26,12 +26,12 @@ CREATE TABLE zombie_conference(
 DROP TABLE IF EXISTS zombie_users;
 
 CREATE TABLE zombie_users(username varchar(40) NOT NULL PRIMARY KEY CHECK(username NOT LIKE ''),
-                password varchar(40) NOT NULL,
+                password varchar(128) NOT NULL,
                 role integer NOT NULL,
                 name varchar(40) NOT NULL,
                 email varchar(100) NOT NULL);
 
-INSERT INTO zombie_users VALUES('admin','b56e0b4ea4962283bee762525c2d490f',0,'Administrator','admin@zombie.com');
+INSERT INTO zombie_users VALUES('admin','da07c08a2c2ef3710e688bff476a8a09d52d6d34b6ee3c41a4b1f58f2949792ef20079565ca0d78e2758b33b50a13c9829c08bdf670dc802e627f289364d203a',0,'Administrator','admin@zombie.com');
 
 
 
