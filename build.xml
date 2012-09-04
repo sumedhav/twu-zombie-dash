@@ -247,7 +247,7 @@
     </target>
 
     <target name="run-jetty" depends="make-jars" description="Run application in Jetty.">
-        <java classname="com.zombiedash.app.jetty.WebServer" classpathref="system-classpath" fork="true"
+        <java classname="com.zombiedash.app.jetty.WebServer" classpathref="common-classpath" fork="true"
               failonerror="true"/>
     </target>
 
