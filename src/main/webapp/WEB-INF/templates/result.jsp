@@ -5,10 +5,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<script type="text/javascript">
+ if(!((navigator.userAgent.match(/iPhone/i)) ||
+         (navigator.userAgent.match(/iPod/i)) ||
+         (navigator.userAgent.match(/Android/i)) ) || (navigator.userAgent.match(/iPod/i))){
+         document.write('<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">')
+         document.write('<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">')
+         }
+</script>
     <title>Results Page</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
-</head>
+      <meta name="viewport" content="width=device-width">
+   </head>
 
     <body>
          <div class="container">
