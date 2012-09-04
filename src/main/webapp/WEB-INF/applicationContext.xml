@@ -10,7 +10,7 @@
        xmlns:jdbc="http://www.springframework.org/schema/jdbc">
 
     <context:annotation-config />
-    <context:component-scan base-package="com.example.app.services" />
+    <!--<context:component-scan base-package="com.example.app.services" />-->
     <context:component-scan base-package="com.zombiedash.app" />
 
     <import resource="applicationContext-security.xml"/>
@@ -36,26 +36,4 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--<bean id="matcher" class="com.zombiedash.app.matcher.CaseInsensitivePathMatcher"/>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
-        <!--<property name="pathMatcher" ref="matcher"/>-->
-    <!--</bean>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
-        <!--<property name="pathMatcher" ref="matcher"/>-->
-        <!--<property name="webBindingInitializer">-->
-            <!--<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer"/>-->
-        <!--</property>-->
-        <!--<property name="messageConverters">-->
-            <!--<list>-->
-                <!--<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>-->
-                <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
-                <!--<bean class="org.springframework.http.converter.FormHttpMessageConverter"/>-->
-                <!--<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <!--<bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>-->
 </beans>

@@ -4,6 +4,7 @@ import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -49,17 +51,13 @@ public class CreateUserPageTest extends BasePageTest {
                 .inputTextOn("email","ndkdnkn@dlm").clickOn("submit");
 
 
-        WebElement invalidUserNameElement = browser.findElement(By.id("invalid_user_name"));
-        assertThat(invalidUserNameElement.getText(), is("Username must have 5-40 alphanumeric characters and no whitespaces."));
+        assertThat(browser.getTextById("invalid_user_name"), is("Username must have 5-40 alphanumeric characters and no whitespaces."));
 
-        WebElement invalidPasswordElement = browser.findElement(By.id("invalid_password"));
-        assertThat(invalidPasswordElement.getText(), is("Password must have 6-40 characters, at least one digit(s) and no non-alphanumeric characters."));
+        assertThat(browser.getTextById("invalid_password"), is("Password must have 6-40 characters, at least one digit(s) and no non-alphanumeric characters."));
 
-        WebElement invalidNameElement = browser.findElement(By.id("invalid_name"));
-        assertThat(invalidNameElement.getText(), is("Name should not exceed 40 characters and should not contain digits, special characters."));
+        assertThat(browser.getTextById("invalid_name"), is("Name should not exceed 40 characters and should not contain digits, special characters."));
 
-        WebElement invalidEmailElement = browser.findElement(By.id("invalid_email"));
-        assertThat(invalidEmailElement.getText(), is("Please enter a valid email address."));
+        assertThat(browser.getTextById("invalid_email"), is("Please enter a valid email address."));
     }
 
     @Test
@@ -72,8 +70,10 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
-        WebElement userListElement = browser.findElement(By.id("username_value_2"));
-        assertThat(userListElement.getText(), is(equalTo("yahya")));
+        assertThat(browser.getTextById("username_value_2"), is(equalTo("yahya")));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        UserManager userManager = new UserManager(jdbcTemplate,"username");
+        userManager.deleteUser();
 
     }
 
@@ -110,7 +110,6 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
 
-        WebElement messageElement = browser.findElement(By.name("error_message_div"));
-        assertThat(messageElement.getText(), is("Someone already has that username. Try another."));
+        assertThat(browser.getTextByName("error_message_div"), is("Someone already has that username. Try another."));
     }
 }
