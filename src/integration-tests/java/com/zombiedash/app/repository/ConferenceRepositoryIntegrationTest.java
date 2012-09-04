@@ -1,6 +1,7 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Conference;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,14 +21,19 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private ConferenceRepository conferenceRepository;
 
+    @Before
+    public void setUp() throws Exception {
+        jdbcTemplate.execute("DELETE zombie_conference");
+        conferenceRepository = new ConferenceRepository(jdbcTemplate);
+    }
 
     @Test
     @Rollback(true)
     public void shouldSaveConferenceToDatabase() throws Exception {
         Conference conference = new Conference(-1,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
-        ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         int numberOfRows = conferenceRepository.saveConference(conference);
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1);
         sqlRowSet.first();
@@ -45,7 +51,6 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Test
     @Rollback(true)
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
-        ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         int conf_id = 3;
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
@@ -63,7 +68,6 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Test
     @Rollback(true)
     public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
-        ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         int conf_id1 = 1;
         int conf_id2 = 2;
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id1,"Java Conference", "Java",
