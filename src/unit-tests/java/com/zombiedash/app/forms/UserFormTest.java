@@ -47,6 +47,13 @@ public class UserFormTest {
     }
 
     @Test
+    public void shouldReturnEmptyFieldErrorWhenPasswordIsEmpty() throws Exception {
+        UserForm userForm = new UserForm("user123","role","name","email@email.com", "");
+        List<String> result = userForm.validate();
+        assertThat(result.get(0),is(equalTo("passwordFieldEmpty")));
+    }
+
+    @Test
     public void shouldReturnInvalidPasswordErrorWhenPasswordIsBelowLowerLimit() throws Exception {
         UserForm userForm = new UserForm("username","role","name","email@email.com", "passw");
         List<String> result = userForm.validate();
@@ -69,6 +76,12 @@ public class UserFormTest {
 
     }
 
+    @Test
+    public void shouldReturnEmptyFieldErrorWhenNameIsEmpty() throws Exception {
+        UserForm userForm = new UserForm("user123","role","","email@email.com", "password123");
+        List<String> result = userForm.validate();
+        assertThat(result.get(0),is(equalTo("nameFieldEmpty")));
+    }
 
     @Test
     public void shouldReturnInvalidNameErrorWhenNameExceedsUpperLimit() {
@@ -81,6 +94,13 @@ public class UserFormTest {
         UserForm userForm = new UserForm("username","role","         ","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("nameFieldEmpty")));
+    }
+
+    @Test
+    public void shouldReturnEmptyFieldErrorWhenEmailIsEmpty() throws Exception {
+        UserForm userForm = new UserForm("user123","role","name","", "password123");
+        List<String> result = userForm.validate();
+        assertThat(result.get(0),is(equalTo("emailFieldEmpty")));
     }
 
     @Test
