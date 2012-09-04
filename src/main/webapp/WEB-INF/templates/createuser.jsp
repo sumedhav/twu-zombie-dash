@@ -21,6 +21,9 @@
          <h3>Create New User</h3>
 
          <div class="control-group">
+            <div class="form-message">
+                <b>All (<span class="error inline-help">*</span>) fields are mandatory.</b>                  ${model.errorString}
+            </div>
             <div name="error_message_div" id="error_message_div" style="color:red">
                 <b>
                 ${validationMessage}
@@ -35,40 +38,40 @@
                  <form id="userDetails" class="form-horizontal" name="userDetails" method="post" action="${pageContext.request.contextPath}/zombie/admin/user/create">
 
                      <div class="control-group">
-                          <label class="control-label align-left" for="username">Username:</label>
+                          <label class="control-label align-left" for="username"><span class="error inline-help">*</span>Username:</label>
                           <div class="controls">
                             <input type="text" name="userName" id="username" value="<c:out value="${model.username}"/>" placeholder="enter username"/>
-                             <span id="invalid_user_name" class="error inline-help" style="color:#FF0000">${invalidUserName}</span>
+                             <div id="invalid_user_name" class="error inline-help">${invalidUserName}</div>
                           </div>
                      </div>
 
                     <div class="control-group">
-                           <label class="control-label align-left" for="password">Password:</label>
+                           <label class="control-label align-left" for="password"><span class="error inline-help">*</span>Password:</label>
                            <div class="controls">
                            <input type="text" name="password" id="password" value="<c:out value="${model.password}"/>" placeholder="enter password"/>
-                             <span id="invalid_password" class="error inline-help" style="color:#FF0000">${invalidPassword}</span>
+                             <div id="invalid_password" class="error inline-help">${invalidPassword}</div>
                            </div>
                     </div>
 
                     <div class="control-group">
-                            <label class="control-label align-left" for="name">Name:</label>
+                            <label class="control-label align-left" for="name"><span class="error inline-help">*</span>Name:</label>
                             <div class="controls">
                             <input type="text" name="name" id="name" value="<c:out value="${model.name}"/>" placeholder="enter name"/>
-                              <span id="invalid_name" class="error inline-help" style="color:#FF0000">${invalidName}</span>
+                              <div id="invalid_name" class="error inline-help">${invalidName}</div>
                             </div>
                     </div>
 
 
                      <div class="control-group">
-                         <label class="control-label align-left" for="email">Email:</label>
+                         <label class="control-label align-left" for="email"><span class="error inline-help">*</span>Email:</label>
                          <div class="controls">
                           <input type="text" name="email" id="email" value="<c:out value="${model.email}"/>" placeholder="enter email"/>
-                            <span id="invalid_email" class="error inline-help" style="color:#FF0000">${invalidEmail}</span>
+                            <div id="invalid_email" class="error inline-help">${invalidEmail}</div>
                          </div>
                      </div>
 
                      <div class="control-group">
-                        <label class="control-label align-left" for="role">Role:</label>
+                        <label class="control-label align-left" for="role">&#160;Role:</label>
                         <div class="controls">
                         <select name="role" id="role">
                             <option value="GameDesigner">Game Designer</option>

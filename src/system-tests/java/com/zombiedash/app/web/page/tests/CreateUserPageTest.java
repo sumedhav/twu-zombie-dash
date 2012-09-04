@@ -50,13 +50,13 @@ public class CreateUserPageTest extends BasePageTest {
 
 
         WebElement invalidUserNameElement = browser.findElement(By.id("invalid_user_name"));
-        assertThat(invalidUserNameElement.getText(), is("Must have 5-40 alphanumeric characters and no whitespaces."));
+        assertThat(invalidUserNameElement.getText(), is("Username must have 5-40 alphanumeric characters and no whitespaces."));
 
         WebElement invalidPasswordElement = browser.findElement(By.id("invalid_password"));
-        assertThat(invalidPasswordElement.getText(), is("Must have 6-40 characters, at least one digit(s) and no non-alphanumeric characters."));
+        assertThat(invalidPasswordElement.getText(), is("Password must have 6-40 characters, at least one digit(s) and no non-alphanumeric characters."));
 
         WebElement invalidNameElement = browser.findElement(By.id("invalid_name"));
-        assertThat(invalidNameElement.getText(), is("Should not exceed 40 characters and should not contain digits, special characters."));
+        assertThat(invalidNameElement.getText(), is("Name should not exceed 40 characters and should not contain digits, special characters."));
 
         WebElement invalidEmailElement = browser.findElement(By.id("invalid_email"));
         assertThat(invalidEmailElement.getText(), is("Please enter a valid email address."));

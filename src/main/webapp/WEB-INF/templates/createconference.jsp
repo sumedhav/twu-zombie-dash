@@ -22,8 +22,8 @@
              </div>
           	<div class="sectionTitle">Create Conference: Enter Details</div>
              <div class="control-group">
-                  <div id="message_to_be_displayed" class="form-message error">
-                      ${model.errorString}
+                  <div class="form-message">
+                      <b>All (<span class="error inline-help">*</span>) fields are mandatory.</b>                  ${model.errorString}
                   </div>
              </div>
 
@@ -32,7 +32,7 @@
                      <form id="conferenceForm" class="form-horizontal" name="conferenceForm" action="${pageContext.request.contextPath}/zombie/admin/conference/create" method = "POST">
 
                          <div class="control-group">
-                             <label class="control-label align-left" for="ConferenceName">Conference name:</label>
+                             <label class="control-label align-left" for="ConferenceName"><span class="error inline-help">*</span>Conference &#160;name:</label>
                              <div class="controls">
                                 <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
                                    onkeydown="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
@@ -43,7 +43,7 @@
                          </div>
 
                          <div class="control-group">
-                              <label class="control-label align-left" for="ConferenceTopic">Topic:</label>
+                              <label class="control-label align-left" for="ConferenceTopic"><span class="error inline-help">*</span>Topic:</label>
                               <div class="controls">
                                  <textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
                                      onkeydown="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
@@ -54,27 +54,27 @@
                           </div>
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceStartDate">Start date:</label>
+                                <label class="control-label align-left" for="ConferenceStartDate"><span class="error inline-help">*</span>Start date:</label>
                                 <div class="controls">
                                  <input type='text' id="conf_start_date" name='conf_start_date' placeholder="yyyy-mm-dd" onFocus="javascript" value="<c:out value="${model.startDate}"/>" >
                                  <span class="error inline-help">${model.startDateFieldMissing}</span>
-                                 <span class="error inline-help">${model.startDateError}</span>
+                                 <div class="error inline-help">${model.startDateError}</div>
                                 </div>
                           </div>
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceEndDate"> End date:</label>
+                                <label class="control-label align-left" for="ConferenceEndDate"><span class="error inline-help">*</span>End date:</label>
                                <div class="controls">
                                 <input type='text' id="conf_end_date" name='conf_end_date' placeholder="yyyy-mm-dd" onFocus="javascript" value="<c:out value="${model.endDate}"/>">
                                  <span class="error inline-help">${model.endDateFieldMissing}</span>
-                                  <span class="error inline-help">${model.endDateError}</span>
+                                 <div class="error inline-help">${model.endDateError}</div>
 
                                 </div>
                           </div>
 
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceDescription">Description:</label>
+                                <label class="control-label align-left" for="ConferenceDescription"><span class="error inline-help">*</span>Description:</label>
                                 <div class="controls">
                                  <textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
                                          onkeydown="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
@@ -86,7 +86,7 @@
 
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceTopic">Venue:</label>
+                                <label class="control-label align-left" for="ConferenceTopic"><span class="error inline-help">*</span>Venue:</label>
                                 <div class="controls">
                                     <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
                                           onkeydown="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
@@ -97,14 +97,14 @@
                           </div>
 
                           <div class="control-group">
-                                <label class="control-label align-left" for="ConferenceAttendees">Max no. of attendees:</label>
+                                <label class="control-label align-left" for="ConferenceAttendees"><span class="error inline-help">*</span>Max no. of &#160;attendees:</label>
                                 <div class="controls">
                                     <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
                                      onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>"
                                      onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  />
                                        <span class="error inline-help">${model.maxAttendeesFieldMissing}</span>
-                                       <span class="error inline-help">${model.numberError}</span>
                                        <span id="maxAttendeesError" class="error inline-help"></span>
+                                       <div class="error inline-help">${model.numberError}</div>
                                 </div>
                           </div>
 

@@ -47,8 +47,7 @@ public class ConferenceValidator {
 
     private boolean isCompletedField(String field, Map<String, String> model, String fieldMissingErrorName) {
         if (field.isEmpty()) {
-            model.put(fieldMissingErrorName,"*");
-            model.put("errorString","All (*) fields are mandatory");
+            model.put(fieldMissingErrorName,"You can't leave this empty.");
             return false;
         }
         else return true;

@@ -13,7 +13,7 @@ input[type="text"], input[type="password"] {
 
 .control-group .align-left{
     text-align: left;
-    width: 100px;
+    width: 110px;
 }
 
 .pageTitle {
@@ -44,6 +44,7 @@ input[type="text"], input[type="password"] {
 
 .form-message {
     padding-left: 50px;
+    font-size: 15px;
 }
 
 .error {
