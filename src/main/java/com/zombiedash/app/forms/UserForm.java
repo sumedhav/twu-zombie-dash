@@ -19,16 +19,16 @@ public class UserForm {
     @Setter
     private String role;
     @Setter
-    private String name;
+    private String fullName;
     @Setter
     private String email;
 
     private List<String> errorCodes = new ArrayList<String>();
 
-    public UserForm(String userName, String role, String name, String email, String password){
+    public UserForm(String userName, String role, String fullName, String email, String password){
         this.userName = userName;
         this.role = role;
-        this.name = name;
+        this.fullName = fullName;
         this.email = email;
         this.password = password;
     }
@@ -38,21 +38,21 @@ public class UserForm {
         modelMap.put("username", userName);
         modelMap.put("password", password);
         modelMap.put("role", role);
-        modelMap.put("name", name);
+        modelMap.put("fullName", fullName);
         modelMap.put("email", email);
         return  modelMap;
     }
 
     public User createUser() {
-       return new User(userName, Role.generateRole(role), name, email);
+       return new User(userName, Role.generateRole(role), fullName, email);
     }
 
     public List<String> validate() {
-        name= name.trim();
+        fullName = fullName.trim();
         validateField(userName, "usernameFieldEmpty","invalidUserName","([a-zA-Z0-9]){5,40}");
         validateField(password, "passwordFieldEmpty", "invalidPassword", "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,40})$");
         validateField(email, "emailFieldEmpty", "invalidEmail", "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        validateField(name, "nameFieldEmpty", "invalidName", "([a-zA-Z ]){1,40}");
+        validateField(fullName, "nameFieldEmpty", "invalidName", "([a-zA-Z ]){1,40}");
         return errorCodes;
     }
 

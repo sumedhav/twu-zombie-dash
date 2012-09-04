@@ -88,7 +88,7 @@ public class UsersControllerTest {
     assertThat(modelAndView.getModel().get("invalidUserName").toString(), is("invalid user name"));
     assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
     assertThat(modelAndView.getModel().get("model").toString(),
-        is(equalTo("{username= , password=password1, role=GameDesigner, name=MR.Right, email=right@gmail.com}")));
+        is(equalTo("{username= , password=password1, role=GameDesigner, fullName=MR.Right, email=right@gmail.com}")));
 
   }
 
