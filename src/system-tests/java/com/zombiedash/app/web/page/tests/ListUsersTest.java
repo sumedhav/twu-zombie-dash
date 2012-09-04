@@ -4,6 +4,7 @@ import com.zombiedash.app.repository.UserRepository;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,8 +17,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class UsersPageTest extends BasePageTest {
-
+public class ListUsersTest extends BasePageTest {
+    private JdbcTemplate jdbcTemplate;
     @Before
     public void setupSession()
     {
@@ -29,36 +30,30 @@ public class UsersPageTest extends BasePageTest {
     }
     @Test
     public void shouldGoToCreateUserPageWhenClickedOnCreateNewUserButton() throws Exception {
-
-        browser.findElement(By.id("create_user"))
-                .click();
+        browser.clickOn("create_user");
         assertThat(browser.getPageTitle(), is("Zombie Dash : Create User"));
     }
 
     @Test
     public void shouldGoToHomePageWhenClickedOnBackButton() throws Exception {
-        browser.findElement(By.id("back_user_home"))
-                .click();
+        browser.clickOn("back_user_home");
         assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
     }
 
     @Test
     public void shouldGoToUserDetailsPageOnClickingThatUserLink() throws Exception {
-        browser= BrowserSessionBuilder
-                .newJavascriptEnabledSession()
-                .loggedInAsAdmin()
-                .build()
-                .open("/app/zombie/admin/user/create");
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        UserManager userManager = new UserManager(jdbcTemplate,"username");
+        userManager.insertUser();
 
-        browser.inputTextOn("username","username1")
-                .inputTextOn("password","password123")
-                .inputTextOn("name","yahya")
-                .inputTextOn("email","email@email.com").clickOn("submit");
+        setupSession();
 
         String nameOfSelectedUser = browser.findElement(By.id("username_value_2")).getText();
-        browser.findElement(By.id("username_value_2")).click();
+        browser.clickOn("username_value_2");
         assertThat(browser.getPageTitle(), is("Zombie Dash : User Details"));
         assertThat(browser.findElement(By.id("name_value")).getText(), is(equalTo(nameOfSelectedUser)));
+        userManager.deleteUser();
     }
+
 
 }

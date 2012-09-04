@@ -1,64 +1,51 @@
 package com.zombiedash.app.web.page.tests;
 
+import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import com.zombiedash.app.web.page.tests.helper.UserManager;
+import org.junit.*;
 import org.openqa.selenium.By;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-@Ignore("WIP: need to implement common login behaviour")
+
 public class UserDetailsPageTest extends BasePageTest {
+    private JdbcTemplate jdbcTemplate;
+    private UserManager userManager;
+
     @Before
     public void setupSession()
     {
         browser= BrowserSessionBuilder
                 .newJavascriptEnabledSession()
                 .loggedInAsAdmin()
-                .build()
-                .open("/app/zombie/admin/user/admin");
+                .build();
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        userManager = new UserManager(jdbcTemplate,"username1");
+        userManager.insertUser();
+
+        browser.open("/app/zombie/admin/user/view/username1");
 
     }
     @Test
     public void shouldGoToUserDetailsPageOnClickingBack() throws Exception {
-        browser= BrowserSessionBuilder
-                .newStatelessSession()
-                .loggedInAsAdmin()
-                .build()
-                .open("/app/zombie/admin/user/admin");
-
-        browser.findElement(By.id("back_user_details"))
-                .click();
+        browser.clickOn("back_user_details");
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
+        userManager.deleteUser();
     }
 
     @Test
     public void shouldRemainOnUserDetailsPageWhenClickedCancelOnAlertBox() {
-        browser.findElement(By.id("delete_user"))
-                .click();
-        browser.alertCancel();
+        browser.clickOn("delete_user").alertCancel();
         assertThat(browser.getPageTitle(), is("Zombie Dash : User Details"));
-
+        userManager.deleteUser();
     }
 
-    @Ignore()
     @Test
     public void shouldDeleteUserWhenClickedOkOnAlertBox() {
-        browser=BrowserSessionBuilder
-                .newJavascriptEnabledSession()
-                .loggedInAsAdmin()
-                .build()
-                .open("/app/zombie/admin/user/create");
-        browser.inputTextOn("username","username")
-                .inputTextOn("password","password123")
-                .inputTextOn("name","yahya")
-                .inputTextOn("email","email@email.com")
-                .clickOn("submit");
-        setupSession();
-        browser.clickOn("delete_user");
-        browser.alertOk();
-        Assert.assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
+        browser.clickOn("delete_user").alertOk();
+        assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
     }
+
 }

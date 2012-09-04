@@ -4,6 +4,7 @@ import com.zombiedash.app.jetty.WebServer;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,6 +23,7 @@ import static org.hamcrest.Matchers.is;
 
 
 public class CreateUserPageTest extends BasePageTest {
+
 
     @Before
     public void setupSession()
@@ -74,6 +77,10 @@ public class CreateUserPageTest extends BasePageTest {
 
         WebElement userListElement = browser.findElement(By.id("username_value_2"));
         assertThat(userListElement.getText(), is(equalTo("yahya")));
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        UserManager userManager = new UserManager(jdbcTemplate,"username");
+        userManager.deleteUser();
+
 
     }
 
