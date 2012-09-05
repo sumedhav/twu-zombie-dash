@@ -9,7 +9,8 @@ CREATE TABLE zombie_option(
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
             PRIMARY KEY (ID,QUESTION_ID),
-            FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID));
+            FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)
+            ON DELETE CASCADE);
 
 
 DROP TABLE IF EXISTS zombie_attendee_info;
@@ -40,9 +41,10 @@ CREATE TABLE zombie_attendee_info(
                 country varchar(40) NOT NULL,
                 conference_ID INT NOT NULL,
                 PRIMARY KEY (username,conference_ID),
-                CONSTRAINT username_constraint FOREIGN KEY (username) REFERENCES zombie_users(username),
+                CONSTRAINT username_constraint FOREIGN KEY (username) REFERENCES zombie_users(username)
+                ON DELETE CASCADE,
                 CONSTRAINT conference_ID_constraint FOREIGN KEY (conference_ID) REFERENCES zombie_conference(ID)
-                        );
+                ON DELETE CASCADE);
 
 INSERT INTO zombie_users VALUES('admin','da07c08a2c2ef3710e688bff476a8a09d52d6d34b6ee3c41a4b1f58f2949792ef20079565ca0d78e2758b33b50a13c9829c08bdf670dc802e627f289364d203a',0,'Administrator','admin@zombie.com');
 

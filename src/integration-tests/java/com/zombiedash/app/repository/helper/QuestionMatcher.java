@@ -1,4 +1,4 @@
-package com.zombiedash.app.repository;
+package com.zombiedash.app.repository.helper;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;

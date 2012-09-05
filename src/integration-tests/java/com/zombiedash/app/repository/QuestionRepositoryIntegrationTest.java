@@ -2,7 +2,9 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
+import com.zombiedash.app.repository.helper.QuestionMatcher;
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,18 +15,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.zombiedash.app.repository.QuestionMatcher.aQuestionWith;
+import static com.zombiedash.app.repository.helper.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 
 @ContextConfiguration(locations = "/test-application-context.xml")
-public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private List<Option> anOptionList;
+    private QuestionRepository questionRepository;
+    @Before
+    public void setUp() {
+        jdbcTemplate.execute("DELETE zombie_question");
+        questionRepository = new QuestionRepository(jdbcTemplate);
+    }
 
     private void setUpQuestions(){
         givenAQuestionWith(10, "Where is Red Fort");
@@ -38,11 +46,10 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     }
     @Test
     public void shouldRetrieveAllQuestions() {
-        int alreadyAvailableQuestions=jdbcTemplate.queryForInt("SELECT count(*) FROM zombie_question");
         setUpQuestions();
-        QuestionRepository questionRepository = new QuestionRepository(jdbcTemplate);
+        int noOfQuestions = 2;
         List<Question> questions = questionRepository.listAllQuestions();
-        assertThat(questions.size(), is(alreadyAvailableQuestions+2));
+        assertThat(questions.size(), is(noOfQuestions));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
                 QuestionMatcher.aQuestionWith("Where is Red Fort",
                         new HashMap<String, Boolean>() {{
@@ -61,6 +68,7 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     @Test
     public void shouldReturnCorrectOption(){
+        setUpQuestions();
         anOptionList = new ArrayList<Option>();
         anOptionList.add(new Option(1, "Bangalore", true));
         anOptionList.add(new Option(2, "Paris", false));
@@ -71,6 +79,7 @@ public class QuestionRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
         assertThat(aQuestion.getValidOption(), equalTo(expectedCorrectOption));
     }
+
     private void givenAQuestionWith(int id, String text) {
         jdbcTemplate.execute(String.format(
                 "insert into zombie_Question (ID,Text) values(%d, '%s')", id, text));
