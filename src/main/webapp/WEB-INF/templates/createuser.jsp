@@ -65,7 +65,7 @@
                             <label class="control-label align-left" for="name"><span class="error ">*</span>Name:</label>
                             <div class="controls">
                               <input type="text" name="fullName" id="name" onkeyup="limitNumOfCharsInField(fullName, 40, '#name_exceed_error');"
-                                    onkeydown="limitNumOfCharsInField(fullName, 40, '#name_exceed_error');" value="<c:out value="${model.name}"/>" placeholder="enter name"/>
+                                    onkeydown="limitNumOfCharsInField(fullName, 40, '#name_exceed_error');" value="<c:out value="${model.fullName}"/>" placeholder="enter name"/>
                               <span id="name_field_empty" class="error ">${nameFieldEmpty}</span>
                               <span id="name_exceed_error" class="error "></span>
                               <div id="invalid_name" class="error ">${invalidName}</div>
