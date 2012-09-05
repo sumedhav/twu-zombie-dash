@@ -46,7 +46,7 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getTextById("invalid_user_name"), is("Username must have 5-40 alphanumeric characters and no whitespaces."));
 
-        assertThat(browser.getTextById("invalid_password"), is("Password must have 6-40 characters, at least one digit(s) and no non-alphanumeric characters."));
+        assertThat(browser.getTextById("invalid_password"), is("Password must have 6-40 alphanumeric characters with at least one digit(s)."));
 
         assertThat(browser.getTextById("invalid_name"), is("Name should not exceed 40 characters and should not contain digits, special characters."));
 
