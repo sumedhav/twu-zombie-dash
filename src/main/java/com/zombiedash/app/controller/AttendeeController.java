@@ -7,8 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/conference/user")
-public class CustomerController {
-        public CustomerController() {
+public class AttendeeController {
+        public AttendeeController() {
         }
 
         @RequestMapping(value="home",method = RequestMethod.GET)

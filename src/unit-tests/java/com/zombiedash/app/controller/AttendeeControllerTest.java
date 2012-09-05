@@ -7,11 +7,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class CustomerControllerTest {
+public class AttendeeControllerTest {
     @Test
     public void shouldDisplayCustomerHomePage() throws Exception {
-        CustomerController customerController=new CustomerController();
-        ModelAndView actualModel = customerController.showCustomerPage();
+        AttendeeController attendeeController =new AttendeeController();
+        ModelAndView actualModel = attendeeController.showCustomerPage();
         assertThat(actualModel.getViewName(), is(equalTo("customer")));
     }
 }
