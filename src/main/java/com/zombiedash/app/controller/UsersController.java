@@ -32,6 +32,7 @@ public class UsersController {
         this.validationMessagesMap = validationMessagesMap;
     }
 
+
     @RequestMapping(value = "/users/list")
     public ModelAndView listUsers() {
         return new ModelAndView("listusers", "Users", userService.getAllUsers());
@@ -60,7 +61,9 @@ public class UsersController {
                 modelAndView.addObject("model", userForm.populateFormValuesIntoMap());
                 modelAndView.addObject("validationMessage", validationMessagesMap.getMessageFor(exception.getMessage()));
             } catch (Exception e) {
-                modelAndView = new ModelAndView("errorpage");
+                modelAndView = new ModelAndView("generalerrorpage");
+                modelAndView.addObject("urlToReturnTo","/zombie/admin/users/list");
+                modelAndView.addObject("returnToPrevPageMessage","Go Back To Users Page");
             }
         }
         return modelAndView;
@@ -75,7 +78,10 @@ public class UsersController {
 
     @RequestMapping(value = "/error", method = GET)
     public ModelAndView showErrorPage() {
-        return new ModelAndView("errorpage");
+        ModelAndView modelAndView = new ModelAndView("generalerrorpage");
+        modelAndView.addObject("urlToReturnTo","/zombie/admin/users/list");
+        modelAndView.addObject("returnToPrevPageMessage","Go Back To Users Page");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/user/view/{userName}")

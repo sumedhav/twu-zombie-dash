@@ -76,7 +76,7 @@ public class UsersControllerTest {
     doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
     ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
 
-    assertThat(modelAndView.getViewName(), is("errorpage"));
+    assertThat(modelAndView.getViewName(), is("generalerrorpage"));
   }
 
 
