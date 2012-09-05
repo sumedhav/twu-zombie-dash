@@ -59,7 +59,6 @@ public class UserRepository {
   }
 
   public void deleteUser(String username){
-    if(username.equals("admin")) throw new RuntimeException("Cannot Delete Admin user.");
     jdbcTemplate.execute("DELETE FROM zombie_users WHERE username = '" + username + "'");
   }
 

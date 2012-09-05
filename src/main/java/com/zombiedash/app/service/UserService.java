@@ -35,6 +35,7 @@ public class UserService {
     }
 
     public void deleteUser(String username){
+        if(username.equals("admin")) throw new RuntimeException("Cannot Delete Admin user.");
         userRepository.deleteUser(username);
     }
 
