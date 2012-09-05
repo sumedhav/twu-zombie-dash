@@ -25,6 +25,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
 
     @Before
     public void setUp() throws Exception {
+        jdbcTemplate.execute("DELETE zombie_attendee_info");
         jdbcTemplate.execute("DELETE zombie_conference");
         conferenceRepository = new ConferenceRepository(jdbcTemplate);
     }

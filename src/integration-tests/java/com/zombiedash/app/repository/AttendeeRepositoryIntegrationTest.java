@@ -1,6 +1,8 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Attendee;
+import com.zombiedash.app.model.Role;
+import com.zombiedash.app.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,10 @@ public class AttendeeRepositoryIntegrationTest {
   @Test
   public void shouldSaveAttendee() {
     jdbcTemplate.execute(String.format("INSERT INTO zombie_conference VALUES('999','name','topic','description','venue','start','end',5);"));
-    Attendee attendee = new Attendee("username","password","name","email","dob", "country");
+    Attendee attendee = new Attendee(new User("username", Role.ATTENDEE,"name","email"),"dob", "country");
     AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
-    Attendee attendee1 = attendeeRepository.saveAttendee(attendee, 999);
-    assertThat(attendee1,is(equalTo(attendee)));
+    boolean isAttendeeSaved = attendeeRepository.saveAttendee(attendee,"password12",999);
+    assertThat(isAttendeeSaved,is(true));
   }
+
 }

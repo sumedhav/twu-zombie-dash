@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,8 +25,8 @@ public class AttendeeRepositoryTest {
     JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
     AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
     Attendee attendee = mock(Attendee.class);
-    Attendee attendee1 = attendeeRepository.saveAttendee(attendee, 0);
-    assertThat(attendee1,is(equalTo(attendee)));
+    boolean isAttendeeSaved = attendeeRepository.saveAttendee(attendee,"password34",0);
+    assertTrue(isAttendeeSaved);
   }
 
   @Test

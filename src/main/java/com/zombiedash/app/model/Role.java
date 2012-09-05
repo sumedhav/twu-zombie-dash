@@ -1,7 +1,7 @@
 package com.zombiedash.app.model;
 
 public enum Role {
-    GAME_DESIGNER(1), ADMIN(0);
+   ATTENDEE(2),GAME_DESIGNER(1), ADMIN(0);
 
     private Integer val;
 

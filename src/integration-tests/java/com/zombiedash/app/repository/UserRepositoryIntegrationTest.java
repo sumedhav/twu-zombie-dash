@@ -34,6 +34,7 @@ public class UserRepositoryIntegrationTest {
 
   @Before
   public void setUp() throws Exception {
+    jdbcTemplate.execute("DELETE zombie_attendee_info");
     jdbcTemplate.execute("DELETE zombie_users");
     userRepository = new UserRepository(jdbcTemplate);
   }
