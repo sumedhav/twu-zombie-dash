@@ -12,6 +12,6 @@ public class AttendeeControllerTest {
     public void shouldDisplayCustomerHomePage() throws Exception {
         AttendeeController attendeeController =new AttendeeController();
         ModelAndView actualModel = attendeeController.showCustomerPage();
-        assertThat(actualModel.getViewName(), is(equalTo("customer")));
+        assertThat(actualModel.getViewName(), is(equalTo("attendee")));
     }
 }
