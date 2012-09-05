@@ -13,7 +13,7 @@ public class AttendeeController {
 
         @RequestMapping(value="home",method = RequestMethod.GET)
         public ModelAndView showCustomerPage() {
-            ModelAndView modelAndView = new ModelAndView("customer");
+            ModelAndView modelAndView = new ModelAndView("attendee");
             return modelAndView;
         }
 }

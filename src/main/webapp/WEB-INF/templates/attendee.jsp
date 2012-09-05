@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Customer Home</title>
+    <title>Attendee Home</title>
     <script type="text/javascript">
      if(!((navigator.userAgent.match(/iPhone/i)) ||
              (navigator.userAgent.match(/iPod/i)) ||
@@ -18,7 +18,7 @@
 <body>
      <div class="container">
         <h1 class="pageTitle">
-            <div>Welcome Customer!!!</div>
+            <div>Welcome Attendee!!!</div>
         </h1>
         <div class="sectionTitle">
             <a href="${pageContext.request.contextPath}/zombie/conference/user/game">Play Game</a>

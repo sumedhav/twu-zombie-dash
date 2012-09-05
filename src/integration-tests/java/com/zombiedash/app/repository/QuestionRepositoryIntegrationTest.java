@@ -28,6 +28,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     private JdbcTemplate jdbcTemplate;
     private List<Option> anOptionList;
     private QuestionRepository questionRepository;
+
     @Before
     public void setUp() {
         jdbcTemplate.execute("DELETE zombie_question");

@@ -38,7 +38,7 @@ public class TriviaGamePageTest extends BasePageTest {
         browser.clickOn("cancel_button")
                 .alertOk();
 
-        assertThat(browser.getPageTitle(), is("Customer Home"));
+        assertThat(browser.getPageTitle(), is("Attendee Home"));
     }
 
     @Test
