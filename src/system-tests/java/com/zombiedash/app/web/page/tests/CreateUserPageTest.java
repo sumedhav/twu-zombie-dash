@@ -19,18 +19,12 @@ public class CreateUserPageTest extends BasePageTest {
 
     @Before
     public void setupSession() {
-        browser= BrowserSessionBuilder
-                .aBrowserSession()
-                .usingHttps()
-                .loggedInAsAdmin()
-                .build()
-                .open("/app/zombie/admin/user/create");
+        browser = BrowserSessionBuilder.buildHttpsAdminSession().open("/app/zombie/admin/user/create");
     }
 
     @Test
     public void shouldDisplayErrorMessageWhenAnyFieldIsEmpty() {
         browser.clickOn("submit");
-
         WebElement messageElement = browser.findElement(By.id("username_field_empty"));
         assertThat(messageElement.getText(), is("You can't leave this field empty."));
     }

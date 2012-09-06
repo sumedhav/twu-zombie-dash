@@ -1,8 +1,10 @@
 package com.zombiedash.app.web.page.tests.helper;
 
-import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
 import org.openqa.selenium.By;
+
+import static com.zombiedash.app.web.Application.javascriptEnabledBrowser;
+import static com.zombiedash.app.web.Application.statelessBrowser;
 
 public class BrowserSessionBuilder {
     private boolean stateless = true;
@@ -12,7 +14,6 @@ public class BrowserSessionBuilder {
     private String password;
 
     private BrowserSessionBuilder() {
-
     }
 
     public BrowserSessionBuilder loggedInAsAdmin() {
@@ -33,7 +34,7 @@ public class BrowserSessionBuilder {
     }
 
     public Browser build() {
-        browser = stateless ? Application.statelessBrowser(httpsSession) : Application.javascriptEnabledBrowser(httpsSession);
+        browser = stateless ? statelessBrowser(httpsSession) : javascriptEnabledBrowser(httpsSession);
         if (user != null && password != null) {
             login(user, password);
         }
@@ -52,5 +53,9 @@ public class BrowserSessionBuilder {
 
     public static BrowserSessionBuilder aBrowserSession() {
         return new BrowserSessionBuilder();
+    }
+
+    public static Browser buildHttpsAdminSession() {
+        return aBrowserSession().usingHttps().loggedInAsAdmin().build();
     }
 }

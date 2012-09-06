@@ -17,11 +17,7 @@ public class ListUsersTest extends BasePageTest {
     @Before
     public void setupSession()
     {
-        browser= BrowserSessionBuilder
-                .aBrowserSession()
-                .usingHttps()
-                .loggedInAsAdmin()
-                .build()
+        browser= BrowserSessionBuilder.buildHttpsAdminSession()
                 .open("/app/zombie/admin/users/list");
     }
     @Test
