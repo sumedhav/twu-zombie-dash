@@ -4,28 +4,34 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/trivia_game_logic.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 <script type="text/javascript">
- if(!((navigator.userAgent.match(/iPhone/i)) ||
-         (navigator.userAgent.match(/iPod/i)) ||
-         (navigator.userAgent.match(/Android/i)) ) || (navigator.userAgent.match(/iPod/i))){
+ if(!isMobileDevice()){
          document.write('<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">')
          document.write('<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">')
+
          }
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
-  <title>Welcome to Trivia Game!</title>
-  <meta name="viewport" content="width=device-width">
-
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/trivia_game_logic.js"></script>
+<title>Welcome to Trivia Game!</title>
+<meta name="viewport" content="width=device-width">
 </head>
-<body >
+<body>
  <div class="container">
          <h1 class="pageTitle">
-             <div>Welcome USERNAME to CONFERENCE NAME</div>
+             TASK NAME
          </h1>
+              <input type="image" id="link"
+             onclick="return doExpandCollapse('box','link','${pageContext.request.contextPath}')"
+             src="${pageContext.request.contextPath}/static/images/sideArrow.jpg">Description
 
-         <div class="row-fluid">
+        <div id="box" name=tbl style="overflow:hidden;display:none; background-color: rgb(170, 170, 170); padding: 5px 10px;">
+                   <label id="description">1.All questions are compulsory<br>
+                   2.No  Negative Marking<br>
+                   3.Each correct answer carries 1 point<br>
+                   4.Best Of Luck!!!</label><br>
+        </div>
+        <div class="row-fluid">
              <div class="span12">
                  <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
                  onSubmit="return validate(${fn:length(questions)})">

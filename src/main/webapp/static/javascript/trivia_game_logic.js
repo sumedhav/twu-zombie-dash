@@ -14,3 +14,22 @@ function validate(numQns){
       return true;
     }
   }
+function isMobileDevice(){
+if((navigator.userAgent.match(/iPhone/i)) ||
+         (navigator.userAgent.match(/Android/i))  || (navigator.userAgent.match(/iPod/i))){
+         return true;
+         }
+         return false;
+}
+function doExpandCollapse(id,image,contextPath){
+    var descriptionLink = document.getElementById(id);
+    var helpImage = document.getElementById(image);
+    if (descriptionLink.style.display=='none'){
+        descriptionLink.style.display='';
+        helpImage.src=contextPath+'/static/images/downArrow.jpg';
+    }
+    else{
+        descriptionLink.style.display='none';
+        helpImage.src=contextPath+'/static/images/sideArrow.jpg';
+    }
+}
