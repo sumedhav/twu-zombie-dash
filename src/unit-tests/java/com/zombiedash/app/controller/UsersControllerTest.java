@@ -25,16 +25,16 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsersControllerTest {
-  private UserService userService;
-  private ValidationMessagesMap validationMessagesMap;
-  private UsersController usersController;
+    private UserService userService;
+    private ValidationMessagesMap validationMessagesMap;
+    private UsersController usersController;
 
-  @Before
-  public void setUp() throws Exception {
-    userService = mock(UserService.class);
-    validationMessagesMap = mock(ValidationMessagesMap.class);
-    usersController = new UsersController(userService, validationMessagesMap);
-  }
+    @Before
+    public void setUp() throws Exception {
+        userService = mock(UserService.class);
+        validationMessagesMap = mock(ValidationMessagesMap.class);
+        usersController = new UsersController(userService, validationMessagesMap);
+    }
 
     @Test
     public void shouldNotViewAdminDetails() throws Exception {
@@ -48,104 +48,107 @@ public class UsersControllerTest {
     }
 
     @Test
-  public void shouldReturnAViewWithNameListUsers() {
-    String result = usersController.listUsers().getViewName();
-    assertThat(result, is("listusers"));
-  }
+    public void shouldReturnAViewWithNameListUsers() {
+        String result = usersController.listUsers().getViewName();
+        assertThat(result, is("listusers"));
+    }
 
-  @Test
-  public void shouldReturnAListContainingUsers() {
-    List<User> list = new ArrayList<User>();
-    User dummyUser = mock(User.class);
-    when(dummyUser.getName()).thenReturn("alice").thenReturn("bob");
-    list.add(dummyUser);
-    list.add(dummyUser);
-    given(userService.getAllUsers()).willReturn(list);
+    @Test
+    public void shouldReturnAListContainingUsers() {
+        List<User> list = new ArrayList<User>();
+        User dummyUser = mock(User.class);
+        when(dummyUser.getName()).thenReturn("alice").thenReturn("bob");
+        list.add(dummyUser);
+        list.add(dummyUser);
+        given(userService.getAllUsers()).willReturn(list);
 
-    ModelAndView modelAndView = usersController.listUsers();
-    List<User> result = (List<User>) modelAndView.getModel().get("Users");
+        ModelAndView modelAndView = usersController.listUsers();
+        List<User> result = (List<User>) modelAndView.getModel().get("Users");
 
-    assertThat(result.get(0).getName(), is("alice"));
-    assertThat(result.get(1).getName(), is("bob"));
-  }
+        assertThat(result.get(0).getName(), is("alice"));
+        assertThat(result.get(1).getName(), is("bob"));
+    }
 
-  @Test
-  public void shouldReturnAViewWithNameCreateUser() {
-    String result = usersController.createUser().getViewName();
-    assertThat(result, is("createuser"));
-  }
+    @Test
+    public void shouldReturnAViewWithNameCreateUser() {
+        String result = usersController.createUser().getViewName();
+        assertThat(result, is("createuser"));
+    }
 
-  @Test
-  public void shouldCreateAnUser() {
-    UserForm userForm = mock(UserForm.class);
-    when(userForm.hasErrors()).thenReturn(false);
-    ModelAndView modelAndView = usersController.createUser(userForm);
-    assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/list"));
-  }
+    @Test
+    public void shouldCreateAnUser() {
+        UserForm userForm = mock(UserForm.class);
+        when(userForm.hasErrors()).thenReturn(false);
+        ModelAndView modelAndView = usersController.createUser(userForm);
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/users/list"));
+    }
 
-  @Test
-  public void shouldDisplayErrorPageForUnExpectedException() {
-    doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
-    ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
+    @Test
+    public void shouldDisplayErrorPageForUnExpectedException() {
+        doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
 
-    assertThat(modelAndView.getViewName(), is("generalerrorpage"));
-  }
-
-
-  @Test
-  public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid(){
-    when(validationMessagesMap.getMessageFor("invalidUserName")).thenReturn("invalid user name");
-    ModelAndView modelAndView = usersController.createUser(new UserForm(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
-    assertThat(modelAndView.getViewName(), is(equalTo("createuser")));
-    assertThat(modelAndView.getModel().get("invalidUserName").toString(), is("invalid user name"));
-    assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
-    assertThat(modelAndView.getModel().get("model").toString(),
-        is(equalTo("{username= , password=password1, role=GameDesigner, fullName=MR.Right, email=right@gmail.com}")));
-
-  }
-
-  @Test
-  public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
-    mockUser();
-    ModelAndView modelAndView = usersController.showUserDetails("username");
-    assertThat(modelAndView.getViewName(), is("userdetails"));
-  }
-
-  @Test
-  public void shouldRetrieveUserDetails() throws Exception {
-    mockUser();
-    ModelAndView result = usersController.showUserDetails("username");
-    assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Game Designer, userName=JohnnyBoy}")));
-  }
-
-  private void mockUser() {
-    User user = mock(User.class);
-    when(user.getName()).thenReturn("John");
-    when(user.getRole()).thenReturn(Role.GAME_DESIGNER);
-    when(user.getUserName()).thenReturn("JohnnyBoy");
-    when(user.getEmail()).thenReturn("John@me.com");
-    when(userService.getUser("username")).thenReturn(user);
-  }
-
-  @Test
-  public void shouldRedirectToDeleteLogicWhenDeleteButtonIsPressed() throws Exception {
-    usersController.processDeleteUser("test.username");
-    verify(userService).deleteUser("test.username");
-  }
+        assertThat(modelAndView.getViewName(), is("generalerrorpage"));
+    }
 
 
-  @Test
-  public void shouldGoBackToCreateUserPageIfPasswordHasNoNumbers() throws Exception {
-    ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "password"));
-    assertThat(modelAndView.getViewName(), is("createuser"));    }
+    @Test
+    public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid() {
+        when(validationMessagesMap.getMessageFor("invalidUserName")).thenReturn("invalid user name");
+        ModelAndView modelAndView = usersController.createUser(new UserForm(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
+        assertThat(modelAndView.getViewName(), is(equalTo("createuser")));
+        assertThat(modelAndView.getModel().get("invalidUserName").toString(), is("invalid user name"));
+        assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
+        assertThat(modelAndView.getModel().get("model").toString(),
+                is(equalTo("{username= , password=password1, role=GameDesigner, fullName=MR.Right, email=right@gmail.com}")));
 
-  @Test
-  public void shouldGoBackToCreateUserPageIfPasswordHasNoAlphabets() throws Exception {
-    ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "13248343"));
-    assertThat(modelAndView.getViewName(), is("createuser"));    }
+    }
 
-  @Test
-  public void shouldGoBackToCreateUserPageIfPasswordHasLessThanSixCharacters() throws Exception {
-    ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "p23w"));
-    assertThat(modelAndView.getViewName(), is("createuser"));    }
+    @Test
+    public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
+        mockUser();
+        ModelAndView modelAndView = usersController.showUserDetails("username");
+        assertThat(modelAndView.getViewName(), is("userdetails"));
+    }
+
+    @Test
+    public void shouldRetrieveUserDetails() throws Exception {
+        mockUser();
+        ModelAndView result = usersController.showUserDetails("username");
+        assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Game Designer, userName=JohnnyBoy}")));
+    }
+
+    private void mockUser() {
+        User user = mock(User.class);
+        when(user.getName()).thenReturn("John");
+        when(user.getRole()).thenReturn(Role.GAME_DESIGNER);
+        when(user.getUserName()).thenReturn("JohnnyBoy");
+        when(user.getEmail()).thenReturn("John@me.com");
+        when(userService.getUser("username")).thenReturn(user);
+    }
+
+    @Test
+    public void shouldRedirectToDeleteLogicWhenDeleteButtonIsPressed() throws Exception {
+        usersController.processDeleteUser("test.username");
+        verify(userService).deleteUser("test.username");
+    }
+
+
+    @Test
+    public void shouldGoBackToCreateUserPageIfPasswordHasNoNumbers() throws Exception {
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "password"));
+        assertThat(modelAndView.getViewName(), is("createuser"));
+    }
+
+    @Test
+    public void shouldGoBackToCreateUserPageIfPasswordHasNoAlphabets() throws Exception {
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "13248343"));
+        assertThat(modelAndView.getViewName(), is("createuser"));
+    }
+
+    @Test
+    public void shouldGoBackToCreateUserPageIfPasswordHasLessThanSixCharacters() throws Exception {
+        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "p23w"));
+        assertThat(modelAndView.getViewName(), is("createuser"));
+    }
 }
