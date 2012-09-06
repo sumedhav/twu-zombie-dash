@@ -19,9 +19,6 @@ import java.util.Map;
 @RequestMapping("/admin/conference")
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
-    private int triedToSubmitFlag = -1;
-
-    private Map<String,String> model = new HashMap<String, String>();
 
     @Autowired
     public ConferenceController(ConferenceRepository conferenceRepository) {
@@ -31,25 +28,10 @@ public class ConferenceController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView showConferenceCreationForm() {
         ModelAndView modelAndView = new ModelAndView("createconference");
-        if (triedToSubmitFlag == 1) {
-            modelAndView.addObject("model", model);
-            triedToSubmitFlag = -1;
-            return modelAndView;
-        }
-        else {
-            model.clear();
-            return modelAndView;
-        }
+        return modelAndView;
     }
 
-    @RequestMapping(value = "list",method = RequestMethod.GET)
-    public ModelAndView home() {
-        List<Conference> conferenceList = conferenceRepository.showAllConferences();
-        return new ModelAndView("conferencehome","Conferences", conferenceList);
-    }
-
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @RequestMapping(value = "create" ,method = RequestMethod.POST)
     public ModelAndView createConference(ConferenceForm conferenceForm) {
         try {
             boolean validDataFlag = conferenceForm.isValidData();
@@ -60,8 +42,7 @@ public class ConferenceController {
                 conferenceRepository.saveConference(conference);
                 return new ModelAndView("redirect:/zombie/admin/conference/list","model", model);
             } else {
-                triedToSubmitFlag = 1;
-                return new ModelAndView("redirect:/zombie/admin/conference/create","model", model);
+                return new ModelAndView("createconference","model", model);
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
@@ -70,6 +51,13 @@ public class ConferenceController {
             modelAndView.addObject("returnToPrevPageMessage","Go back to conference home page");
             return modelAndView;
         }
+    }
+
+
+    @RequestMapping(value = "list",method = RequestMethod.GET)
+    public ModelAndView home() {
+        List<Conference> conferenceList = conferenceRepository.showAllConferences();
+        return new ModelAndView("conferencehome","Conferences", conferenceList);
     }
 
     @RequestMapping(value = "view/{conferenceId}")

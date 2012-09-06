@@ -5,6 +5,8 @@ import com.zombiedash.app.validator.ConferenceForm;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -36,10 +38,12 @@ public class ConferenceControllerTest {
   }
 
   @Test
-  public void submitWithIncompleteFormShouldRemainOnCreateForm() throws Exception {
-    ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
-    ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-    ModelAndView actualModel = conferenceController.createConference(new ConferenceForm("NotNull", "", "NotNull", "NotNull", "NotNull", "NotNull", "1"));
-    assertThat(actualModel.getViewName(), is(equalTo("redirect:/zombie/admin/conference/create")));
+  public void submitWithIncompleteFormShouldRemainOnCreateFormWithPreviousValuesRetained() throws Exception {
+      ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
+      ConferenceController conferenceController = new ConferenceController(conferenceRepository);
+      ModelAndView actualModel = conferenceController.createConference(new ConferenceForm("name1", "", "NotNull", "NotNull", "NotNull", "NotNull", "1"));
+      Map<String, String> model = ((Map<String, String>)actualModel.getModel().get("model"));
+      assertThat(model.get("name"), is(equalTo("name1")));
+      assertThat(actualModel.getViewName(), is(equalTo("createconference")));
   }
 }
