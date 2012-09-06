@@ -2,7 +2,7 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
-import com.zombiedash.app.repository.helper.QuestionMatcher;
+import com.zombiedash.app.test.matchers.QuestionMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.zombiedash.app.repository.helper.QuestionMatcher.aQuestionWith;
+import static com.zombiedash.app.test.matchers.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
