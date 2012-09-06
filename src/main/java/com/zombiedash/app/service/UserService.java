@@ -1,11 +1,16 @@
 package com.zombiedash.app.service;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.google.common.collect.Iterables.filter;
 
 @Service
 public class UserService {
@@ -39,4 +44,14 @@ public class UserService {
         userRepository.deleteUser(username);
     }
 
+    public List<User> getAllNonAdminUsers() {
+        List<User> allUsers = getAllUsers();
+        Predicate<User> isNonAdmin = new Predicate<User>() {
+            public boolean apply(User user) {
+                return user.getRole() != Role.ADMIN;
+            }
+        };
+        List<User> nonAdminUsers = Lists.newArrayList(filter(allUsers, isNonAdmin));
+        return nonAdminUsers;
+    }
 }

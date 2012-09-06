@@ -56,11 +56,15 @@ public class UsersControllerTest {
     @Test
     public void shouldReturnAListContainingUsers() {
         List<User> list = new ArrayList<User>();
-        User dummyUser = mock(User.class);
-        when(dummyUser.getName()).thenReturn("alice").thenReturn("bob");
-        list.add(dummyUser);
-        list.add(dummyUser);
-        given(userService.getAllUsers()).willReturn(list);
+        User alice = mock(User.class);
+        User bob = mock(User.class);
+        list.add(alice);
+        list.add(bob);
+        given(alice.getName()).willReturn("alice");
+        given(alice.getRole()).willReturn(Role.GAME_DESIGNER);
+        given(bob.getName()).willReturn("bob");
+        given(bob.getRole()).willReturn(Role.GAME_DESIGNER);
+        given(userService.getAllNonAdminUsers()).willReturn(list);
 
         ModelAndView modelAndView = usersController.listUsers();
         List<User> result = (List<User>) modelAndView.getModel().get("Users");

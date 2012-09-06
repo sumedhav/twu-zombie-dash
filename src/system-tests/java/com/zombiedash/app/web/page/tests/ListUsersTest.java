@@ -44,8 +44,8 @@ public class ListUsersTest extends BasePageTest {
 
         setupSession();
 
-        String nameOfSelectedUser = browser.findElement(By.id("username_value_2")).getText();
-        browser.clickOn("username_value_2");
+        String nameOfSelectedUser = browser.findElement(By.id("username_value_1")).getText();
+        browser.clickOn("username_value_1");
         assertThat(browser.getPageTitle(), is("Zombie Dash : User Details"));
         assertThat(browser.findElement(By.id("name_value")).getText(), is(equalTo(nameOfSelectedUser)));
         userManager.deleteUser();

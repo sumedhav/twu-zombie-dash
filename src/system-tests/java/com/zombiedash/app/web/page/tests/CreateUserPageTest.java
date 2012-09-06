@@ -63,7 +63,7 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
-        assertThat(browser.getTextById("username_value_2"), is(equalTo("yahya")));
+        assertThat(browser.getTextById("username_value_1"), is(equalTo("yahya")));
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         UserManager userManager = new UserManager(jdbcTemplate, "username");
         userManager.deleteUser();

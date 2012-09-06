@@ -27,10 +27,8 @@
                         </tr>
                         <c:forEach var="user" items="${Users}" varStatus = "userStatus">
                         <tr>
-                            <c:if test="${user.role != 'ADMIN'}">
                             <td><a href="${pageContext.request.contextPath}/zombie/admin/user/view/${user.userName}" id="username_value_${userStatus.count}" name="username_value"><c:out value="${user.name}"/></a></td>
                             <td><c:out value="${user.role}"/></td>
-                            </c:if>
                         </tr>
                        </c:forEach>
                    </table>

@@ -6,6 +6,7 @@ import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
+import org.springframework.aop.target.LazyInitTargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Iterables.filter;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -36,7 +39,7 @@ public class UsersController {
 
     @RequestMapping(value = "/users/list")
     public ModelAndView listUsers() {
-        return new ModelAndView("listusers", "Users", userService.getAllUsers());
+        return new ModelAndView("listusers", "Users", userService.getAllNonAdminUsers());
     }
 
     @RequestMapping(value = "/user/create", method = GET)
