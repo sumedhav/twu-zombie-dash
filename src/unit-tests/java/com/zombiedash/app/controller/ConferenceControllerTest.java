@@ -30,7 +30,7 @@ public class ConferenceControllerTest {
   public void submitShouldGoToHome() throws Exception {
     ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
     ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-    ModelAndView actualModel = conferenceController.submit("NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", "10");
+    ModelAndView actualModel = conferenceController.createConference("NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", "10");
     assertThat(actualModel.getViewName(),is(equalTo("redirect:/zombie/admin/conference/list")));
   }
 
@@ -38,7 +38,7 @@ public class ConferenceControllerTest {
   public void submitWithIncompleteFormShouldRemainOnCreateForm() throws Exception {
     ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
     ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-    ModelAndView actualModel = conferenceController.submit("NotNull", "", "NotNull", "NotNull", "NotNull", "NotNull", "1");
+    ModelAndView actualModel = conferenceController.createConference("NotNull", "", "NotNull", "NotNull", "NotNull", "NotNull", "1");
     assertThat(actualModel.getViewName(), is(equalTo("redirect:/zombie/admin/conference/create")));
   }
 }

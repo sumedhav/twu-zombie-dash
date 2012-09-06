@@ -49,14 +49,16 @@ public class ConferenceController {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
         return new ModelAndView("conferencehome","Conferences", conferenceList);
     }
+
+
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public ModelAndView submit(@RequestParam("conf_name") String conferenceName,
-                               @RequestParam("conf_topic") String conferenceTopic,
-                               @RequestParam("conf_description") String conferenceDescription,
-                               @RequestParam("conf_venue") String conferenceVenue,
-                               @RequestParam("conf_start_date") String conferenceStartDate,
-                               @RequestParam("conf_end_date") String conferenceEndDate,
-                               @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
+    public ModelAndView createConference(@RequestParam("conf_name") String conferenceName,
+                                         @RequestParam("conf_topic") String conferenceTopic,
+                                         @RequestParam("conf_description") String conferenceDescription,
+                                         @RequestParam("conf_venue") String conferenceVenue,
+                                         @RequestParam("conf_start_date") String conferenceStartDate,
+                                         @RequestParam("conf_end_date") String conferenceEndDate,
+                                         @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
 
         model.clear();
         conferenceName = conferenceName.trim();
