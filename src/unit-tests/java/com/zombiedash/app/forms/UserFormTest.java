@@ -14,37 +14,47 @@ import static org.mockito.Mockito.mock;
 
 public class UserFormTest {
 
+    private UserForm userFormFactory(String username, String role, String name, String email, String password) {
+        UserForm userForm = new UserForm();
+        userForm.setEmail(email);
+        userForm.setFullName(name);
+        userForm.setPassword(password);
+        userForm.setRole(role);
+        userForm.setUserName(username);
+        return userForm;
+    }
+
     @Test
-    public void shouldReturnEmptyFieldErrorWhenUserNameIsEmpty() throws Exception {
-        UserForm userForm = new UserForm("","role","name","email@email.com", "password134234fsd");
+    public void shouldReturnEmptyFieldErrorWhenUserNameIsEmpty() {
+        UserForm userForm = userFormFactory("", "", "", "", "");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("usernameFieldEmpty")));
     }
 
     @Test
     public void shouldReturnInvalidUserNameWhenUserNameHasWhitespaces() {
-        UserForm userForm = new UserForm("user 123","role","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("user 123","role","name","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidUserName")));
     }
 
     @Test
     public void shouldReturnInvalidUserNameErrorWhenUserNameIsBelowLowerLimit() throws Exception {
-        UserForm userForm = new UserForm("user","role","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("user","role","name","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidUserName")));
     }
 
     @Test
     public void shouldReturnInvalidUserNameErrorWhenUserNameIsAboveUpperLimit() throws Exception {
-        UserForm userForm = new UserForm("qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","role","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","role","name","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidUserName")));
     }
 
     @Test
     public void shouldReturnInvalidUserNameErrorWhenUserNameHasSpecialCharacters() throws Exception {
-        UserForm userForm = new UserForm("qwertyuioplkjhgfdsazxcvbnmqwertyu@#","role","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("qwertyuioplkjhgfdsazxcvbnmqwertyu@#","role","name","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidUserName")));
 
@@ -52,14 +62,14 @@ public class UserFormTest {
 
     @Test
     public void shouldReturnEmptyFieldErrorWhenPasswordIsEmpty() throws Exception {
-        UserForm userForm = new UserForm("user123","role","name","email@email.com", "");
+        UserForm userForm = userFormFactory("user123","role","name","email@email.com", "");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("passwordFieldEmpty")));
     }
 
     @Test
     public void shouldReturnInvalidPasswordErrorWhenPasswordIsBelowLowerLimit() throws Exception {
-        UserForm userForm = new UserForm("username","role","name","email@email.com", "passw");
+        UserForm userForm = userFormFactory("username","role","name","email@email.com", "passw");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidPassword")));
     }
@@ -67,14 +77,14 @@ public class UserFormTest {
 
     @Test
     public void shouldReturnInvalidPasswordErrorWhenPasswordIsAboveUpperLimit() throws Exception {
-        UserForm userForm = new UserForm("username","role","name","email@email.com", "qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg");
+        UserForm userForm = userFormFactory("username","role","name","email@email.com", "qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidPassword")));
     }
 
     @Test
     public void shouldReturnInvalidPasswordErrorWhenPasswordHasSpecialCharacters() throws Exception {
-        UserForm userForm = new UserForm("username","role","name","email@email.com", "password134234*&^fsd");
+        UserForm userForm = userFormFactory("username","role","name","email@email.com", "password134234*&^fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidPassword")));
 
@@ -82,41 +92,41 @@ public class UserFormTest {
 
     @Test
     public void shouldReturnEmptyFieldErrorWhenNameIsEmpty() throws Exception {
-        UserForm userForm = new UserForm("user123","role","","email@email.com", "password123");
+        UserForm userForm = userFormFactory("user123","role","","email@email.com", "password123");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("nameFieldEmpty")));
     }
 
     @Test
     public void shouldReturnInvalidNameErrorWhenNameExceedsUpperLimit() {
-        UserForm userForm = new UserForm("username","role","qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("username","role","qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhg","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidName")));
     }
     @Test
     public void shouldReturnInvalidNameErrorWhenNameIsOnlyWhiteSpaces() {
-        UserForm userForm = new UserForm("username","role","         ","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("username","role","         ","email@email.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("nameFieldEmpty")));
     }
 
     @Test
     public void shouldReturnEmptyFieldErrorWhenEmailIsEmpty() throws Exception {
-        UserForm userForm = new UserForm("user123","role","name","", "password123");
+        UserForm userForm = userFormFactory("user123","role","name","", "password123");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("emailFieldEmpty")));
     }
 
     @Test
     public void shouldValidateEmail() throws Exception {
-        UserForm userForm = new UserForm("username","role","name","emailemail.com", "password134234fsd");
+        UserForm userForm = userFormFactory("username","role","name","emailemail.com", "password134234fsd");
         List<String> result = userForm.validate();
         assertThat(result.get(0),is(equalTo("invalidEmail")));
     }
 
     @Test
     public void shouldReturnNoErrorsWhenAllCredentialsAreValid() {
-        UserForm userForm = new UserForm("user123","role","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("user123","role","name","email@email.com", "password134234fsd");
         userForm.validate();
         assertThat(userForm.hasErrors(),is(false));
     }

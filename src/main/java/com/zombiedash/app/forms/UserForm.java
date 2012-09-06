@@ -10,28 +10,37 @@ import org.springframework.ui.ModelMap;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 public class UserForm {
-    @Setter
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     private String userName;
-    @Setter
     private String password;
-    @Setter
     private String role;
-    @Setter
     private String fullName;
-    @Setter
     private String email;
 
     private List<String> errorCodes = new ArrayList<String>();
 
-    public UserForm(String userName, String role, String fullName, String email, String password){
-        this.userName = userName;
-        this.role = role;
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-    }
+    public UserForm() {}
+
 
     public ModelMap populateFormValuesIntoMap(){
         ModelMap modelMap  = new ModelMap();

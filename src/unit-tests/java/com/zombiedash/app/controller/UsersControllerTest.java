@@ -90,7 +90,7 @@ public class UsersControllerTest {
     @Test
     public void shouldDisplayErrorPageForUnExpectedException() {
         doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
-        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
+        ModelAndView modelAndView = usersController.createUser(userFormFactory("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
 
         assertThat(modelAndView.getViewName(), is("generalerrorpage"));
     }
@@ -99,7 +99,7 @@ public class UsersControllerTest {
     @Test
     public void shouldStayOnTheCreateUserPageAndShowErrorMessageIfUserIsInvalid() {
         when(validationMessagesMap.getMessageFor("invalidUserName")).thenReturn("invalid user name");
-        ModelAndView modelAndView = usersController.createUser(new UserForm(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
+        ModelAndView modelAndView = usersController.createUser(userFormFactory(" ", "GameDesigner", "MR.Right", "right@gmail.com", "password1"));
         assertThat(modelAndView.getViewName(), is(equalTo("createuser")));
         assertThat(modelAndView.getModel().get("invalidUserName").toString(), is("invalid user name"));
         assertThat(modelAndView.getModel().get("model"), is(notNullValue()));
@@ -140,19 +140,29 @@ public class UsersControllerTest {
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasNoNumbers() throws Exception {
-        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "password"));
+        ModelAndView modelAndView = usersController.createUser(userFormFactory("username", "GameDesigner", "Name", "email@email.com", "password"));
         assertThat(modelAndView.getViewName(), is("createuser"));
     }
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasNoAlphabets() throws Exception {
-        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "13248343"));
+        ModelAndView modelAndView = usersController.createUser(userFormFactory("username", "GameDesigner", "Name", "email@email.com", "13248343"));
         assertThat(modelAndView.getViewName(), is("createuser"));
     }
 
     @Test
     public void shouldGoBackToCreateUserPageIfPasswordHasLessThanSixCharacters() throws Exception {
-        ModelAndView modelAndView = usersController.createUser(new UserForm("username", "GameDesigner", "Name", "email@email.com", "p23w"));
+        ModelAndView modelAndView = usersController.createUser(userFormFactory("username", "GameDesigner", "Name", "email@email.com", "p23w"));
         assertThat(modelAndView.getViewName(), is("createuser"));
+    }
+
+    private UserForm userFormFactory(String username, String role, String name, String email, String password) {
+        UserForm userForm = new UserForm();
+        userForm.setEmail(email);
+        userForm.setFullName(name);
+        userForm.setPassword(password);
+        userForm.setRole(role);
+        userForm.setUserName(username);
+        return userForm;
     }
 }
