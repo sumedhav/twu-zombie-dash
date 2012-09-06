@@ -1,6 +1,7 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Conference;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -55,8 +55,7 @@ public class ConferenceRepositoryIntegrationTest {
     @Rollback(true)
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
         long conf_id = 3;
-        jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id,"Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
+        populateDatabaseWithSampleData(conf_id, "Java Conference");
         Conference actualConference = conferenceRepository.showConference(conf_id);
         assertThat(actualConference.getId(),is(equalTo(conf_id)));
         assertThat(actualConference.getName(),is(equalTo("Java Conference")));
@@ -73,10 +72,8 @@ public class ConferenceRepositoryIntegrationTest {
     public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
         long conf_id1 = 1;
         long conf_id2 = 2;
-        jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id1,"Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
-        jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id2,"Other Java Conference", "Java",
-                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
+        populateDatabaseWithSampleData(conf_id1, "Java Conference");
+        populateDatabaseWithSampleData(conf_id2, "Other Java Conference");
         List<Conference> actualConferences = conferenceRepository.showAllConferences();
         assertThat(actualConferences.get(0).getName(),is(equalTo("Java Conference")));
         assertThat(actualConferences.get(1).getName(),is(equalTo("Other Java Conference")));
@@ -88,6 +85,25 @@ public class ConferenceRepositoryIntegrationTest {
             assertThat(actualConference.getEndDate(),is(equalTo("2012-08-23")));
             assertThat(actualConference.getMaxAttendee(),is(equalTo(2)));
         }
+    }
+
+    private void populateDatabaseWithSampleData(long conferenceId, String conferenceName) {
+        jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conferenceId,conferenceName, "Java",
+                "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
+    }
+
+    @Test
+    @Rollback(true)
+    public void shouldReturnTrueIfConferenceIsPresent(){
+        populateDatabaseWithSampleData(1L,"");
+        assertThat(conferenceRepository.isConferencePresent(1L), is(equalTo(true)));
+    }
+
+    @Test
+    @Rollback(true)
+    public void shouldReturnFalseIfConferenceIsNotPresent(){
+        populateDatabaseWithSampleData(1L,"");
+        assertThat(conferenceRepository.isConferencePresent(2L), is(equalTo(false)));
     }
 
 }
