@@ -1,7 +1,7 @@
 package com.zombiedash.app.controller;
 
 
-import com.zombiedash.app.service.RegistrationService;
+import com.zombiedash.app.repository.ConferenceRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -12,19 +12,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.isNotNull;
-import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationControllerTest {
-    @Mock RegistrationService mockRegistrationService;
+    @Mock
+    ConferenceRepository conferenceRepository;
 
     @Test
     public void shouldGoToRegistrationPageIfConferenceIdIsValid(){
         long confId = 1;
-        when(mockRegistrationService.validateConferenceId(confId)).thenReturn(true);
-        RegistrationController registrationController = new RegistrationController(mockRegistrationService);
+        when(conferenceRepository.isConferencePresent(confId)).thenReturn(true);
+        RegistrationController registrationController = new RegistrationController(conferenceRepository);
         ModelAndView result = registrationController.openRegistrationPage(confId);
         assertThat(result.getViewName(),is("attendeeregistration"));
     }
@@ -32,10 +32,10 @@ public class RegistrationControllerTest {
     @Test
     public void shouldGoToErrorPageIfConferenceIdIsInvalid(){
         long confId = 1;
-        when(mockRegistrationService.validateConferenceId(confId)).thenReturn(false);
-        RegistrationController registrationController = new RegistrationController(mockRegistrationService);
+        when(conferenceRepository.isConferencePresent(confId)).thenReturn(false);
+        RegistrationController registrationController = new RegistrationController(conferenceRepository);
         ModelAndView result = registrationController.openRegistrationPage(confId);
-        assertThat(result.getViewName(),is(""));
+        assertThat(result.getViewName(),is("404"));
     }
 
 }

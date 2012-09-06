@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.annotation.Nullable;
@@ -51,6 +52,12 @@ public class Browser {
 
     public Browser inputTextOn(String id, String text) {
         this.findElement(By.id(id)).sendKeys(text);
+        return this;
+    }
+
+    public Browser selectFromDropDown(String id, String choice) {
+        Select select = new Select(driver.findElement(By.id(id)));
+        select.selectByValue(choice);
         return this;
     }
 
