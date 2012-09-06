@@ -12,14 +12,14 @@
         <intercept-url pattern="/zombie/conference/user/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/zombie/logout" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="https"/>
         <intercept-url pattern="/**" access="ROLE_ADMIN" requires-channel="https"/>
-        <form-login login-page = "/zombie/login" default-target-url='/zombie/admin/home'/>
+        <form-login login-page = "/zombie/login" default-target-url='/zombie/admin/home' login-processing-url="/j_spring_security_check"/>
         <logout logout-success-url="/zombie/logout"/>
     </http>
 
 
     <authentication-manager>
-        <authentication-provider ref="UserAuthenticationProvider"/>
+        <authentication-provider ref="userAuthenticationProvider"/>
     </authentication-manager>
 
-    <beans:bean id="UserAuthenticationProvider" class="com.zombiedash.app.security.UserAuthenticationProvider"/>
+    <beans:bean id="userAuthenticationProvider" class="com.zombiedash.app.security.UserAuthenticationProvider"/>
 </beans:beans>

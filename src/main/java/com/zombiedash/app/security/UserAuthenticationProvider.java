@@ -8,37 +8,36 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Arrays;
-import java.util.List;
+import static java.util.Arrays.asList;
 
-public class UserAuthenticationProvider implements AuthenticationProvider{
-  private UserService userService;
+public class UserAuthenticationProvider implements AuthenticationProvider {
 
-  @Autowired
-  public void setUserService(UserService userService) {
-    this.userService = userService;
-  }
+    private UserService userService;
 
-  @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-      userService.authenticateAndReturnUser((String) authentication.getPrincipal(),(String) authentication.getCredentials());
-        List<? extends GrantedAuthority> grantedAuthorities = Arrays.asList(new GrantedAuthority() {
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String principal = (String) authentication.getPrincipal();
+        String credentials = (String) authentication.getCredentials();
+        userService.authenticateAndReturnUser(principal, credentials);
+        return new UsernamePasswordAuthenticationToken(principal, credentials, asList(adminAuthority()));
+    }
+
+    private GrantedAuthority adminAuthority() {
+        return new GrantedAuthority() {
             @Override
             public String getAuthority() {
                 return "ROLE_ADMIN";
             }
-        });
+        };
+    }
 
-      return new UsernamePasswordAuthenticationToken(
-          authentication.getPrincipal(),
-          authentication.getCredentials(),
-              grantedAuthorities
-          );
-
-  }
-
-  @Override
-  public boolean supports(Class<?> aClass) {
-    return true;
-  }
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return true;
+    }
 }
