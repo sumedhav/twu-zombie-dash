@@ -35,7 +35,7 @@
                          <div class="control-group">
                              <label class="control-label align-left" for="ConferenceName"><span class="error ">*</span>Conference &#160;name:</label>
                              <div class="controls">
-                                <textarea name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
+                                <textarea id='conf_name' name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
                                    onkeydown="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
                                    placeholder="enter conference name"><c:out value="${model.name}"/></textarea>
                                 <span class="error  field-missing">${model.nameFieldMissing}</span>
@@ -46,7 +46,7 @@
                          <div class="control-group">
                               <label class="control-label align-left" for="ConferenceTopic"><span class="error ">*</span>Topic:</label>
                               <div class="controls">
-                                 <textarea name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
+                                 <textarea id='conf_topic' name='conf_topic' onkeyup="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
                                      onkeydown="limitNumOfCharsInField(conf_topic, 100, '#topicExceedError');"
                                      placeholder="enter conference topic"><c:out value="${model.topic}"/></textarea>
                                  <span class="error  field-missing">${model.topicFieldMissing}</span>
@@ -77,7 +77,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceDescription"><span class="error ">*</span>Description:</label>
                                 <div class="controls">
-                                 <textarea name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
+                                 <textarea id='conf_description' name='conf_description' onkeyup="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
                                          onkeydown="limitNumOfCharsInField(conf_description,500,'#descriptionExceedError');"
                                         placeholder="enter conference description"><c:out value="${model.description}"/></textarea>
                                      <span class="error  field-missing">${model.descriptionFieldMissing}</span>
@@ -89,7 +89,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceTopic"><span class="error ">*</span>Venue:</label>
                                 <div class="controls">
-                                    <textarea name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
+                                    <textarea id='conf_venue' name='conf_venue' onkeyup="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
                                           onkeydown="limitNumOfCharsInField(conf_venue,200,'#venueExceedError');"
                                           placeholder="enter conference venue"><c:out value="${model.venue}"/></textarea>
                                        <span class="error  field-missing">${model.venueFieldMissing}</span>
@@ -100,7 +100,7 @@
                           <div class="control-group">
                                 <label class="control-label align-left" for="ConferenceAttendees"><span class="error ">*</span>Max no. of &#160;attendees:</label>
                                 <div class="controls">
-                                    <input type='text' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
+                                    <input type='text' id='conf_max_attendees' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
                                      onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>"
                                      onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  />
                                        <span class="error  field-missing">${model.maxAttendeesFieldMissing}</span>
