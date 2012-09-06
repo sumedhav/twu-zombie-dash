@@ -19,7 +19,14 @@ public class ConferenceFormTest {
 
     @Before
     public void setUp() {
-        conferenceForm = new ConferenceForm("NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", "10");
+        conferenceForm = new ConferenceForm();
+        conferenceForm.setConf_name("NotNull");
+        conferenceForm.setConf_topic("NotNull");
+        conferenceForm.setConf_description("NotNull");
+        conferenceForm.setConf_venue("NotNull");
+        conferenceForm.setConf_start_date("2013-03-04");
+        conferenceForm.setConf_end_date("2013-03-04");
+        conferenceForm.setConf_max_attendees("10");
         model = new HashMap<String, String>();
     }
 
@@ -43,15 +50,27 @@ public class ConferenceFormTest {
 
     @Test
     public void shouldValidateAndReturnTrueWhenAllDataEnteredIntoCreateConferenceIsCorrect() {
-        ConferenceForm conferenceForm1 = new ConferenceForm("Dummy_Check", "Dummy_Check", "Dummy_Check","Dummy_Check", "2013-01-01", "2013-01-04", "20");
-        boolean isValid = conferenceForm1.isValidData();
+        conferenceForm.setConf_name("NotNull");
+        conferenceForm.setConf_topic("NotNull");
+        conferenceForm.setConf_description("NotNull");
+        conferenceForm.setConf_venue("NotNull");
+        conferenceForm.setConf_start_date("2013-03-04");
+        conferenceForm.setConf_end_date("2013-03-04");
+        conferenceForm.setConf_max_attendees("10");
+        boolean isValid = conferenceForm.isValidData();
         Assert.assertThat(isValid, is(true));
     }
 
     @Test
     public void shouldValidateAndReturnFalseWhenDateEnteredIntoCreateConferenceIsInCorrect() {
-        ConferenceForm conferenceForm1 = new ConferenceForm("Dummy_Check", "Dummy_Check", "Dummy_Check","Dummy_Check", "2013-01-01549608", "2013-01-04", "20");
-        boolean isValid = conferenceForm1.isValidData();
+        conferenceForm.setConf_name("NotNull");
+        conferenceForm.setConf_topic("NotNull");
+        conferenceForm.setConf_description("NotNull");
+        conferenceForm.setConf_venue("NotNull");
+        conferenceForm.setConf_start_date("2013-03-01549608");
+        conferenceForm.setConf_end_date("2013-03-04");
+        conferenceForm.setConf_max_attendees("10");
+        boolean isValid = conferenceForm.isValidData();
         Assert.assertThat(isValid, is(false));
     }
 

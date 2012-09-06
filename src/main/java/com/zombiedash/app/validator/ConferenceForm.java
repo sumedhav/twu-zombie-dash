@@ -11,44 +11,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@NoArgsConstructor
 public class ConferenceForm {
 
-    @Setter
     private String conf_name;
-
-    @Setter
     private String conf_topic;
-
-    @Setter
     private String conf_venue;
-
-    @Setter
     private String conf_start_date;
-
-    @Setter
     private String conf_end_date;
-
-    @Setter
-
     private String conf_description;
-
-    @Setter
-    private  String conf_max_attendees;
+    private String conf_max_attendees;
 
     private HashMap<String, String> model = new HashMap<String, String>();
-
-    public ConferenceForm(String conf_name, String conf_topic, String conf_description, String conf_venue, String conf_start_date, String conf_end_date, String conf_max_attendees) {
-        this.conf_name = conf_name;
-        this.conf_topic = conf_topic;
-        this.conf_venue = conf_venue;
-        this.conf_start_date = conf_start_date;
-        this.conf_end_date = conf_end_date;
-        this.conf_description = conf_description;
-        this.conf_max_attendees = conf_max_attendees;
-    }
-
-
 
     private boolean isValidNumber(String conferenceMaxAttendees) {
         try {
@@ -64,6 +37,8 @@ public class ConferenceForm {
             return false;
         }
     }
+
+
 
     private boolean isValidDate(String rawDate, String errorName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,7 +94,6 @@ public class ConferenceForm {
         return validDataFlag;
     }
 
-
     private boolean isEndAfterStartDate(String startDate, String endDate, String endDateError) {
         boolean isValid = (isValidDate(startDate, "") && isValidDate(endDate, ""));
         if (!isValid){
@@ -138,6 +112,7 @@ public class ConferenceForm {
             }
         }
     }
+
 
     public Conference createConference() {
         return new Conference(1L,
@@ -160,5 +135,33 @@ public class ConferenceForm {
         model.put("maxAttendees", conf_max_attendees);
 
         return model;
+    }
+
+    public void setConf_name(String conf_name) {
+        this.conf_name = conf_name;
+    }
+
+    public void setConf_topic(String conf_topic) {
+        this.conf_topic = conf_topic;
+    }
+
+    public void setConf_venue(String conf_venue) {
+        this.conf_venue = conf_venue;
+    }
+
+    public void setConf_start_date(String conf_start_date) {
+        this.conf_start_date = conf_start_date;
+    }
+
+    public void setConf_end_date(String conf_end_date) {
+        this.conf_end_date = conf_end_date;
+    }
+
+    public void setConf_description(String conf_description) {
+        this.conf_description = conf_description;
+    }
+
+    public void setConf_max_attendees(String conf_max_attendees) {
+        this.conf_max_attendees = conf_max_attendees;
     }
 }

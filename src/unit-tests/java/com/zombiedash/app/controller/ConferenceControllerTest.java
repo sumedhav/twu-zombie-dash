@@ -33,7 +33,15 @@ public class ConferenceControllerTest {
   public void submitShouldGoToHome() throws Exception {
       ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
       ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-      ModelAndView actualModel = conferenceController.createConference(new ConferenceForm("NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", "10"));
+      ConferenceForm conferenceForm = new ConferenceForm();
+      conferenceForm.setConf_name("NotNull");
+      conferenceForm.setConf_topic("NotNull");
+      conferenceForm.setConf_description("NotNull");
+      conferenceForm.setConf_venue("NotNull");
+      conferenceForm.setConf_start_date("2013-03-04");
+      conferenceForm.setConf_end_date("2013-03-04");
+      conferenceForm.setConf_max_attendees("10");
+      ModelAndView actualModel = conferenceController.createConference(conferenceForm);
       assertThat(actualModel.getViewName(),is(equalTo("redirect:/zombie/admin/conference/list")));
   }
 
@@ -41,7 +49,15 @@ public class ConferenceControllerTest {
   public void submitWithIncompleteFormShouldRemainOnCreateFormWithPreviousValuesRetained() throws Exception {
       ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
       ConferenceController conferenceController = new ConferenceController(conferenceRepository);
-      ModelAndView actualModel = conferenceController.createConference(new ConferenceForm("name1", "", "NotNull", "NotNull", "NotNull", "NotNull", "1"));
+      ConferenceForm conferenceForm = new ConferenceForm();
+      conferenceForm.setConf_name("name1");
+      conferenceForm.setConf_topic("");
+      conferenceForm.setConf_description("NotNull");
+      conferenceForm.setConf_venue("NotNull");
+      conferenceForm.setConf_start_date("NotNull");
+      conferenceForm.setConf_end_date("NotNull");
+      conferenceForm.setConf_max_attendees("10");
+      ModelAndView actualModel = conferenceController.createConference(conferenceForm);
       Map<String, String> model = ((Map<String, String>)actualModel.getModel().get("model"));
       assertThat(model.get("name"), is(equalTo("name1")));
       assertThat(actualModel.getViewName(), is(equalTo("createconference")));
