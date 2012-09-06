@@ -261,7 +261,7 @@
         <input message="Build number?" addproperty="build.number"/>
     </target>
 
-    <target name="coverage" depends="clean, instrument, run-tests-with-coverage">
+    <target name="coverage" depends="clean, instrument, run-tests-with-coverage" description="Run test coverage report">
         <delete dir="${build.coverage.dir}"/>
         <mkdir dir="${build.coverage.dir}"/>
         <cobertura-report  srcdir="${src.dir}/java" destdir="${build.coverage.dir}"/>

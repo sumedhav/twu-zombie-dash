@@ -17,7 +17,7 @@ public class AuthenticationTest extends BasePageTest {
                 .loggedInAsAdmin()
                 .build();
 
-        assertThat(browser.getPageTitle(), is("Zombie Dash : Welcome"));
+        assertThat(browser.currentUrl(), browser.getPageTitle(), is("Zombie Dash : Welcome"));
     }
 
     @Test

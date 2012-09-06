@@ -89,6 +89,10 @@ public class Browser {
         return this.findElement(By.tagName("title")).getText();
     }
 
+    public String currentUrl() {
+        return driver.getCurrentUrl();
+    }
+
     public void stop() {
         try {
             driver.quit();
