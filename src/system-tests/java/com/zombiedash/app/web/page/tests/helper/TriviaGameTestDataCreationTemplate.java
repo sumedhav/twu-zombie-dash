@@ -17,15 +17,15 @@ public class TriviaGameTestDataCreationTemplate {
         jdbcTemplate.execute("DELETE zombie_task ");
     }
 
-    public void givenATaskWith(String name, UUID taskID) {
+    public void insertTask(String name, UUID taskID) {
         jdbcTemplate.update("INSERT INTO zombie_task values(?,?)", name, taskID);
     }
 
-    public void givenAQuestionWith(UUID id, String text, UUID taskId) {
+    public void insertQuestion(UUID id, String text, UUID taskId) {
         jdbcTemplate.update("insert into zombie_Question values(?,?,?)", id, text, taskId);
     }
 
-    public void givenAnOptionFor(UUID questionId, int optionId, String text, boolean correct) {
+    public void insertOption(UUID questionId, int optionId, String text, boolean correct) {
         jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, questionId, text, correct);
     }
 

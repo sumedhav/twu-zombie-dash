@@ -112,34 +112,34 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(numberOfSelections, is(1));
     }
 
-    private void initializeQuestionsAndOptions() {
+    private void initializeQuestionsAndOptionsInTheDatabase() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         testDataTemplate = new TriviaGameTestDataCreationTemplate(jdbcTemplate);
 
         testDataTemplate.clearTables();
         UUID questionID1 = UUID.randomUUID();
         UUID taskID = UUID.randomUUID();
-        testDataTemplate.givenATaskWith("charles_task", taskID);
-        testDataTemplate.givenAQuestionWith(questionID1, "Where is Red Fort", taskID);
-        testDataTemplate.givenAnOptionFor(questionID1, 1, "Delhi", true);
-        testDataTemplate.givenAnOptionFor(questionID1, 2, "Paris", false);
-        testDataTemplate.givenAnOptionFor(questionID1, 3, "New York", false);
+        testDataTemplate.insertTask("charles_task", taskID);
+        testDataTemplate.insertQuestion(questionID1, "Where is Red Fort", taskID);
+        testDataTemplate.insertOption(questionID1, 1, "Delhi", true);
+        testDataTemplate.insertOption(questionID1, 2, "Paris", false);
+        testDataTemplate.insertOption(questionID1, 3, "New York", false);
         UUID questionID2 = UUID.randomUUID();
-        testDataTemplate.givenAQuestionWith(questionID2, "Is it lunch time?", taskID);
-        testDataTemplate.givenAnOptionFor(questionID2, 4, "I bet it is", true);
-        testDataTemplate.givenAnOptionFor(questionID2, 5, "No thanks, fasting at the moment", false);
+        testDataTemplate.insertQuestion(questionID2, "Is it lunch time?", taskID);
+        testDataTemplate.insertOption(questionID2, 4, "I bet it is", true);
+        testDataTemplate.insertOption(questionID2, 5, "No thanks, fasting at the moment", false);
     }
 
 
     private void initializeJavaScriptBrowserAndSetUpData() {
         browser = BrowserSessionBuilder.aBrowserSession().withJavascriptEnabled().build();
-        initializeQuestionsAndOptions();
+        initializeQuestionsAndOptionsInTheDatabase();
         browser.open(TRIVIA_GAME_URL);
     }
 
     private void initializeStatelessBrowserAndSetUpData() {
         browser = BrowserSessionBuilder.aBrowserSession().build();
-        initializeQuestionsAndOptions();
+        initializeQuestionsAndOptionsInTheDatabase();
         browser.open(TRIVIA_GAME_URL);
     }
 }
