@@ -39,11 +39,12 @@ public class TriviaGameControllerTest {
         List<Question> expectedQuestions = new ArrayList<Question>();
         List<Option> optionsList1 = new ArrayList<Option>();
         UUID questionId = UUID.randomUUID();
+        UUID taskId = UUID.randomUUID();
         optionsList1.add(new Option(questionId,"Bangalore", true));
         optionsList1.add(new Option(questionId,"Paris", false));
         optionsList1.add(new Option(questionId,"Johannesburg", false));
         optionsList1.add(new Option(questionId,"London", false));
-        Question question = new Question(questionId, "Where are you?", optionsList1);
+        Question question = new Question(questionId, "Where are you?", optionsList1, taskId);
         expectedQuestions.add(question);
 
         UUID questionId1 = UUID.randomUUID();
@@ -52,7 +53,7 @@ public class TriviaGameControllerTest {
         optionsList2.add(new Option(questionId1,"Paris", false));
         optionsList2.add(new Option(questionId1,"Johannesburg", true));
         optionsList2.add(new Option(questionId1,"London", false));
-        Question question2 = new Question(questionId1, "Where are tigers?", optionsList2);
+        Question question2 = new Question(questionId1, "Where are tigers?", optionsList2, taskId);
         expectedQuestions.add(question2);
         when(mockQuestionRepository.listAllQuestions()).thenReturn(expectedQuestions);
         ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showGamePage();

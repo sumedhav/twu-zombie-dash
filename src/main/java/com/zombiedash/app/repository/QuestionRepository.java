@@ -49,7 +49,7 @@ public class QuestionRepository {
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
                 return new Question((UUID)resultSet.getObject("Id"),
-                        resultSet.getString("Text"),listAllOptions((UUID)resultSet.getObject("Id")));
+                        resultSet.getString("Text"),listAllOptions((UUID)resultSet.getObject("Id")), (UUID)resultSet.getObject("task_id"));
             }
         });
     }

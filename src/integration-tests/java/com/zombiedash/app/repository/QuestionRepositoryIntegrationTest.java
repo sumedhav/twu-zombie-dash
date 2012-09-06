@@ -78,6 +78,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     @Test
     public void shouldReturnCorrectOption(){
         UUID questionId = UUID.randomUUID();
+        UUID taskId = UUID.randomUUID();
         setUpQuestions();
         anOptionList = new ArrayList<Option>();
         anOptionList.add(new Option(questionId, "Bangalore", true));
@@ -85,7 +86,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         anOptionList.add(new Option(questionId, "Johannesburg", false));
 
         String expectedCorrectOption = "Bangalore";
-        Question aQuestion = new Question(questionId, "Where are you?", anOptionList);
+        Question aQuestion = new Question(questionId, "Where are you?", anOptionList, taskId);
 
         assertThat(aQuestion.getValidOption(), equalTo(expectedCorrectOption));
     }

@@ -9,8 +9,9 @@ public class Question {
     private String text;
 
     private List<Option> options =new ArrayList<Option>();
+    private UUID taskId;
 
-    public Question(UUID questionId, String text, List<Option> options) {
+    public Question(UUID questionId, String text, List<Option> options, UUID taskId) {
         this.questionId = questionId;
         this.text = text;
         this.options =options;
