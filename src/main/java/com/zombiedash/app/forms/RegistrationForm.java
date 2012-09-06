@@ -1,7 +1,5 @@
 package com.zombiedash.app.forms;
 
-import com.zombiedash.app.model.Role;
-
 import java.util.List;
 
 public class RegistrationForm {
@@ -10,6 +8,13 @@ public class RegistrationForm {
     private String fullName = "";
     private String email = "";
     private String password = "";
+    private String address = "";
+    private String password2= "";
+    private final static int ADDRESS_MAX_LENGTH = 100;
+    private final static int PHONENO_MAX_LENGTH = 20;
+    private final static int ZIPCODE_MAX_LENGTH = 20;
+    private String phoneNo = "";
+    private String zipcode = "";
 
     public void setEmail(String email) {
         this.email = email;
@@ -27,12 +32,34 @@ public class RegistrationForm {
         this.password = password;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public List<String> validate() {
         userForm = new UserForm();
         userForm.setUserName(userName);
         userForm.setFullName(fullName);
         userForm.setEmail(email);
         userForm.setPassword(password);
-        return userForm.validate();
+        List<String> errorCodes = userForm.validate();
+        if (address.isEmpty()) {errorCodes.add("addressFieldEmpty");}
+        if (address.length() > ADDRESS_MAX_LENGTH) {errorCodes.add("invalidAddress");}
+        if (phoneNo.length() > PHONENO_MAX_LENGTH) {errorCodes.add("invalidPhoneNo");}
+        if (zipcode.length() > ZIPCODE_MAX_LENGTH) {errorCodes.add("invalidZipcode");}
+        if (!password.equals(password2)) {errorCodes.add("passwordMismatch");}
+        return errorCodes;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 }
