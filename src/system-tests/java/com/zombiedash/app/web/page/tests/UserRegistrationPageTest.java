@@ -46,7 +46,7 @@ public class UserRegistrationPageTest extends BasePageTest{
     @Test
     public void shouldGoTo404PageIfConferenceDoesNotExist(){
         populateWithOneConference();
-        openConferenceRegistrationPage("3");
+        openConferenceRegistrationPage("100");
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Page Not Found")));
     }
 
