@@ -2,12 +2,10 @@ package com.zombiedash.app.web.page.tests;
 
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.Browser;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +24,6 @@ public class CreateConferencePageTest {
     public void clickOnCreateConferenceShouldOpenCreateConferencePage(){
         browser.open("/app/zombie/admin/conference/list");
         browser.clickOn("conference_creation");
-        assertThat(browser.getCurrentUrl(),endsWith("/app/zombie/admin/conference/create"));
+        assertThat(browser.getPageTitle(),is(equalTo("Create Conference Page")));
    }
 }
