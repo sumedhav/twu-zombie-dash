@@ -132,13 +132,13 @@ public class TriviaGamePageTest extends BasePageTest {
 
 
     private void initializeJavaScriptBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.aBrowserSession().usingHttps().withJavascriptEnabled().build();
+        browser = BrowserSessionBuilder.aBrowserSession().withJavascriptEnabled().build();
         initializeQuestionsAndOptions();
         browser.open(TRIVIA_GAME_URL);
     }
 
     private void initializeStatelessBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.aBrowserSession().usingHttps().build();
+        browser = BrowserSessionBuilder.aBrowserSession().build();
         initializeQuestionsAndOptions();
         browser.open(TRIVIA_GAME_URL);
     }
