@@ -27,6 +27,9 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    private OptionRepository optionRepository;
+
     private QuestionRepository questionRepository;
 
     @Before
@@ -88,9 +91,9 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
     private List<Option> createOptionList(UUID questionId) {
         List <Option> optionList = new ArrayList<Option>();
-        optionList.add(new Option(questionId, "Bangalore", true));
-        optionList.add(new Option(questionId, "Paris", false));
-        optionList.add(new Option(questionId, "Johannesburg", false));
+        optionList.add(new Option(UUID.randomUUID(), "Bangalore", true, questionId));
+        optionList.add(new Option(UUID.randomUUID(), "Paris", false, questionId));
+        optionList.add(new Option(UUID.randomUUID(), "Johannesburg", false, questionId));
         return optionList;
     }
 
@@ -103,7 +106,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     }
 
     private void insertOption(UUID questionId, int optionId, String text, boolean correct) {
-        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, questionId, text, correct);
+        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, text, correct, questionId);
     }
 
 }

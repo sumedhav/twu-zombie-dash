@@ -12,10 +12,10 @@ CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
                        FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID));
 
 CREATE TABLE zombie_option(
-            ID INT,
-            QUESTION_ID uuid NOT NULL,
+            ID uuid,
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
+            QUESTION_ID uuid NOT NULL,
             PRIMARY KEY (ID,QUESTION_ID),
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)
             ON DELETE CASCADE);

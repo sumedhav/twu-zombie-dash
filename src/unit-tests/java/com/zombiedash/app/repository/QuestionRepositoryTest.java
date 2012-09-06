@@ -3,8 +3,8 @@ package com.zombiedash.app.repository;
 import com.zombiedash.app.model.Question;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.UUID;
@@ -37,4 +37,5 @@ public class QuestionRepositoryTest {
 
         verify(jdbcTemplate).update(INSERT_QUESTION, questionID, "What is this question?", taskID);
     }
+
 }

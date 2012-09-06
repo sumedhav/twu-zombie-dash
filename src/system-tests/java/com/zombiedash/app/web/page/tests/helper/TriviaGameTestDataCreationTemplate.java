@@ -26,7 +26,7 @@ public class TriviaGameTestDataCreationTemplate {
     }
 
     public void insertOption(UUID questionId, int optionId, String text, boolean correct) {
-        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, questionId, text, correct);
+        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, text, correct,  questionId);
     }
 
 }

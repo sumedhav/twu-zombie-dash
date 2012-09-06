@@ -53,12 +53,12 @@ public class ResultServiceIntegrationTest {
     }
 
 
-    private List<Option> createOptionList(UUID questionId1) {
+    private List<Option> createOptionList(UUID questionId) {
         List<Option> optionList = new ArrayList<Option>();
-        optionList.add(new Option(questionId1,"Bangalore", true));
-        optionList.add(new Option(questionId1,"Paris", false));
-        optionList.add(new Option(questionId1,"Johannesburg", false));
-        optionList.add(new Option(questionId1,"London", false));
+        optionList.add(new Option(UUID.randomUUID(),"Bangalore", true, questionId));
+        optionList.add(new Option(UUID.randomUUID(),"Paris", false, questionId));
+        optionList.add(new Option(UUID.randomUUID(),"Johannesburg", false, questionId));
+        optionList.add(new Option(UUID.randomUUID(),"London", false, questionId));
         return optionList;
     }
 
