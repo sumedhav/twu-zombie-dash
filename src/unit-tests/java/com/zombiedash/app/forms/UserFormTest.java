@@ -1,5 +1,8 @@
 package com.zombiedash.app.forms;
 
+import com.zombiedash.app.model.Role;
+import com.zombiedash.app.model.User;
+import com.zombiedash.app.test.matchers.UserMatcher;
 import org.junit.Test;
 
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class UserFormTest {
 

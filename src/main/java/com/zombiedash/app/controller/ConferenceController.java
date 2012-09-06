@@ -2,13 +2,12 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
-import com.zombiedash.app.validator.ConferenceValidator;
+import com.zombiedash.app.validator.ConferenceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/admin/conference")
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
-    private static final Long DUMMY_ID = (long) -1;
     private int triedToSubmitFlag = -1;
 
     private Map<String,String> model = new HashMap<String, String>();
@@ -31,7 +29,7 @@ public class ConferenceController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView createConference() {
+    public ModelAndView showConferenceCreationForm() {
         ModelAndView modelAndView = new ModelAndView("createconference");
         if (triedToSubmitFlag == 1) {
             modelAndView.addObject("model", model);
@@ -52,42 +50,18 @@ public class ConferenceController {
 
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public ModelAndView createConference(@RequestParam("conf_name") String conferenceName,
-                                         @RequestParam("conf_topic") String conferenceTopic,
-                                         @RequestParam("conf_description") String conferenceDescription,
-                                         @RequestParam("conf_venue") String conferenceVenue,
-                                         @RequestParam("conf_start_date") String conferenceStartDate,
-                                         @RequestParam("conf_end_date") String conferenceEndDate,
-                                         @RequestParam("conf_max_attendees") String conferenceMaxAttendees) {
-
-        model.clear();
-        conferenceName = conferenceName.trim();
-        conferenceTopic = conferenceTopic.trim();
-        conferenceDescription = conferenceDescription.trim();
-        conferenceVenue = conferenceVenue.trim();
-        conferenceMaxAttendees = conferenceMaxAttendees.trim();
-
-        model.put("name",conferenceName);
-        model.put("topic",conferenceTopic);
-        model.put("startDate",conferenceStartDate);
-        model.put("endDate",conferenceEndDate);
-        model.put("description",conferenceDescription);
-        model.put("venue",conferenceVenue);
-        model.put("maxAttendees", conferenceMaxAttendees);
-
-        ConferenceValidator conferenceValidator = new ConferenceValidator();
-
+    public ModelAndView createConference(ConferenceForm conferenceForm) {
         try {
-            boolean validDataFlag = conferenceValidator.isValidData(model);
+            boolean validDataFlag = conferenceForm.isValidData();
 
+            HashMap<String, String> model = conferenceForm.populateModelMapWithFormValues();
             if (validDataFlag) {
-                Conference conference = new Conference(DUMMY_ID,conferenceName, conferenceTopic, conferenceDescription,
-                        conferenceVenue, conferenceStartDate, conferenceEndDate, Integer.parseInt(conferenceMaxAttendees));
+                Conference conference = conferenceForm.createConference();
                 conferenceRepository.saveConference(conference);
-                return new ModelAndView("redirect:/zombie/admin/conference/list","model",model);
+                return new ModelAndView("redirect:/zombie/admin/conference/list","model", model);
             } else {
                 triedToSubmitFlag = 1;
-                return new ModelAndView("redirect:/zombie/admin/conference/create","model",model);
+                return new ModelAndView("redirect:/zombie/admin/conference/create","model", model);
             }
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");

@@ -7,10 +7,6 @@ public class User implements java.io.Serializable {
     private String name;
     private String email;
 
-    public User(String userName) {
-        this(userName,  Role.GAME_DESIGNER, "Default Name", "default@mail.com");
-    }
-
     public User(String userName, Role userRole, String name, String email) {
         this.userName = userName;
         this.userRole = userRole;

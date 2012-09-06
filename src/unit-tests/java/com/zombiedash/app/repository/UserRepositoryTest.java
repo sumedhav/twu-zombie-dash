@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class UserRepositoryTest {
 
     @Test
     public void shouldCheckIfUserExists() throws Exception {
-        List listOfUsers = new ArrayList(){{add(new User("username"));}};
+        List listOfUsers = new ArrayList(){{add(new User("username", Role.ADMIN, "vcfdc", "email@email.com"));}};
         when(jdbcTemplate.query(anyString(),any(Object[].class), any(RowMapper.class))).thenReturn(listOfUsers);
         boolean result = userRepository.userNameExists("username");
         assertThat(result, is(true));
