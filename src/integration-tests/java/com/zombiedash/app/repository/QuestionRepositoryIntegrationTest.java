@@ -27,7 +27,6 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private List<Option> anOptionList;
     private QuestionRepository questionRepository;
 
     @Before
@@ -36,26 +35,27 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         questionRepository = new QuestionRepository(jdbcTemplate);
     }
 
-    private void setUpQuestions(){
-        UUID questionID = UUID.randomUUID();
-        UUID taskID = UUID.randomUUID();
-        givenATaskWith("charles_task", taskID);
-        givenAQuestionWith(questionID, "Where is Red Fort", taskID);
-        givenAnOptionFor(questionID, 10, "Delhi", true);
-        givenAnOptionFor(questionID, 20, "Paris", false);
-        givenAnOptionFor(questionID, 30, "New York", false);
-        UUID questionID1 = UUID.randomUUID();
-        UUID taskID1 = UUID.randomUUID();
-        givenATaskWith("sumedha", taskID1);
-        givenAQuestionWith(questionID1, "Is it lunch time?", taskID1);
-        givenAnOptionFor(questionID1, 10, "I bet it is", true);
-        givenAnOptionFor(questionID1, 20, "No thanks, fasting at the moment", false);
+    private void insertDataIntoDatabase(){
+        UUID questionId1 = UUID.randomUUID();
+        UUID taskId1 = UUID.randomUUID();
+        insertTask("charles_task", taskId1);
+        insertQuestion(questionId1, "Where is Red Fort", taskId1);
+        insertOption(questionId1, 10, "Delhi", true);
+        insertOption(questionId1, 20, "Paris", false);
+        insertOption(questionId1, 30, "New York", false);
+
+        UUID questionId2 = UUID.randomUUID();
+        UUID taskId2 = UUID.randomUUID();
+        insertTask("sumedha", taskId2);
+        insertQuestion(questionId2, "Is it lunch time?", taskId2);
+        insertOption(questionId2, 10, "I bet it is", true);
+        insertOption(questionId2, 20, "No thanks, fasting at the moment", false);
 
     }
     
     @Test
     public void shouldRetrieveAllQuestions() {
-        setUpQuestions();
+        insertDataIntoDatabase();
         int noOfQuestions = 2;
         List<Question> questions = questionRepository.listAllQuestions();
         assertThat(questions.size(), is(noOfQuestions));
@@ -79,27 +79,30 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     public void shouldReturnCorrectOption(){
         UUID questionId = UUID.randomUUID();
         UUID taskId = UUID.randomUUID();
-        setUpQuestions();
-        anOptionList = new ArrayList<Option>();
-        anOptionList.add(new Option(questionId, "Bangalore", true));
-        anOptionList.add(new Option(questionId, "Paris", false));
-        anOptionList.add(new Option(questionId, "Johannesburg", false));
+        createOptionList(questionId);
 
-        String expectedCorrectOption = "Bangalore";
-        Question aQuestion = new Question(questionId, "Where are you?", anOptionList, taskId);
+        Question aQuestion = new Question(questionId, "Where are you?", createOptionList(questionId), taskId);
 
-        assertThat(aQuestion.getValidOption(), equalTo(expectedCorrectOption));
+        assertThat(aQuestion.getValidOption(), equalTo("Bangalore"));
     }
 
-    private void givenATaskWith(String name, UUID taskID) {
+    private List<Option> createOptionList(UUID questionId) {
+        List <Option> optionList = new ArrayList<Option>();
+        optionList.add(new Option(questionId, "Bangalore", true));
+        optionList.add(new Option(questionId, "Paris", false));
+        optionList.add(new Option(questionId, "Johannesburg", false));
+        return optionList;
+    }
+
+    private void insertTask(String name, UUID taskID) {
         jdbcTemplate.update("INSERT INTO zombie_task values(?,?)", name, taskID);
     }
 
-    private void givenAQuestionWith(UUID id, String text, UUID taskId) {
+    private void insertQuestion(UUID id, String text, UUID taskId) {
         jdbcTemplate.update("insert into zombie_Question values(?,?,?)", id, text, taskId);
     }
 
-    private void givenAnOptionFor(UUID questionId, int optionId, String text, boolean correct) {
+    private void insertOption(UUID questionId, int optionId, String text, boolean correct) {
         jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, questionId, text, correct);
     }
 
