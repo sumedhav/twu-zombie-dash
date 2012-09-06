@@ -5,6 +5,7 @@ import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,18 @@ public class UsersControllerTest {
     usersController = new UsersController(userService, validationMessagesMap);
   }
 
-  @Test
+    @Test
+    public void shouldNotViewAdminDetails() throws Exception {
+        User adminUser = mock(User.class);
+        given(adminUser.getRole()).willReturn(Role.ADMIN);
+        given(userService.getUser("adminUser")).willReturn(adminUser);
+
+        String result = usersController.showUserDetails("adminUser").getViewName();
+
+        assertThat(result, CoreMatchers.is("404"));
+    }
+
+    @Test
   public void shouldReturnAViewWithNameListUsers() {
     String result = usersController.listUsers().getViewName();
     assertThat(result, is("listusers"));
@@ -94,25 +106,25 @@ public class UsersControllerTest {
 
   @Test
   public void shouldDisplayDetailsPageForSelectedUser() throws Exception {
-    mockAdminUser();
-    ModelAndView modelAndView = usersController.showUserDetails("admin");
+    mockUser();
+    ModelAndView modelAndView = usersController.showUserDetails("username");
     assertThat(modelAndView.getViewName(), is("userdetails"));
   }
 
   @Test
   public void shouldRetrieveUserDetails() throws Exception {
-    mockAdminUser();
-    ModelAndView result = usersController.showUserDetails("admin");
-    assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Administrator, userName=JohnnyBoy}")));
+    mockUser();
+    ModelAndView result = usersController.showUserDetails("username");
+    assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Game Designer, userName=JohnnyBoy}")));
   }
 
-  private void mockAdminUser() {
+  private void mockUser() {
     User user = mock(User.class);
     when(user.getName()).thenReturn("John");
-    when(user.getRole()).thenReturn(Role.ADMIN);
+    when(user.getRole()).thenReturn(Role.GAME_DESIGNER);
     when(user.getUserName()).thenReturn("JohnnyBoy");
     when(user.getEmail()).thenReturn("John@me.com");
-    when(userService.getUser("admin")).thenReturn(user);
+    when(userService.getUser("username")).thenReturn(user);
   }
 
   @Test

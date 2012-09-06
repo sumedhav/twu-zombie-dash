@@ -3,6 +3,7 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.error.ValidationMessagesMap;
 import com.zombiedash.app.forms.UserForm;
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +88,9 @@ public class UsersController {
     @RequestMapping(value = "/user/view/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
         User user = userService.getUser(userName);
+        if (user.getRole() == Role.ADMIN) {
+            return new ModelAndView("404");
+        }
         Map<String,String> map = new HashMap<String,String>();
         map.put("userName",user.getUserName());
         map.put("name",user.getName());
