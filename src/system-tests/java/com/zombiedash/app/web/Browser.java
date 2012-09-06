@@ -110,4 +110,8 @@ public class Browser {
         driver.switchTo().alert().dismiss();
         return this;
     }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
 }
