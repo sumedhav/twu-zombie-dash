@@ -49,19 +49,20 @@ public class ConferenceRepositoryTest {
 
   @Test
   public void shouldReadConferenceFromDatabase() {
-    when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1))
+    when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1L))
         .thenAnswer(new Answer<SqlRowSet>() {
           @Override
           public SqlRowSet answer(InvocationOnMock invocation) throws Throwable {
             SqlRowSet sqlRowSet = mock(SqlRowSet.class);
             when(sqlRowSet.getString(anyInt())).thenReturn("java");
             when(sqlRowSet.getString(7)).thenReturn("2012-06-07");
-            when(sqlRowSet.getInt(anyInt())).thenReturn(1);
+            when(sqlRowSet.getInt(8)).thenReturn(1);
+            when(sqlRowSet.getLong(1)).thenReturn(1L);
             return sqlRowSet;
           }
         });
     ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-    Conference actualConference = conferenceRepository.showConference(1);
+    Conference actualConference = conferenceRepository.showConference(1L);
     assertThat(actualConference.getEndDate(),is(equalTo("2012-06-07")));
   }
 
@@ -72,7 +73,7 @@ public class ConferenceRepositoryTest {
       public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
         List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
         HashMap<String,Object> firstResult = new HashMap<String, Object>();
-        firstResult.put("id",1);
+        firstResult.put("id",1L);
         firstResult.put("name", "Java");
         firstResult.put("topic","Java");
         firstResult.put("description","Java");
@@ -82,7 +83,7 @@ public class ConferenceRepositoryTest {
         firstResult.put("max_attendee",1);
         resultBlock.add(firstResult);
         HashMap<String, Object> secondResult = new HashMap<String, Object>();
-        secondResult.put("id",2);
+        secondResult.put("id",2L);
         secondResult.put("name", "Java");
         secondResult.put("topic", "Java");
         secondResult.put("description", "Java");
@@ -100,4 +101,9 @@ public class ConferenceRepositoryTest {
       assertThat(actualConference.getEndDate(), is(equalTo("2012-06-07")));
     }
   }
+
+    @Test
+    public void shouldReturnFalseIfIdIsNotPresent(){
+
+    }
 }

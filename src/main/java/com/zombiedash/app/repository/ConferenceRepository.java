@@ -14,6 +14,7 @@ import java.util.Map;
 public class ConferenceRepository {
     public static final String SQL_CONFERENCE_INSERT = "INSERT INTO zombie_conference values (?,?,?,?,?,?,?,?)";
     public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM zombie_conference WHERE ID = ?";
+    public static final String SQL_COUNT_CONFERENCE = "SELECT COUNT(*) FROM zombie_conference WHERE ID = ?";
     public static final String SQL_CONFERENCE_SELECT_ALL = "SELECT * FROM zombie_conference";
     public static final String SQL_CONFERENCE_NUM_ENTRIES = "SELECT COUNT (*) FROM zombie_conference";
     private JdbcTemplate jdbcTemplate;
@@ -36,10 +37,17 @@ public class ConferenceRepository {
                 conference.getMaxAttendee());
     }
 
-    public Conference showConference(int conferenceID) {
+    public boolean isConferencePresent(long conferenceID) {
+        if (jdbcTemplate.queryForInt(SQL_COUNT_CONFERENCE,conferenceID) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    public Conference showConference(Long conferenceID) {
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceID);
         rowSet.first();
-        return new Conference(rowSet.getInt(1),
+        return new Conference(rowSet.getLong(1),
                 rowSet.getString(2),
                 rowSet.getString(3),
                 rowSet.getString(4),
@@ -55,7 +63,7 @@ public class ConferenceRepository {
         for (Map<String, Object> resultRow : conferenceSQLCollection) {
             conferences.add(
                     new Conference(
-                            (Integer) resultRow.get("id"),
+                            (Long) resultRow.get("id"),
                             (String) resultRow.get("name"),
                             (String) resultRow.get("topic"),
                             (String) resultRow.get("description"),

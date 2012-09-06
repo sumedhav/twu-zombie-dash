@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS zombie_users;
 
 
 CREATE TABLE zombie_conference(
-    ID INT PRIMARY KEY,
+    ID bigint PRIMARY KEY,
     NAME VARCHAR(200) NOT NULL,
     TOPIC VARCHAR(200) NOT NULL,
     DESCRIPTION VARCHAR(1000) NOT NULL,
@@ -39,6 +39,9 @@ CREATE TABLE zombie_attendee_info(
                 username varchar(40) ,
                 dob varchar(10) NOT NULL,
                 country varchar(40) NOT NULL,
+                phoneNo varchar(20),
+                address varchar(100),
+                zipcode varchar(20),
                 conference_ID INT NOT NULL,
                 PRIMARY KEY (username,conference_ID),
                 CONSTRAINT username_constraint FOREIGN KEY (username) REFERENCES zombie_users(username)

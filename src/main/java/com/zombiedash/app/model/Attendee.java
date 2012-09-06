@@ -1,35 +1,58 @@
 package com.zombiedash.app.model;
 
 public class Attendee {
-  private User user;
-  private String dob;
-  private String country;
-
-  public Attendee(User user,String dob, String country) {
-    this.user = user;
-    this.dob = dob;
-    this.country = country;
-  }
-
-  public String getUsername() {
-    return user.getUserName();
-  }
+    private User user;
+    private String dob;
+    private String country;
+    private String zipcode;
+    private String address;
+    private String phoneNo;
 
 
-  public String getName() {
-    return user.getName();
-  }
+    public Attendee(User user,
+                    String dob,
+                    String country,
+                    String phoneNo,
+                    String address,
+                    String zipcode) {
+        this.user = user;
+        this.dob = dob;
+        this.country = country;
+        this.phoneNo=phoneNo;
+        this.address=address;
+        this.zipcode=zipcode;
+    }
 
-  public String getEmail() {
-    return user.getEmail();
-  }
+    public String getUsername() {
+        return user.getUserName();
+    }
 
-  public String getDob() {
-    return dob;
-  }
 
-  public String getCountry() {
-    return country;
-  }
+    public String getName() {
+        return user.getName();
+    }
 
+    public String getEmail() {
+        return user.getEmail();
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
 }

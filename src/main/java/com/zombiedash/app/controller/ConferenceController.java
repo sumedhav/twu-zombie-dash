@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("/admin/conference")
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
-    private static final int DUMMY_ID = -1;
+    private static final Long DUMMY_ID = (long) -1;
     private int triedToSubmitFlag = -1;
 
     private Map<String,String> model = new HashMap<String, String>();
@@ -101,7 +101,7 @@ public class ConferenceController {
     @RequestMapping(value = "view/{conferenceId}")
     public ModelAndView view(@PathVariable String conferenceId) {
         try{
-            Conference thisConference = conferenceRepository.showConference(Integer.parseInt(conferenceId));
+            Conference thisConference = conferenceRepository.showConference(Long.parseLong(conferenceId));
             return new ModelAndView("conferenceview","Conference", thisConference);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");

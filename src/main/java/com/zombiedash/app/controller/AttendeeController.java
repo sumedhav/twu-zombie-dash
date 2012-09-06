@@ -16,4 +16,5 @@ public class AttendeeController {
             ModelAndView modelAndView = new ModelAndView("attendee");
             return modelAndView;
         }
+
 }

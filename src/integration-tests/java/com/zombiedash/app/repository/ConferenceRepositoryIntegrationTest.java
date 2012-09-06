@@ -3,12 +3,14 @@ package com.zombiedash.app.repository;
 import com.zombiedash.app.model.Conference;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
@@ -16,8 +18,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-application-context.xml")
-public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class ConferenceRepositoryIntegrationTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -32,7 +35,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Test
     @Rollback(true)
     public void shouldSaveConferenceToDatabase() throws Exception {
-        Conference conference = new Conference(-1,"Java Conference", "Java",
+        Conference conference = new Conference((long)-1,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         int numberOfRows = conferenceRepository.saveConference(conference);
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1);
@@ -51,7 +54,7 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Test
     @Rollback(true)
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
-        int conf_id = 3;
+        long conf_id = 3;
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         Conference actualConference = conferenceRepository.showConference(conf_id);
@@ -68,8 +71,8 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
     @Test
     @Rollback(true)
     public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
-        int conf_id1 = 1;
-        int conf_id2 = 2;
+        long conf_id1 = 1;
+        long conf_id2 = 2;
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id1,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conf_id2,"Other Java Conference", "Java",
@@ -86,4 +89,5 @@ public class ConferenceRepositoryIntegrationTest extends AbstractTransactionalJU
             assertThat(actualConference.getMaxAttendee(),is(equalTo(2)));
         }
     }
+
 }
