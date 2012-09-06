@@ -1,11 +1,19 @@
 DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
-CREATE TABLE zombie_question (ID INT PRIMARY KEY,
-                       Text varchar(50) NOT NULL);
+DROP TABLE IF EXISTS zombie_task;
+
+CREATE TABLE zombie_task(name varchar(100) NOT NULL,
+                         ID uuid NOT NULL,
+                         PRIMARY KEY (ID));
+
+CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
+                       Text varchar(50) NOT NULL,
+                       TASK_ID uuid NOT NULL,
+                       FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID));
 
 CREATE TABLE zombie_option(
             ID INT,
-            QUESTION_ID int NOT NULL,
+            QUESTION_ID uuid NOT NULL,
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
             PRIMARY KEY (ID,QUESTION_ID),

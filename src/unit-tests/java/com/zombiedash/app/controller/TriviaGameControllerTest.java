@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -37,18 +38,21 @@ public class TriviaGameControllerTest {
     public void shouldPopulateModelAndViewWithQuestionsForTheGame(){
         List<Question> expectedQuestions = new ArrayList<Question>();
         List<Option> optionsList1 = new ArrayList<Option>();
-        optionsList1.add(new Option(1,"Bangalore", true));
-        optionsList1.add(new Option(1,"Paris", false));
-        optionsList1.add(new Option(1,"Johannesburg", false));
-        optionsList1.add(new Option(1,"London", false));
-        Question question = new Question(1, "Where are you?", optionsList1);
+        UUID questionId = UUID.randomUUID();
+        optionsList1.add(new Option(questionId,"Bangalore", true));
+        optionsList1.add(new Option(questionId,"Paris", false));
+        optionsList1.add(new Option(questionId,"Johannesburg", false));
+        optionsList1.add(new Option(questionId,"London", false));
+        Question question = new Question(questionId, "Where are you?", optionsList1);
         expectedQuestions.add(question);
+
+        UUID questionId1 = UUID.randomUUID();
         List<Option> optionsList2 = new ArrayList<Option>();
-        optionsList2.add(new Option(1,"Bangalore", false));
-        optionsList2.add(new Option(1,"Paris", false));
-        optionsList2.add(new Option(1,"Johannesburg", true));
-        optionsList2.add(new Option(1,"London", false));
-        Question question2 = new Question(2, "Where are tigers?", optionsList2);
+        optionsList2.add(new Option(questionId1,"Bangalore", false));
+        optionsList2.add(new Option(questionId1,"Paris", false));
+        optionsList2.add(new Option(questionId1,"Johannesburg", true));
+        optionsList2.add(new Option(questionId1,"London", false));
+        Question question2 = new Question(questionId1, "Where are tigers?", optionsList2);
         expectedQuestions.add(question2);
         when(mockQuestionRepository.listAllQuestions()).thenReturn(expectedQuestions);
         ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showGamePage();

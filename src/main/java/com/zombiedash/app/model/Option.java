@@ -1,11 +1,13 @@
 package com.zombiedash.app.model;
 
+import java.util.UUID;
+
 public class Option {
-    private int questionId;
+    private UUID questionId;
     private String text;
     private boolean isCorrect;
 
-    public Option( int questionId, String text, Boolean correct) {
+    public Option( UUID questionId, String text, Boolean correct) {
         this.questionId = questionId;
         this.text = text;
         this.isCorrect = correct;

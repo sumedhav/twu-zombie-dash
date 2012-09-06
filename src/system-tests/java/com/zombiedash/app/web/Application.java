@@ -65,7 +65,7 @@ public class Application {
         setSystemProperty("controlm.queue.provider", "none");
         setSystemProperty("icc.service.provider", "local");
 
-        if (StringUtils.isBlank(hostname)) {
+        if (StringUtils.isBlank(hostname) || hostname!=null) {
             hostname = "localhost";
         }
         return hostname;

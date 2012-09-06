@@ -2,14 +2,15 @@ package com.zombiedash.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Question {
-    private int questionId;
+    private UUID questionId;
     private String text;
 
     private List<Option> options =new ArrayList<Option>();
 
-    public Question(int questionId, String text, List<Option> options) {
+    public Question(UUID questionId, String text, List<Option> options) {
         this.questionId = questionId;
         this.text = text;
         this.options =options;

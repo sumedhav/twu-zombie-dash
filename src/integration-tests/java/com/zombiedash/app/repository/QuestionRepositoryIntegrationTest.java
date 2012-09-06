@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static com.zombiedash.app.repository.helper.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -36,15 +37,22 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     }
 
     private void setUpQuestions(){
-        givenAQuestionWith(10, "Where is Red Fort");
-        givenAnOptionFor(10, 10, "Delhi", true);
-        givenAnOptionFor(10, 20, "Paris", false);
-        givenAnOptionFor(10, 30, "New York", false);
-        givenAQuestionWith(20, "Is it lunch time?");
-        givenAnOptionFor(20, 10, "I bet it is", true);
-        givenAnOptionFor(20, 20, "No thanks, fasting at the moment", false);
+        UUID questionID = UUID.randomUUID();
+        UUID taskID = UUID.randomUUID();
+        givenATaskWith("charles_task", taskID);
+        givenAQuestionWith(questionID, "Where is Red Fort", taskID);
+        givenAnOptionFor(questionID, 10, "Delhi", true);
+        givenAnOptionFor(questionID, 20, "Paris", false);
+        givenAnOptionFor(questionID, 30, "New York", false);
+        UUID questionID1 = UUID.randomUUID();
+        UUID taskID1 = UUID.randomUUID();
+        givenATaskWith("sumedha", taskID1);
+        givenAQuestionWith(questionID1, "Is it lunch time?", taskID1);
+        givenAnOptionFor(questionID1, 10, "I bet it is", true);
+        givenAnOptionFor(questionID1, 20, "No thanks, fasting at the moment", false);
 
     }
+    
     @Test
     public void shouldRetrieveAllQuestions() {
         setUpQuestions();
@@ -69,27 +77,29 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
     @Test
     public void shouldReturnCorrectOption(){
+        UUID questionId = UUID.randomUUID();
         setUpQuestions();
         anOptionList = new ArrayList<Option>();
-        anOptionList.add(new Option(1, "Bangalore", true));
-        anOptionList.add(new Option(2, "Paris", false));
-        anOptionList.add(new Option(3, "Johannesburg", false));
+        anOptionList.add(new Option(questionId, "Bangalore", true));
+        anOptionList.add(new Option(questionId, "Paris", false));
+        anOptionList.add(new Option(questionId, "Johannesburg", false));
 
         String expectedCorrectOption = "Bangalore";
-        Question aQuestion = new Question(3, "Where are you?", anOptionList);
+        Question aQuestion = new Question(questionId, "Where are you?", anOptionList);
 
         assertThat(aQuestion.getValidOption(), equalTo(expectedCorrectOption));
     }
 
-    private void givenAQuestionWith(int id, String text) {
-        jdbcTemplate.execute(String.format(
-                "insert into zombie_Question (ID,Text) values(%d, '%s')", id, text));
+    private void givenATaskWith(String name, UUID taskID) {
+        jdbcTemplate.update("INSERT INTO zombie_task values(?,?)", name, taskID);
     }
 
-    private void givenAnOptionFor(int questionId, int optionId, String text, boolean correct) {
-        jdbcTemplate.execute(String.format("insert into zombie_Option (id,question_id,text,correct) " +
-                "values (%d, %d, '%s', %b)",
-                optionId, questionId, text, correct));
+    private void givenAQuestionWith(UUID id, String text, UUID taskId) {
+        jdbcTemplate.update("insert into zombie_Question values(?,?,?)", id, text, taskId);
+    }
+
+    private void givenAnOptionFor(UUID questionId, int optionId, String text, boolean correct) {
+        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, questionId, text, correct);
     }
 
 }
