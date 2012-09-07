@@ -4,12 +4,9 @@ import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.UUID;
 
@@ -26,7 +23,6 @@ public class UserRegistrationPageTest extends BasePageTest{
         browser= BrowserSessionBuilder
                 .aBrowserSession()
                 .usingHttps()
-//                .withJavascriptEnabled()
                 .loggedInAsAdmin()
                 .build();
     }

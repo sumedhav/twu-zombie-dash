@@ -5,12 +5,13 @@
 <title>Create Conference Page</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/create.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/createConference.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/custom.datepick.css" rel="stylesheet"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/util.js"></script>
 
 </head>
 <body onload='document.conferenceForm.conf_name.focus();'>
@@ -101,8 +102,8 @@
                                 <label class="control-label align-left" for="ConferenceAttendees"><span class="error ">*</span>Max no. of &#160;attendees:</label>
                                 <div class="controls">
                                     <input type='text' id='conf_max_attendees' name='conf_max_attendees' size="28" placeholder="enter max no. of attendees"
-                                     onkeyup="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>"
-                                     onkeydown="limitNumOfCharsInField(conf_max_attendees,6,'#maxAttendeesError');"  />
+                                     onkeyup="limitMaxNumberOfAttendees(6,'#maxAttendeesError');" value="<c:out value="${model.maxAttendees}"/>"
+                                     onkeydown="limitMaxNumberOfAttendees(6,'#maxAttendeesError');"  />
                                        <span class="error  field-missing">${model.maxAttendeesFieldMissing}</span>
                                        <span id="maxAttendeesError" class="error "></span>
                                        <div class="error ">${model.numberError}</div>
