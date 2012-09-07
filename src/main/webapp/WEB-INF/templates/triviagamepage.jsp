@@ -25,7 +25,7 @@
              onclick="return doExpandCollapse('box','link','${pageContext.request.contextPath}')"
              src="${pageContext.request.contextPath}/static/images/sideArrow.jpg">Description
 
-        <div id="box" name=tbl style="overflow:hidden;display:none; background-color: rgb(170, 170, 170); padding: 5px 10px;">
+        <div id="box" name=tbl style="overflow:hidden;display:none;width: 80%; height: 10%; border: 3px solid gray;">
                    <label id="description">1.All questions are compulsory<br>
                    2.No  Negative Marking<br>
                    3.Each correct answer carries 1 point<br>
