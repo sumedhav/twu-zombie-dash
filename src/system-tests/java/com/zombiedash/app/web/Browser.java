@@ -17,7 +17,7 @@ public class Browser {
 
     private final boolean javascriptEnabled;
     private final String hostAddress;
-    private final WebDriver driver;
+    private WebDriver driver;
 
     private final static int TIMEOUT= 30;
 
@@ -96,6 +96,7 @@ public class Browser {
     public void stop() {
         try {
             driver.quit();
+            driver = null;
         } catch (Exception e) {
             e.printStackTrace();
         }

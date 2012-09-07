@@ -91,6 +91,9 @@ public class Application {
         if (statelessBrowser != null) {
             statelessBrowser.stop();
         }
+        if(firefoxBrowser != null) {
+            firefoxBrowser.stop();
+        }
         if (server != null) {
             server.stop();
         }
