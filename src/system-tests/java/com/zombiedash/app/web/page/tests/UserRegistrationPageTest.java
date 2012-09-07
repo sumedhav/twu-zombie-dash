@@ -41,26 +41,33 @@ public class UserRegistrationPageTest extends BasePageTest{
     @Test
     public void shouldGoToUserRegistrationPageIfConferenceExists(){
         UUID confId = populateWithOneConference();
-        openConferenceRegistrationPage(confId);
-        assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Attendee Registration")));
+        openConferenceRegistrationPage(confId.toString());
+        assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
     }
 
     @Test
     public void shouldGoTo404PageIfConferenceDoesNotExist(){
         populateWithOneConference();
-        openConferenceRegistrationPage(UUID.randomUUID());
-        assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Page Not Found")));
+        UUID randomUUID = UUID.randomUUID();
+        openConferenceRegistrationPage(randomUUID.toString());
+        assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Page Not Found")));
     }
 
+    @Test
+    public void shouldGoTo404PageIfConferenceIDIsInvalidFormat(){
+        populateWithOneConference();
+        openConferenceRegistrationPage("1234");
+        assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Page Not Found")));
+    }
 
-    private void openConferenceRegistrationPage(UUID conferenceId) {
-        browser.open("/app/zombie/register/" + conferenceId.toString());
+    private void openConferenceRegistrationPage(String conferenceId) {
+        browser.open("/app/zombie/register/" + conferenceId);
     }
 
     @Test
     public void shouldRegisterAnAttendeeWithValidInformation() {
         UUID confId = populateWithOneConference();
-        openConferenceRegistrationPage(confId);
+        openConferenceRegistrationPage(confId.toString());
         browser.inputTextOn("userName","ExampleUsername")
                .inputTextOn("password","Password1")
                .inputTextOn("password2", "Password1")
@@ -70,7 +77,7 @@ public class UserRegistrationPageTest extends BasePageTest{
                .selectFromDropDown("countrylist","India")
                .inputTextOn("phoneno", "1-555-555-5555")
                .inputTextOn("address","Example Address")
-               .inputTextOn("zipcode","55555");
+               .inputTextOn("zipcode", "55555");
 
         browser.clickOn("submit");
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Registration Confirmed")));

@@ -15,9 +15,8 @@ import java.util.UUID;
 public class ConferenceRepository {
     public static final String SQL_CONFERENCE_INSERT = "INSERT INTO zombie_conference values (?,?,?,?,?,?,?,?)";
     public static final String SQL_CONFERENCE_SELECT = "SELECT * FROM zombie_conference WHERE ID = ?";
-    public static final String SQL_COUNT_CONFERENCE = "SELECT COUNT(*) FROM zombie_conference WHERE ID = ?";
+    public static final String SQL_COUNT_CONFERENCE = "SELECT COUNT (*) FROM zombie_conference WHERE ID = ?";
     public static final String SQL_CONFERENCE_SELECT_ALL = "SELECT * FROM zombie_conference";
-    public static final String SQL_CONFERENCE_NUM_ENTRIES = "SELECT COUNT (*) FROM zombie_conference";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired

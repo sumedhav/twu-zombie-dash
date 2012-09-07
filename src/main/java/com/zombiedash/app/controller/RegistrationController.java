@@ -27,7 +27,12 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register/{confId}", method= GET)
     public ModelAndView openRegistrationPage(@PathVariable("confId") String confId) {
-        UUID uuid = UUID.fromString(confId);
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(confId);
+        } catch (Exception e) {
+            return new ModelAndView("404");
+        }
         if (conferenceRepository.isConferencePresent(uuid)) {
             Map<String,UUID> conferenceMap = new HashMap<String,UUID>();
             conferenceMap.put("confId",uuid);
