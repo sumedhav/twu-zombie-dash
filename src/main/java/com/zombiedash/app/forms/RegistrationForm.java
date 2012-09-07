@@ -44,6 +44,8 @@ public class RegistrationForm {
         userForm.setPassword(password);
         List<String> errorCodes = userForm.validate();
         if (address.isEmpty()) {errorCodes.add("addressFieldEmpty");}
+        if (phoneNo.isEmpty()) {errorCodes.add("phoneNoFieldEmpty");}
+        if (zipcode.isEmpty()) {errorCodes.add("zipcodeFieldEmpty");}
         if (address.length() > ADDRESS_MAX_LENGTH) {errorCodes.add("invalidAddress");}
         if (phoneNo.length() > PHONENO_MAX_LENGTH) {errorCodes.add("invalidPhoneNo");}
         if (zipcode.length() > ZIPCODE_MAX_LENGTH) {errorCodes.add("invalidZipcode");}

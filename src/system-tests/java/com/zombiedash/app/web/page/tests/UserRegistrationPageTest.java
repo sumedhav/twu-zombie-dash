@@ -29,8 +29,10 @@ public class UserRegistrationPageTest extends BasePageTest{
                 .build();
     }
 
+
     private void populateWithOneConference() {
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        jdbcTemplate.execute("DELETE zombie_conference");
         conferenceRepository = new ConferenceRepository(jdbcTemplate);
         conferenceRepository.saveConference(
                 new Conference(1L,"Java","Java","Java","here","2013-01-01","2013-01-05",100));
@@ -46,7 +48,7 @@ public class UserRegistrationPageTest extends BasePageTest{
     @Test
     public void shouldGoTo404PageIfConferenceDoesNotExist(){
         populateWithOneConference();
-        openConferenceRegistrationPage("100");
+        openConferenceRegistrationPage("2");
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Page Not Found")));
     }
 

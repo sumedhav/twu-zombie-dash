@@ -56,6 +56,20 @@ public class RegistrationFormTest {
     }
 
     @Test
+    public void shouldReturnEmptyPhoneNoErrorIfAddressIsEmpty() {
+        RegistrationForm registrationForm = new RegistrationForm();
+        List<String> errorCodes = registrationForm.validate();
+        assertThat(errorCodes.contains("phoneNoFieldEmpty"),is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldReturnEmptyZipcodeErrorIfAddressIsEmpty() {
+        RegistrationForm registrationForm = new RegistrationForm();
+        List<String> errorCodes = registrationForm.validate();
+        assertThat(errorCodes.contains("zipcodeFieldEmpty"),is(equalTo(true)));
+    }
+
+    @Test
     public void shouldReturnPasswordMismatchErrorIfPasswordDoNotMatch(){
         RegistrationForm registrationForm = new RegistrationForm();
         registrationForm.setPassword("Password1");
