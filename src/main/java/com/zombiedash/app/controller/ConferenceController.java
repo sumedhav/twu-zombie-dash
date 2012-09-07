@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 @Controller
@@ -63,7 +64,7 @@ public class ConferenceController {
     @RequestMapping(value = "view/{conferenceId}")
     public ModelAndView view(@PathVariable String conferenceId) {
         try{
-            Conference thisConference = conferenceRepository.showConference(Long.parseLong(conferenceId));
+            Conference thisConference = conferenceRepository.showConference(UUID.fromString(conferenceId));
             return new ModelAndView("conferenceview","Conference", thisConference);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -32,8 +33,9 @@ public class ConferenceFormTest {
 
     @Test
     public void shouldCreateConference() throws Exception {
-        assertThat(conferenceForm.createConference(),
-                ConferenceMatcher.isAConferenceWith(1L, "NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", 10));
+        Conference conference = conferenceForm.createConference();
+        assertThat(conference,
+                ConferenceMatcher.isAConferenceWith(conference.getId(), "NotNull", "NotNull", "NotNull", "NotNull", "2013-03-04", "2013-03-04", 10));
     }
 
     @Test

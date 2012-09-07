@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -18,9 +20,10 @@ public class RegistrationServiceTest {
 
     @Test
     public void shouldReturnTrueIfConferenceIdIsInDatabase(){
-        when(conferenceRepository.isConferencePresent(anyLong())).thenReturn(true);
+        UUID confId = UUID.randomUUID();
+        when(conferenceRepository.isConferencePresent(confId)).thenReturn(true);
         RegistrationService registrationService = new RegistrationService(conferenceRepository);
-        boolean result = registrationService.validateConferenceId((long)1);
+        boolean result = registrationService.validateConferenceId(confId);
         assertTrue(result);
     }
 

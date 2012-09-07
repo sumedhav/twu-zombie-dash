@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -30,37 +32,39 @@ public class UserRegistrationPageTest extends BasePageTest{
     }
 
 
-    private void populateWithOneConference() {
+    private UUID populateWithOneConference() {
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         jdbcTemplate.execute("DELETE zombie_conference");
         conferenceRepository = new ConferenceRepository(jdbcTemplate);
+        UUID conferenceId = UUID.randomUUID();
         conferenceRepository.saveConference(
-                new Conference(1L,"Java","Java","Java","here","2013-01-01","2013-01-05",100));
+                new Conference(conferenceId,"Java","Java","Java","here","2013-01-01","2013-01-05",100));
+        return conferenceId;
     }
 
     @Test
     public void shouldGoToUserRegistrationPageIfConferenceExists(){
-        populateWithOneConference();
-        openConferenceRegistrationPage("1");
+        UUID confId = populateWithOneConference();
+        openConferenceRegistrationPage(confId);
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Attendee Registration")));
     }
 
     @Test
     public void shouldGoTo404PageIfConferenceDoesNotExist(){
         populateWithOneConference();
-        openConferenceRegistrationPage("2");
+        openConferenceRegistrationPage(UUID.randomUUID());
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Page Not Found")));
     }
 
 
-    private void openConferenceRegistrationPage(String conferenceId) {
-        browser.open("/app/zombie/register/" + conferenceId);
+    private void openConferenceRegistrationPage(UUID conferenceId) {
+        browser.open("/app/zombie/register/" + conferenceId.toString());
     }
 
     @Test
     public void shouldRegisterAnAttendeeWithValidInformation() {
-        populateWithOneConference();
-        openConferenceRegistrationPage("1");
+        UUID confId = populateWithOneConference();
+        openConferenceRegistrationPage(confId);
         browser.inputTextOn("userName","ExampleUsername")
                .inputTextOn("password","Password1")
                .inputTextOn("password2", "Password1")

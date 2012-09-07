@@ -4,6 +4,8 @@ import com.zombiedash.app.repository.ConferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class RegistrationService {
     private ConferenceRepository conferenceRepository;
@@ -13,7 +15,7 @@ public class RegistrationService {
         this.conferenceRepository = conferenceRepository;
     }
 
-    public boolean validateConferenceId(long confId) {
+    public boolean validateConferenceId(UUID confId) {
         return conferenceRepository.isConferencePresent(confId);
     }
 }

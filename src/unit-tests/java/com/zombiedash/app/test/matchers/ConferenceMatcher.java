@@ -6,9 +6,11 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
+import java.util.UUID;
+
 public class ConferenceMatcher extends BaseMatcher <Conference>{
 
-    private Long id;
+    private UUID id;
     private String name;
     private String topic;
     private String description;
@@ -18,7 +20,7 @@ public class ConferenceMatcher extends BaseMatcher <Conference>{
     private int maxAttendees;
     private Conference actualConference;
 
-    public ConferenceMatcher(Long id, String name, String topic, String description, String venue, String startDate, String endDate, int maxAttendees) {
+    public ConferenceMatcher(UUID id, String name, String topic, String description, String venue, String startDate, String endDate, int maxAttendees) {
         this.id = id;
         this.name = name;
         this.topic = topic;
@@ -32,7 +34,7 @@ public class ConferenceMatcher extends BaseMatcher <Conference>{
     @Override
     public boolean matches(Object item) {
         actualConference = (Conference) item;
-        return id == actualConference.getId() &&
+        return id.equals(actualConference.getId()) &&
                 name.equals(actualConference.getName()) &&
                 topic.equals(actualConference.getTopic()) &&
                 description.equals(actualConference.getDescription()) &&
@@ -56,7 +58,7 @@ public class ConferenceMatcher extends BaseMatcher <Conference>{
         description.appendText("Expected user [" + expectedConferenceAttributes + "], " + "instead got user with username: [" + actualConferenceAttributes + "]");
     }
 
-    private String conferenceAttributes(Long id,
+    private String conferenceAttributes(UUID id,
                                   String name,
                                   String topic,
                                   String description,
@@ -64,10 +66,10 @@ public class ConferenceMatcher extends BaseMatcher <Conference>{
                                   String startDate,
                                   String endDate,
                                   int maxAttendees) {
-        return StringUtils.join(new String[]{String.valueOf(id), name, topic, description, venue, startDate, endDate, String.valueOf(maxAttendees)}, ", ");
+        return StringUtils.join(new String[]{id.toString(), name, topic, description, venue, startDate, endDate, String.valueOf(maxAttendees)}, ", ");
     }
 
-    public static Matcher<Conference> isAConferenceWith(Long id,
+    public static Matcher<Conference> isAConferenceWith(UUID id,
                                                         String name,
                                                         String topic,
                                                         String description,

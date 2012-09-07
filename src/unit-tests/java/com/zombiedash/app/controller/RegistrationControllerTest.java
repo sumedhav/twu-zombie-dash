@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -22,19 +24,19 @@ public class RegistrationControllerTest {
 
     @Test
     public void shouldGoToRegistrationPageIfConferenceIdIsValid(){
-        long confId = 1;
+        UUID confId = UUID.randomUUID();
         when(conferenceRepository.isConferencePresent(confId)).thenReturn(true);
         RegistrationController registrationController = new RegistrationController(conferenceRepository);
-        ModelAndView result = registrationController.openRegistrationPage(confId);
+        ModelAndView result = registrationController.openRegistrationPage(confId.toString());
         assertThat(result.getViewName(),is("attendeeregistration"));
     }
 
     @Test
     public void shouldGoToErrorPageIfConferenceIdIsInvalid(){
-        long confId = 1;
+        UUID confId = UUID.randomUUID();
         when(conferenceRepository.isConferencePresent(confId)).thenReturn(false);
         RegistrationController registrationController = new RegistrationController(conferenceRepository);
-        ModelAndView result = registrationController.openRegistrationPage(confId);
+        ModelAndView result = registrationController.openRegistrationPage(confId.toString());
         assertThat(result.getViewName(),is("404"));
     }
 

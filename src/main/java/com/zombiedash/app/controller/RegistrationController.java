@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -25,10 +26,11 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register/{confId}", method= GET)
-    public ModelAndView openRegistrationPage(@PathVariable("confId") long confId) {
-        if (conferenceRepository.isConferencePresent(confId)) {
-            Map<String,Long> conferenceMap = new HashMap<String,Long>();
-            conferenceMap.put("confId",confId);
+    public ModelAndView openRegistrationPage(@PathVariable("confId") String confId) {
+        UUID uuid = UUID.fromString(confId);
+        if (conferenceRepository.isConferencePresent(uuid)) {
+            Map<String,UUID> conferenceMap = new HashMap<String,UUID>();
+            conferenceMap.put("confId",uuid);
             return new ModelAndView("attendeeregistration","model",conferenceMap);
         } else {
             return new ModelAndView("404");
@@ -36,7 +38,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register/{confId}", method = POST)
-    public ModelAndView submitRegistrationPage(@PathVariable("confId") long confId) {
+    public ModelAndView submitRegistrationPage(@PathVariable("confId") String confId) {
         return new ModelAndView("registrationconfirmed");
     }
 

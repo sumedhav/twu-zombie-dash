@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class ConferenceRepository {
@@ -25,9 +26,8 @@ public class ConferenceRepository {
     }
 
     public Integer saveConference(Conference conference) {
-        int id = jdbcTemplate.queryForInt(SQL_CONFERENCE_NUM_ENTRIES) + 1;
         return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
-                id,
+                conference.getId(),
                 conference.getName(),
                 conference.getTopic(),
                 conference.getDescription(),
@@ -37,17 +37,17 @@ public class ConferenceRepository {
                 conference.getMaxAttendee());
     }
 
-    public boolean isConferencePresent(long conferenceID) {
+    public boolean isConferencePresent(UUID conferenceID) {
         if (jdbcTemplate.queryForInt(SQL_COUNT_CONFERENCE,conferenceID) == 1)
             return true;
         else
             return false;
     }
 
-    public Conference showConference(Long conferenceID) {
+    public Conference showConference(UUID conferenceID) {
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceID);
         rowSet.first();
-        return new Conference(rowSet.getLong(1),
+        return new Conference((UUID)rowSet.getObject(1),
                 rowSet.getString(2),
                 rowSet.getString(3),
                 rowSet.getString(4),
@@ -63,7 +63,7 @@ public class ConferenceRepository {
         for (Map<String, Object> resultRow : conferenceSQLCollection) {
             conferences.add(
                     new Conference(
-                            (Long) resultRow.get("id"),
+                            (UUID) resultRow.get("id"),
                             (String) resultRow.get("name"),
                             (String) resultRow.get("topic"),
                             (String) resultRow.get("description"),

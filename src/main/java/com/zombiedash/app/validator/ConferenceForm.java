@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ConferenceForm {
 
@@ -115,7 +116,7 @@ public class ConferenceForm {
 
 
     public Conference createConference() {
-        return new Conference(1L,
+        return new Conference(UUID.randomUUID(),
                 conf_name,
                 conf_topic,
                 conf_description,

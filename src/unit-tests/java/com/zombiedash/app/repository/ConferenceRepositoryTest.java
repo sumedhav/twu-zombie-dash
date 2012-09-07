@@ -8,16 +8,16 @@ import org.mockito.stubbing.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ConferenceRepositoryTest {
@@ -31,11 +31,12 @@ public class ConferenceRepositoryTest {
 
     @Test
     public void shouldNotThrowErrorAndSaveConferenceToDatabase() throws Exception {
-        when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES)).thenReturn(0);
-        int id = jdbcTemplate.queryForInt(ConferenceRepository.SQL_CONFERENCE_NUM_ENTRIES) + 1;
-        when(jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,id,"","","","","","",0)).thenReturn(1);
+        when(jdbcTemplate.update(anyString(), anyObject(),anyString(),anyString(), anyString(),anyString(),anyString(),
+                anyString(), anyInt())).thenReturn(1);
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         Conference conference = mock(Conference.class);
+        UUID uuid = UUID.randomUUID();
+        when(conference.getId()).thenReturn(uuid);
         when(conference.getDescription()).thenReturn("");
         when(conference.getEndDate()).thenReturn("");
         when(conference.getMaxAttendee()).thenReturn(0);
@@ -43,13 +44,14 @@ public class ConferenceRepositoryTest {
         when(conference.getStartDate()).thenReturn("");
         when(conference.getTopic()).thenReturn("");
         when(conference.getVenue()).thenReturn("");
-        int numberOfRows = conferenceRepository.saveConference(conference);
-        assertThat(numberOfRows,is(equalTo(1)));
+        conferenceRepository.saveConference(conference);
+        verify(jdbcTemplate).update("INSERT INTO zombie_conference values (?,?,?,?,?,?,?,?)",uuid, "", "", "", "", "", "", 0);
     }
 
     @Test
     public void shouldReadConferenceFromDatabase() {
-        when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1L))
+        UUID conferenceId = UUID.randomUUID();
+        when(jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,conferenceId))
                 .thenAnswer(new Answer<SqlRowSet>() {
                     @Override
                     public SqlRowSet answer(InvocationOnMock invocation) throws Throwable {
@@ -62,7 +64,7 @@ public class ConferenceRepositoryTest {
                     }
                 });
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        Conference actualConference = conferenceRepository.showConference(1L);
+        Conference actualConference = conferenceRepository.showConference(conferenceId);
         assertThat(actualConference.getEndDate(),is(equalTo("2012-06-07")));
     }
 
@@ -73,7 +75,7 @@ public class ConferenceRepositoryTest {
             public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
                 List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
                 HashMap<String,Object> firstResult = new HashMap<String, Object>();
-                firstResult.put("id",1L);
+                firstResult.put("id",UUID.randomUUID());
                 firstResult.put("name", "Java");
                 firstResult.put("topic","Java");
                 firstResult.put("description","Java");
@@ -83,7 +85,7 @@ public class ConferenceRepositoryTest {
                 firstResult.put("max_attendee",1);
                 resultBlock.add(firstResult);
                 HashMap<String, Object> secondResult = new HashMap<String, Object>();
-                secondResult.put("id",2L);
+                secondResult.put("id",UUID.randomUUID());
                 secondResult.put("name", "Java");
                 secondResult.put("topic", "Java");
                 secondResult.put("description", "Java");
@@ -104,15 +106,17 @@ public class ConferenceRepositoryTest {
 
     @Test
     public void shouldReturnFalseIfIdIsNotPresent(){
-        when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_COUNT_CONFERENCE,1L)).thenReturn(0);
+        UUID conferenceId = UUID.randomUUID();
+        when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_COUNT_CONFERENCE,conferenceId)).thenReturn(0);
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        assertThat(conferenceRepository.isConferencePresent(1L),is(equalTo(false)));
+        assertThat(conferenceRepository.isConferencePresent(conferenceId),is(equalTo(false)));
     }
 
     @Test
     public void shouldReturnTrueIfIdIsPresent(){
-        when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_COUNT_CONFERENCE,1L)).thenReturn(1);
+        UUID conferenceId = UUID.randomUUID();
+        when(jdbcTemplate.queryForInt(ConferenceRepository.SQL_COUNT_CONFERENCE,conferenceId)).thenReturn(1);
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        assertThat(conferenceRepository.isConferencePresent(1L),is(equalTo(true)));
+        assertThat(conferenceRepository.isConferencePresent(conferenceId),is(equalTo(true)));
     }
 }

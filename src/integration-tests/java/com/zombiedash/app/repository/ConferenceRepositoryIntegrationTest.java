@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
@@ -35,13 +36,14 @@ public class ConferenceRepositoryIntegrationTest {
     @Test
     @Rollback(true)
     public void shouldSaveConferenceToDatabase() throws Exception {
-        Conference conference = new Conference((long)-1,"Java Conference", "Java",
+        UUID conferenceId = UUID.randomUUID();
+        Conference conference = new Conference(conferenceId,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
         int numberOfRows = conferenceRepository.saveConference(conference);
-        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,1);
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,conferenceId);
         sqlRowSet.first();
         assertThat(numberOfRows,is(equalTo(1)));
-        assertThat(sqlRowSet.getInt(1),is(equalTo(1)));
+        assertThat((UUID) sqlRowSet.getObject(1), is(equalTo(conferenceId)));
         assertThat(sqlRowSet.getString(2),is(equalTo("Java Conference")));
         assertThat(sqlRowSet.getString(3),is(equalTo("Java")));
         assertThat(sqlRowSet.getString(4),is(equalTo("for people who really like java")));
@@ -54,7 +56,7 @@ public class ConferenceRepositoryIntegrationTest {
     @Test
     @Rollback(true)
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
-        long conf_id = 3;
+        UUID conf_id = UUID.randomUUID();
         populateDatabaseWithSampleData(conf_id, "Java Conference");
         Conference actualConference = conferenceRepository.showConference(conf_id);
         assertThat(actualConference.getId(),is(equalTo(conf_id)));
@@ -70,8 +72,8 @@ public class ConferenceRepositoryIntegrationTest {
     @Test
     @Rollback(true)
     public void shouldRetrieveAllConferencesFromDatabase() throws Exception{
-        long conf_id1 = 1;
-        long conf_id2 = 2;
+        UUID conf_id1 = UUID.randomUUID();
+        UUID conf_id2 = UUID.randomUUID();
         populateDatabaseWithSampleData(conf_id1, "Java Conference");
         populateDatabaseWithSampleData(conf_id2, "Other Java Conference");
         List<Conference> actualConferences = conferenceRepository.showAllConferences();
@@ -87,7 +89,7 @@ public class ConferenceRepositoryIntegrationTest {
         }
     }
 
-    private void populateDatabaseWithSampleData(long conferenceId, String conferenceName) {
+    private void populateDatabaseWithSampleData(UUID conferenceId, String conferenceName) {
         jdbcTemplate.update(ConferenceRepository.SQL_CONFERENCE_INSERT,conferenceId,conferenceName, "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
     }
@@ -95,15 +97,17 @@ public class ConferenceRepositoryIntegrationTest {
     @Test
     @Rollback(true)
     public void shouldReturnTrueIfConferenceIsPresent(){
-        populateDatabaseWithSampleData(1L,"");
-        assertThat(conferenceRepository.isConferencePresent(1L), is(equalTo(true)));
+        UUID conferenceId = UUID.randomUUID();
+        populateDatabaseWithSampleData(conferenceId,"");
+        assertThat(conferenceRepository.isConferencePresent(conferenceId), is(equalTo(true)));
     }
 
     @Test
     @Rollback(true)
     public void shouldReturnFalseIfConferenceIsNotPresent(){
-        populateDatabaseWithSampleData(1L,"");
-        assertThat(conferenceRepository.isConferencePresent(2L), is(equalTo(false)));
+        UUID conferenceId = UUID.randomUUID();
+        populateDatabaseWithSampleData(conferenceId,"");
+        assertThat(conferenceRepository.isConferencePresent(UUID.randomUUID()), is(equalTo(false)));
     }
 
 }

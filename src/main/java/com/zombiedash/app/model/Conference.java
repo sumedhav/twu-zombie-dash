@@ -1,8 +1,10 @@
 package com.zombiedash.app.model;
 
 
+import java.util.UUID;
+
 public class Conference {
-  private Long id;
+  private UUID id;
   private String name;
   private String topic;
   private String description;
@@ -11,7 +13,7 @@ public class Conference {
   private String endDate;
   private int maxAttendee;
 
-  public Conference(Long id,
+  public Conference(UUID id,
                     String name,
                     String topic,
                     String description,
@@ -29,7 +31,7 @@ public class Conference {
     this.maxAttendee = maxAttendee;
   }
 
-  public Long getId() {
+  public UUID getId() {
       return id;
   }
 
