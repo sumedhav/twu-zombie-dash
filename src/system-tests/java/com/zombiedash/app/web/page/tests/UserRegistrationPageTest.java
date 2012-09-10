@@ -75,7 +75,7 @@ public class UserRegistrationPageTest extends BasePageTest{
                .inputTextOn("name","Example Name")
                .inputTextOn("dob","1950-01-01")
                .selectFromDropDown("countrylist","India")
-               .inputTextOn("phoneno", "1-555-555-5555")
+               .inputTextOn("phoneNo", "1-555-555-5555")
                .inputTextOn("address","Example Address")
                .inputTextOn("zipcode", "55555");
 

@@ -30,11 +30,6 @@ public class User implements java.io.Serializable {
         return userRole;
     }
 
-    @Override
-    public String toString() {
-        return "Username: " + userName + ", Role: " + userRole + ", Name: " + name + ", Email: " + email;
-    }
-
     public String getUserName() {
         return userName;
     }

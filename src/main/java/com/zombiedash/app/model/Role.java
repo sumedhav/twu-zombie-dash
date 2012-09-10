@@ -17,6 +17,8 @@ public enum Role {
             return ADMIN;
         if (roleName.equals("1") || roleName.equalsIgnoreCase("GameDesigner"))
             return GAME_DESIGNER;
+        if (roleName.equals("2") || roleName.equalsIgnoreCase("Attendee"))
+            return ATTENDEE;
         throw new RuntimeException("Invalid Role name.");
     }
 

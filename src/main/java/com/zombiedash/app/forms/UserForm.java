@@ -3,44 +3,20 @@ package com.zombiedash.app.forms;
 
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserForm {
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     private String userName;
     private String password;
     private String role;
     private String fullName;
     private String email;
-
     private List<String> errorCodes = new ArrayList<String>();
 
     public UserForm() {}
-
 
     public ModelMap populateFormValuesIntoMap(){
         ModelMap modelMap  = new ModelMap();
@@ -86,5 +62,25 @@ public class UserForm {
 
     public List getErrorCodes() {
         return errorCodes;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

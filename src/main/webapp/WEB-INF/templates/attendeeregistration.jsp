@@ -28,7 +28,6 @@
              <div class="row-fluid">
                  <div class="span12">
                      <form id="attendeeRegistration" class="form-horizontal" name="attendeeRegistration" method="post" action="${pageContext.request.contextPath}/zombie/register/${model.confId}">
-
                          <div class="control-group">
                               <label class="control-label align-left" for="userName"><span class="error ">*</span>Username:</label>
                               <div class="controls">
@@ -40,11 +39,10 @@
                                 <div id="invalid_user_name" class="error ">${invalidUserName}</div>
                               </div>
                          </div>
-
                         <div class="control-group">
                                <label class="control-label align-left" for="password"><span class="error ">*</span>Password:</label>
                                <div class="controls">
-                                 <input type="text" name="password" id="password" onkeyup="limitNumOfCharsInField(password, 40, '#password_exceed_error');"
+                                 <input type="password" name="password" id="password" onkeyup="limitNumOfCharsInField(password, 40, '#password_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(password, 40, '#password_exceed_error');" value="<c:out value="${model.password}"/>" placeholder="enter password"/>
                                  <span id="password_field_empty" class="error ">${passwordFieldEmpty}</span>
                                  <span id="password_exceed_error" class="error "></span>
@@ -52,16 +50,15 @@
                                </div>
                         </div>
                         <div class="control-group">
-                               <label class="control-label align-left" for="password"><span class="error ">*</span>Password:</label>
+                               <label class="control-label align-left" for="password"><span class="error ">*</span>Retype Password:</label>
                                <div class="controls">
-                                 <input type="text" name="password2" id="password2" onkeyup="limitNumOfCharsInField(password, 40, '#password_exceed_error');"
+                                 <input type="password" name="password2" id="password2" onkeyup="limitNumOfCharsInField(password, 40, '#password_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(password2, 40, '#password_exceed_error');" value="<c:out value="${model.password}"/>" placeholder="enter password"/>
                                  <span id="password_field_empty" class="error ">${passwordFieldEmpty}</span>
                                  <span id="password_exceed_error" class="error "></span>
                                  <div id="invalid_password" class="error ">${invalidPassword}</div>
                                </div>
                         </div>
-
                          <div class="control-group">
                              <label class="control-label align-left" for="email"><span class="error ">*</span>Email:</label>
                              <div class="controls">
@@ -72,7 +69,6 @@
                                 <div id="invalid_email" class="error ">${invalidEmail}</div>
                              </div>
                          </div>
-
                         <div class="control-group">
                                 <label class="control-label align-left" for="name"><span class="error ">*</span>Name:</label>
                                 <div class="controls">
@@ -93,12 +89,11 @@
                                   <div id="invalid_dob" class="error ">${invalidDob}</div>
                                 </div>
                         </div>
-
                         <div class="control-group">
-                                <label class="control-label align-left" for="phoneno"><span class="error ">*</span>Phone Number::</label>
+                                <label class="control-label align-left" for="phoneNo"><span class="error ">*</span>Phone Number::</label>
                                 <div class="controls">
-                                  <input type="text" name="phoneno" id="phoneno" onkeyup="limitNumOfCharsInField(phoneno, 40, '#name_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(phoneno, 40, '#name_exceed_error');" value="<c:out value="${model.phoneno}"/>" placeholder="enter phone number"/>
+                                  <input type="text" name="phoneNo" id="phoneNo" onkeyup="limitNumOfCharsInField(phoneno, 40, '#name_exceed_error');"
+                                        onkeydown="limitNumOfCharsInField(phoneNo, 40, '#name_exceed_error');" value="<c:out value="${model.phoneNo}"/>" placeholder="enter phone number"/>
                                   <span id="phoneno_field_empty" class="error ">${phonenoFieldEmpty}</span>
                                   <span id="phoneno_exceed_error" class="error "></span>
                                   <div id="invalid_phoneno" class="error ">${invalidPhoneno}</div>
@@ -124,17 +119,12 @@
                                   <div id="invalid_zipcode" class="error ">${invalidZipcode}</div>
                                 </div>
                         </div>
-
-
                          <div class="control-group">
                             <label class="control-label align-left" for="country">Country:</label>
                             <div class="controls">
                               <jsp:include page="countrylist.html"/>
                               </div>
                          </div>
-
-
-
                          <div class="control-group">
                             <div class="controls offset6" >
                                  <input id="submit" name="submit" type="submit" value="Save"  class="btn btn-primary" />

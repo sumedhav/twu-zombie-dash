@@ -8,7 +8,6 @@ public class Attendee {
     private String address;
     private String phoneNo;
 
-
     public Attendee(User user,
                     String dob,
                     String country,

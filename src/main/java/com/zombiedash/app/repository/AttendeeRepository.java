@@ -30,7 +30,6 @@ public class AttendeeRepository {
     }
 
     public boolean insertAttendee(Attendee attendee, String password, UUID conference_id) {
-        try {
             jdbcTemplate.update(INSERT_INTO_USER_TABLE,
                     attendee.getUsername(),
                     password,
@@ -46,9 +45,6 @@ public class AttendeeRepository {
                     attendee.getZipcode(),
                     conference_id);
             return true;
-        } catch (Exception ex) {
-            return false;
-        }
     }
 
     public Attendee fetchAttendee(String username, String conference) {
