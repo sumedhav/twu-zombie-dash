@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/trivia_game_logic.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
 <script type="text/javascript">
@@ -33,8 +34,10 @@
         </div>
         <div class="row-fluid">
              <div class="span12">
+                 <div name="error_message_div" class="error" id="incompleteQuestionsError">
+                 </div>
                  <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
-                 onSubmit="return validate(${fn:length(questions)})">
+                 onSubmit="return validate(${fn:length(questions)},incompleteQuestionsError)">
 
                   <c:forEach var="question" items="${questions}" varStatus="questionStatus">
                      <div class="question">${question.text}</div>

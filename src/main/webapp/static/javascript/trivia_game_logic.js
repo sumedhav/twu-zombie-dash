@@ -1,4 +1,4 @@
-function validate(numQns){
+function validate(numQns,errorName){
     var radios = document.getElementsByTagName('input');
     var value=0;
     for (var i = 0; i < radios.length; i++) {
@@ -7,7 +7,7 @@ function validate(numQns){
         }
     }
     if (value < numQns) {
-      alert("You need to answer all the questions!");
+      $(errorName).html("<br />You need to answer all the questions!!");
       return false;
       }
     else {
