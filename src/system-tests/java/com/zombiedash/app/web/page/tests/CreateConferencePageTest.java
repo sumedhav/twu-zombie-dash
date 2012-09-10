@@ -54,6 +54,7 @@ public class CreateConferencePageTest {
         browser.alertOk();
         assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Conference Home")));
     }
+
     @Test
     public void adminClickOnCancelAndCancelOnAlertBoxToStayOnPage() {
         browser = BrowserSessionBuilder
@@ -67,6 +68,7 @@ public class CreateConferencePageTest {
         browser.alertCancel();
         assertThat(browser.getPageTitle(),is(equalTo("Create Conference Page")));
     }
+
     @Test
     public void shouldBeOnTheSamePageOfConferenceWhenSomeOrAllFieldsAreInvalid() throws Exception {
         browser.open("/app/zombie/admin/conference/create");
@@ -80,6 +82,7 @@ public class CreateConferencePageTest {
         browser.clickOn("submit");
         assertThat(browser.getPageTitle(), is(equalTo("Create Conference Page")));
     }
+
     @Test
     public void shouldShowErrorMessageWhenFieldsAreEmpty() throws Exception {
         browser.open("/app/zombie/admin/conference/create");

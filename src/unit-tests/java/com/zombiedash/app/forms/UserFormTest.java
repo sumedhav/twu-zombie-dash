@@ -4,6 +4,7 @@ import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.test.matchers.UserMatcher;
 import org.junit.Test;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
@@ -131,4 +132,15 @@ public class UserFormTest {
         assertThat(userForm.hasErrors(),is(false));
     }
 
+    @Test
+    public void shouldPopulateModelMapWithFormValues() throws Exception {
+        UserForm userForm = userFormFactory("user123","role","name","email@email.com", "password134234fsd");
+        ModelMap modelMap = userForm.populateFormValuesIntoMap();
+        String username =(String) modelMap.get("username");
+        assertThat(username,is("user123"));
+        assertThat((String)modelMap.get("role"),is("role"));
+        assertThat((String)modelMap.get("fullName"),is("name"));
+        assertThat((String)modelMap.get("email"),is("email@email.com"));
+        assertThat((String)modelMap.get("password"),is("password134234fsd"));
+    }
 }
