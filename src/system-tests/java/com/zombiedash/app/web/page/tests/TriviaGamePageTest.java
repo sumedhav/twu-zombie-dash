@@ -69,15 +69,8 @@ public class TriviaGamePageTest extends BasePageTest {
         }
         browser.clickOn("submit_button");
 
-        assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
-        assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
-
-        for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
-            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
-            assertThat(options.get(0).isSelected(),is(true));
-        }
-
-        assertThat(browser.findElement(By.name("question_"+questions.size())).isSelected(),is(false));
+        assertThat(browser.getPageTitle(), is("Attendee Home"));
+        assertThat(browser.findElement(By.id("obtainedScore")).getText(), is(String.valueOf(questions.size())));
     }
 
     @Test
@@ -100,10 +93,7 @@ public class TriviaGamePageTest extends BasePageTest {
         }
         browser.clickOn("submit_button");
 
-        assertThat(browser.getPageTitle(), is("Results Page"));
-        assertThat(browser.findElement(By.id("obtainedScore")).getText(), is(String.valueOf(questions.size())));
-        assertThat(browser.findElement(By.id("maxScore")).getText(), is(String.valueOf(questions.size())));
-    }
+        assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
 
 
 

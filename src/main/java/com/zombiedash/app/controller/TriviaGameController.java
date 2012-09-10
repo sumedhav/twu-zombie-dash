@@ -6,12 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/conference/user/game")
@@ -31,18 +26,4 @@ public class TriviaGameController {
         modelAndView.addObject("questions", questionRepository.listAllQuestions());
         return modelAndView;
     }
-
-    @RequestMapping(value = "result", method = RequestMethod.POST)
-    public ModelAndView showResultsPage(@RequestParam Map<String, String> params) {
-        int noOfQuestionsInRepository=questionRepository.listAllQuestions().size();
-        ModelAndView modelAndView = new ModelAndView("result");
-        List<String> userAnswers=new ArrayList<String>();
-        int question_id;
-        for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){
-            userAnswers.add(params.get("question_"+question_id));
-        }
-        modelAndView.addObject("maxScore", userAnswers.size());
-        modelAndView.addObject("obtainedScore",resultService.calculateScore(userAnswers));
-        return modelAndView;
-}
 }

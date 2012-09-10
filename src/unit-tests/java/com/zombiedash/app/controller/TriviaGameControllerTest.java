@@ -11,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,12 +59,5 @@ public class TriviaGameControllerTest {
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 
         assertThat(actualQuestions,sameInstance(expectedQuestions));
-    }
-
-    @Test
-    public void shouldPopulateModelAndViewScoreForTheGame(){
-        when(resultService.calculateScore(new ArrayList<String>())).thenReturn(0);
-        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showResultsPage(new HashMap<String,String>());
-        assertThat(modelAndView.getViewName(), is("result"));
     }
 }

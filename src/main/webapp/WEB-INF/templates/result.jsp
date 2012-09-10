@@ -22,9 +22,9 @@
             <h1 class="pageTitle">
                 <div>Test Completed</div>
             </h1>
-            <div class="sectionTitle">
-                Your score is <b id="obtainedScore">${obtainedScore}</b> out of <b id="maxScore">${maxScore}</b>.
-            </div>
+             <div class="sectionTitle">
+                 Your score is <b id="obtainedScore">${obtainedScore}</b> out of <b id="maxScore">${maxScore}</b>.
+             </div>
          </div>
     </body>
 </html>

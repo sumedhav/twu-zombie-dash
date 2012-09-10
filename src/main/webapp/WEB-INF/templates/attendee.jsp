@@ -20,9 +20,12 @@
         <h1 class="pageTitle">
             <div>Welcome Attendee!!!</div>
         </h1>
-        <div class="sectionTitle">
+         <div class="sectionTitle">
+         Your current score is <b id="obtainedScore">${obtainedScore}</b>
+         </div>
+         </br>
+         <div class="sectionTitle">
             <a href="${pageContext.request.contextPath}/zombie/conference/user/game">Play Game</a>
-            <!--Your score is <b id="obtainedScore">${obtainedScore}</b> out of <b id="maxScore">${maxScore}</b>. -->
         </div>
      </div>
 </body>
