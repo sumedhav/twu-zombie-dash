@@ -4,10 +4,6 @@ import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.test.matchers.UserMatcher;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
@@ -15,10 +11,9 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.powermock.api.mockito.PowerMockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Role.class)
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(Role.class)
 public class UserFormTest {
 
     private UserForm userFormFactory(String username, String role, String name, String email, String password) {
@@ -152,10 +147,8 @@ public class UserFormTest {
 
     @Test
     public void shouldCreateAUser() throws Exception {
-        PowerMockito.mockStatic(Role.class);
-        when(Role.generateRole("GameDesigner")).thenReturn(Role.GAME_DESIGNER);
         UserForm userForm = userFormFactory("user123","GameDesigner","name","email@email.com", "password134234fsd");
         User user = userForm.createUser();
-        assertThat(user, UserMatcher.isAUserWith("user123", Role.GAME_DESIGNER,"name","email@email.com"));
+        assertThat(user, UserMatcher.isAUserWith("user123", Role.GAME_DESIGNER, "name", "email@email.com"));
     }
 }

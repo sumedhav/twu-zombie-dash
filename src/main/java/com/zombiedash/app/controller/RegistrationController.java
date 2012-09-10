@@ -63,7 +63,7 @@ public class RegistrationController {
         }else{
             try{
                 Attendee attendee = registrationForm.createAttendee();
-                attendeeRepository.saveAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
+                attendeeRepository.insertAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
                 modelAndView = new ModelAndView("registrationconfirmed");
                 return modelAndView;
             }catch (Exception exception){

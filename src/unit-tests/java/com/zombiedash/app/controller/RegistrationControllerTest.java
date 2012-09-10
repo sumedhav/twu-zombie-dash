@@ -76,7 +76,7 @@ public class RegistrationControllerTest {
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
 
-        verify(attendeeRepository).saveAttendee(attendee, "password1", conferenceId);
+        verify(attendeeRepository).insertAttendee(attendee, "password1", conferenceId);
         assertThat(modelAndView.getViewName(), is("registrationconfirmed"));
     }
 
@@ -87,7 +87,7 @@ public class RegistrationControllerTest {
 
         RegistrationForm registrationForm = aValidRegistrationForm(attendee);
 
-        doThrow(Exception.class).when(attendeeRepository).saveAttendee(attendee, "password1", conferenceId);
+        doThrow(Exception.class).when(attendeeRepository).insertAttendee(attendee, "password1", conferenceId);
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
         assertThat(modelAndView.getViewName(), is(equalTo("generalerrorpage")));
