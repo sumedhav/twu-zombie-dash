@@ -46,7 +46,7 @@ public class UserRepository {
     return userList.get(0);
   }
 
-  public Boolean createUser(User user, String password){
+  public Boolean insertUser(User user, String password){
     Integer result = jdbcTemplate.update(INSERT_USER,
         user.getUserName(),
         passwordEncoder.encodePassword(password,SALT),

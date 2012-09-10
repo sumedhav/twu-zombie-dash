@@ -79,7 +79,7 @@ public class UserRepositoryIntegrationTest {
 
   @Test
   public void shouldCreateUser() {
-    Boolean userCreationFlag = userRepository.createUser(new User("designer", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"), "password1");
+    Boolean userCreationFlag = userRepository.insertUser(new User("designer", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"), "password1");
     User actualUser = retrieveUserByUsername("designer");
     assertThat(userCreationFlag,is(equalTo(true)));
     assertThat(actualUser, isAUserWith("designer", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"));
@@ -88,7 +88,7 @@ public class UserRepositoryIntegrationTest {
   @Test
   public void shouldHashUserPassword() throws Exception {
     PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
-    userRepository.createUser(new User("designer", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"), "password1");
+    userRepository.insertUser(new User("designer", Role.GAME_DESIGNER, "MR.Right", "right@rightmail.com"), "password1");
     String result = jdbcTemplate.queryForObject("SELECT password FROM zombie_users WHERE username = 'designer'", String.class);
     assertThat(result , is(equalTo(passwordEncoder.encodePassword("password1",UserRepository.SALT))));
   }

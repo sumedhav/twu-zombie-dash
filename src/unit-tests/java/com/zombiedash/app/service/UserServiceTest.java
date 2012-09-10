@@ -88,7 +88,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldCreateNewUser() {
-        given(userRepository.createUser(user, "password1")).willReturn(true);
+        given(userRepository.insertUser(user, "password1")).willReturn(true);
 
         Boolean userCreated = userService.createUser(user, "password1");
 

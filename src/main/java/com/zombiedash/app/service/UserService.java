@@ -36,7 +36,7 @@ public class UserService {
 
     public boolean createUser(User user, String password) {
         if(userRepository.userNameExists(user.getUserName())) throw new IllegalArgumentException("userNameAlreadyExists");
-        return userRepository.createUser(user, password);
+        return userRepository.insertUser(user, password);
     }
 
     public void deleteUser(String username){
