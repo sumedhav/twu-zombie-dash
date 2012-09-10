@@ -18,7 +18,7 @@ public class AttendeeControllerTest {
         QuestionRepository questionRepository = mock(QuestionRepository.class);
         ResultService userService = mock(ResultService.class);
         AttendeeController attendeeController =new AttendeeController(questionRepository,userService);
-        ModelAndView actualModel = attendeeController.showCustomerPage(new HashMap<String, String>());
+        ModelAndView actualModel = attendeeController.display(new HashMap<String, String>());
         assertThat(actualModel.getViewName(), is(equalTo("attendee")));
     }
 
