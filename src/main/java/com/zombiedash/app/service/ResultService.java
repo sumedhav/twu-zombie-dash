@@ -5,7 +5,9 @@ import com.zombiedash.app.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ResultService {
@@ -29,4 +31,16 @@ public class ResultService {
         }
         return score;
     }
+
+    public int getScoreOfUserSelectedOptions(Map<String, String> params) {
+        int noOfQuestionsInRepository = questionRepository.listAllQuestions().size();
+        List<String> userAnswers=new ArrayList<String>();
+        int question_id;
+        for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){
+            userAnswers.add(params.get("question_"+question_id));
+        }
+       return  calculateScore(userAnswers);
+    }
+
+
 }
