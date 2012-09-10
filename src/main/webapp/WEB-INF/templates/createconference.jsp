@@ -39,7 +39,7 @@
                                 <textarea id='conf_name' name='conf_name' onkeyup="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
                                    onkeydown="limitNumOfCharsInField(conf_name, 100, '#nameExceedError');"
                                    placeholder="enter conference name"><c:out value="${model.name}"/></textarea>
-                                <span class="error  field-missing">${model.nameFieldMissing}</span>
+                                <span  id="errorConferenceName" class="error  field-missing">${model.nameFieldMissing}</span>
                                 <span id="nameExceedError" class="error "></span>
                              </div>
                          </div>
