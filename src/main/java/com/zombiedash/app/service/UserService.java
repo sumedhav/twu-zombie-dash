@@ -26,15 +26,15 @@ public class UserService {
         return userRepository.fetchUser(username, password);
     }
 
-    public List<User> getAllUsers() {
+    public List<User> fetchAllUsers() {
         return userRepository.fetchAllUsers();
     }
 
-    public User getUser(String username){
+    public User fetchUser(String username){
         return userRepository.fetchUser(username);
     }
 
-    public boolean createUser(User user, String password) {
+    public boolean insertUser(User user, String password) {
         if(userRepository.userNameExists(user.getUserName())) throw new IllegalArgumentException("userNameAlreadyExists");
         return userRepository.insertUser(user, password);
     }
@@ -44,8 +44,8 @@ public class UserService {
         userRepository.deleteUser(username);
     }
 
-    public List<User> getAllNonAdminUsers() {
-        List<User> allUsers = getAllUsers();
+    public List<User> fetchAllNonAdminUsers() {
+        List<User> allUsers = fetchAllUsers();
         Predicate<User> isNonAdmin = new Predicate<User>() {
             public boolean apply(User user) {
                 return user.getRole() != Role.ADMIN;

@@ -71,7 +71,7 @@ public class UserServiceTest {
         list.add(user);
         given(userRepository.fetchAllUsers()).willReturn(list);
 
-        List<User> result = userService.getAllUsers();
+        List<User> result = userService.fetchAllUsers();
 
         assertThat(result.get(0), sameInstance(admin));
         assertThat(result.get(1), sameInstance(user));
@@ -81,7 +81,7 @@ public class UserServiceTest {
     public void shouldGetUser() {
         given(userRepository.fetchUser("user")).willReturn(user);
 
-        User result = userService.getUser("user");
+        User result = userService.fetchUser("user");
 
         assertThat(result, sameInstance(user));
     }
@@ -90,7 +90,7 @@ public class UserServiceTest {
     public void shouldCreateNewUser() {
         given(userRepository.insertUser(user, "password1")).willReturn(true);
 
-        Boolean userCreated = userService.createUser(user, "password1");
+        Boolean userCreated = userService.insertUser(user, "password1");
 
         assertThat(userCreated, is(true));
     }
@@ -100,7 +100,7 @@ public class UserServiceTest {
         given(user.getUserName()).willReturn("username");
         given(userRepository.userNameExists("username")).willReturn(true);
 
-        userService.createUser(user, "password1");
+        userService.insertUser(user, "password1");
         thrown.expectMessage("userNameAlreadyExists");
     }
 

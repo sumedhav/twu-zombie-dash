@@ -6,7 +6,6 @@ import com.zombiedash.app.forms.UserForm;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
-import org.springframework.aop.target.LazyInitTargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +37,7 @@ public class UsersController {
 
     @RequestMapping(value = "/users/list")
     public ModelAndView listUsers() {
-        return new ModelAndView("listusers", "Users", userService.getAllNonAdminUsers());
+        return new ModelAndView("listusers", "Users", userService.fetchAllNonAdminUsers());
     }
 
     @RequestMapping(value = "/user/create", method = GET)
@@ -58,7 +56,7 @@ public class UsersController {
         } else {
             try {
                 User user = userForm.createUser();
-                userService.createUser(user, userForm.getPassword());
+                userService.insertUser(user, userForm.getPassword());
                 modelAndView = new ModelAndView("redirect:/zombie/admin/users/list");
             } catch (IllegalArgumentException exception) {
                 modelAndView = new ModelAndView("createuser");
@@ -90,7 +88,7 @@ public class UsersController {
 
     @RequestMapping(value = "/user/view/{userName}")
     public ModelAndView showUserDetails(@PathVariable("userName") String userName) {
-        User user = userService.getUser(userName);
+        User user = userService.fetchUser(userName);
         if (user.getRole() == Role.ADMIN) {
             return new ModelAndView("404");
         }

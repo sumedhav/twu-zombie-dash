@@ -40,7 +40,7 @@ public class UsersControllerTest {
     public void shouldNotViewAdminDetails() throws Exception {
         User adminUser = mock(User.class);
         given(adminUser.getRole()).willReturn(Role.ADMIN);
-        given(userService.getUser("adminUser")).willReturn(adminUser);
+        given(userService.fetchUser("adminUser")).willReturn(adminUser);
 
         String result = usersController.showUserDetails("adminUser").getViewName();
 
@@ -64,7 +64,7 @@ public class UsersControllerTest {
         given(alice.getRole()).willReturn(Role.GAME_DESIGNER);
         given(bob.getName()).willReturn("bob");
         given(bob.getRole()).willReturn(Role.GAME_DESIGNER);
-        given(userService.getAllNonAdminUsers()).willReturn(list);
+        given(userService.fetchAllNonAdminUsers()).willReturn(list);
 
         ModelAndView modelAndView = usersController.listUsers();
         List<User> result = (List<User>) modelAndView.getModel().get("Users");
@@ -89,7 +89,7 @@ public class UsersControllerTest {
 
     @Test
     public void shouldDisplayErrorPageForUnExpectedException() {
-        doThrow(new RuntimeException()).when(userService).createUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
+        doThrow(new RuntimeException()).when(userService).insertUser(argThat(isAUserWith("username", Role.GAME_DESIGNER, "MR Right", "right@gmail.com")), eq("password1"));
         ModelAndView modelAndView = usersController.createUser(userFormFactory("username", "GameDesigner", "MR Right", "right@gmail.com", "password1"));
 
         assertThat(modelAndView.getViewName(), is("generalerrorpage"));
@@ -128,7 +128,7 @@ public class UsersControllerTest {
         when(user.getRole()).thenReturn(Role.GAME_DESIGNER);
         when(user.getUserName()).thenReturn("JohnnyBoy");
         when(user.getEmail()).thenReturn("John@me.com");
-        when(userService.getUser("username")).thenReturn(user);
+        when(userService.fetchUser("username")).thenReturn(user);
     }
 
     @Test
