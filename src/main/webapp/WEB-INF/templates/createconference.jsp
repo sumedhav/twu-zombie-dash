@@ -11,7 +11,7 @@
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
 <link type="text/css" href="${pageContext.request.contextPath}/static/css/custom.datepick.css" rel="stylesheet"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/util.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
 
 </head>
 <body onload='document.conferenceForm.conf_name.focus();'>

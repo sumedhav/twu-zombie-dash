@@ -17,7 +17,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/util.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
   </head>
   <body>
     <div style="display: none;">
