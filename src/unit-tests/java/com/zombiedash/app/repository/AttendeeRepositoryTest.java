@@ -45,7 +45,7 @@ public class AttendeeRepositoryTest {
                     }
                 });
         AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
-        Attendee attendee = attendeeRepository.getAttendee("username", "conference");
+        Attendee attendee = attendeeRepository.fetchAttendee("username", "conference");
         assertThat(attendee.getUsername(), is(equalTo("username")));
     }
 }

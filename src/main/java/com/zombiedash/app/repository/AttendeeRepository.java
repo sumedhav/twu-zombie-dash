@@ -51,7 +51,7 @@ public class AttendeeRepository {
         }
     }
 
-    public Attendee getAttendee(String username, String conference) {
+    public Attendee fetchAttendee(String username, String conference) {
         Object[] arg = new Object[]{username, conference};
         List<Attendee> attendee = jdbcTemplate.query(SELECT_ATTENDEE, arg, new RowMapper<Attendee>() {
             @Override
