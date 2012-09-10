@@ -54,7 +54,8 @@
                    <div class="control-group">
                     <div class="controls offset8" >
                          <input type="submit" value="Submit" name="submit" id="submit_button"  class="btn btn-primary"/>&nbsp &nbsp
-                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/conference/user/home')" name="cancel" id="cancel_button" class="btn btn-primary"/>
+                        <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/attendee/1/home')" name="cancel" id="cancel_button" class="btn btn-primary"/>
+
                     </div>
                    </div>
                  </form>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/conference/user")
+@RequestMapping("/attendee/1")
 public class AttendeeController {
         public AttendeeController() {
         }
