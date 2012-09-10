@@ -43,7 +43,7 @@ public class UserRepositoryIntegrationTest {
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta123', 'password1', 1, 'First Game Designer', 'gm1@zombie.com')");
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('charlie', 'qwerty1234', 1, 'Second Game Designer', 'gm2@zombie.com')");
-    List<User> result = userRepository.retrieveAllUsers();
+    List<User> result = userRepository.fetchAllUsers();
     assertThat(result.get(0), isAUserWith("admin", Role.ADMIN, "Administrator", "admin@zombie.com"));
     assertThat(result.get(1), isAUserWith("beta123", Role.GAME_DESIGNER, "First Game Designer", "gm1@zombie.com"));
     assertThat(result.get(2), isAUserWith("charlie", Role.GAME_DESIGNER, "Second Game Designer", "gm2@zombie.com"));
@@ -53,20 +53,20 @@ public class UserRepositoryIntegrationTest {
   @Test
   public void shouldRetrieveGivenUserIfUserExists() {
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('admin', 'Welcome1', 0, 'Administrator', 'admin@zombie.com')");
-    User result = userRepository.getUser("admin");
+    User result = userRepository.fetchUser("admin");
     assertThat(result, isAUserWith("admin", Role.ADMIN, "Administrator", "admin@zombie.com"));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void shouldThrowRuntimeExceptionIfNoUserIsFound() {
-    userRepository.getUser("wrongName");
+    userRepository.fetchUser("wrongName");
   }
 
   @Test
   public void shouldLookUpAuthenticationCredentialsAndReturnUsernameIfFound() {
     PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('beta123', '" + passwordEncoder.encodePassword("password1",UserRepository.SALT) + "', 1, 'Game Designer 1', 'gm1@zombie.com')");
-    User actualUser = userRepository.getUser("beta123", "password1");
+    User actualUser = userRepository.fetchUser("beta123", "password1");
     assertThat(actualUser, isAUserWith("beta123", Role.GAME_DESIGNER, "Game Designer 1", "gm1@zombie.com"));
   }
 
@@ -74,7 +74,7 @@ public class UserRepositoryIntegrationTest {
   public void shouldThrowInvalidArgumentExceptionIfCredentialsAreBad() {
     PasswordEncoder passwordEncoder = new ShaPasswordEncoder(512);
     jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', '" + passwordEncoder.encodePassword("correctPassword1", UserRepository.SALT) + "', 1, '', '')");
-    userRepository.getUser("beta123", "wrongPassword1");
+    userRepository.fetchUser("beta123", "wrongPassword1");
   }
 
   @Test

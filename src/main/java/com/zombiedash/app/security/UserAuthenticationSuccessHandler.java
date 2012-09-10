@@ -27,7 +27,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        User user = userRepository.getUser(authentication.getPrincipal().toString());
+        User user = userRepository.fetchUser(authentication.getPrincipal().toString());
         response.sendRedirect(request.getContextPath() + redirectUrl(user));
     }
 

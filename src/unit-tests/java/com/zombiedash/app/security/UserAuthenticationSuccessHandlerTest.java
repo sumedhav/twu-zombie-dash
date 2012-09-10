@@ -40,7 +40,7 @@ public class UserAuthenticationSuccessHandlerTest {
         UUID userId = randomUUID();
         String username = "admin";
         User user = new User(userId, username, ADMIN, "silvio the admin", "italiano@mailinator.com");
-        when(userRepository.getUser(username)).thenReturn(user);
+        when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
         Collection authorities = asList(adminAuthority());
@@ -55,7 +55,7 @@ public class UserAuthenticationSuccessHandlerTest {
         UUID userId = randomUUID();
         String username = "raphael";
         User user = new User(userId, username, ATTENDEE, "raphael oliveira", "brasileiro@mailinator.com");
-        when(userRepository.getUser(username)).thenReturn(user);
+        when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
         given(request.getContextPath()).willReturn("app");
@@ -68,7 +68,7 @@ public class UserAuthenticationSuccessHandlerTest {
         UUID userId = randomUUID();
         String username = "charles";
         User user = new User(userId, username, ATTENDEE, "charles kimpolo", "cramo@mailinator.com");
-        when(userRepository.getUser(username)).thenReturn(user);
+        when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
         given(request.getContextPath()).willReturn("app");

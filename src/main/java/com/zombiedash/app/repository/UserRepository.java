@@ -29,17 +29,17 @@ public class UserRepository {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public List<User> retrieveAllUsers() {
+  public List<User> fetchAllUsers() {
     return jdbcTemplate.query(RETRIEVE_ALL_USERS, userMapper());
   }
 
-  public User getUser(String username){
-    List<User> userList = retrieveAllUsersWithUserName(username);
+  public User fetchUser(String username){
+    List<User> userList = fetchAllUsersWithUserName(username);
     if(userList.size() == 0) throw new IllegalArgumentException("Username not found");
     return userList.get(0);
   }
 
-  public User getUser(String username, String password){
+  public User fetchUser(String username, String password){
     Object[] arg = new Object[]{username, passwordEncoder.encodePassword(password,SALT)};
     List<User> userList = jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME_AND_PASSWORD, arg, userMapper());
     if(userList.size() == 0) throw new BadCredentialsException("The username or password you entered is incorrect");
@@ -64,7 +64,7 @@ public class UserRepository {
 
 
   public boolean userNameExists(String username) {
-    List<User> users = retrieveAllUsersWithUserName(username);
+    List<User> users = fetchAllUsersWithUserName(username);
     return users.size() != 0;
   }
 
@@ -80,7 +80,7 @@ public class UserRepository {
     };
   }
 
-  private List<User> retrieveAllUsersWithUserName(String username) {
+  private List<User> fetchAllUsersWithUserName(String username) {
     Object[] arg = new Object[]{username};
     return jdbcTemplate.query(RETRIEVE_USER_BY_USERNAME, arg, userMapper());
   }

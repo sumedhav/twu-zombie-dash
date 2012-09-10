@@ -23,15 +23,15 @@ public class UserService {
     }
 
     public User authenticateAndReturnUser(String username, String password) {
-        return userRepository.getUser(username, password);
+        return userRepository.fetchUser(username, password);
     }
 
     public List<User> getAllUsers() {
-        return userRepository.retrieveAllUsers();
+        return userRepository.fetchAllUsers();
     }
 
     public User getUser(String username){
-        return userRepository.getUser(username);
+        return userRepository.fetchUser(username);
     }
 
     public boolean createUser(User user, String password) {
