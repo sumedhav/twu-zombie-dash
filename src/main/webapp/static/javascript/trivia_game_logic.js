@@ -7,7 +7,7 @@ function validate(numQns,errorName){
         }
     }
     if (value < numQns) {
-      $(errorName).html("<br />You need to answer all the questions!!");
+      $(errorName).html("<br />You need to answer all the questions!");
       return false;
       }
     else {

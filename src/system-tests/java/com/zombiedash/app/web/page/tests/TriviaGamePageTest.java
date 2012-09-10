@@ -74,7 +74,7 @@ public class TriviaGamePageTest extends BasePageTest {
     }
 
     @Test
-    public void shouldDisplayAlertWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
+    public void shouldDisplayErrorMessageWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
 
         List<WebElement> questions = browser.findElements(By.className("question"));
@@ -82,10 +82,10 @@ public class TriviaGamePageTest extends BasePageTest {
             List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
             options.get(0).click();
         }
-        browser.clickOn("submit_button")
-                .alertOk();
+        browser.clickOn("submit_button");
 
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
+        assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
 
         for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
             List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
