@@ -26,9 +26,11 @@ public class AttendeeRepositoryIntegrationTest {
         UUID conferenceId = UUID.randomUUID();
         jdbcTemplate.execute(String.format("INSERT INTO zombie_conference VALUES(cast('%s' AS uuid),'name','topic','description'," +
                 "'venue','start','end',5);", conferenceId.toString()));
-        Attendee attendee = new Attendee(new User("username", Role.ATTENDEE, "name", "email"), "dob", "country", null, null, null);
+        jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', 'password1', 2, 'Attendee', 'attendee@zombie.com')");
+
+        Attendee attendee = new Attendee(new User("username", Role.ATTENDEE, "Attendee", "attendee@zombie.com"), "dob", "country", null, null, null);
         AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
-        boolean isAttendeeSaved = attendeeRepository.insertAttendee(attendee, "password12", conferenceId);
+        boolean isAttendeeSaved = attendeeRepository.insertAttendee(attendee, conferenceId);
         assertThat(isAttendeeSaved, is(true));
     }
 

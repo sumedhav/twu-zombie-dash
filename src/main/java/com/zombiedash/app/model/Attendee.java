@@ -2,12 +2,12 @@ package com.zombiedash.app.model;
 
 public class Attendee {
     private User user;
+
     private String dob;
     private String country;
     private String zipcode;
     private String address;
     private String phoneNo;
-
     public Attendee(User user,
                     String dob,
                     String country,
@@ -20,6 +20,10 @@ public class Attendee {
         this.phoneNo=phoneNo;
         this.address=address;
         this.zipcode=zipcode;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getUsername() {

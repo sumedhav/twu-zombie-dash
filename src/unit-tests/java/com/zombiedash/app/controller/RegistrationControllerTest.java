@@ -4,8 +4,8 @@ package com.zombiedash.app.controller;
 import com.zombiedash.app.error.ValidationMessagesMap;
 import com.zombiedash.app.forms.RegistrationForm;
 import com.zombiedash.app.model.Attendee;
-import com.zombiedash.app.repository.AttendeeRepository;
 import com.zombiedash.app.repository.ConferenceRepository;
+import com.zombiedash.app.service.RegistrationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 public class RegistrationControllerTest {
 
     @Mock
-    AttendeeRepository attendeeRepository;
+    RegistrationService attendeeRepository  ;
     @Mock
     ConferenceRepository conferenceRepository;
     @Mock
@@ -76,7 +76,7 @@ public class RegistrationControllerTest {
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
 
-        verify(attendeeRepository).insertAttendee(attendee, "password1", conferenceId);
+        verify(attendeeRepository).registerAttendee(attendee, "password1", conferenceId);
         assertThat(modelAndView.getViewName(), is("registrationconfirmed"));
     }
 
@@ -87,7 +87,7 @@ public class RegistrationControllerTest {
 
         RegistrationForm registrationForm = aValidRegistrationForm(attendee);
 
-        doThrow(Exception.class).when(attendeeRepository).insertAttendee(attendee, "password1", conferenceId);
+        doThrow(Exception.class).when(attendeeRepository).registerAttendee(attendee, "password1", conferenceId);
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
         assertThat(modelAndView.getViewName(), is(equalTo("generalerrorpage")));

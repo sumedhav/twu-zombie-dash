@@ -29,6 +29,8 @@ public enum Role {
                 return "Administrator";
             case 1:
                 return "Game Designer";
+            case 2:
+                return "Attendee";
             default:
                 return "Invalid Role";
         }

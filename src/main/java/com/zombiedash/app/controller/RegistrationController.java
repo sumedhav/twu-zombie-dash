@@ -3,8 +3,8 @@ package com.zombiedash.app.controller;
 import com.zombiedash.app.error.ValidationMessagesMap;
 import com.zombiedash.app.forms.RegistrationForm;
 import com.zombiedash.app.model.Attendee;
-import com.zombiedash.app.repository.AttendeeRepository;
 import com.zombiedash.app.repository.ConferenceRepository;
+import com.zombiedash.app.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +25,11 @@ public class RegistrationController {
 
     private ConferenceRepository conferenceRepository;
     private ValidationMessagesMap validationMessagesMap;
-    private AttendeeRepository attendeeRepository;
-
+    private RegistrationService registrationService;
     @Autowired
-    public RegistrationController(ConferenceRepository conferenceRepository, AttendeeRepository attendeeRepository, ValidationMessagesMap validationMessagesMap) {
+    public RegistrationController(ConferenceRepository conferenceRepository, RegistrationService registrationService, ValidationMessagesMap validationMessagesMap) {
         this.conferenceRepository = conferenceRepository;
-        this.attendeeRepository = attendeeRepository;
+        this.registrationService = registrationService;
         this.validationMessagesMap = validationMessagesMap;
     }
 
@@ -63,10 +62,11 @@ public class RegistrationController {
         }else{
             try{
                 Attendee attendee = registrationForm.createAttendee();
-                attendeeRepository.insertAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
+                registrationService.registerAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
                 modelAndView = new ModelAndView("registrationconfirmed");
                 return modelAndView;
-            }catch (Exception exception){
+            }
+            catch (Exception exception){
                 modelAndView = new ModelAndView("generalerrorpage");
                 modelAndView.addObject("urlToReturnTo","/zombie/registration/"+conferenceId);
                 modelAndView.addObject("returnToPrevPageMessage","Go Back To Registration Page to try again");

@@ -89,8 +89,15 @@
                                   <div id="invalid_dob" class="error ">${invalidDob}</div>
                                 </div>
                         </div>
+                         <div class="control-group">
+                                <label class="control-label align-left" for="country"><span class="error ">*</span>Country:</label>
+                                <div class="controls">
+                                     <jsp:include page="countrylist.html"/>
+                                 </div>
+                          </div>
+
                         <div class="control-group">
-                                <label class="control-label align-left" for="phoneNo"><span class="error ">*</span>Phone Number::</label>
+                                <label class="control-label align-left" for="phoneNo">Phone Number::</label>
                                 <div class="controls">
                                   <input type="text" name="phoneNo" id="phoneNo" onkeyup="limitNumOfCharsInField(phoneno, 40, '#name_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(phoneNo, 40, '#name_exceed_error');" value="<c:out value="${model.phoneNo}"/>" placeholder="enter phone number"/>
@@ -100,7 +107,7 @@
                                 </div>
                         </div>
                         <div class="control-group">
-                                <label class="control-label align-left" for="address"><span class="error ">*</span>Address:</label>
+                                <label class="control-label align-left" for="address">Address:</label>
                                 <div class="controls">
                                   <input type="text" name="address" id="address" onkeyup="limitNumOfCharsInField(address, 40, '#name_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(address, 40, '#name_exceed_error');" value="<c:out value="${model.address}"/>" placeholder="enter address"/>
@@ -110,7 +117,7 @@
                                 </div>
                         </div>
                         <div class="control-group">
-                                <label class="control-label align-left" for="zipcode"><span class="error ">*</span>Zipcode:</label>
+                                <label class="control-label align-left" for="zipcode">Zipcode:</label>
                                 <div class="controls">
                                   <input type="text" name="zipcode" id="zipcode" onkeyup="limitNumOfCharsInField(zipcode, 40, '#name_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(zipcode, 40, '#name_exceed_error');" value="<c:out value="${model.zipcode}"/>" placeholder="enter zipcode"/>
@@ -119,12 +126,6 @@
                                   <div id="invalid_zipcode" class="error ">${invalidZipcode}</div>
                                 </div>
                         </div>
-                         <div class="control-group">
-                            <label class="control-label align-left" for="country">Country:</label>
-                            <div class="controls">
-                              <jsp:include page="countrylist.html"/>
-                              </div>
-                         </div>
                          <div class="control-group">
                             <div class="controls offset6" >
                                  <input id="submit" name="submit" type="submit" value="Save"  class="btn btn-primary" />

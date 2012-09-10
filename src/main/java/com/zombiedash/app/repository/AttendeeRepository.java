@@ -29,13 +29,7 @@ public class AttendeeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean insertAttendee(Attendee attendee, String password, UUID conference_id) {
-            jdbcTemplate.update(INSERT_INTO_USER_TABLE,
-                    attendee.getUsername(),
-                    password,
-                    Role.ATTENDEE.getVal(),
-                    attendee.getName(),
-                    attendee.getEmail());
+    public boolean insertAttendee(Attendee attendee, UUID conference_id) {
             jdbcTemplate.update(INSERT_INTO_ATTENDEE_INFO_TABLE,
                     attendee.getUsername(),
                     attendee.getDob(),

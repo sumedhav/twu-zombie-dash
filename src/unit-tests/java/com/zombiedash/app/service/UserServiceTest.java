@@ -95,13 +95,15 @@ public class UserServiceTest {
         assertThat(userCreated, is(true));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void shouldNotCreateUserIfUserAlreadyExists() throws Exception {
         given(user.getUserName()).willReturn("username");
         given(userRepository.userNameExists("username")).willReturn(true);
 
-        userService.insertUser(user, "password1");
+        thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("userNameAlreadyExists");
+
+        userService.insertUser(user, "password1");
     }
 
     @Test
