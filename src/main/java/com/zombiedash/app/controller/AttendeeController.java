@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,14 +25,7 @@ public class AttendeeController {
     @RequestMapping(value="home")
     public ModelAndView display(@RequestParam Map<String, String> params) {
         ModelAndView modelAndView = new ModelAndView("attendee");
-        int noOfQuestionsInRepository = questionRepository.fetchAllQuestions().size();
-        List<String> userAnswers=new ArrayList<String>();
-        int question_id;
-        for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){
-            userAnswers.add(params.get("question_"+question_id));
-        }
-           modelAndView.addObject("maxScore", userAnswers.size());
-           modelAndView.addObject("obtainedScore",resultService.calculateScore(userAnswers));
-           return modelAndView;
+        modelAndView.addObject("obtainedScore", resultService.getScoreOfUserSelectedOptions(params));
+        return modelAndView;
         }
 }
