@@ -32,7 +32,7 @@ public class AttendeeControllerTest {
         when(conferenceRepository.findConferenceById(conferenceId)).thenReturn(conference());
         UUID attendeeId = randomUUID();
         User user = new User("Tejinder", Role.ATTENDEE, "Klamour", "clovea@twu.com");
-        Attendee attendee = new Attendee(user, attendeeId, "2012-06-12", "India", "0800282820", "2050", "0820854959");
+        Attendee attendee = new Attendee(user,"2012-06-12", "India", "0800282820", "2050", "0820854959");
         when(attendeeRepository.findAttendeeById(attendeeId)).thenReturn(attendee);
 
         ModelAndView actualModel = attendeeController.display(attendeeId);
@@ -47,6 +47,7 @@ public class AttendeeControllerTest {
 
 
     private Conference conference() {
-        return new Conference(10l, "fake conference", "topic", "what is", "venue", "2002-10-10", "2012-12-12", 123);
+        UUID conferenceId = randomUUID();
+        return new Conference(conferenceId, "fake conference", "topic", "what is", "venue", "2002-10-10", "2012-12-12", 123);
     }
 }

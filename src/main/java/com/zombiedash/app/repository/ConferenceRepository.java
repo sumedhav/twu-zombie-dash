@@ -44,7 +44,7 @@ public class ConferenceRepository {
     }
 
     public Conference showConference(UUID conferenceID) {
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceID);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT, conferenceID);
         rowSet.first();
         return new Conference((UUID)rowSet.getObject(1),
                 rowSet.getString(2),
@@ -72,5 +72,10 @@ public class ConferenceRepository {
                             (Integer) resultRow.get("max_attendee")));
         }
         return conferences;
+    }
+
+    public Conference findConferenceById(UUID conferenceId) {
+        return new Conference(conferenceId,"Java Conference","Java Topic","Awesome Java",
+                "Venue", "2013-01-02","2013-01-02", 2);
     }
 }
