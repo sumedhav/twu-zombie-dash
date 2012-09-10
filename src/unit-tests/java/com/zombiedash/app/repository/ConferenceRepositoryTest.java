@@ -44,7 +44,7 @@ public class ConferenceRepositoryTest {
         when(conference.getStartDate()).thenReturn("");
         when(conference.getTopic()).thenReturn("");
         when(conference.getVenue()).thenReturn("");
-        conferenceRepository.saveConference(conference);
+        conferenceRepository.insertConference(conference);
         verify(jdbcTemplate).update("INSERT INTO zombie_conference values (?,?,?,?,?,?,?,?)",uuid, "", "", "", "", "", "", 0);
     }
 

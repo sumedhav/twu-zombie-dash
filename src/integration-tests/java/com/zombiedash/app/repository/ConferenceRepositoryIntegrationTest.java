@@ -1,7 +1,6 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Conference;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ public class ConferenceRepositoryIntegrationTest {
         UUID conferenceId = UUID.randomUUID();
         Conference conference = new Conference(conferenceId,"Java Conference", "Java",
                 "for people who really like java", "near you", "2012-08-21", "2012-08-23", 2);
-        int numberOfRows = conferenceRepository.saveConference(conference);
+        int numberOfRows = conferenceRepository.insertConference(conference);
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(ConferenceRepository.SQL_CONFERENCE_SELECT,conferenceId);
         sqlRowSet.first();
         assertThat(numberOfRows,is(equalTo(1)));

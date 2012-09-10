@@ -33,8 +33,8 @@ public class UserRegistrationPageTest extends BasePageTest{
         jdbcTemplate.execute("DELETE zombie_conference");
         conferenceRepository = new ConferenceRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
-        conferenceRepository.saveConference(
-                new Conference(conferenceId,"Java","Java","Java","here","2013-01-01","2013-01-05",100));
+        conferenceRepository.insertConference(
+            new Conference(conferenceId, "Java", "Java", "Java", "here", "2013-01-01", "2013-01-05", 100));
         return conferenceId;
     }
 

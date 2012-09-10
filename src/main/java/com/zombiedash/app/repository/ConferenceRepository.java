@@ -24,7 +24,7 @@ public class ConferenceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Integer saveConference(Conference conference) {
+    public Integer insertConference(Conference conference) {
         return jdbcTemplate.update(SQL_CONFERENCE_INSERT,
                 conference.getId(),
                 conference.getName(),
@@ -44,7 +44,7 @@ public class ConferenceRepository {
     }
 
     public Conference showConference(UUID conferenceID) {
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT,conferenceID);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT, conferenceID);
         rowSet.first();
         return new Conference((UUID)rowSet.getObject(1),
                 rowSet.getString(2),

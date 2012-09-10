@@ -39,7 +39,7 @@ public class ConferenceController {
             HashMap<String, String> model = conferenceForm.populateModelMapWithFormValues();
             if (validDataFlag) {
                 Conference conference = conferenceForm.createConference();
-                conferenceRepository.saveConference(conference);
+                conferenceRepository.insertConference(conference);
                 return new ModelAndView("redirect:/zombie/admin/conference/list","model", model);
             }
             return new ModelAndView("createconference","model", model);
