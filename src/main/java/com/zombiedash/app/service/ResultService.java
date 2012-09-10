@@ -33,7 +33,7 @@ public class ResultService {
     }
 
     public int getScoreOfUserSelectedOptions(Map<String, String> params) {
-        int noOfQuestionsInRepository = questionRepository.listAllQuestions().size();
+        int noOfQuestionsInRepository = questionRepository.fetchAllQuestions().size();
         List<String> userAnswers=new ArrayList<String>();
         int question_id;
         for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){
