@@ -24,7 +24,7 @@ public class OptionRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    List<Option> listAllOptions(UUID questionId) {
+    List<Option> fetchAllOptions(UUID questionId) {
         Object[] arg = new Object[]{questionId};
         return jdbcTemplate.query(SELECT_ALL_VALID_OPTIONS, arg, new RowMapper() {
             @Override

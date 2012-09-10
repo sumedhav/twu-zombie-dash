@@ -54,7 +54,7 @@ public class TriviaGameControllerTest {
         optionsList2.add(new Option(UUID.randomUUID(),"London", false, questionId1));
         Question question2 = new Question(questionId1, "Where are tigers?", optionsList2, taskId);
         expectedQuestions.add(question2);
-        when(mockQuestionRepository.listAllQuestions()).thenReturn(expectedQuestions);
+        when(mockQuestionRepository.fetchAllQuestions()).thenReturn(expectedQuestions);
         ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showGamePage();
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 

@@ -60,7 +60,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     public void shouldRetrieveAllQuestions() {
         insertDataIntoDatabase();
         int noOfQuestions = 2;
-        List<Question> questions = questionRepository.listAllQuestions();
+        List<Question> questions = questionRepository.fetchAllQuestions();
         assertThat(questions.size(), is(noOfQuestions));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
                 QuestionMatcher.aQuestionWith("Where is Red Fort",

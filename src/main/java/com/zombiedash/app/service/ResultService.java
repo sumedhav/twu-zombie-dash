@@ -20,7 +20,7 @@ public class ResultService {
 
     public int calculateScore(List<String> userAnswers) {
         int score=0,currentAnswer=0;
-        for(Question question: questionRepository.listAllQuestions()){
+        for(Question question: questionRepository.fetchAllQuestions()){
            if(question.getValidOption().equals(userAnswers.get(currentAnswer))){
 
                score+=POINTS_FOR_CORRECT_ANSWER;

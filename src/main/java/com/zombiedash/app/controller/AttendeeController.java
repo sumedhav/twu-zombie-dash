@@ -27,7 +27,7 @@ public class AttendeeController {
     @RequestMapping(value="home")
     public ModelAndView display(@RequestParam Map<String, String> params) {
         ModelAndView modelAndView = new ModelAndView("attendee");
-        int noOfQuestionsInRepository = questionRepository.listAllQuestions().size();
+        int noOfQuestionsInRepository = questionRepository.fetchAllQuestions().size();
         List<String> userAnswers=new ArrayList<String>();
         int question_id;
         for(question_id=1;question_id<=noOfQuestionsInRepository;question_id++){

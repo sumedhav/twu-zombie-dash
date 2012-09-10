@@ -28,7 +28,7 @@ public class ResultServiceIntegrationTest {
         List<Question> questionList = createQuestionList();
         userAnswers.add("Bangalore");
         userAnswers.add("Delhi");
-        when(questionRepository.listAllQuestions()).thenReturn(questionList);
+        when(questionRepository.fetchAllQuestions()).thenReturn(questionList);
         ResultService resultService = new ResultService(questionRepository);
         assertThat(resultService.calculateScore(userAnswers), is(expectedScore));
     }

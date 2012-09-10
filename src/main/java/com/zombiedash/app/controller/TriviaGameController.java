@@ -23,7 +23,7 @@ public class TriviaGameController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showGamePage() {
         ModelAndView modelAndView = new ModelAndView("triviagamepage");
-        modelAndView.addObject("questions", questionRepository.listAllQuestions());
+        modelAndView.addObject("questions", questionRepository.fetchAllQuestions());
         return modelAndView;
     }
 }

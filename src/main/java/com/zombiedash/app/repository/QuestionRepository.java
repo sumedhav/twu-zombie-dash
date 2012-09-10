@@ -1,7 +1,6 @@
 package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Question;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,13 +26,13 @@ public class QuestionRepository {
         this.optionRepository = new OptionRepository(jdbcTemplate);
     }
 
-    public List<Question> listAllQuestions() {
+    public List<Question> fetchAllQuestions() {
         return jdbcTemplate.query(SELECT_ALL_QUESTIONS, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
                 return new Question((UUID)resultSet.getObject("Id"),
-                        resultSet.getString("Text"), optionRepository.listAllOptions((UUID) resultSet.getObject("Id")), (UUID)resultSet.getObject("task_id"));
+                        resultSet.getString("Text"), optionRepository.fetchAllOptions((UUID) resultSet.getObject("Id")), (UUID)resultSet.getObject("task_id"));
             }
         });
     }
