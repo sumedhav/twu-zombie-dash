@@ -55,7 +55,7 @@ public class ConferenceController {
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public ModelAndView home() {
-        List<Conference> conferenceList = conferenceRepository.showAllConferences();
+        List<Conference> conferenceList = conferenceRepository.fetchAllConferences();
         ModelAndView modelAndView = new ModelAndView("conferencehome");
         if(conferenceList.isEmpty())
             modelAndView.addObject("emptyConferenceListMessage","No existing conferences !!");
@@ -66,7 +66,7 @@ public class ConferenceController {
     @RequestMapping(value = "view/{conferenceId}")
     public ModelAndView view(@PathVariable String conferenceId) {
         try{
-            Conference thisConference = conferenceRepository.showConference(UUID.fromString(conferenceId));
+            Conference thisConference = conferenceRepository.fetchConference(UUID.fromString(conferenceId));
             return new ModelAndView("conferenceview","Conference", thisConference);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");

@@ -70,7 +70,7 @@ public class ConferenceControllerTest {
     @Test
     public void shouldDisplayNoConferencesExistMessageWhenConferenceListIsEmpty() throws Exception {
         ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
-        when(conferenceRepository.showAllConferences()).thenReturn(new ArrayList<Conference>());
+        when(conferenceRepository.fetchAllConferences()).thenReturn(new ArrayList<Conference>());
         ConferenceController conferenceController = new ConferenceController(conferenceRepository);
         ModelAndView actualModel = conferenceController.home();
         assertThat(actualModel.getViewName(),is(equalTo("conferencehome")));

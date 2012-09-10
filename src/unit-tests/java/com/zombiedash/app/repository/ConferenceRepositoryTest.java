@@ -64,7 +64,7 @@ public class ConferenceRepositoryTest {
                     }
                 });
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        Conference actualConference = conferenceRepository.showConference(conferenceId);
+        Conference actualConference = conferenceRepository.fetchConference(conferenceId);
         assertThat(actualConference.getEndDate(),is(equalTo("2012-06-07")));
     }
 
@@ -93,7 +93,7 @@ public class ConferenceRepositoryTest {
             }
         });
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        List<Conference> actualConferences = conferenceRepository.showAllConferences();
+        List<Conference> actualConferences = conferenceRepository.fetchAllConferences();
         for (Conference actualConference : actualConferences) {
             assertThat(actualConference.getEndDate(), is(equalTo("2012-06-07")));
         }

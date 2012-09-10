@@ -57,7 +57,7 @@ public class ConferenceRepositoryIntegrationTest {
     public void shouldRetrieveConferenceFromDatabase() throws Exception {
         UUID conf_id = UUID.randomUUID();
         populateDatabaseWithSampleData(conf_id, "Java Conference");
-        Conference actualConference = conferenceRepository.showConference(conf_id);
+        Conference actualConference = conferenceRepository.fetchConference(conf_id);
         assertThat(actualConference.getId(),is(equalTo(conf_id)));
         assertThat(actualConference.getName(),is(equalTo("Java Conference")));
         assertThat(actualConference.getTopic(),is(equalTo("Java")));
@@ -75,7 +75,7 @@ public class ConferenceRepositoryIntegrationTest {
         UUID conf_id2 = UUID.randomUUID();
         populateDatabaseWithSampleData(conf_id1, "Java Conference");
         populateDatabaseWithSampleData(conf_id2, "Other Java Conference");
-        List<Conference> actualConferences = conferenceRepository.showAllConferences();
+        List<Conference> actualConferences = conferenceRepository.fetchAllConferences();
         assertThat(actualConferences.get(0).getName(),is(equalTo("Java Conference")));
         assertThat(actualConferences.get(1).getName(),is(equalTo("Other Java Conference")));
         for (Conference actualConference : actualConferences) {

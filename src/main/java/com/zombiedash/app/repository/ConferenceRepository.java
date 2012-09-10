@@ -43,7 +43,7 @@ public class ConferenceRepository {
             return false;
     }
 
-    public Conference showConference(UUID conferenceID) {
+    public Conference fetchConference(UUID conferenceID) {
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(SQL_CONFERENCE_SELECT, conferenceID);
         rowSet.first();
         return new Conference((UUID)rowSet.getObject(1),
@@ -56,7 +56,7 @@ public class ConferenceRepository {
                 rowSet.getInt(8));
     }
 
-    public List<Conference> showAllConferences() {
+    public List<Conference> fetchAllConferences() {
         List<Map<String,Object>> conferenceSQLCollection = jdbcTemplate.queryForList(SQL_CONFERENCE_SELECT_ALL);
         ArrayList<Conference> conferences = new ArrayList<Conference>();
         for (Map<String, Object> resultRow : conferenceSQLCollection) {
