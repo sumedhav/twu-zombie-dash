@@ -50,7 +50,7 @@ CREATE TABLE zombie_attendee_info(
                 phoneNo varchar(20),
                 address varchar(100),
                 zipcode varchar(20),
-                conference_ID INT NOT NULL,
+                conference_ID uuid NOT NULL,
                 PRIMARY KEY (username,conference_ID),
                 CONSTRAINT username_constraint FOREIGN KEY (username) REFERENCES zombie_users(username)
                 ON DELETE CASCADE,

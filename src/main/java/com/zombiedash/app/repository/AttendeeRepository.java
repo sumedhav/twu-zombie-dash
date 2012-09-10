@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class AttendeeRepository {
@@ -22,12 +23,13 @@ public class AttendeeRepository {
             "user.username=attendee.username";
 
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     public AttendeeRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean saveAttendee(Attendee attendee,String password,Integer conference_id) {
+    public boolean saveAttendee(Attendee attendee, String password, UUID conference_id) {
         try {
             jdbcTemplate.update(INSERT_INTO_USER_TABLE,
                     attendee.getUsername(),
@@ -44,15 +46,14 @@ public class AttendeeRepository {
                     attendee.getZipcode(),
                     conference_id);
             return true;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return false;
         }
     }
 
     public Attendee getAttendee(String username, String conference) {
-        Object[] arg = new Object[]{username,conference};
-        List<Attendee> attendee = jdbcTemplate.query(SELECT_ATTENDEE,arg,new RowMapper<Attendee>() {
+        Object[] arg = new Object[]{username, conference};
+        List<Attendee> attendee = jdbcTemplate.query(SELECT_ATTENDEE, arg, new RowMapper<Attendee>() {
             @Override
             public Attendee mapRow(ResultSet resultSet, int i) throws SQLException {
                 return new Attendee(
