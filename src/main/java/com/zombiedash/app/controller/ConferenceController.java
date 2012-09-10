@@ -42,10 +42,9 @@ public class ConferenceController {
                 Conference conference = conferenceForm.createConference();
                 conferenceRepository.saveConference(conference);
                 return new ModelAndView("redirect:/zombie/admin/conference/list","model", model);
-            } else {
-                return new ModelAndView("createconference","model", model);
             }
-        } catch (Exception e) {
+            return new ModelAndView("createconference","model", model);
+            } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
             modelAndView.addObject("errorMessage",e.getMessage());
             modelAndView.addObject("urlToReturnTo","/zombie/admin/conference/list");
@@ -58,7 +57,11 @@ public class ConferenceController {
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public ModelAndView home() {
         List<Conference> conferenceList = conferenceRepository.showAllConferences();
-        return new ModelAndView("conferencehome","Conferences", conferenceList);
+        ModelAndView modelAndView = new ModelAndView("conferencehome");
+        if(conferenceList.isEmpty())
+            modelAndView.addObject("emptyConferenceListMessage","No existing conferences !!");
+        modelAndView.addObject("Conferences", conferenceList);
+        return modelAndView;
     }
 
     @RequestMapping(value = "view/{conferenceId}")

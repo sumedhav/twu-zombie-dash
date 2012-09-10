@@ -34,6 +34,7 @@
                           <br>
                           </br>
                       </c:forEach>
+                      <div id="empty_conference_message">${emptyConferenceListMessage}</div>
                   </ol>
               </div>
 
