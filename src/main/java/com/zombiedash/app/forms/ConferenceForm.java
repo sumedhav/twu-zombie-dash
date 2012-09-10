@@ -76,18 +76,18 @@ public class ConferenceForm {
         conf_venue = conf_venue.trim();
         conf_max_attendees = conf_max_attendees.trim();
 
-        boolean validDataFlag = this.isValidNumber(conf_max_attendees);
-        validDataFlag &= this.isValidDate(conf_start_date, "startDateError");
-        validDataFlag &= this.isValidDate(conf_end_date, "endDateError");
-        validDataFlag &= this.isEndAfterStartDate(conf_start_date, conf_end_date, "endDateError");
+        boolean validDataFlag = isValidNumber(conf_max_attendees);
+        validDataFlag &= isValidDate(conf_start_date, "startDateError");
+        validDataFlag &= isValidDate(conf_end_date, "endDateError");
+        validDataFlag &= isEndAfterStartDate(conf_start_date, conf_end_date, "endDateError");
 
-        validDataFlag &= this.isCompletedField(conf_name, "nameFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_topic, "topicFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_description, "descriptionFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_venue, "venueFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_start_date, "startDateFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_end_date, "endDateFieldMissing");
-        validDataFlag &= this.isCompletedField(conf_max_attendees, "maxAttendeesFieldMissing");
+        validDataFlag &= isCompletedField(conf_name, "nameFieldMissing");
+        validDataFlag &= isCompletedField(conf_topic, "topicFieldMissing");
+        validDataFlag &= isCompletedField(conf_description, "descriptionFieldMissing");
+        validDataFlag &= isCompletedField(conf_venue, "venueFieldMissing");
+        validDataFlag &= isCompletedField(conf_start_date, "startDateFieldMissing");
+        validDataFlag &= isCompletedField(conf_end_date, "endDateFieldMissing");
+        validDataFlag &= isCompletedField(conf_max_attendees, "maxAttendeesFieldMissing");
 
         return validDataFlag;
     }
