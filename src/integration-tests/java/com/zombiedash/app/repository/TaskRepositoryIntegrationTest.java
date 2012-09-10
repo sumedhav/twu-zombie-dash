@@ -28,7 +28,7 @@ public class TaskRepositoryIntegrationTest {
     @Test
     public void shouldInsertTaskIntoDatabase() {
         TaskRepository taskRepository = new TaskRepository(jdbcTemplate);
-        UUID returnId = taskRepository.insert("zombie_task_one");
+        UUID returnId = taskRepository.insertTask("zombie_task_one");
         UUID  databaseId= jdbcTemplate.queryForObject("SELECT id FROM zombie_task where name='zombie_task_one'",
                 UUID.class);
         assertThat(databaseId, is(returnId));

@@ -20,7 +20,7 @@ public class TaskService {
     }
 
     public void insertTask(String name, List<Question> questions) {
-        UUID taskId = taskRepository.insert(name);
+        UUID taskId = taskRepository.insertTask(name);
         for (Question question : questions) {
             questionRepository.insertQuestion(taskId, question);
         }

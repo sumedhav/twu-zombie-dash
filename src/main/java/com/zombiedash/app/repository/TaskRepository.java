@@ -5,8 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.UUID;
 
-import static org.mockito.Matchers.anyString;
-
 public class TaskRepository {
 
     private JdbcTemplate jdbcTemplate;
@@ -17,7 +15,7 @@ public class TaskRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public UUID insert(String name) {
+    public UUID insertTask(String name) {
         UUID id = UUID.randomUUID();
         jdbcTemplate.update(INSERT_TASK, name, id);
         return id;

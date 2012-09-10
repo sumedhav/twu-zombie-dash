@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +30,7 @@ public class TaskServiceTest {
         questions = new ArrayList<Question>();
         questions.add(question);
         randomUUID = UUID.randomUUID();
-        when(taskRepository.insert(anyString())).thenReturn(randomUUID);
+        when(taskRepository.insertTask(anyString())).thenReturn(randomUUID);
 
     }
 
@@ -39,7 +38,7 @@ public class TaskServiceTest {
     public void shouldInsertTask()  {
         String name = "charles_task_one";
         taskService.insertTask(name, questions);
-        verify(taskRepository).insert(name);
+        verify(taskRepository).insertTask(name);
     }
 
     @Test
