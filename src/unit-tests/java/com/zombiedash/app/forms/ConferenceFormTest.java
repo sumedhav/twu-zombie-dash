@@ -1,8 +1,8 @@
-package com.zombiedash.app.validator;
+package com.zombiedash.app.forms;
 
-import com.zombiedash.app.forms.ConferenceForm;
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.test.matchers.ConferenceMatcher;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNull;
 
 public class ConferenceFormTest {
     private ConferenceForm conferenceForm;
@@ -75,5 +74,40 @@ public class ConferenceFormTest {
         boolean isValid = conferenceForm.isValidData();
         Assert.assertThat(isValid, is(false));
     }
+
+  @Test
+  public void shouldReturnFalseWhenNameFieldIsBeyondSizeLimit() {
+    conferenceForm.setConf_name(StringUtils.repeat("X",101));
+    boolean validData = conferenceForm.isValidData();
+    assertThat(validData,is(false));
+  }
+
+  @Test
+  public void shouldReturnFalseWhenDescriptionFieldIsBeyondSizeLimit() {
+    conferenceForm.setConf_description(StringUtils.repeat("X",501));
+    boolean validData = conferenceForm.isValidData();
+    assertThat(validData,is(false));
+  }
+
+  @Test
+  public void shouldReturnFalseWhenVenueFieldIsBeyondSizeLimit() {
+    conferenceForm.setConf_venue(StringUtils.repeat("X",201));
+    boolean validData = conferenceForm.isValidData();
+    assertThat(validData,is(false));
+  }
+
+  @Test
+  public void shouldReturnFalseWhenTopicFieldIsBeyondSizeLimit() {
+    conferenceForm.setConf_topic(StringUtils.repeat("X",101));
+    boolean validData = conferenceForm.isValidData();
+    assertThat(validData,is(false));
+  }
+
+  @Test
+  public void shouldReturnFalseWhenMaxAttendeesFieldIsBeyondSizeLimit() {
+    conferenceForm.setConf_max_attendees(StringUtils.repeat("9",7));
+    boolean validData = conferenceForm.isValidData();
+    assertThat(validData,is(false));
+  }
 
 }
