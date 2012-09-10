@@ -4,6 +4,7 @@ package com.zombiedash.app.web.page.tests;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -56,13 +57,11 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         assertThat(browser.findElement(By.id("option_1_1")).isSelected(), is(true));
     }
-
+    @Ignore()   
     @Test
     public void shouldDisplayErrorMessageWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
-
         browser.clickOn("submit_button");
-
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
 
