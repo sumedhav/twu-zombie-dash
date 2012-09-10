@@ -14,6 +14,7 @@ function createCalendar(element) {
 }
 
 $(document).ready(function() {
+  document.conferenceForm.conf_name.focus();
   createCalendar("#conf_start_date");
   createCalendar("#conf_end_date");
 })

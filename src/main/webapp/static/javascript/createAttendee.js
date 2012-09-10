@@ -4,5 +4,6 @@ function createCalendar(element) {
 }
 
 $(document).ready(function() {
+  document.attendeeRegistration.userName.focus();
   createCalendar("#dob");
 })
