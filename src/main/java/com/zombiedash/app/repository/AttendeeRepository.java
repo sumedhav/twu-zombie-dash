@@ -29,7 +29,7 @@ public class AttendeeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean saveAttendee(Attendee attendee, String password, UUID conference_id) {
+    public boolean insertAttendee(Attendee attendee, String password, UUID conference_id) {
         try {
             jdbcTemplate.update(INSERT_INTO_USER_TABLE,
                     attendee.getUsername(),

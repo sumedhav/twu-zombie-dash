@@ -28,7 +28,7 @@ public class AttendeeRepositoryIntegrationTest {
                 "'venue','start','end',5);", conferenceId.toString()));
         Attendee attendee = new Attendee(new User("username", Role.ATTENDEE, "name", "email"), "dob", "country", null, null, null);
         AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
-        boolean isAttendeeSaved = attendeeRepository.saveAttendee(attendee, "password12", conferenceId);
+        boolean isAttendeeSaved = attendeeRepository.insertAttendee(attendee, "password12", conferenceId);
         assertThat(isAttendeeSaved, is(true));
     }
 
