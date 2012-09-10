@@ -70,10 +70,4 @@ public class AttendeeRepository {
         });
         return attendee.get(0);
     }
-
-    public Attendee findAttendeeById(UUID attendeeId) {
-        return null;
-    }
-
-
 }

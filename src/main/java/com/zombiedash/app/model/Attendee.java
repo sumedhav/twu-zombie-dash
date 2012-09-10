@@ -1,7 +1,5 @@
 package com.zombiedash.app.model;
 
-import java.util.UUID;
-
 public class Attendee {
     private User user;
     private String dob;
@@ -9,7 +7,6 @@ public class Attendee {
     private String zipcode;
     private String address;
     private String phoneNo;
-    private UUID conferenceId;
 
 
     public Attendee(User user,
@@ -57,9 +54,5 @@ public class Attendee {
 
     public String getPhoneNo() {
         return phoneNo;
-    }
-
-    public UUID getConferenceId() {
-        return conferenceId;
     }
 }
