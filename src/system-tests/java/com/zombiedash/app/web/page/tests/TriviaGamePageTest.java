@@ -57,14 +57,36 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         assertThat(browser.findElement(By.id("option_1_1")).isSelected(), is(true));
     }
-    @Ignore()   
+
     @Test
     public void shouldDisplayErrorMessageWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
+
+        List<WebElement> questions = browser.findElements(By.className("question"));
+        for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
+            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
+            options.get(0).click();
+        }
         browser.clickOn("submit_button");
+
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
         assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
 
+        for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
+            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
+            assertThat(options.get(0).isSelected(),is(true));
+        }
+
+        assertThat(browser.findElement(By.name("question_"+questions.size())).isSelected(),is(false));
+    }
+
+    @Test
+    public void shouldDisplayErrorMessageWhenNoQuestionsAreAnsweredAndStayOnSamePage(){
+        initializeJavaScriptBrowserAndSetUpData();
+        browser.clickOn("submit_button");
+
+        assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
+        assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
     }
 
     @Test

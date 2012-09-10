@@ -34,11 +34,10 @@
         </div>
         <div class="row-fluid">
              <div class="span12">
+                 <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
+                 onSubmit="return validate(${fn:length(questions)},'#incompleteQuestionsError')">
                  <div name="error_message_div" class="error" id="incompleteQuestionsError">
                  </div>
-                 <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/conference/user/game/result"
-                 onSubmit="return validate(${fn:length(questions)},incompleteQuestionsError)">
-
                   <c:forEach var="question" items="${questions}" varStatus="questionStatus">
                      <div class="question">${question.text}</div>
                          <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
