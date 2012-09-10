@@ -1,5 +1,6 @@
 package com.zombiedash.app.validator;
 
+import com.zombiedash.app.forms.ConferenceForm;
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.test.matchers.ConferenceMatcher;
 import org.junit.Assert;
@@ -8,7 +9,6 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

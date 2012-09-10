@@ -2,12 +2,11 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
-import com.zombiedash.app.validator.ConferenceForm;
+import com.zombiedash.app.forms.ConferenceForm;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;

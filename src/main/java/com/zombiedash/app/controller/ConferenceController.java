@@ -2,7 +2,7 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
-import com.zombiedash.app.validator.ConferenceForm;
+import com.zombiedash.app.forms.ConferenceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 
