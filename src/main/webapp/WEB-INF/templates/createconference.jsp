@@ -1,20 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Create Conference Page</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/createConference.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
-<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
-<link type="text/css" href="${pageContext.request.contextPath}/static/css/custom.datepick.css" rel="stylesheet"/>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery.datepick.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
 
-</head>
-<body onload='document.conferenceForm.conf_name.focus();'>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+<t:form>
+    <jsp:attribute name="title">Create Conference Page</jsp:attribute>
+    <jsp:body>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/createConference.js"></script>
+
 	 <div class="container">
              <h1 class="pageTitle">
                  <div>Zombie Dash</div>
@@ -43,6 +38,8 @@
                                 <span id="nameExceedError" class="error "></span>
                              </div>
                          </div>
+
+
 
                          <div class="control-group">
                               <label class="control-label align-left" for="ConferenceTopic"><span class="error ">*</span>Topic:</label>
@@ -122,10 +119,6 @@
                      </form>
                  </div>
              </div>
-         </div>
-
-
-	</form>
-
-</body>
-</html>
+     </div>
+    </jsp:body>
+</t:form>

@@ -4,18 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Zombie Dash : Create User</title>
+<t:form>
+    <jsp:attribute name="title">Zombie Dash : Create User</jsp:attribute>
+    <jsp:body>
+      <script type="text/javascript">
+        $(document).ready(function() {
+          document.userDetails.userName.focus();
+        });
+      </script>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/confirm_cancel.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
-<link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 
-</head>
-<body onload='document.userDetails.userName.focus();'>
+
  <div class="container">
          <h1 class="pageTitle">
              <div>Zombie Dash</div>
@@ -99,10 +98,10 @@
                             <input id="cancel" name="cancel" type="button" value="Cancel" onClick="return confirmCancel('${pageContext.request.contextPath}','/zombie/admin/users/list')" class="btn btn-primary"/>
                         </div>
                      </div>
+
                  </form>
              </div>
          </div>
      </div>
-</form>
-</body>
-</html>
+    </jsp:body>
+</t:form>
