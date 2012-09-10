@@ -1,6 +1,10 @@
 DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
 DROP TABLE IF EXISTS zombie_task;
+DROP TABLE IF EXISTS zombie_attendee_info;
+DROP TABLE IF EXISTS zombie_conference;
+DROP TABLE IF EXISTS zombie_users;
+
 
 CREATE TABLE zombie_task(name varchar(100) NOT NULL,
                          ID uuid NOT NULL,
@@ -21,9 +25,7 @@ CREATE TABLE zombie_option(
             ON DELETE CASCADE);
 
 
-DROP TABLE IF EXISTS zombie_attendee_info;
-DROP TABLE IF EXISTS zombie_conference;
-DROP TABLE IF EXISTS zombie_users;
+
 
 
 CREATE TABLE zombie_conference(
