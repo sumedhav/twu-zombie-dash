@@ -9,7 +9,7 @@
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/jquery-1.8.1.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/dynamic_option_counter.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/dynamic_option_adder.js"></script>
         <script>
 
         </script>

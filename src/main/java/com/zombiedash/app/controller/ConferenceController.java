@@ -1,8 +1,6 @@
 package com.zombiedash.app.controller;
 
-import com.zombiedash.app.forms.TaskForm;
 import com.zombiedash.app.model.Conference;
-import com.zombiedash.app.model.Task;
 import com.zombiedash.app.repository.ConferenceRepository;
 import com.zombiedash.app.forms.ConferenceForm;
 import com.zombiedash.app.repository.TaskRepository;
@@ -22,12 +20,10 @@ import java.util.UUID;
 @RequestMapping("/admin/conference")
 public class ConferenceController {
     private ConferenceRepository conferenceRepository;
-    private TaskRepository taskRepository;
 
     @Autowired
-    public ConferenceController(ConferenceRepository conferenceRepository, TaskRepository taskRepository) {
+    public ConferenceController(ConferenceRepository conferenceRepository) {
         this.conferenceRepository = conferenceRepository;
-        this.taskRepository = taskRepository;
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
@@ -81,46 +77,4 @@ public class ConferenceController {
         }
     }
 
-    @RequestMapping(value = "{conferenceId}/create/task", method = RequestMethod.GET)
-    public ModelAndView showTaskCreationForm(@PathVariable String conferenceId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createtask");
-        modelAndView.addObject("conferenceId", conferenceId);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "{conferenceId}/create/task", method = RequestMethod.POST)
-    public ModelAndView createTask(@PathVariable String conferenceId, TaskForm taskForm) {
-        try {
-            boolean validDataFlag = taskForm.isValidData();
-
-            HashMap<String, String> model = taskForm.populateModelMapWithFormValues();
-            if (validDataFlag) {
-                Task task = taskForm.createTask(UUID.fromString(conferenceId));
-                UUID taskId = taskRepository.insertTask(task);
-                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/conference/"+conferenceId+"/create/question");
-                modelAndView.addObject("conferenceId",conferenceId);
-                modelAndView.addObject("taskId", taskId);
-                return modelAndView;
-            }
-            return new ModelAndView("createtask","model", model);
-        } catch(Exception e) {
-            e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            return modelAndView;
-        }
-    }
-
-    @RequestMapping(value = "{conferenceId}/create/question", method = RequestMethod.GET)
-    public ModelAndView showQuestionCreationForm(@PathVariable String conferenceId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createquestion");
-        return modelAndView;
-    }
-    @RequestMapping(value = "{conferenceId}/create/question", method = RequestMethod.POST)
-    public ModelAndView createQuestion(@PathVariable String conferenceId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createquestion");
-        return modelAndView;
-    }
 }
