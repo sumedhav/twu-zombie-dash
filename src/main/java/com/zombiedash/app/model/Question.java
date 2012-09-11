@@ -15,6 +15,7 @@ public class Question {
         this.questionId = questionId;
         this.text = text;
         this.options =options;
+        this.taskId = taskId;
     }
 
     public String getText() {

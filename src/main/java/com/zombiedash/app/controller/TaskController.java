@@ -13,7 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.UUID;
 
-@Controller()
+@Controller
+@RequestMapping("/admin")
 public class TaskController {
     private TaskRepository taskRepository;
 
@@ -22,7 +23,7 @@ public class TaskController {
         this.taskRepository = taskRepository;
     }
 
-    @RequestMapping(value = "/admin/conference/{conferenceId}/create/task", method = RequestMethod.GET)
+    @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.GET)
     public ModelAndView showTaskCreationForm(@PathVariable String conferenceId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createtask");
@@ -30,7 +31,7 @@ public class TaskController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/conference/{conferenceId}/create/task", method = RequestMethod.POST)
+    @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.POST)
     public ModelAndView createTask(@PathVariable String conferenceId, TaskForm taskForm) {
         try {
             boolean validDataFlag = taskForm.isValidData();
@@ -39,7 +40,7 @@ public class TaskController {
             if (validDataFlag) {
                 Task task = taskForm.createTask(UUID.fromString(conferenceId));
                 UUID taskId = taskRepository.insertTask(task);
-                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/conference/" + conferenceId + "/create/question");
+                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/task/" + taskId + "/create/question");
                 modelAndView.addObject("taskId", taskId);
                 return modelAndView;
             }
@@ -51,15 +52,15 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(value = "/admin/conference/{conferenceId}/create/question", method = RequestMethod.GET)
-    public ModelAndView showQuestionCreationForm(@PathVariable String conferenceId) {
+    @RequestMapping(value = "/task/{taskId}/create/question", method = RequestMethod.GET)
+    public ModelAndView showQuestionCreationForm(@PathVariable String taskId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createquestion");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/conference/{conferenceId}/create/question", method = RequestMethod.POST)
-    public ModelAndView createQuestion(@PathVariable String conferenceId) {
+    @RequestMapping(value = "/task/{taskId}/create/question", method = RequestMethod.POST)
+    public ModelAndView createQuestion(@PathVariable String taskId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createquestion");
         return modelAndView;
