@@ -4,6 +4,7 @@ import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -44,8 +45,8 @@ public class UserRegistrationPageTest extends BasePageTest{
 
   @Test
   public void shouldGoToUserRegistrationPageIfConferenceExists(){
-    UUID confId = populateWithOneConference();
-    openConferenceRegistrationPage(confId.toString());
+    UUID conferenceId = populateWithOneConference();
+    openConferenceRegistrationPage(conferenceId.toString());
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
 
@@ -70,31 +71,41 @@ public class UserRegistrationPageTest extends BasePageTest{
 
   @Test
   public void shouldRegisterAnAttendeeWithValidInformation() {
-    UUID confId = populateWithOneConference();
-    registerExampleValidAttendee(confId);
+    UUID conferenceId = populateWithOneConference();
+    registerExampleValidAttendee(conferenceId, "ExampleUsername");
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Registration Confirmed")));
   }
 
-  private void registerExampleValidAttendee(UUID confId) {
-    openConferenceRegistrationPage(confId.toString());
-    browser.inputTextOn("userName","ExampleUsername")
+  private void registerExampleValidAttendee(UUID conferenceId, String username) {
+    openConferenceRegistrationPage(conferenceId.toString());
+    browser.inputTextOn("phoneNo", "1-555-555-5555")
+        .inputTextOn("address","Example Address")
+        .inputTextOn("zipcode", "55555");
+    fillOutMandatoryFields(username);
+    browser.clickOn("submit");
+  }
+
+  private void registerExampleMinimalValidAttendee(UUID conferenceId, String username) {
+    openConferenceRegistrationPage(conferenceId.toString());
+    fillOutMandatoryFields(username);
+    browser.clickOn("submit");
+  }
+
+  private void fillOutMandatoryFields(String username) {
+    browser.inputTextOn("userName",username)
         .inputTextOn("password","Password1")
         .inputTextOn("password2", "Password1")
         .inputTextOn("email","example@email.com")
         .inputTextOn("name","Example Name")
         .inputTextOn("dob","1950-01-01")
-        .selectFromDropDown("countrylist","India")
-        .inputTextOn("phoneNo", "1-555-555-5555")
-        .inputTextOn("address","Example Address")
-        .inputTextOn("zipcode", "55555");
-    browser.clickOn("submit");
+        .selectFromDropDown("countrylist","India");
   }
 
   @Ignore
   @Test
   public void shouldReturnToSamePageWhenFieldsAreEmpty() {
-    UUID confId = populateWithOneConference();
-    openConferenceRegistrationPage(confId.toString());
+    UUID conferenceId = populateWithOneConference();
+    openConferenceRegistrationPage(conferenceId.toString());
     browser.clickOn("submit");
 
     assertThatFieldHasInvalidData("username_field_empty", "You can't leave this field empty.");
@@ -113,9 +124,26 @@ public class UserRegistrationPageTest extends BasePageTest{
 
   @Test
   public void shouldShowErrorMessageOnDuplicateUsername() {
-    UUID uuidConference = populateWithOneConference();
-    registerExampleValidAttendee(uuidConference);
-    registerExampleValidAttendee(uuidConference);
+    UUID conferenceId = populateWithOneConference();
+    registerExampleValidAttendee(conferenceId, "ExampleUsername");
+    registerExampleValidAttendee(conferenceId, "ExampleUsername");
+    assertThat(browser.getTextById("error_message_div"), is(equalTo("Someone already has that username. Try another.")));
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnShortUsername() {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendee(conferenceId,"Bob");
+    assertThat(browser.getTextById("invalid_user_name"), is(equalTo("Username must have 5-40 alphanumeric characters and no whitespaces.")));
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnExcessivelyLongUsername() {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendee(conferenceId, StringUtils.repeat("X",41));
+    assertThat(browser.getTextById("invalid_user_name"), is(equalTo("Username must have 5-40 alphanumeric characters and no whitespaces.")));
+    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Attendee Registration")));
   }
 }
