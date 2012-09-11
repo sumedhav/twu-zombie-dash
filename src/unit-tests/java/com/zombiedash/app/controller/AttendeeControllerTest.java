@@ -1,5 +1,6 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.repository.ResultRepository;
 import com.zombiedash.app.service.ResultService;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,8 +19,10 @@ public class AttendeeControllerTest {
     @Test
     public void shouldDisplayCustomerHomePage() throws Exception {
         ResultService userService = mock(ResultService.class);
-        AttendeeController attendeeController =new AttendeeController(userService);
-        ModelAndView actualModel = attendeeController.display(mock(Principal.class));
+        Principal principal=mock(Principal.class);
+        ResultRepository resultRepository=mock(ResultRepository.class);
+        AttendeeController attendeeController =new AttendeeController(userService,resultRepository);
+        ModelAndView actualModel = attendeeController.display(principal);
         assertThat(actualModel.getViewName(), is(equalTo("attendee")));
     }
 

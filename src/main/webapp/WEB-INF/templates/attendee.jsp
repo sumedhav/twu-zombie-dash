@@ -1,4 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,6 +26,9 @@
          Your current score is <b id="obtainedScore">${obtainedScore}</b>
          </div>
          </br>
+         <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
+            <a href="${pageContext.request.contextPath}/zombie/attendee/1/game/${incompleteTask.id}">${incompleteTask.name}<a>
+         </c:forEach>
          <div class="sectionTitle">
             <a href="${pageContext.request.contextPath}/zombie/attendee/game">Play Game</a>
         </div>

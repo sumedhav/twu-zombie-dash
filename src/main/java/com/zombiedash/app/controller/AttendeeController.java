@@ -1,5 +1,6 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.repository.ResultRepository;
 import com.zombiedash.app.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import java.util.Map;
 @RequestMapping("/attendee/1")
 public class AttendeeController {
         private ResultService resultService;
+        private ResultRepository resultRepository;
 
     @Autowired
-    public AttendeeController(ResultService resultService) {
+    public AttendeeController(ResultService resultService,ResultRepository resultRepository) {
         this.resultService = resultService;
+        this.resultRepository=resultRepository;
     }
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
@@ -27,6 +30,7 @@ public class AttendeeController {
         String username = principal.getName();
         int score = resultService.getAttendeeScore(username);
         modelAndView.addObject("obtainedScore", score);
+        modelAndView.addObject("incompleteTasks",resultRepository.getIncompleteTasks(principal.getName()));
         return modelAndView;
     }
 }
