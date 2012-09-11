@@ -17,7 +17,7 @@ public class RegistrationForm {
     private UserForm userForm;
     private String userName = "";
 
-    private String fullName = "";
+    private String name = "";
 
     private String email = "";
     private String password = "";
@@ -26,7 +26,7 @@ public class RegistrationForm {
     private String address = "";
     private String phoneNo = "";
     private String zipcode = "";
-    private String country = "";
+    private String countrylist = "";
     private final static int ADDRESS_MAX_LENGTH = 100;
     private final static int PHONENO_MAX_LENGTH = 20;
     private final static int ZIPCODE_MAX_LENGTH = 20;
@@ -37,12 +37,12 @@ public class RegistrationForm {
     public void validate() {
         userForm = new UserForm();
         userForm.setUserName(userName);
-        userForm.setFullName(fullName);
+        userForm.setFullName(name);
         userForm.setEmail(email);
         userForm.setPassword(password);
         errorCodes = userForm.validate();
         validateDOB(dob);
-//        if(!isValidDOB(dob)) {errorCodes.add("invalidDOB");}
+        if(countrylist.equals("")) {errorCodes.add("countryNotSelected");}
         if (address.length() > ADDRESS_MAX_LENGTH) {errorCodes.add("invalidAddress");}
         if (phoneNo.length() > PHONENO_MAX_LENGTH) {errorCodes.add("invalidPhoneNo");}
         if (zipcode.length() > ZIPCODE_MAX_LENGTH) {errorCodes.add("invalidZipcode");}
@@ -70,8 +70,8 @@ public class RegistrationForm {
         this.userName = userName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -107,7 +107,7 @@ public class RegistrationForm {
     }
 
     public Attendee createAttendee() {
-        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), fullName, email), dob, country, phoneNo, address, zipcode);
+        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode);
     }
 
     public String getDob() {
@@ -118,26 +118,26 @@ public class RegistrationForm {
         this.dob = dob;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountrylist() {
+        return countrylist;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountrylist(String countrylist) {
+        this.countrylist = countrylist;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
     public Map populateFormValuesToModelMap() {
         HashMap<String, String> model = new HashMap<String, String>();
         model.put("username", userName);
-        model.put("name", fullName);
+        model.put("name", name);
         model.put("email", email);
         model.put("dob", dob);
         model.put("address", address);
-        model.put("country", country);
+        model.put("countrylist", countrylist);
         model.put("zipCode", zipcode);
         model.put("phoneNo", phoneNo);
         return model;

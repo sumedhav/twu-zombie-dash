@@ -64,6 +64,13 @@ public class RegistrationFormTest {
     }
 
     @Test
+    public void shouldFailIfNoCountryIsSelected() throws Exception {
+        registrationForm.setCountrylist("");
+        registrationForm.validate();
+        assertThat(registrationForm.getErrors().contains("countryNotSelected"), is(equalTo(true)));
+    }
+
+    @Test
     public void shouldReturnInvalidAddressErrorWhenAddressIsInvalid(){
         registrationForm.setAddress(
                 "Invalid AddressXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -112,7 +119,7 @@ public class RegistrationFormTest {
         expectedMap.put("email", "sadasdas@email.com");
         expectedMap.put("dob", "1990-01-01");
         expectedMap.put("address", "address");
-        expectedMap.put("country", "India");
+        expectedMap.put("countrylist", "India");
         expectedMap.put("zipCode", "zipcode");
         expectedMap.put("phoneNo", "1241324");
 
@@ -141,10 +148,10 @@ public class RegistrationFormTest {
 
         RegistrationForm registrationForm = new RegistrationForm();
         registrationForm.setUserName(userName);
-        registrationForm.setFullName(name);
+        registrationForm.setName(name);
         registrationForm.setEmail(email);
         registrationForm.setDob(dob);
-        registrationForm.setCountry(country);
+        registrationForm.setCountrylist(country);
         registrationForm.setAddress(address);
         registrationForm.setPhoneNo(phoneNo);
         registrationForm.setZipcode(zipcode);

@@ -61,7 +61,7 @@ public class Browser {
     }
 
     public Browser selectFromDropDown(String id, String choice) {
-        Select select = new Select(driver.findElement(By.id(id)));
+        Select select = new Select(this.findElement(By.id(id)));
         select.selectByValue(choice);
         return this;
     }

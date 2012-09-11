@@ -1,5 +1,6 @@
-<select name="countrylist" id="countrylist">
-<option value=” selected='selected'>Select Country</option>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<select name="countrylist" id="countrylist" value="<c:out value="${model.countrylist}"/>" >
+<option value='' selected='selected'>Select Country</option>
 <option value='Afghanistan'>Afghanistan</option>
 <option value='Albania'>Albania</option>
 <option value='Algeria'>Algeria</option>

@@ -66,7 +66,7 @@ public class RegistrationController {
             try{
                 Attendee attendee = registrationForm.createAttendee();
                 registrationService.registerAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
-                modelAndView = new ModelAndView("registrationconfirmed", "registeredName", registrationForm.getFullName());
+                modelAndView = new ModelAndView("registrationconfirmed", "registeredName", registrationForm.getName());
                 return modelAndView;
             }
             catch (IllegalArgumentException exception){
