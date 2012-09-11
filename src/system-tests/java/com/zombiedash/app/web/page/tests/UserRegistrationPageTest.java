@@ -209,4 +209,28 @@ public class UserRegistrationPageTest extends BasePageTest{
     registerExampleMinimalValidAttendeeWithReplacement(conferenceId,"dob","abcd");
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
+
+  @Test
+  public void shouldShowInlineErrorOnInvalidDateOfBirth() {
+    assertInvalidDateError("1234567890", "Enter a date in yyyy-mm-dd format.", "invalid_date_format");
+  }
+
+  @Ignore
+  @Test
+  public void shouldShowInlineErrorOnFutureDate() {
+    assertInvalidDateError("3000-11-03", "Hmm, the date doesn’t look right. Be sure to use your actual DOB.", "invalid_dob");
+  }
+
+  @Ignore
+  @Test
+  public void shouldShowInlineErrorOnPreTwentiethCenturyDate() {
+    assertInvalidDateError("1800-11-03", "Hmm, the date doesn’t look right. Be sure to use your actual DOB.", "invalid_dob");
+  }
+
+  private void assertInvalidDateError(String dob, String errorMessage, String field) {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId,"dob",dob);
+    assertThat(browser.getTextById(field), is(equalTo(errorMessage)));
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
 }
