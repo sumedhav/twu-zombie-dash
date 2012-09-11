@@ -1,14 +1,24 @@
 DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
 DROP TABLE IF EXISTS zombie_task;
-DROP TABLE IF EXISTS zombie_attendee_info;
 DROP TABLE IF EXISTS zombie_conference;
-DROP TABLE IF EXISTS zombie_users;
 
+CREATE TABLE zombie_conference(
+    ID uuid PRIMARY KEY,
+    NAME VARCHAR(200) NOT NULL,
+    TOPIC VARCHAR(200) NOT NULL,
+    DESCRIPTION VARCHAR(1000) NOT NULL,
+    VENUE VARCHAR(400) NOT NULL,
+    START_DATE VARCHAR(10) NOT NULL,
+    END_DATE VARCHAR(10) NOT NULL,
+    MAX_ATTENDEE INT NOT NULL);
 
 CREATE TABLE zombie_task(name varchar(100) NOT NULL,
                          ID uuid NOT NULL,
-                         PRIMARY KEY (ID));
+                         Description varchar(1000) NOT NULL,
+                         CONFERENCE_ID uuid NOT NULL,
+                         PRIMARY KEY (ID),
+                         FOREIGN KEY(CONFERENCE_ID) REFERENCES zombie_conference(ID));
 
 CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
                        Text varchar(50) NOT NULL,
@@ -25,18 +35,8 @@ CREATE TABLE zombie_option(
             ON DELETE CASCADE);
 
 
-
-
-
-CREATE TABLE zombie_conference(
-    ID uuid PRIMARY KEY,
-    NAME VARCHAR(200) NOT NULL,
-    TOPIC VARCHAR(200) NOT NULL,
-    DESCRIPTION VARCHAR(1000) NOT NULL,
-    VENUE VARCHAR(400) NOT NULL,
-    START_DATE VARCHAR(10) NOT NULL,
-    END_DATE VARCHAR(10) NOT NULL,
-    MAX_ATTENDEE INT NOT NULL);
+DROP TABLE IF EXISTS zombie_attendee_info;
+DROP TABLE IF EXISTS zombie_users;
 
 CREATE TABLE zombie_users(username varchar(40)  PRIMARY KEY ,
                 password varchar(128) NOT NULL,

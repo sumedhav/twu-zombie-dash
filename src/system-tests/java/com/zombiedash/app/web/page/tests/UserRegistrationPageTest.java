@@ -30,6 +30,9 @@ public class UserRegistrationPageTest extends BasePageTest{
 
     private UUID populateWithOneConference() {
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        jdbcTemplate.execute("DELETE zombie_option");
+        jdbcTemplate.execute("DELETE zombie_question");
+        jdbcTemplate.execute("DELETE zombie_task");
         jdbcTemplate.execute("DELETE zombie_conference");
         conferenceRepository = new ConferenceRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();

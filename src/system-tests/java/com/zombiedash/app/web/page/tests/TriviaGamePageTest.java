@@ -127,7 +127,8 @@ public class TriviaGamePageTest extends BasePageTest {
         testDataTemplate.clearTables();
         UUID questionID1 = UUID.randomUUID();
         UUID taskID = UUID.randomUUID();
-        testDataTemplate.insertTask("charles_task", taskID);
+        UUID conferenceId = testDataTemplate.insertConference();
+        testDataTemplate.insertTask("charles_task", taskID, "sample description", conferenceId);
         testDataTemplate.insertQuestion(questionID1, "Where is Red Fort", taskID);
         testDataTemplate.insertOption(questionID1, 1, "Delhi", true);
         testDataTemplate.insertOption(questionID1, 2, "Paris", false);

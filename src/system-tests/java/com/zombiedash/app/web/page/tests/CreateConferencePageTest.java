@@ -39,8 +39,8 @@ public class CreateConferencePageTest {
                 .inputTextOn("conf_max_attendees", "200");
         browser.clickOn("submit");
         assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Conference Home")));
-        assertThat(browser.getTextById("existing_conference_id_1"), is(equalTo("Conference Name")));
     }
+
     @Test
     public void adminClickOnCancelToLeaveThePage() {
         browser = BrowserSessionBuilder

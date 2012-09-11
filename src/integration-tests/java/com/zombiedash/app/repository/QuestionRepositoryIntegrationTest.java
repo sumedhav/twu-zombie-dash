@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.test.matchers.QuestionMatcher;
@@ -19,6 +20,7 @@ import java.util.UUID;
 import static com.zombiedash.app.test.matchers.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 
@@ -41,7 +43,8 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     private void insertDataIntoDatabase(){
         UUID questionId1 = UUID.randomUUID();
         UUID taskId1 = UUID.randomUUID();
-        insertTask("charles_task", taskId1);
+        UUID conferenceId = insertConference();
+        insertTask("charles_task", taskId1, "sample description", conferenceId);
         insertQuestion(questionId1, "Where is Red Fort", taskId1);
         insertOption(questionId1, 10, "Delhi", true);
         insertOption(questionId1, 20, "Paris", false);
@@ -49,7 +52,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
         UUID questionId2 = UUID.randomUUID();
         UUID taskId2 = UUID.randomUUID();
-        insertTask("sumedha", taskId2);
+        insertTask("sumedha", taskId2, "description when", conferenceId);
         insertQuestion(questionId2, "Is it lunch time?", taskId2);
         insertOption(questionId2, 10, "I bet it is", true);
         insertOption(questionId2, 20, "No thanks, fasting at the moment", false);
@@ -97,8 +100,14 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         return optionList;
     }
 
-    private void insertTask(String name, UUID taskID) {
-        jdbcTemplate.update("INSERT INTO zombie_task values(?,?)", name, taskID);
+    private UUID insertConference() {
+        String conferenceId = "372b7e07-4cbd-47e3-90cd-7f166c2c29df";
+        jdbcTemplate.update("INSERT INTO zombie_conference values(?,?,?,?,?,?,?,?)",UUID.fromString(conferenceId), "Spring", "Spring", "Spring", "Spring", "2012-12-12", "2012-12-30", 12);
+        return UUID.fromString(conferenceId);
+    }
+
+    private void insertTask(String name, UUID taskID, String description, UUID conferenceId) {
+        jdbcTemplate.update("INSERT INTO zombie_task values(?,?,?,?)", name, taskID, description, conferenceId);
     }
 
     private void insertQuestion(UUID id, String text, UUID taskId) {

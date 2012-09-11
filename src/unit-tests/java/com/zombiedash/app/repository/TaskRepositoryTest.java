@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Task;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,11 +18,12 @@ public class TaskRepositoryTest {
     @Test
     public void shouldInsertTaskIntoDatabase() throws Exception {
         jdbcTemplate = mock(JdbcTemplate.class);
-        String name = "zombie_task_one";
-        String QUERY_BY_NAME = "INSERT INTO zombie_task values(?,?)";
-        when(jdbcTemplate.update(anyString(), any(UUID.class), anyString())).thenReturn(1);
+        String name = "";
+        String QUERY_BY_NAME = "INSERT INTO zombie_task values(?,?,?,?)";
+        when(jdbcTemplate.update(anyString(),anyString(), any(UUID.class), anyString(), any(UUID.class))).thenReturn(1);
         TaskRepository taskRepository = new TaskRepository(jdbcTemplate);
-        UUID id = taskRepository.insertTask(name);
-        verify(jdbcTemplate).update(QUERY_BY_NAME, name ,id);
+        Task task = mock(Task.class);
+        UUID id = taskRepository.insertTask(task);
+        verify(jdbcTemplate).update(QUERY_BY_NAME, task.getName(), task.getId(),task.getDescription(),task.getConferenceId() );
     }
 }
