@@ -26,6 +26,10 @@ input[type="submit"], input[type="button"] {
     margin-bottom: 50px;
 }
 
+.checkbox-label {
+   display:inline-block;
+}
+
 .sectionTitle{
     margin-bottom:50px;
     font-weight:bold;

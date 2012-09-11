@@ -126,6 +126,23 @@
                                   <div id="invalid_zipcode" class="error ">${invalidZipcode}</div>
                                 </div>
                         </div>
+                        <div class="control-group">
+                                <div class="checkbox-controls">
+                                  <input type="checkbox" name="productsMailingConfirmation" id="productsMailingConfirmation"
+                                        checked="<c:out value="${model.productsMail}"/>"/>
+                                <label class="checkbox-label" for="productsMailingConfirmation">Would you like to receive emails about new products</label>
+                                </div>
+                        </div>
+
+                        <div class="checkbox-control-group">
+                            <div class="checkbox-controls" float="left">
+                              <input type="checkbox" name="adsConfirmation" id="adsConfirmation"
+                                    checked="<c:out value="${model.adsConfirm}"/>" />
+                                     <label class="checkbox-label" for="adsConfirmation">Would you like to receive general advertisements</label>
+                            </div>
+
+                        </div>
+
                          <div class="control-group">
                             <div class="controls offset6" >
                                  <input id="submit" name="submit" type="submit" value="Save"  class="btn btn-primary" />
