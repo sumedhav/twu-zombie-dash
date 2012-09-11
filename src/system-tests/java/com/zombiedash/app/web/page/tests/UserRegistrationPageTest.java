@@ -142,8 +142,48 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldShowInlineErrorMessageOnExcessivelyLongUsername() {
     UUID conferenceId = populateWithOneConference();
-    registerExampleMinimalValidAttendee(conferenceId, StringUtils.repeat("X",41));
+    registerExampleMinimalValidAttendee(conferenceId, StringUtils.repeat("X", 41));
     assertThat(browser.getTextById("invalid_user_name"), is(equalTo("Username must have 5-40 alphanumeric characters and no whitespaces.")));
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnShortPassword() {
+    assertPasswordError("XXXXX");
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnLongPassword() {
+    assertPasswordError(StringUtils.repeat("X", 41));
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnInvalidCharacterPassword() {
+    assertPasswordError("XXXXX !@#$ggdsjfg");
+  }
+
+  @Test
+  public void shouldShowInlineErrorMessageOnNonAlphaNumericPassword() {
+    assertPasswordError("7674746466");
+  }
+
+  private void assertPasswordError(String password) {
+    UUID conferenceId = populateWithOneConference();
+    openConferenceRegistrationPage(conferenceId.toString());
+    browser.inputTextOn("password",password);
+    browser.clickOn("submit");
+    assertThat(browser.getTextById("invalid_password"), is(equalTo("Password must have 6-40 alphanumeric characters with at least one digit(s).")));
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorOnUnequalPassword() {
+    UUID conferenceId = populateWithOneConference();
+    openConferenceRegistrationPage(conferenceId.toString());
+    fillOutMandatoryFields("Mister");
+    browser.inputTextOn("password","password1");
+    browser.inputTextOn("password2","password2");
+    browser.clickOn("submit");
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
 }
