@@ -11,12 +11,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,7 +31,7 @@ public class TriviaGameControllerTest {
 
     @Test
     public void shouldForwardToTriviaGamePage() {
-        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showGamePage();
+        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository).showGamePage();
         assertThat(modelAndView.getViewName(), is("triviagamepage"));
     }
 
@@ -55,9 +57,17 @@ public class TriviaGameControllerTest {
         Question question2 = new Question(questionId1, "Where are tigers?", optionsList2, taskId);
         expectedQuestions.add(question2);
         when(mockQuestionRepository.fetchAllQuestions()).thenReturn(expectedQuestions);
-        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository,resultService).showGamePage();
+        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository).showGamePage();
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 
         assertThat(actualQuestions,sameInstance(expectedQuestions));
+    }
+
+    @Test
+    public void shouldRedirectToAttendeeHome() throws Exception {
+        TriviaGameController triviaGameController = new TriviaGameController(mockQuestionRepository);
+        HashMap<String,String> modelMap = mock(HashMap.class);
+        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap);
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/attendee/1/home"));
     }
 }

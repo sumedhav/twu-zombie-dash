@@ -1,6 +1,7 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.service.ResultService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,6 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
 public class AttendeeControllerTest {
+
     @Test
     public void shouldDisplayCustomerHomePage() throws Exception {
         ResultService userService = mock(ResultService.class);

@@ -25,7 +25,7 @@
          </div>
          </br>
          <div class="sectionTitle">
-            <a href="${pageContext.request.contextPath}/zombie/conference/user/game">Play Game</a>
+            <a href="${pageContext.request.contextPath}/zombie/attendee/1/game">Play Game</a>
         </div>
      </div>
 </body>

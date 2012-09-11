@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
 
 public class TriviaGamePageTest extends BasePageTest {
 
-    public static final String TRIVIA_GAME_URL = "/app/zombie/conference/user/game";
+    public static final String TRIVIA_GAME_URL = "/app/zombie/attendee/1/game";
     private TriviaGameTestDataCreationTemplate testDataTemplate;
 
     @Test
