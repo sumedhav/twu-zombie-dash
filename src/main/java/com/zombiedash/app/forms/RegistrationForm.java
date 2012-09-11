@@ -12,7 +12,9 @@ public class RegistrationForm {
     public static final String ATTENDEE = "attendee";
     private UserForm userForm;
     private String userName = "";
+
     private String fullName = "";
+
     private String email = "";
     private String password = "";
     private String password2= "";
@@ -28,7 +30,6 @@ public class RegistrationForm {
     public RegistrationForm(){
         userForm = new UserForm();
     }
-
     public void validate() {
         userForm = new UserForm();
         userForm.setUserName(userName);
@@ -104,6 +105,10 @@ public class RegistrationForm {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public Map populateFormValuesToModelMap() {

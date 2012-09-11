@@ -37,6 +37,7 @@
                                 <span id="username_field_empty" class="error ">${usernameFieldEmpty}</span>
                                 <span id="username_exceed_error" class="error "></span>
                                 <div id="invalid_user_name" class="error ">${invalidUserName}</div>
+                                <div id="existent_user_name" class="error ">${userNameAlreadyExists}</div>
                               </div>
                          </div>
                         <div class="control-group">

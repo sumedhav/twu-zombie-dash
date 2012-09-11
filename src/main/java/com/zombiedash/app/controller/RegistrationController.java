@@ -53,22 +53,32 @@ public class RegistrationController {
     @RequestMapping(value = "/register/{conferenceId}", method = POST)
     public ModelAndView submitRegistrationPage(@PathVariable("conferenceId") String conferenceId, RegistrationForm registrationForm) {
         ModelAndView modelAndView;
+        Map<String, String> model;
         registrationForm.validate();
         if(registrationForm.hasErrors()){
             modelAndView = new ModelAndView("attendeeregistration");
+            model = registrationForm.populateFormValuesToModelMap();
+            model.put("confId", conferenceId);
             populateErrorsInModelAndView(modelAndView, registrationForm.getErrors());
-            modelAndView.addObject("model", registrationForm.populateFormValuesToModelMap());
+            modelAndView.addObject("model", model);
             return modelAndView;
         }else{
             try{
                 Attendee attendee = registrationForm.createAttendee();
                 registrationService.registerAttendee(attendee, registrationForm.getPassword(), UUID.fromString(conferenceId));
-                modelAndView = new ModelAndView("registrationconfirmed");
+                modelAndView = new ModelAndView("registrationconfirmed", "registeredName", registrationForm.getFullName());
+                return modelAndView;
+            }
+            catch (IllegalArgumentException exception){
+                modelAndView = new ModelAndView("attendeeregistration");
+                model = registrationForm.populateFormValuesToModelMap();
+                modelAndView.addObject("userNameAlreadyExists", validationMessagesMap.getMessageFor(exception.getMessage()));
+                modelAndView.addObject("model", model);
                 return modelAndView;
             }
             catch (Exception exception){
                 modelAndView = new ModelAndView("generalerrorpage");
-                modelAndView.addObject("urlToReturnTo","/zombie/registration/"+conferenceId);
+                modelAndView.addObject("urlToReturnTo","/zombie/register/"+conferenceId);
                 modelAndView.addObject("returnToPrevPageMessage","Go Back To Registration Page to try again");
                 return modelAndView;
             }

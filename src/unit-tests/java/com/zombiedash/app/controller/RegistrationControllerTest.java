@@ -18,13 +18,14 @@ import java.util.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationControllerTest {
 
     @Mock
-    RegistrationService attendeeRepository  ;
+    RegistrationService registrationService;
     @Mock
     ConferenceRepository conferenceRepository;
     @Mock
@@ -33,7 +34,7 @@ public class RegistrationControllerTest {
     private RegistrationController registrationController;
     @Before
     public void setup(){
-       registrationController = new RegistrationController(conferenceRepository, attendeeRepository, validationMessagesMap);
+       registrationController = new RegistrationController(conferenceRepository, registrationService, validationMessagesMap);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class RegistrationControllerTest {
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
 
-        verify(attendeeRepository).registerAttendee(attendee, "password1", conferenceId);
+        verify(registrationService).registerAttendee(attendee, "password1", conferenceId);
         assertThat(modelAndView.getViewName(), is("registrationconfirmed"));
     }
 
@@ -87,10 +88,25 @@ public class RegistrationControllerTest {
 
         RegistrationForm registrationForm = aValidRegistrationForm(attendee);
 
-        doThrow(Exception.class).when(attendeeRepository).registerAttendee(attendee, "password1", conferenceId);
+        doThrow(Exception.class).when(registrationService).registerAttendee(attendee, "password1", conferenceId);
 
         ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
         assertThat(modelAndView.getViewName(), is(equalTo("generalerrorpage")));
+    }
+
+    @Test
+    public void shouldDisplayTheSamePageWithValidationErrorsIfUsernameAlreadyExists() throws Exception {
+        Attendee attendee = mock(Attendee.class);
+        UUID conferenceId = UUID.randomUUID();
+
+        doThrow(new IllegalArgumentException("userNameAlreadyExists")).when(registrationService).registerAttendee(attendee, "password1", conferenceId);
+        given(validationMessagesMap.getMessageFor("userNameAlreadyExists")).willReturn("Someone already has that username. Try another.");
+        RegistrationForm registrationForm = aValidRegistrationForm(attendee);
+
+        registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
+        ModelAndView modelAndView = registrationController.submitRegistrationPage(conferenceId.toString(), registrationForm);
+        assertThat(modelAndView.getViewName(), is("attendeeregistration"));
+        assertThat((String)modelAndView.getModel().get("userNameAlreadyExists"), is(equalTo("Someone already has that username. Try another.")));
     }
 
     private RegistrationForm aRegistrationFormWithErrors(List<String> errorCodes, Map<String, String> model) {
