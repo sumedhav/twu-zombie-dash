@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -21,9 +22,11 @@ public class AttendeeController {
     }
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
-    public ModelAndView display(@RequestParam Map<String, String> params) {
+    public ModelAndView display(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("attendee");
-        modelAndView.addObject("obtainedScore", resultService.getScoreOfUserSelectedOptions(params));
+        String username = principal.getName();
+        int score = resultService.getAttendeeScore(username);
+        modelAndView.addObject("obtainedScore", score);
         return modelAndView;
     }
 }

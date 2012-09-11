@@ -2,6 +2,7 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Task;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-application-context.xml")
@@ -102,4 +105,14 @@ public class ResultRepositoryIntegrationTest {
         assertEquals(incompleteTasks.get(0).getId(),secondTaskId);
     }
 
+    @Ignore
+    @Test
+    public void shouldGetScoreOfAllTasksCompletedByAttendee() throws Exception {
+        ResultRepository resultRepository = new ResultRepository(jdbcTemplate);
+        jdbcTemplate.execute("DELETE FROM zombie_attendee_score");
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 1);
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 2);
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 1);
+        assertThat(resultRepository.getAttendeeScore("admin"), is(4));
+    }
 }

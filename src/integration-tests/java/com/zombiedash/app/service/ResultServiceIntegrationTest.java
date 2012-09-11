@@ -3,6 +3,7 @@ package com.zombiedash.app.service;
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.repository.QuestionRepository;
+import com.zombiedash.app.repository.ResultRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,6 +22,9 @@ public class ResultServiceIntegrationTest {
     @Mock
     private QuestionRepository questionRepository;
 
+    @Mock
+    private ResultRepository resultRepository;
+
     @Test
     public void shouldVerifyResultForGivenQuestionListAndAnswersList(){
         int expectedScore = 1;
@@ -29,7 +33,7 @@ public class ResultServiceIntegrationTest {
         userAnswers.add("Bangalore");
         userAnswers.add("Delhi");
         when(questionRepository.fetchAllQuestions()).thenReturn(questionList);
-        ResultService resultService = new ResultService(questionRepository);
+        ResultService resultService = new ResultService(questionRepository,resultRepository);
         assertThat(resultService.calculateScore(userAnswers), is(expectedScore));
     }
 

@@ -2,7 +2,7 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
-import com.zombiedash.app.repository.QuestionRepository;
+import com.zombiedash.app.repository.ResultRepository;
 import com.zombiedash.app.service.ResultService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +24,16 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TriviaGameControllerTest {
+   
     @Mock
-    QuestionRepository mockQuestionRepository;
+    ResultService mockResultService;
 
     @Mock
-    ResultService resultService;
+    ResultRepository mockResultRepository;
 
     @Test
     public void shouldForwardToTriviaGamePage() {
-        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository).showGamePage();
+        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage();
         assertThat(modelAndView.getViewName(), is("triviagamepage"));
     }
 
@@ -56,8 +58,8 @@ public class TriviaGameControllerTest {
         optionsList2.add(new Option(UUID.randomUUID(),"London", false, questionId1));
         Question question2 = new Question(questionId1, "Where are tigers?", optionsList2, taskId);
         expectedQuestions.add(question2);
-        when(mockQuestionRepository.fetchAllQuestions()).thenReturn(expectedQuestions);
-        ModelAndView modelAndView = new TriviaGameController(mockQuestionRepository).showGamePage();
+        when(mockResultService.listQuestions()).thenReturn(expectedQuestions);
+        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage();
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 
         assertThat(actualQuestions,sameInstance(expectedQuestions));
@@ -65,9 +67,10 @@ public class TriviaGameControllerTest {
 
     @Test
     public void shouldRedirectToAttendeeHome() throws Exception {
-        TriviaGameController triviaGameController = new TriviaGameController(mockQuestionRepository);
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
         HashMap<String,String> modelMap = mock(HashMap.class);
-        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap);
+        Principal principal = mock(Principal.class);
+        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap, principal);
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/attendee/1/home"));
     }
 }

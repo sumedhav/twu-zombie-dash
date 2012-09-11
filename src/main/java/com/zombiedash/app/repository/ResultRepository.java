@@ -19,6 +19,7 @@ public class ResultRepository {
             " zombie_attendee_info AS attendee WHERE attendee.username = ? AND attendee.conference_ID = task.CONFERENCE_ID" +
             " AND ID NOT IN (SELECT task_ID FROM zombie_attendee_score WHERE username = ?)";
     private final String ADD_COMPLETED_TASK="INSERT INTO zombie_attendee_score VALUES(?,?,?)";
+    private final String SELECT_SCORES_OF_ATTENDEE = "SELECT sum(score) FROM zombie_attendee_score WHERE username = ?";
     @Autowired
     public ResultRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -43,4 +44,9 @@ public class ResultRepository {
         return jdbcTemplate.update(ADD_COMPLETED_TASK,username,taskID,score);
     }
 
+    public Integer getAttendeeScore(String username) {
+        Object[] args=new Object[]{username};
+        Integer score = jdbcTemplate.queryForInt(SELECT_SCORES_OF_ATTENDEE,args);
+        return score;
+    }
 }

@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.HashMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +19,7 @@ public class AttendeeControllerTest {
     public void shouldDisplayCustomerHomePage() throws Exception {
         ResultService userService = mock(ResultService.class);
         AttendeeController attendeeController =new AttendeeController(userService);
-        ModelAndView actualModel = attendeeController.display(new HashMap<String, String>());
+        ModelAndView actualModel = attendeeController.display(mock(Principal.class));
         assertThat(actualModel.getViewName(), is(equalTo("attendee")));
     }
 
