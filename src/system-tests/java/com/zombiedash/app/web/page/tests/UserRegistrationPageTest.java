@@ -29,18 +29,18 @@ public class UserRegistrationPageTest extends BasePageTest{
   }
 
 
-    private UUID populateWithOneConference() {
-        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
-        jdbcTemplate.execute("DELETE zombie_option");
-        jdbcTemplate.execute("DELETE zombie_question");
-        jdbcTemplate.execute("DELETE zombie_task");
-        jdbcTemplate.execute("DELETE zombie_conference");
-        conferenceRepository = new ConferenceRepository(jdbcTemplate);
-        UUID conferenceId = UUID.randomUUID();
-        conferenceRepository.insertConference(
-            new Conference(conferenceId, "Java", "Java", "Java", "here", "2013-01-01", "2013-01-05", 100));
-        return conferenceId;
-    }
+  private UUID populateWithOneConference() {
+    jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+    jdbcTemplate.execute("DELETE zombie_option");
+    jdbcTemplate.execute("DELETE zombie_question");
+    jdbcTemplate.execute("DELETE zombie_task");
+    jdbcTemplate.execute("DELETE zombie_conference");
+    conferenceRepository = new ConferenceRepository(jdbcTemplate);
+    UUID conferenceId = UUID.randomUUID();
+    conferenceRepository.insertConference(
+        new Conference(conferenceId, "Java", "Java", "Java", "here", "2013-01-01", "2013-01-05", 100));
+    return conferenceId;
+  }
 
   @Test
   public void shouldGoToUserRegistrationPageIfConferenceExists(){
@@ -71,6 +71,11 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldRegisterAnAttendeeWithValidInformation() {
     UUID confId = populateWithOneConference();
+    registerExampleValidAttendee(confId);
+    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Registration Confirmed")));
+  }
+
+  private void registerExampleValidAttendee(UUID confId) {
     openConferenceRegistrationPage(confId.toString());
     browser.inputTextOn("userName","ExampleUsername")
         .inputTextOn("password","Password1")
@@ -82,9 +87,7 @@ public class UserRegistrationPageTest extends BasePageTest{
         .inputTextOn("phoneNo", "1-555-555-5555")
         .inputTextOn("address","Example Address")
         .inputTextOn("zipcode", "55555");
-
     browser.clickOn("submit");
-    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Registration Confirmed")));
   }
 
   @Ignore
@@ -108,42 +111,11 @@ public class UserRegistrationPageTest extends BasePageTest{
     assertThat(browser.getTextById(errorId), is(equalTo(errorMessage)));
   }
 
-  @Ignore
   @Test
   public void shouldShowErrorMessageOnDuplicateUsername() {
-//    UUID uuidUser = UUID.randomUUID();
-//    User originalUser = new User(uuidUser,"rafael", Role.ATTENDEE,"rafael","rafeal@gmail.com");
-//    Attendee originalAttendee = new Attendee(originalUser,"1984-04-06","Brazil","","","");
-//    UserRepository userRepository = new UserRepository(jdbcTemplate);
-//    userRepository.insertUser(originalUser,"Password123");
     UUID uuidConference = populateWithOneConference();
-//    AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
-//    attendeeRepository.insertAttendee(originalAttendee,uuidConference);
-    openConferenceRegistrationPage(uuidConference.toString());
-    browser.inputTextOn("userName", "rafael")
-        .inputTextOn("password", "Password1")
-        .inputTextOn("password2", "Password1")
-        .inputTextOn("email", "example@email.com")
-        .inputTextOn("name", "Example Name")
-        .inputTextOn("dob", "1950-01-01")
-        .selectFromDropDown("countrylist", "India")
-        .inputTextOn("phoneNo", "1-555-555-5555")
-        .inputTextOn("address", "Example Address")
-        .inputTextOn("zipcode", "55555");
-    browser.clickOn("submit");
-    openConferenceRegistrationPage(uuidConference.toString());
-    browser.inputTextOn("userName", "rafael")
-        .inputTextOn("password", "Password1")
-        .inputTextOn("password2", "Password1")
-        .inputTextOn("email", "example@email.com")
-        .inputTextOn("name", "Example Name")
-        .inputTextOn("dob", "1950-01-01")
-        .selectFromDropDown("countrylist", "India")
-        .inputTextOn("phoneNo", "1-555-555-5555")
-        .inputTextOn("address", "Example Address")
-        .inputTextOn("zipcode", "55555");
-    browser.clickOn("submit");
-
+    registerExampleValidAttendee(uuidConference);
+    registerExampleValidAttendee(uuidConference);
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
 }
