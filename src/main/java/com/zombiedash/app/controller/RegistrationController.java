@@ -55,10 +55,10 @@ public class RegistrationController {
         ModelAndView modelAndView;
         Map<String, String> model;
         registrationForm.validate();
+        model = registrationForm.populateFormValuesToModelMap();
+        model.put("confId", conferenceId);
         if(registrationForm.hasErrors()){
             modelAndView = new ModelAndView("attendeeregistration");
-            model = registrationForm.populateFormValuesToModelMap();
-            model.put("confId", conferenceId);
             populateErrorsInModelAndView(modelAndView, registrationForm.getErrors());
             modelAndView.addObject("model", model);
             return modelAndView;
@@ -71,7 +71,6 @@ public class RegistrationController {
             }
             catch (IllegalArgumentException exception){
                 modelAndView = new ModelAndView("attendeeregistration");
-                model = registrationForm.populateFormValuesToModelMap();
                 modelAndView.addObject("userNameAlreadyExists", validationMessagesMap.getMessageFor(exception.getMessage()));
                 modelAndView.addObject("model", model);
                 return modelAndView;
