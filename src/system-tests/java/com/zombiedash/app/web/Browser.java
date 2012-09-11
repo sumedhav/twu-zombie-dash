@@ -55,6 +55,11 @@ public class Browser {
         return this;
     }
 
+    public Browser clearTextOn(String id) {
+      this.findElement(By.id(id)).clear();
+      return this;
+    }
+
     public Browser selectFromDropDown(String id, String choice) {
         Select select = new Select(driver.findElement(By.id(id)));
         select.selectByValue(choice);

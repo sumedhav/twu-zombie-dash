@@ -72,33 +72,35 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldRegisterAnAttendeeWithValidInformation() {
     UUID conferenceId = populateWithOneConference();
-    registerExampleValidAttendee(conferenceId, "ExampleUsername");
+    registerExampleValidAttendeeWithReplacement(conferenceId, "userName", "ExampleUsername");
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Registration Confirmed")));
   }
 
-  private void registerExampleValidAttendee(UUID conferenceId, String username) {
+  private void registerExampleValidAttendeeWithReplacement(UUID conferenceId, String field, String fieldReplacement) {
     openConferenceRegistrationPage(conferenceId.toString());
     browser.inputTextOn("phoneNo", "1-555-555-5555")
         .inputTextOn("address","Example Address")
         .inputTextOn("zipcode", "55555");
-    fillOutMandatoryFields(username);
+    fillOutMandatoryFieldsWithReplacement(field, fieldReplacement);
     browser.clickOn("submit");
   }
 
-  private void registerExampleMinimalValidAttendee(UUID conferenceId, String username) {
+  private void registerExampleMinimalValidAttendeeWithReplacement(UUID conferenceId, String field, String fieldReplacement) {
     openConferenceRegistrationPage(conferenceId.toString());
-    fillOutMandatoryFields(username);
+    fillOutMandatoryFieldsWithReplacement(field, fieldReplacement);
     browser.clickOn("submit");
   }
 
-  private void fillOutMandatoryFields(String username) {
-    browser.inputTextOn("userName",username)
+  private void fillOutMandatoryFieldsWithReplacement(String field, String fieldReplacement) {
+    browser.inputTextOn("userName","ExampleUsername")
         .inputTextOn("password","Password1")
         .inputTextOn("password2", "Password1")
         .inputTextOn("email","example@email.com")
         .inputTextOn("name","Example Name")
         .inputTextOn("dob","1950-01-01")
-        .selectFromDropDown("countrylist","India");
+        .selectFromDropDown("countrylist","India")
+        .clearTextOn(field)
+        .inputTextOn(field, fieldReplacement);
   }
 
   @Ignore
@@ -125,8 +127,8 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldShowErrorMessageOnDuplicateUsername() {
     UUID conferenceId = populateWithOneConference();
-    registerExampleValidAttendee(conferenceId, "ExampleUsername");
-    registerExampleValidAttendee(conferenceId, "ExampleUsername");
+    registerExampleValidAttendeeWithReplacement(conferenceId, "userName", "ExampleUsername");
+    registerExampleValidAttendeeWithReplacement(conferenceId, "userName", "ExampleUsername");
     assertThat(browser.getTextById("error_message_div"), is(equalTo("Someone already has that username. Try another.")));
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
@@ -134,7 +136,7 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldShowInlineErrorMessageOnShortUsername() {
     UUID conferenceId = populateWithOneConference();
-    registerExampleMinimalValidAttendee(conferenceId,"Bob");
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "userName", "Bob");
     assertThat(browser.getTextById("invalid_user_name"), is(equalTo("Username must have 5-40 alphanumeric characters and no whitespaces.")));
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
@@ -142,7 +144,7 @@ public class UserRegistrationPageTest extends BasePageTest{
   @Test
   public void shouldShowInlineErrorMessageOnExcessivelyLongUsername() {
     UUID conferenceId = populateWithOneConference();
-    registerExampleMinimalValidAttendee(conferenceId, StringUtils.repeat("X", 41));
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "userName", StringUtils.repeat("X", 41));
     assertThat(browser.getTextById("invalid_user_name"), is(equalTo("Username must have 5-40 alphanumeric characters and no whitespaces.")));
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Attendee Registration")));
   }
@@ -169,9 +171,7 @@ public class UserRegistrationPageTest extends BasePageTest{
 
   private void assertPasswordError(String password) {
     UUID conferenceId = populateWithOneConference();
-    openConferenceRegistrationPage(conferenceId.toString());
-    browser.inputTextOn("password",password);
-    browser.clickOn("submit");
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "password", password);
     assertThat(browser.getTextById("invalid_password"), is(equalTo("Password must have 6-40 alphanumeric characters with at least one digit(s).")));
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
@@ -180,10 +180,33 @@ public class UserRegistrationPageTest extends BasePageTest{
   public void shouldShowInlineErrorOnUnequalPassword() {
     UUID conferenceId = populateWithOneConference();
     openConferenceRegistrationPage(conferenceId.toString());
-    fillOutMandatoryFields("Mister");
-    browser.inputTextOn("password","password1");
-    browser.inputTextOn("password2","password2");
-    browser.clickOn("submit");
+    fillOutMandatoryFieldsWithReplacement("password", "password1");
+    browser.clearTextOn("password2")
+        .inputTextOn("password2","password2")
+        .clickOn("submit");
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorOnInvalidEmail() {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "email", "boo");
+    assertThat(browser.getTextById("invalid_email"), is(equalTo("Please enter a valid email address.")));
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldShowInlineErrorOnInvalidName() {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "name", "Alfred1");
+    assertThat(browser.getTextById("invalid_name"), is(equalTo("Name should not exceed 40 characters and should not contain digits, special characters.")));
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
+  }
+
+  @Test
+  public void shouldNotBeAbleToEnterCharactersInDobFields() {
+    UUID conferenceId = populateWithOneConference();
+    registerExampleMinimalValidAttendeeWithReplacement(conferenceId,"dob","abcd");
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
 }
