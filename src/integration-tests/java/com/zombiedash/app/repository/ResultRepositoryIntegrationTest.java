@@ -2,7 +2,6 @@ package com.zombiedash.app.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
@@ -28,14 +26,16 @@ public class ResultRepositoryIntegrationTest {
     private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?)";
     private final String CREATE_TASK = "INSERT INTO zombie_task values(?,?,?,?)";
     private String username;
+    private UUID firstTaskId;
+    private UUID secondTaskId;
 
     @Before
     public void setupDb(){
         username="username";
         resultRepository = new ResultRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
-        UUID firstTaskId = UUID.randomUUID();
-        UUID secondTaskId = UUID.randomUUID();
+        firstTaskId = UUID.randomUUID();
+        secondTaskId = UUID.randomUUID();
         clearAllTables();
         jdbcTemplate.update(CREATE_CONFERENCE,
                 conferenceId,
@@ -82,16 +82,23 @@ public class ResultRepositoryIntegrationTest {
     }
 
     @Test
-    public void shouldReturnEmptyWhenNoTaskIsCompleted(){
-        List<String> completedTasks = resultRepository.getCompletedTasks(username);
-        assertEquals(completedTasks.size(),0);
+    public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted(){
+        List<String> incompleteTask=resultRepository.getIncompleteTasks(username);
+        assertEquals(incompleteTask.size(),2);
     }
 
     @Test
-    public void shouldReturnAllTasksForAttendee(){
-        List<String> allTasks=resultRepository.getAllTasks(username);
-        assertEquals(allTasks.size(),2);
+    public void shouldAddCompletedTask(){
+        int result = resultRepository.addCompletedTask(username,firstTaskId,40);
+        assertEquals(result,1);
     }
 
+    @Test
+    public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted(){
+        resultRepository.addCompletedTask(username,firstTaskId,40);
+        List<String> incompleteTasks=resultRepository.getIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(),1);
+        assertEquals(incompleteTasks.get(0),secondTaskId.toString());
+    }
 
 }
