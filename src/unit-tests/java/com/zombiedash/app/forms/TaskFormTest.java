@@ -19,8 +19,8 @@ public class TaskFormTest {
     @Before
     public void setUpTaskForm() {
         taskForm = new TaskForm();
-        taskForm.setTaskName("task_1");
-        taskForm.setTaskDescription("Hello World");
+        taskForm.setTask_name("task_1");
+        taskForm.setTask_description("Hello World");
     }
 
     @Test
@@ -40,13 +40,13 @@ public class TaskFormTest {
 
     @Test
     public void shouldReturnFalseForEmptyNameFieldInTaskForm() throws Exception {
-        taskForm.setTaskName("");
+        taskForm.setTask_name("");
         assertFalse(taskForm.isValidData());
     }
 
     @Test
     public void shouldReturnFalseForEmptyDescriptionInTaskForm() throws Exception {
-        taskForm.setTaskDescription("");
+        taskForm.setTask_description("");
         assertFalse(taskForm.isValidData());
     }
 

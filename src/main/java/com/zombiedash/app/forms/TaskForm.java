@@ -7,38 +7,38 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class TaskForm {
-    private String taskName;
-    private String taskDescription;
+    private String task_name;
+    private String task_description;
 
     private HashMap<String, String> model = new HashMap<String, String>();
 
-    public void setTaskName(String task_name) {
-        this.taskName = task_name;
+    public void setTask_name(String task_name) {
+        this.task_name = task_name;
     }
 
-    public void setTaskDescription(String task_description) {
-        this.taskDescription = task_description;
+    public void setTask_description(String task_description) {
+        this.task_description = task_description;
     }
 
     public Task createTask(UUID conferenceId) {
-        return new Task(taskName,
+        return new Task(task_name,
                     UUID.randomUUID(),
-                    taskDescription,
+                task_description,
                     conferenceId);
     }
 
     public HashMap<String, String> populateModelMapWithFormValues() {
-        model.put("name", taskName);
-        model.put("description", taskDescription);
+        model.put("name", task_name);
+        model.put("description", task_description);
         return model;
     }
 
     public boolean isValidData() {
-        taskName = taskName.trim();
-        taskDescription = taskDescription.trim();
+        task_name = task_name.trim();
+        task_description = task_description.trim();
 
-        boolean validDataFlag = this.isEmpty(taskName, "tasknameFieldEmpty");
-        validDataFlag  &= this.isEmpty(taskDescription, "descriptionFieldMissing");
+        boolean validDataFlag = this.isEmpty(task_name, "tasknameFieldEmpty");
+        validDataFlag  &= this.isEmpty(task_description, "descriptionFieldMissing");
 
         return validDataFlag;
     }

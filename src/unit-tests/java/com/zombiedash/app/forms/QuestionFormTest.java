@@ -32,8 +32,8 @@ public class QuestionFormTest {
         options.add(option1);
         options.add(option2);
 
-        questionForm.setQuestionText("Where is Charles From?");
-        questionForm.setOptions(options);
+        questionForm.setQuestion_text("Where is Charles From?");
+        questionForm.setQuestion_options(options);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class QuestionFormTest {
 
     @Test
     public void shouldReturnFalseIfQuestionTextLeftEmpty() throws Exception {
-        questionForm.setQuestionText("");
+        questionForm.setQuestion_text("");
         fakeOptions();
         assertFalse(questionForm.isValidData());
     }

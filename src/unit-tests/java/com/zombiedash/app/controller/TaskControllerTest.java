@@ -38,8 +38,8 @@ public class TaskControllerTest {
     @Test
     public void shouldCreateTask() throws Exception {
         TaskForm taskForm = new TaskForm();
-        taskForm.setTaskName("Spring");
-        taskForm.setTaskDescription("Yellow Fellow");
+        taskForm.setTask_name("Spring");
+        taskForm.setTask_description("Yellow Fellow");
         UUID conferenceId = UUID.randomUUID();
         UUID taskId = UUID.randomUUID();
         when(taskRepository.insertTask(any(Task.class))).thenReturn(taskId);
@@ -51,8 +51,8 @@ public class TaskControllerTest {
     public void shouldStayOnCreateTaskFormIfAnyFieldLeftEmpty() throws Exception {
         UUID conferenceId = UUID.randomUUID();
         TaskForm taskForm = new TaskForm();
-        taskForm.setTaskName("  ");
-        taskForm.setTaskDescription("Yellow Fellow");
+        taskForm.setTask_name("  ");
+        taskForm.setTask_description("Yellow Fellow");
         ModelAndView modelAndView = taskController.createTask("" + conferenceId, taskForm);
         Map<String, String> model = ((Map<String, String>) modelAndView.getModel().get("model"));
         MatcherAssert.assertThat(model.get("description"), Matchers.is(Matchers.equalTo("Yellow Fellow")));
