@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,8 +84,8 @@ public class ResultRepositoryIntegrationTest {
 
     @Test
     public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted(){
-        List<String> incompleteTask=resultRepository.getIncompleteTasks(username);
-        assertEquals(incompleteTask.size(),2);
+        List<Task> incompleteTasks=resultRepository.getIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(),2);
     }
 
     @Test
@@ -96,9 +97,9 @@ public class ResultRepositoryIntegrationTest {
     @Test
     public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted(){
         resultRepository.addCompletedTask(username,firstTaskId,40);
-        List<String> incompleteTasks=resultRepository.getIncompleteTasks(username);
+        List<Task> incompleteTasks=resultRepository.getIncompleteTasks(username);
         assertEquals(incompleteTasks.size(),1);
-        assertEquals(incompleteTasks.get(0),secondTaskId.toString());
+        assertEquals(incompleteTasks.get(0).getId(),secondTaskId);
     }
 
 }
