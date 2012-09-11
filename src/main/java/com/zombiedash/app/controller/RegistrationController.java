@@ -71,7 +71,7 @@ public class RegistrationController {
             }
             catch (IllegalArgumentException exception){
                 modelAndView = new ModelAndView("attendeeregistration");
-                modelAndView.addObject("userNameAlreadyExists", validationMessagesMap.getMessageFor(exception.getMessage()));
+                modelAndView.addObject("userNameAlreadyExists", validationMessagesMap.getMessageFor("userNameAlreadyExists"));
                 modelAndView.addObject("model", model);
                 return modelAndView;
             }

@@ -4,6 +4,10 @@ import com.zombiedash.app.model.Attendee;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +41,25 @@ public class RegistrationForm {
         userForm.setEmail(email);
         userForm.setPassword(password);
         errorCodes = userForm.validate();
+        validateDOB(dob);
+//        if(!isValidDOB(dob)) {errorCodes.add("invalidDOB");}
         if (address.length() > ADDRESS_MAX_LENGTH) {errorCodes.add("invalidAddress");}
         if (phoneNo.length() > PHONENO_MAX_LENGTH) {errorCodes.add("invalidPhoneNo");}
         if (zipcode.length() > ZIPCODE_MAX_LENGTH) {errorCodes.add("invalidZipcode");}
         if (!password.equals(password2)) {errorCodes.add("passwordMismatch");}
+    }
+
+    private void validateDOB(String date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try{
+            Date parsedDate = dateFormat.parse(date);
+            Date nineteenHundred = dateFormat.parse("1900-01-01");
+            Date currentDate = new Date();
+            if(parsedDate.after(currentDate) || parsedDate.before(nineteenHundred)) {errorCodes.add("invalidDOB");}
+        }catch (ParseException e) {
+            errorCodes.add("invalidDateFormat");
+        }
     }
 
     public void setEmail(String email) {

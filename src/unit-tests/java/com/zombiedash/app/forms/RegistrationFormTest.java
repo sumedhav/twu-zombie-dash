@@ -36,6 +36,34 @@ public class RegistrationFormTest {
     }
 
     @Test
+    public void shouldReturnInvalidDateFormatErrorIfDOBFormatIsIncorrect() throws Exception {
+        registrationForm.setDob("2003-2-29");
+        registrationForm.validate();
+        assertThat(registrationForm.getErrors().contains("invalidDateFormat"), is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldReturnInvalidDOBErrorIfDOBIsAFutureDate() throws Exception {
+        registrationForm.setDob("3020-1-12");
+        registrationForm.validate();
+        assertThat(registrationForm.getErrors().contains("invalidDOB"), is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldReturnInvalidDOBErrorIfDOBIsBeforeYear1900() throws Exception {
+        registrationForm.setDob("1880-01-09");
+        registrationForm.validate();
+        assertThat(registrationForm.getErrors().contains("invalidDOB"), is(equalTo(true)));
+    }
+
+    @Test
+    public void shouldAcceptADOBBetween1900AndCurrentDate() throws Exception {
+        registrationForm.setDob("1910-02-06");
+        registrationForm.validate();
+        assertThat(registrationForm.getErrors().contains("invalidDOB"), is(equalTo(false)));
+    }
+
+    @Test
     public void shouldReturnInvalidAddressErrorWhenAddressIsInvalid(){
         registrationForm.setAddress(
                 "Invalid AddressXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");

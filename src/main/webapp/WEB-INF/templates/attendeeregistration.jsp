@@ -82,11 +82,10 @@
                         <div class="control-group">
                                 <label class="control-label align-left" for="dob"><span class="error ">*</span>Date of Birth:</label>
                                 <div class="controls">
-                                  <input type="text" name="dob" id="dob" onkeyup="limitNumOfCharsInField(dob, 40, '#name_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(dob, 40, '#name_exceed_error');" value="<c:out value="${model.dob}"/>" placeholder="enter date of birth"/>
+                                  <input type="text" name="dob" id="dob" value="<c:out value="${model.dob}"/>" placeholder="enter date of birth"/>
                                   <span id="dob_field_empty" class="error ">${dobFieldEmpty}</span>
-                                  <span id="dob_exceed_error" class="error "></span>
-                                  <div id="invalid_dob" class="error ">${invalidDob}</div>
+                                  <div id="invalid_date_format" class="error ">${invalidDateFormat}</div>
+                                  <div id="invalid_dob" class="error ">${invalidDOB}</div>
                                 </div>
                         </div>
                          <div class="control-group">
@@ -99,8 +98,8 @@
                         <div class="control-group">
                                 <label class="control-label align-left" for="phoneNo">Phone Number::</label>
                                 <div class="controls">
-                                  <input type="text" name="phoneNo" id="phoneNo" onkeyup="limitNumOfCharsInField(phoneno, 40, '#name_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(phoneNo, 40, '#name_exceed_error');" value="<c:out value="${model.phoneNo}"/>" placeholder="enter phone number"/>
+                                  <input type="text" name="phoneNo" id="phoneNo" onkeyup="limitNumOfCharsInField(phoneno, 40, '#phoneno_exceed_error');"
+                                        onkeydown="limitNumOfCharsInField(phoneNo, 40, '#phoneno_exceed_error');" value="<c:out value="${model.phoneNo}"/>" placeholder="enter phone number"/>
                                   <span id="phoneno_field_empty" class="error ">${phonenoFieldEmpty}</span>
                                   <span id="phoneno_exceed_error" class="error "></span>
                                   <div id="invalid_phoneno" class="error ">${invalidPhoneno}</div>
@@ -109,8 +108,8 @@
                         <div class="control-group">
                                 <label class="control-label align-left" for="address">Address:</label>
                                 <div class="controls">
-                                  <input type="text" name="address" id="address" onkeyup="limitNumOfCharsInField(address, 40, '#name_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(address, 40, '#name_exceed_error');" value="<c:out value="${model.address}"/>" placeholder="enter address"/>
+                                  <input type="text" name="address" id="address" onkeyup="limitNumOfCharsInField(address, 40, '#address_exceed_error');"
+                                        onkeydown="limitNumOfCharsInField(address, 40, '#address_exceed_error');" value="<c:out value="${model.address}"/>" placeholder="enter address"/>
                                   <span id="address_field_empty" class="error ">${addressFieldEmpty}</span>
                                   <span id="address_exceed_error" class="error "></span>
                                   <div id="invalid_address" class="error ">${invalidAddress}</div>
@@ -119,8 +118,8 @@
                         <div class="control-group">
                                 <label class="control-label align-left" for="zipcode">Zipcode:</label>
                                 <div class="controls">
-                                  <input type="text" name="zipcode" id="zipcode" onkeyup="limitNumOfCharsInField(zipcode, 40, '#name_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(zipcode, 40, '#name_exceed_error');" value="<c:out value="${model.zipcode}"/>" placeholder="enter zipcode"/>
+                                  <input type="text" name="zipcode" id="zipcode" onkeyup="limitNumOfCharsInField(zipcode, 40, '#zipcode_exceed_error');"
+                                        onkeydown="limitNumOfCharsInField(zipcode, 40, '#zipcode_exceed_error');" value="<c:out value="${model.zipcode}"/>" placeholder="enter zipcode"/>
                                   <span id="zipcode_field_empty" class="error ">${zipcodeFieldEmpty}</span>
                                   <span id="zipcode_exceed_error" class="error "></span>
                                   <div id="invalid_zipcode" class="error ">${invalidZipcode}</div>
