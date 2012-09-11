@@ -19,7 +19,7 @@ CREATE TABLE zombie_task(name varchar(100) NOT NULL,
                          Description varchar(1000) NOT NULL,
                          CONFERENCE_ID uuid NOT NULL,
                          PRIMARY KEY (ID),
-                         FOREIGN KEY(CONFERENCE_ID) REFERENCES zombie_conference(ID));
+                         FOREIGN KEY(CONFERENCE_ID) REFERENCES zombie_conference(ID) ON DELETE CASCADE);
 
 CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
                        Text varchar(50) NOT NULL,
