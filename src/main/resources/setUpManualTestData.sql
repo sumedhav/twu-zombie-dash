@@ -1,5 +1,5 @@
 insert into zombie_task values ('charles_task', cast('2b4e62ac-4a90-4c71-9486-e67bded6248e' AS uuid));
-insert into zombie_question values (cast('372b7e07-4cbd-47e3-90cd-7f166c2c25df' AS uuid), 'Where is Red Fort', cast('2b4e62ac-4a90-4c71-9486-e67bded6248e' AS uuid));
+insert into zombie_question values (cast('372b7e07-4cbd-47e3-90cd-7f166c2c25df' AS uuid), 'Where is Red Fort?', cast('2b4e62ac-4a90-4c71-9486-e67bded6248e' AS uuid));
 insert into zombie_question values (cast('1bf3b297-2d15-4228-8830-1ebe15e35100' AS uuid), 'Is it lunch time?', cast('2b4e62ac-4a90-4c71-9486-e67bded6248e' AS uuid));
 insert into zombie_option values (cast('8acf8dc8-22a0-4041-bdf4-05c25abe0d64' AS uuid), 'Delhi', true,  cast('372b7e07-4cbd-47e3-90cd-7f166c2c25df' AS uuid));
 insert into zombie_option values (cast('86fa57fd-c3bc-40f6-b19d-b0ba3f713243' AS uuid), 'Paris', false, cast('372b7e07-4cbd-47e3-90cd-7f166c2c25df' AS uuid));

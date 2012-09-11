@@ -1,6 +1,5 @@
 package com.zombiedash.app.controller;
 
-import com.zombiedash.app.repository.QuestionRepository;
 import com.zombiedash.app.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +12,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/attendee/1")
 public class AttendeeController {
-    private QuestionRepository questionRepository;
     private ResultService resultService;
 
     @Autowired
-    public AttendeeController(QuestionRepository questionRepository, ResultService resultService) {
-        this.questionRepository = questionRepository;
+    public AttendeeController(ResultService resultService) {
         this.resultService = resultService;
     }
 
