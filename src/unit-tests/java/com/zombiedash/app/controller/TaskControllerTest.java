@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -80,6 +79,6 @@ public class TaskControllerTest {
         when(questionRepository.insertQuestion(any(Question.class))).thenReturn(taskId);
         when(questionForm.isValidData()).thenReturn(true);
         ModelAndView modelAndView = taskController.createQuestion(taskId.toString(), questionForm);
-        assertThat(modelAndView.getViewName(), is("redirect://zombie/attendee/game"));
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/conference/view/null"));
     }
 }

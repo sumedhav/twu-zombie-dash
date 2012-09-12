@@ -49,8 +49,7 @@ public class TaskCreationTest extends BasePageTest{
         .inputTextOn("optionText_3","Third")
         .clickOn("isCorrect2")
         .clickOn("submitQuestion");
-    System.out.println("");
-    //assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Conference Information")));
+    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Conference Information")));
   }
 
 }

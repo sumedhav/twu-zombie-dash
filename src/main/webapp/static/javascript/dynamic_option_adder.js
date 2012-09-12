@@ -19,11 +19,11 @@ function createOption(){
 
     var tdata = "<tr name=\"row_" + c + "\">"
                     + "<td class=\"controls\">"
-                        + "<input type=\"radio\" name=\"isCorrect\" id=\"isCorrect" + c + "\"/>"
+                        + "<input type=\"radio\" name=\"question_option_values\" id=\"isCorrect" + c + "\" value=\""+c+"\" \" />"
                     + "</td>"
                     + "<td class=\"controls\">"
-                        + "<input type=\"text\" name=\"optionText_" + c + "\" id=\"optionText_" + c
-                            + "\" onkeyup=\"limitNumOfCharsInField( optionText_" + c + ", 10, \'#optionText_exceed_error_"
+                        + "<input type=\"text\" name=\"question_option_texts\" id=\"optionText_" + c
+                            + "\"  onkeyup=\"limitNumOfCharsInField( optionText_" + c + ", 10, \'#optionText_exceed_error_"
                             + c + " \');\" onkeydown=\"limitNumOfCharsInField( optionText_" + c + ", 10, \'#optionText_exceed_error_"
                             + c + " \');\"value=\"\" placeholder=\"enter option " + c + "\"/>"
                         + "<span id=\"optionText_exceed_error_" + c + "\" class=\"error\"></span>"

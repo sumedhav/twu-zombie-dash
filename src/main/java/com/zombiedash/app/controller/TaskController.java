@@ -21,8 +21,9 @@ import java.util.UUID;
 public class TaskController {
     private TaskRepository taskRepository;
     private QuestionRepository questionRepository;
+  private String conferenceId;
 
-    @Autowired
+  @Autowired
     public TaskController(TaskRepository taskRepository, QuestionRepository questionRepository) {
         this.taskRepository = taskRepository;
         this.questionRepository = questionRepository;
@@ -38,6 +39,7 @@ public class TaskController {
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.POST)
     public ModelAndView createTask(@PathVariable String conferenceId, TaskForm taskForm) {
+        this.conferenceId = conferenceId;
         try {
             boolean validDataFlag = taskForm.isValidData();
 
@@ -61,6 +63,7 @@ public class TaskController {
     public ModelAndView showQuestionCreationForm(@PathVariable String taskId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createquestion");
+        modelAndView.addObject("taskId",taskId);
         return modelAndView;
     }
 
@@ -68,12 +71,11 @@ public class TaskController {
     public ModelAndView createQuestion(@PathVariable String taskId, QuestionForm questionForm) {
         try {
             boolean validDataFlag = questionForm.isValidData();
-
             HashMap<String, String> model = questionForm.populateModelMapWithFormValues();
             if (validDataFlag) {
                 Question question = questionForm.createQuestion(UUID.fromString(taskId));
                 questionRepository.insertQuestion(question);
-                ModelAndView modelAndView = new ModelAndView("redirect://zombie/attendee/game");
+                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/conference/view/"+ conferenceId);
                 return modelAndView;
             }
             return new ModelAndView("createquestion", "model", model);
