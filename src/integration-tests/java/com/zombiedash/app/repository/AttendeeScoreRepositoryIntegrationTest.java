@@ -9,7 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
@@ -22,20 +24,21 @@ public class AttendeeScoreRepositoryIntegrationTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private AttendeeScoreRepository resultRepository;
+    private AttendeeScoreRepository attendeeScoreRepository;
 
-    private final String CREATE_CONFERENCE="INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
-    private final String CREATE_USER="INSERT INTO zombie_users VALUES(?,?,?,?,?)";
+    private final String CREATE_CONFERENCE = "INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
+    private final String CREATE_USER = "INSERT INTO zombie_users VALUES(?,?,?,?,?)";
     private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?)";
     private final String CREATE_TASK = "INSERT INTO zombie_task values(?,?,?,?)";
+
     private String username;
     private UUID firstTaskId;
     private UUID secondTaskId;
 
     @Before
-    public void setupDb(){
-        username="username";
-        resultRepository = new AttendeeScoreRepository(jdbcTemplate);
+    public void setupDb() {
+        username = "username";
+        attendeeScoreRepository = new AttendeeScoreRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
         firstTaskId = UUID.randomUUID();
         secondTaskId = UUID.randomUUID();
@@ -84,24 +87,32 @@ public class AttendeeScoreRepositoryIntegrationTest {
                 conferenceId);
     }
 
-    @Test
-    public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted(){
-        List<Task> incompleteTasks=resultRepository.getIncompleteTasks(username);
-        assertEquals(incompleteTasks.size(),2);
+    private void createQuestion(UUID id, String text, UUID taskId) {
+        jdbcTemplate.update("insert into zombie_Question values(?,?,?)", id, text, taskId);
+    }
+
+    private void createOption(UUID questionId, UUID optionId, String text, boolean correct) {
+        jdbcTemplate.update("INSERT INTO zombie_option values(?,?,?,?)", optionId, text, correct, questionId);
     }
 
     @Test
-    public void shouldAddCompletedTask(){
-        int result = resultRepository.addCompletedTask(username,firstTaskId,40);
-        assertEquals(result,1);
+    public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted() {
+        List<Task> incompleteTasks = attendeeScoreRepository.getIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(), 2);
     }
 
     @Test
-    public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted(){
-        resultRepository.addCompletedTask(username,firstTaskId,40);
-        List<Task> incompleteTasks=resultRepository.getIncompleteTasks(username);
-        assertEquals(incompleteTasks.size(),1);
-        assertEquals(incompleteTasks.get(0).getId(),secondTaskId);
+    public void shouldAddCompletedTask() {
+        int result = attendeeScoreRepository.addCompletedTask(username, firstTaskId, 40);
+        assertEquals(result, 1);
+    }
+
+    @Test
+    public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted() {
+        attendeeScoreRepository.addCompletedTask(username, firstTaskId, 40);
+        List<Task> incompleteTasks = attendeeScoreRepository.getIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(), 1);
+        assertEquals(incompleteTasks.get(0).getId(), secondTaskId);
     }
 
 
@@ -109,6 +120,27 @@ public class AttendeeScoreRepositoryIntegrationTest {
     public void shouldGetScoreOfAllTasksCompletedByAttendee() throws Exception {
         jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, firstTaskId, 1);
         jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, secondTaskId, 3);
-        assertThat(resultRepository.getAttendeeScore(username), is(4));
+        assertThat(attendeeScoreRepository.getAttendeeScore(username), is(4));
     }
+
+    @Test
+    public void shouldInsertUserAnswersForOneTask() {
+        Map<String, String> userAnswer = new HashMap();
+        UUID questionId = UUID.randomUUID();
+        UUID optionId = UUID.randomUUID();
+
+        createQuestion(questionId, "What's your name?", firstTaskId);
+        createOption(questionId, optionId, "Charles", true);
+        UUID secondQuestionId = UUID.randomUUID();
+        UUID secondOptionId = UUID.randomUUID();
+        createQuestion(secondQuestionId, "What's your name?", firstTaskId);
+        createOption(secondQuestionId, optionId, "Charles", true);
+
+        userAnswer.put(questionId.toString(), optionId.toString());
+        userAnswer.put(secondQuestionId.toString(), secondOptionId.toString());
+
+        int result = attendeeScoreRepository.insertAnswers(username, firstTaskId, userAnswer);
+        assertThat(result, is(1));
+    }
+
 }

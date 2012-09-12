@@ -26,7 +26,7 @@ CREATE TABLE zombie_task(name varchar(100) NOT NULL,
 CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
                        Text varchar(50) NOT NULL,
                        TASK_ID uuid NOT NULL,
-                       FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID));
+                       FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID) ON DELETE CASCADE);
 
 CREATE TABLE zombie_option(
             ID uuid,
@@ -66,6 +66,18 @@ CREATE TABLE zombie_attendee_score(
                 FOREIGN KEY (username) REFERENCES zombie_users(username) ON DELETE CASCADE,
                 FOREIGN KEY (task_ID) REFERENCES zombie_task(ID) ON DELETE CASCADE,
                 PRIMARY KEY(username,task_ID));
+
+CREATE TABLE zombie_attendee_answers(
+                username varchar(40),
+                task_ID uuid,
+                question_ID uuid,
+                option_ID uuid,
+                FOREIGN KEY (username) REFERENCES zombie_users(username) ON DELETE CASCADE,
+                FOREIGN KEY (task_ID) REFERENCES zombie_task(id) ON DELETE CASCADE,
+                FOREIGN KEY (question_ID) REFERENCES zombie_question(id) ON DELETE CASCADE,
+                PRIMARY KEY(username,task_ID,question_ID)
+);
+
 
 INSERT INTO zombie_users VALUES('admin','da07c08a2c2ef3710e688bff476a8a09d52d6d34b6ee3c41a4b1f58f2949792ef20079565ca0d78e2758b33b50a13c9829c08bdf670dc802e627f289364d203a',0,'Administrator','admin@zombie.com');
 
