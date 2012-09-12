@@ -89,37 +89,13 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(browser.getTextById("incompleteQuestionsError"), is("You need to answer all the questions!"));
     }
 
-    @Ignore("depends on attendee login")
     @Test
     public void shouldDisplayAttendeeHomePageWithUpdatedScoreWhenAllQuestionsAreAnsweredAndSubmitted() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
-
-        List<WebElement> questions = browser.findElements(By.className("question"));
-        for (int questionNumber = 1; questionNumber <= questions.size(); questionNumber++) {
-            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
-            options.get(0).click();
-        }
+        browser.findElement(By.id("option_1_1")).click();
+        browser.findElement(By.id("option_2_1")).click();
         browser.clickOn("submit_button");
-
         assertThat(browser.getPageTitle(), is("Attendee Home"));
-
-    }
-
-    @Test
-    public void shouldAllowOnlyOneAnswerForAQuestion() throws Exception {
-        initializeStatelessBrowserAndSetUpData();
-
-        List<WebElement> radioButtons = browser.findElements(By.id("option_1_1"));
-        for (WebElement radioButton : radioButtons) {
-            radioButton.click();
-        }
-        int numberOfSelections = 0;
-        for (WebElement radioButton : radioButtons) {
-            if (radioButton.isSelected()) {
-                numberOfSelections++;
-            }
-        }
-        assertThat(numberOfSelections, is(1));
     }
 
     private void initializeQuestionsAndOptionsInTheDatabase() {
