@@ -48,7 +48,6 @@ public class TriviaGameController {
     public ModelAndView showResultsPage(@RequestParam Map<String, String> params,@PathVariable String taskId,Principal principal) {
         try {
             ModelAndView modelAndView = new ModelAndView("redirect:/zombie/attendee/home");
-            int obtainedScore = resultService.getScoreOfUserSelectedOptions(params,taskId);
             String userName = principal.getName();
             UUID currentTaskId = UUID.fromString(taskId);
             AttendeeScoreRepository attendeeScoreRepository = new AttendeeScoreRepository(jdbcTemplate);
