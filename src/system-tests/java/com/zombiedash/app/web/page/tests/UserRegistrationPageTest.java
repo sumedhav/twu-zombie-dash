@@ -6,7 +6,6 @@ import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -24,7 +23,6 @@ public class UserRegistrationPageTest extends BasePageTest{
   public void setupSession() {
     browser= BrowserSessionBuilder
         .aBrowserSession()
-            .withJavascriptEnabled()
         .usingHttps()
         .loggedInAsAdmin()
         .build();
@@ -104,7 +102,6 @@ public class UserRegistrationPageTest extends BasePageTest{
         .selectFromDropDown("countrylist","India");
   }
 
-  @Ignore
   @Test
   public void shouldReturnToSamePageWhenFieldsAreEmpty() {
     UUID conferenceId = populateWithOneConference();
@@ -142,7 +139,7 @@ public class UserRegistrationPageTest extends BasePageTest{
     assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Attendee Registration")));
   }
 
-  @Test@Ignore
+  @Test
   public void shouldShowInlineErrorMessageOnExcessivelyLongUsername() {
     UUID conferenceId = populateWithOneConference();
     registerExampleMinimalValidAttendeeWithReplacement(conferenceId, "userName", StringUtils.repeat("X", 41));
@@ -216,16 +213,14 @@ public class UserRegistrationPageTest extends BasePageTest{
     assertInvalidDateError("1234567890", "Enter a date in yyyy-mm-dd format.", "invalid_date_format");
   }
 
-  @Ignore
   @Test
   public void shouldShowInlineErrorOnFutureDate() {
-    assertInvalidDateError("3000-11-03", "Hmm, the date doesn’t look right. Be sure to use your actual DOB.", "invalid_dob");
+    assertInvalidDateError("3000-11-03", "Hmm, the date doesn't look right. Be sure to use your actual DOB.", "invalid_dob");
   }
 
-  @Ignore
   @Test
   public void shouldShowInlineErrorOnPreTwentiethCenturyDate() {
-    assertInvalidDateError("1800-11-03", "Hmm, the date doesn’t look right. Be sure to use your actual DOB.", "invalid_dob");
+    assertInvalidDateError("1800-11-03", "Hmm, the date doesn't look right. Be sure to use your actual DOB.", "invalid_dob");
   }
 
   private void assertInvalidDateError(String dob, String errorMessage, String field) {

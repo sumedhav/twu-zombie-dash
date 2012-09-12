@@ -58,7 +58,8 @@ public class RegistrationForm {
             Date currentDate = new Date();
             if(parsedDate.after(currentDate) || parsedDate.before(nineteenHundred)) {errorCodes.add("invalidDOB");}
         }catch (ParseException e) {
-            errorCodes.add("invalidDateFormat");
+            if(date.equals("")) {errorCodes.add("dobFieldEmpty");}
+            else {errorCodes.add("invalidDateFormat");}
         }
     }
 

@@ -31,11 +31,10 @@
                          <div class="control-group">
                               <label class="control-label align-left" for="userName"><span class="error ">*</span>Username:</label>
                               <div class="controls">
-                                <input type="text" name="userName" id="userName" onkeyup="limitNumOfCharsInField(userName, 40, '#username_exceed_error');"
-                                   onkeydown="limitNumOfCharsInField(userName, 40, '#username_exceed_error');"value="<c:out value="${model.username}"/>"
+                                <input type="text" name="userName" id="userName" value="<c:out value="${model.username}"/>"
                                    placeholder="enter username"/>
                                 <span id="username_field_empty" class="error ">${usernameFieldEmpty}</span>
-                                <span id="username_exceed_error" class="error "></span>
+                                <!--<span id="username_exceed_error" class="error "></span>-->
                                 <div id="invalid_user_name" class="error ">${invalidUserName}</div>
                               </div>
                          </div>
