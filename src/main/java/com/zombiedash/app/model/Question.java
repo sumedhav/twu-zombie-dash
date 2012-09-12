@@ -8,13 +8,13 @@ public class Question {
     private UUID questionId;
     private String text;
 
-    private List<Option> options =new ArrayList<Option>();
+    private List<Option> options = new ArrayList<Option>();
     private UUID taskId;
 
     public Question(UUID questionId, String text, List<Option> options, UUID taskId) {
         this.questionId = questionId;
         this.text = text;
-        this.options =options;
+        this.options = options;
         this.taskId = taskId;
     }
 
@@ -30,15 +30,15 @@ public class Question {
         return text;
     }
 
-   public List<Option> getOptions() {
+    public List<Option> getOptions() {
         return options;
     }
 
-    public String getValidOption() {
-        String answer = "";
-        for (Option option : options){
-            if(option.isCorrect()){
-                answer = option.getText();
+    public UUID getValidOption() {
+        UUID answer = UUID.randomUUID();
+        for (Option option : options) {
+            if (option.isCorrect()) {
+                answer = option.getOptionId();
                 break;
             }
         }

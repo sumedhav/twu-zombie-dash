@@ -62,7 +62,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         taskTestDataManager.insertOption(questionId2, 80, "No thanks, fasting at the moment", false);
 
     }
-
+    
     @Test
     public void shouldRetrieveAllQuestionsOfATask() {
         insertDataIntoDatabase();
@@ -82,25 +82,23 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     }
 
     @Test
-    public void shouldReturnCorrectOption(){
+    public void shouldReturnCorrectOption() {
         UUID questionId = UUID.randomUUID();
         UUID taskId = UUID.randomUUID();
-        createOptionList(questionId);
+        UUID correctOptionId = UUID.randomUUID();
 
-        Question aQuestion = new Question(questionId, "Where are you?", createOptionList(questionId), taskId);
+        Question aQuestion = new Question(questionId, "Where are you?", createOptionList(questionId, correctOptionId), taskId);
 
-        assertThat(aQuestion.getValidOption(), equalTo("Bangalore"));
+        assertThat(aQuestion.getValidOption(), equalTo(correctOptionId));
     }
 
-    private List<Option> createOptionList(UUID questionId) {
-        List <Option> optionList = new ArrayList<Option>();
-        optionList.add(new Option(UUID.randomUUID(), "Bangalore", true, questionId));
+    private List<Option> createOptionList(UUID questionId, UUID correctOptionId) {
+        List<Option> optionList = new ArrayList<Option>();
+        optionList.add(new Option(correctOptionId, "Bangalore", true, questionId));
         optionList.add(new Option(UUID.randomUUID(), "Paris", false, questionId));
         optionList.add(new Option(UUID.randomUUID(), "Johannesburg", false, questionId));
         return optionList;
     }
-
-
 
 }
 

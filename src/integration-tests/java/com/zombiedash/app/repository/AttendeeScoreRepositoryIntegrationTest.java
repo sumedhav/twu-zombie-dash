@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.AttendeeAnswer;
 import com.zombiedash.app.model.Task;
 import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
 import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
@@ -32,6 +33,7 @@ public class AttendeeScoreRepositoryIntegrationTest {
     private final String CREATE_USER="INSERT INTO zombie_users VALUES(?,?,?,?,?)";
     private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?,?,?)";
     private final String CREATE_TASK = "INSERT INTO zombie_task values(?,?,?,?)";
+
     private String username;
     private UUID firstTaskId;
     private UUID secondTaskId;
@@ -108,9 +110,9 @@ public class AttendeeScoreRepositoryIntegrationTest {
     }
 
     @Test
-    public void shouldAddCompletedTask(){
-        int result = attendeeScoreRepository.addCompletedTask(username,firstTaskId,40);
-        assertEquals(result,1);
+    public void shouldAddCompletedTask() {
+        int result = attendeeScoreRepository.addCompletedTask(username, firstTaskId, 40);
+        assertEquals(result, 1);
     }
 
     @Test
@@ -180,4 +182,14 @@ public class AttendeeScoreRepositoryIntegrationTest {
         assertThat(result, is(1));
     }
 
+
+    @Test
+    public void shouldGetAnswersOfAnAttendee() {
+        UUID questionId = UUID.randomUUID();
+        UUID optionId = UUID.randomUUID();
+        createQuestionAndAnswerForTask(firstTaskId, questionId, optionId);
+        jdbcTemplate.update("INSERT INTO zombie_attendee_answers VALUES(?,?,?,?)", username, firstTaskId, questionId, optionId);
+        List<AttendeeAnswer> answers = attendeeScoreRepository.fetchAnswers(username, firstTaskId);
+        assertThat(answers.size(), is(1));
+    }
 }

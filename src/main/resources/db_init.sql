@@ -35,7 +35,6 @@ CREATE TABLE zombie_option(
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
             QUESTION_ID uuid NOT NULL,
-            PRIMARY KEY (ID,QUESTION_ID),
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)
             ON DELETE CASCADE);
 

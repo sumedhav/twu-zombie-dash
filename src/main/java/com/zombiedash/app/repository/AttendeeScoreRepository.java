@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.AttendeeAnswer;
 import com.zombiedash.app.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,11 +20,13 @@ public class AttendeeScoreRepository {
     private final String SELECT_INCOMPLETE_TASKS_FOR_ATTENDEE ="SELECT * FROM zombie_task AS task," +
             " zombie_attendee_info AS attendee WHERE attendee.username = ? AND attendee.conference_ID = task.CONFERENCE_ID" +
             " AND ID NOT IN (SELECT task_ID FROM zombie_attendee_score WHERE username = ?)";
-    private final String ADD_COMPLETED_TASK="INSERT INTO zombie_attendee_score VALUES(?,?,?)";
+    private final String ADD_COMPLETED_TASK = "INSERT INTO zombie_attendee_score VALUES(?,?,?)";
     private final String SELECT_SCORES_OF_ATTENDEE = "SELECT sum(score) FROM zombie_attendee_score WHERE username = ?";
     private final String COUNT_OF_TASK_OF_ATTENDEE =  "SELECT count(*) FROM zombie_attendee_score WHERE username = ? AND " +
             "task_ID = ?";
     private final String INSERT_USER_ANSWER = "INSERT INTO zombie_attendee_answers VALUES(?,?,?,?)";
+    private final String SELECT_ANSWER_OF_ATTENDEE = "SELECT * FROM zombie_attendee_answers WHERE username = ? and task_ID = ?";
+
     @Autowired
     public AttendeeScoreRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -76,5 +79,18 @@ public class AttendeeScoreRepository {
         }
 
 
+    }
+
+    public List<AttendeeAnswer> fetchAnswers(String username, UUID taskId) {
+        Object[] args = new Object[]{username, taskId};
+        return jdbcTemplate.query(SELECT_ANSWER_OF_ATTENDEE, args, new RowMapper<AttendeeAnswer>() {
+            @Override
+            public AttendeeAnswer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return new AttendeeAnswer(resultSet.getString("username"),
+                        (UUID) resultSet.getObject("task_ID"),
+                        (UUID) resultSet.getObject("question_ID"),
+                        (UUID) resultSet.getObject("option_ID"));  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
     }
 }

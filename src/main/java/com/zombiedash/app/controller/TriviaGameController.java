@@ -51,7 +51,9 @@ public class TriviaGameController {
             int obtainedScore = resultService.getScoreOfUserSelectedOptions(params,taskId);
             String userName = principal.getName();
             UUID currentTaskId = UUID.fromString(taskId);
-            resultService.addCompletedTask(userName,currentTaskId,obtainedScore);
+            AttendeeScoreRepository attendeeScoreRepository = new AttendeeScoreRepository(jdbcTemplate);
+            attendeeScoreRepository.insertAnswers(userName, currentTaskId, params);
+            resultService.calculateScore(userName, currentTaskId);
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");

@@ -1,5 +1,6 @@
 package com.zombiedash.app.service;
 
+import com.zombiedash.app.model.AttendeeAnswer;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.repository.AttendeeScoreRepository;
 import com.zombiedash.app.repository.QuestionRepository;
@@ -19,39 +20,39 @@ public class ResultService {
     private AttendeeScoreRepository attendeeScoreRepository;
 
     @Autowired
-    public ResultService(QuestionRepository questionRepository, AttendeeScoreRepository resultRepository) {
+    public ResultService(QuestionRepository questionRepository, AttendeeScoreRepository attendeeScoreRepository) {
         this.questionRepository = questionRepository;
-        this.attendeeScoreRepository = resultRepository;
+        this.attendeeScoreRepository = attendeeScoreRepository;
     }
 
-    public int calculateScore(List<String> userAnswers, String taskId) {
-        int score = 0, currentAnswer = 0;
-        for (Question question : listQuestions(taskId)) {
-            if (question.getValidOption().equals(userAnswers.get(currentAnswer))) {
-
-                score += POINTS_FOR_CORRECT_ANSWER;
-            }
-            currentAnswer++;
+    public int calculateScore(String username, UUID taskId) {
+        List<AttendeeAnswer> answers = attendeeScoreRepository.fetchAnswers(username, taskId);
+        List<Question> questions = questionRepository.fetchAllQuestions(taskId.toString());
+        int score = 0;
+        for (AttendeeAnswer answer : answers) {
+            UUID questionId = answer.getQuestionId();
+            Question correspondingQuestion = findQuestionById(questionId, questions);
+            if (answer.getOptionId().equals(correspondingQuestion.getValidOption()))
+                score++;
         }
         return score;
     }
 
-    public int getScoreOfUserSelectedOptions(Map<String, String> params, String taskId) {
-        int noOfQuestionsInRepository = listQuestions(taskId).size();
-        List<String> userAnswers = new ArrayList<String>();
-        for (int questionId = 1; questionId <= noOfQuestionsInRepository; questionId++) {
-            userAnswers.add(params.get("question_" + questionId));
+    private Question findQuestionById(UUID questionId, List<Question> questions) {
+
+        for (Question question : questions) {
+            if (question.getQuestionId().equals(questionId))
+                return question;
         }
-        return calculateScore(userAnswers, taskId);
+        return null;
     }
+
+  
 
     public List<Question> listQuestions(String taskId) {
         return questionRepository.fetchAllQuestions(taskId);
     }
 
-    public void addCompletedTask(String username, UUID taskId, int score) {
-        attendeeScoreRepository.addCompletedTask(username, taskId, score);
-    }
 
     public int getAttendeeScore(String username) {
         return attendeeScoreRepository.fetchAttendeeScore(username);
