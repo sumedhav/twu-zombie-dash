@@ -28,7 +28,7 @@ public class AttendeeScoreRepositoryIntegrationTest {
 
     private final String CREATE_CONFERENCE = "INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
     private final String CREATE_USER = "INSERT INTO zombie_users VALUES(?,?,?,?,?)";
-    private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?)";
+    private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?,?,?)";
     private final String CREATE_TASK = "INSERT INTO zombie_task values(?,?,?,?)";
 
     private String username;
@@ -85,6 +85,8 @@ public class AttendeeScoreRepositoryIntegrationTest {
                 null,
                 null,
                 null,
+                true,
+                true,
                 conferenceId);
     }
 

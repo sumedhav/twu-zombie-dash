@@ -136,7 +136,7 @@
                         <div class="checkbox-control-group">
                             <div class="checkbox-controls" float="left">
                               <input type="checkbox" name="adsConfirmation" id="adsConfirmation"
-                                    checked="<c:out value="${model.adsConfirm}"/>" />
+                                    checked="<c:out value="${model.adsConfirm}"/>"/>
                                      <label class="checkbox-label" for="adsConfirmation">Would you like to receive general advertisements</label>
                             </div>
 

@@ -111,7 +111,7 @@ public class RegistrationFormTest {
 
     @Test
     public void shouldPopulateFromValuesToModelMap() throws Exception {
-        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode");
+        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "true", "false");
 
         HashMap<String, String> expectedMap = new HashMap<String, String>();
         expectedMap.put("username", "sadasdas");
@@ -122,6 +122,8 @@ public class RegistrationFormTest {
         expectedMap.put("countrylist", "India");
         expectedMap.put("zipCode", "zipcode");
         expectedMap.put("phoneNo", "1241324");
+        expectedMap.put("productsMailingConfirmation", "true");
+        expectedMap.put("adsConfirmation", "false");
 
         Map map = registrationForm.populateFormValuesToModelMap();
 
@@ -130,7 +132,7 @@ public class RegistrationFormTest {
 
     @Test
     public void shouldCreateAttendee() throws Exception {
-        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode");
+        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "true", "true");
 
         Attendee attendee = registrationForm.createAttendee();
 
@@ -142,9 +144,11 @@ public class RegistrationFormTest {
         assertThat(attendee.getAddress(), is("address"));
         assertThat(attendee.getPhoneNo(), is("1241324"));
         assertThat(attendee.getZipcode(), is("zipcode"));
+        assertThat(attendee.getProductsMailingConfirmation(), is(true));
+        assertThat(attendee.getAdsConfirmation(), is(true));
     }
 
-    private RegistrationForm registrationFormFactory(String userName, String name, String email, String dob, String country, String address, String phoneNo, String zipcode) {
+    private RegistrationForm registrationFormFactory(String userName, String name, String email, String dob, String country, String address, String phoneNo, String zipcode, String productsMailingConfirmation, String adsConfirmation) {
 
         RegistrationForm registrationForm = new RegistrationForm();
         registrationForm.setUserName(userName);
@@ -155,6 +159,8 @@ public class RegistrationFormTest {
         registrationForm.setAddress(address);
         registrationForm.setPhoneNo(phoneNo);
         registrationForm.setZipcode(zipcode);
+        registrationForm.setProductsMailingConfirmation(productsMailingConfirmation);
+        registrationForm.setAdsConfirmation(adsConfirmation);
         return registrationForm;
     }
 }

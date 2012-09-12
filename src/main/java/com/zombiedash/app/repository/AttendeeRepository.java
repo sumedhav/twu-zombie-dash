@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public class AttendeeRepository {
     public static final String INSERT_INTO_USER_TABLE = "INSERT INTO zombie_users VALUES(?,?,?,?,?)";
-    public static final String INSERT_INTO_ATTENDEE_INFO_TABLE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?)";
+    public static final String INSERT_INTO_ATTENDEE_INFO_TABLE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?,?,?)";
     public static final String SELECT_ATTENDEE = "SELECT * FROM zombie_attendees as attendee," +
             "zombie_users as user" +
             "WHERE user.username= ? AND attendee.conference_ID = ? AND" +
@@ -37,6 +37,8 @@ public class AttendeeRepository {
                     attendee.getPhoneNo(),
                     attendee.getAddress(),
                     attendee.getZipcode(),
+                    attendee.getProductsMailingConfirmation(),
+                    attendee.getAdsConfirmation(),
                     conference_id);
             return true;
     }
@@ -55,7 +57,9 @@ public class AttendeeRepository {
                         resultSet.getString("country"),
                         resultSet.getString("phoneNo"),
                         resultSet.getString("address"),
-                        resultSet.getString("zipcode"));
+                        resultSet.getString("zipcode"),
+                        resultSet.getBoolean("productMails"),
+                        resultSet.getBoolean("adsMails"));
             }
         });
         return attendee.get(0);

@@ -8,18 +8,25 @@ public class Attendee {
     private String zipcode;
     private String address;
     private String phoneNo;
+    private Boolean productsMailingConfirmation;
+    private Boolean adsConfirmation;
+
     public Attendee(User user,
                     String dob,
                     String country,
                     String phoneNo,
                     String address,
-                    String zipcode) {
+                    String zipcode,
+                    Boolean productsMailingConfirmation,
+                    Boolean adsConfirmation) {
         this.user = user;
         this.dob = dob;
         this.country = country;
         this.phoneNo=phoneNo;
         this.address=address;
         this.zipcode=zipcode;
+        this.productsMailingConfirmation = productsMailingConfirmation;
+        this.adsConfirmation = adsConfirmation;
     }
 
     public User getUser() {
@@ -57,5 +64,13 @@ public class Attendee {
 
     public String getPhoneNo() {
         return phoneNo;
+    }
+
+    public Boolean getProductsMailingConfirmation() {
+        return productsMailingConfirmation;
+    }
+
+    public Boolean getAdsConfirmation() {
+        return adsConfirmation;
     }
 }

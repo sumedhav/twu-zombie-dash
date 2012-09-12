@@ -31,6 +31,9 @@ public class RegistrationForm {
     private final static int PHONENO_MAX_LENGTH = 20;
     private final static int ZIPCODE_MAX_LENGTH = 20;
     private List<String> errorCodes;
+    private String productsMailingConfirmation;
+    private String adsConfirmation;
+
     public RegistrationForm(){
         userForm = new UserForm();
     }
@@ -108,7 +111,7 @@ public class RegistrationForm {
     }
 
     public Attendee createAttendee() {
-        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode);
+        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode, Boolean.parseBoolean(productsMailingConfirmation), Boolean.parseBoolean(adsConfirmation));
     }
 
     public String getDob() {
@@ -141,6 +144,16 @@ public class RegistrationForm {
         model.put("countrylist", countrylist);
         model.put("zipCode", zipcode);
         model.put("phoneNo", phoneNo);
+        model.put("productsMailingConfirmation", productsMailingConfirmation);
+        model.put("adsConfirmation", adsConfirmation);
         return model;
+    }
+
+    public void setProductsMailingConfirmation(String productsMailingConfirmation) {
+        this.productsMailingConfirmation = productsMailingConfirmation;
+    }
+
+    public void setAdsConfirmation(String adsConfirmation) {
+        this.adsConfirmation = adsConfirmation;
     }
 }

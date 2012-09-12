@@ -28,7 +28,7 @@ public class AttendeeRepositoryIntegrationTest {
                 "'venue','start','end',5);", conferenceId.toString()));
         jdbcTemplate.execute("INSERT INTO zombie_users VALUES('username', 'password1', 2, 'Attendee', 'attendee@zombie.com')");
 
-        Attendee attendee = new Attendee(new User("username", Role.ATTENDEE, "Attendee", "attendee@zombie.com"), "dob", "country", null, null, null);
+        Attendee attendee = new Attendee(new User("username", Role.ATTENDEE, "Attendee", "attendee@zombie.com"), "dob", "country", null, null, null, true, true);
         AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
         boolean isAttendeeSaved = attendeeRepository.insertAttendee(attendee, conferenceId);
         assertThat(isAttendeeSaved, is(true));

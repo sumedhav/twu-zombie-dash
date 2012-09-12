@@ -100,8 +100,10 @@ public class Browser {
 
     public void stop() {
         try {
-            driver.quit();
-            driver = null;
+            if (driver != null) {
+                driver.quit();
+                driver = null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

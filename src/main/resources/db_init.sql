@@ -53,6 +53,8 @@ CREATE TABLE zombie_attendee_info(
                 phoneNo varchar(20),
                 address varchar(100),
                 zipcode varchar(20),
+                productMails BOOLEAN,
+                adsMails BOOLEAN,
                 conference_ID uuid NOT NULL,
                 PRIMARY KEY (username,conference_ID),
                 CONSTRAINT username_constraint FOREIGN KEY (username) REFERENCES zombie_users(username)
