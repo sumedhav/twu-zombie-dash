@@ -54,8 +54,7 @@ public class TaskController {
             return new ModelAndView("createtask", "model", model);
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            return modelAndView;
+            return new ModelAndView("generalerrorpage");
         }
     }
 
@@ -63,7 +62,7 @@ public class TaskController {
     public ModelAndView showQuestionCreationForm(@PathVariable String taskId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createquestion");
-        modelAndView.addObject("taskId",taskId);
+        modelAndView.addObject("taskId", taskId);
         return modelAndView;
     }
 
@@ -75,14 +74,15 @@ public class TaskController {
             if (validDataFlag) {
                 Question question = questionForm.createQuestion(UUID.fromString(taskId));
                 questionRepository.insertQuestion(question);
-                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/conference/view/"+ conferenceId);
-                return modelAndView;
+                if(questionForm.getAddAnotherQuestion()){
+                  return new ModelAndView("redirect:/zombie/gamedesigner/task/"+ taskId +"/create/question");
+                }
+                return new ModelAndView("redirect:/zombie/admin/conference/view/"+ conferenceId);
             }
             return new ModelAndView("createquestion", "model", model);
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            return modelAndView;
+            return new ModelAndView("generalerrorpage");
         }
     }
 }

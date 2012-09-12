@@ -11,10 +11,19 @@ import java.util.UUID;
 public class QuestionForm {
   private String question_text;
   private List<Option> question_options;
-  private UUID questionId = UUID.randomUUID();
+  private UUID questionId;
   private List<String> question_option_texts;
   private List<Integer> question_option_values;
   private HashMap<String, String> model = new HashMap<String, String>();
+  private Boolean addAnotherQuestion = false;
+
+  public void setAddAnotherQuestion(Boolean addAnotherQuestion) {
+    this.addAnotherQuestion = addAnotherQuestion;
+  }
+
+  public Boolean getAddAnotherQuestion() {
+    return addAnotherQuestion;
+  }
 
   public void setQuestion_option_texts(List<String> question_option_texts) {
     this.question_option_texts = question_option_texts;
@@ -45,6 +54,7 @@ public class QuestionForm {
   }
 
   public boolean isValidData() {
+    questionId = UUID.randomUUID();
     initializeQuestionOptions();
     question_text = question_text.trim();
     boolean validDataFlag = this.isEmpty(question_text, "questionTextFieldEmpty");
