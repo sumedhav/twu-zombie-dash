@@ -28,11 +28,10 @@ public class AttendeeScoreRepositoryIntegrationTest {
 
     private AttendeeScoreRepository attendeeScoreRepository;
 
-    private final String CREATE_CONFERENCE = "INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
-    private final String CREATE_USER = "INSERT INTO zombie_users VALUES(?,?,?,?,?)";
+    private final String CREATE_CONFERENCE="INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
+    private final String CREATE_USER="INSERT INTO zombie_users VALUES(?,?,?,?,?)";
     private final String CREATE_ATTENDEE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?,?,?)";
     private final String CREATE_TASK = "INSERT INTO zombie_task values(?,?,?,?)";
-
     private String username;
     private UUID firstTaskId;
     private UUID secondTaskId;
@@ -41,9 +40,9 @@ public class AttendeeScoreRepositoryIntegrationTest {
     private UserTestDataManager userTestDataManager;
 
     @Before
-    public void setupDb() {
-        username = "username";
-        userAnswer=new HashMap();
+    public void setupDb(){
+        username="username";
+        userAnswer = new HashMap<String, String>();
         attendeeScoreRepository = new AttendeeScoreRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
         firstTaskId = UUID.randomUUID();
@@ -103,23 +102,23 @@ public class AttendeeScoreRepositoryIntegrationTest {
     }
 
     @Test
-    public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted() {
-        List<Task> incompleteTasks = attendeeScoreRepository.getIncompleteTasks(username);
-        assertEquals(incompleteTasks.size(), 2);
+    public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted(){
+        List<Task> incompleteTasks= attendeeScoreRepository.fetchIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(),2);
     }
 
     @Test
-    public void shouldAddCompletedTask() {
-        int result = attendeeScoreRepository.addCompletedTask(username, firstTaskId, 40);
-        assertEquals(result, 1);
+    public void shouldAddCompletedTask(){
+        int result = attendeeScoreRepository.addCompletedTask(username,firstTaskId,40);
+        assertEquals(result,1);
     }
 
     @Test
-    public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted() {
+    public void shouldReturnIncompleteTasksWhenSomeTasksAreCompleted(){
         attendeeScoreRepository.addCompletedTask(username, firstTaskId, 40);
-        List<Task> incompleteTasks = attendeeScoreRepository.getIncompleteTasks(username);
-        assertEquals(incompleteTasks.size(), 1);
-        assertEquals(incompleteTasks.get(0).getId(), secondTaskId);
+        List<Task> incompleteTasks= attendeeScoreRepository.fetchIncompleteTasks(username);
+        assertEquals(incompleteTasks.size(),1);
+        assertEquals(incompleteTasks.get(0).getId(),secondTaskId);
     }
 
 
@@ -127,7 +126,18 @@ public class AttendeeScoreRepositoryIntegrationTest {
     public void shouldGetScoreOfAllTasksCompletedByAttendee() throws Exception {
         jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, firstTaskId, 1);
         jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, secondTaskId, 3);
-        assertThat(attendeeScoreRepository.getAttendeeScore(username), is(4));
+        assertThat(attendeeScoreRepository.fetchAttendeeScore(username), is(4));
+    }
+
+    @Test
+    public void shouldReturnTrueIfTaskExistsInDatabase() throws Exception {
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, firstTaskId, 1);
+        assertThat(attendeeScoreRepository.doesTaskExist(username,firstTaskId.toString()), is(true));
+    }
+
+    @Test
+    public void shouldReturnFalseIfTaskDoesNotExistInDatabase() throws Exception {
+        assertThat(attendeeScoreRepository.doesTaskExist(username, firstTaskId.toString()), is(false));
     }
 
 

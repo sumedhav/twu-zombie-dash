@@ -16,12 +16,12 @@ public class ResultService {
 
     private QuestionRepository questionRepository;
     private int POINTS_FOR_CORRECT_ANSWER = 1;
-    private AttendeeScoreRepository resultRepository;
+    private AttendeeScoreRepository attendeeScoreRepository;
 
     @Autowired
     public ResultService(QuestionRepository questionRepository, AttendeeScoreRepository resultRepository) {
         this.questionRepository = questionRepository;
-        this.resultRepository = resultRepository;
+        this.attendeeScoreRepository = resultRepository;
     }
 
     public int calculateScore(List<String> userAnswers, String taskId) {
@@ -50,10 +50,14 @@ public class ResultService {
     }
 
     public void addCompletedTask(String username, UUID taskId, int score) {
-        resultRepository.addCompletedTask(username, taskId,score);
+        attendeeScoreRepository.addCompletedTask(username, taskId, score);
     }
 
     public int getAttendeeScore(String username) {
-        return resultRepository.getAttendeeScore(username);
+        return attendeeScoreRepository.fetchAttendeeScore(username);
+    }
+
+    public boolean isTaskComplete(String username, String taskId) {
+        return attendeeScoreRepository.doesTaskExist(username,taskId);
     }
 }

@@ -19,6 +19,7 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,12 +30,13 @@ public class TriviaGameControllerTest {
     ResultService mockResultService;
 
     @Mock
-    AttendeeScoreRepository mockResultRepository;
+    AttendeeScoreRepository mockAttendeeScoreRepository;
 
     @Test
     public void shouldForwardToTriviaGamePage() {
         String taskId = UUID.randomUUID().toString();
-        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId);
+        Principal principal = mock(Principal.class);
+        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId,principal);
         when(mockResultService.listQuestions(taskId)).thenReturn(new ArrayList<Question>());
         assertThat(modelAndView.getViewName(), is("triviagamepage"));
     }
@@ -61,7 +63,8 @@ public class TriviaGameControllerTest {
         Question question2 = new Question(questionId1, "Where are tigers?", optionsList2, taskId);
         expectedQuestions.add(question2);
         when(mockResultService.listQuestions(taskId.toString())).thenReturn(expectedQuestions);
-        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId.toString());
+        Principal principal = mock(Principal.class);
+        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId.toString(),principal);
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 
         assertThat(actualQuestions,sameInstance(expectedQuestions));
@@ -82,6 +85,17 @@ public class TriviaGameControllerTest {
         HashMap<String,String> modelMap = mock(HashMap.class);
         Principal principal = null;
         ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,UUID.randomUUID().toString(),principal);
+        assertThat(modelAndView.getViewName(),is("generalerrorpage"));
+    }
+
+    @Test
+    public void shouldShowErrorPageIfCompletedTaskIsAccessed() throws Exception {
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
+        String taskId = UUID.randomUUID().toString();
+        Principal principal = mock(Principal.class);
+        when(principal.getName()).thenReturn("username");
+        when(mockResultService.isTaskComplete("username",taskId)).thenReturn(true);
+        ModelAndView modelAndView = triviaGameController.showGamePage(taskId,principal);
         assertThat(modelAndView.getViewName(),is("generalerrorpage"));
     }
 }

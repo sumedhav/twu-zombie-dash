@@ -14,12 +14,12 @@ import java.security.Principal;
 @RequestMapping("/attendee")
 public class AttendeeController {
     private ResultService resultService;
-    private AttendeeScoreRepository resultRepository;
+    private AttendeeScoreRepository attendeeScoreRepository;
 
     @Autowired
     public AttendeeController(ResultService resultService,AttendeeScoreRepository resultRepository) {
         this.resultService = resultService;
-        this.resultRepository=resultRepository;
+        this.attendeeScoreRepository =resultRepository;
     }
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
@@ -28,7 +28,7 @@ public class AttendeeController {
         String username = principal.getName();
         int score = resultService.getAttendeeScore(username);
         modelAndView.addObject("obtainedScore", score);
-        modelAndView.addObject("incompleteTasks",resultRepository.getIncompleteTasks(principal.getName()));
+        modelAndView.addObject("incompleteTasks", attendeeScoreRepository.fetchIncompleteTasks(principal.getName()));
         return modelAndView;
     }
 }

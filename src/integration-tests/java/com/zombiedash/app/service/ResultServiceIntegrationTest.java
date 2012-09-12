@@ -23,7 +23,7 @@ public class ResultServiceIntegrationTest {
     private QuestionRepository questionRepository;
 
     @Mock
-    private AttendeeScoreRepository resultRepository;
+    private AttendeeScoreRepository attendeeScoreRepository;
     private UUID taskId;
 
     @Test
@@ -34,7 +34,7 @@ public class ResultServiceIntegrationTest {
         userAnswers.add("Bangalore");
         userAnswers.add("Delhi");
         when(questionRepository.fetchAllQuestions(taskId.toString())).thenReturn(questionList);
-        ResultService resultService = new ResultService(questionRepository,resultRepository);
+        ResultService resultService = new ResultService(questionRepository, attendeeScoreRepository);
         assertThat(resultService.calculateScore(userAnswers,taskId.toString()), is(expectedScore));
     }
 

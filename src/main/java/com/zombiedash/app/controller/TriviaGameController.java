@@ -27,28 +27,37 @@ public class TriviaGameController {
         this.resultService = resultService;
     }
 
-    @RequestMapping(value = "{incompleteTaskId}", method = RequestMethod.GET)
-    public ModelAndView showGamePage(@PathVariable String incompleteTaskId) {
-        ModelAndView modelAndView = new ModelAndView("triviagamepage");
-        modelAndView.addObject("questions", resultService.listQuestions(incompleteTaskId));
-        modelAndView.addObject("incompleteTaskId", incompleteTaskId);
+    @RequestMapping(value = "{taskId}",method = RequestMethod.GET)
+    public ModelAndView showGamePage(@PathVariable String taskId, Principal principal) {
+        String username = principal.getName();
+        ModelAndView modelAndView = new ModelAndView();
+        if(resultService.isTaskComplete(username,taskId))   {
+            modelAndView.setViewName("generalerrorpage");
+            modelAndView.addObject("taskAlreadyComplete","This task has already been performed.");
+            modelAndView.addObject("urlToReturnTo","/zombie/attendee/home");
+            modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
+            return modelAndView;
+        }
+        modelAndView.setViewName("triviagamepage");
+        modelAndView.addObject("questions", resultService.listQuestions(taskId));
+        modelAndView.addObject("incompleteTaskId",taskId);
         return modelAndView;
     }
 
-    @RequestMapping(value = "{incompleteTaskId}", method = RequestMethod.POST)
-    public ModelAndView showResultsPage(@RequestParam Map<String, String> params, @PathVariable String incompleteTaskId, Principal principal) {
+    @RequestMapping(value = "{taskId}", method = RequestMethod.POST)
+    public ModelAndView showResultsPage(@RequestParam Map<String, String> params,@PathVariable String taskId,Principal principal) {
         try {
             ModelAndView modelAndView = new ModelAndView("redirect:/zombie/attendee/home");
-            int obtainedScore = resultService.getScoreOfUserSelectedOptions(params, incompleteTaskId);
+            int obtainedScore = resultService.getScoreOfUserSelectedOptions(params,taskId);
             String userName = principal.getName();
-            UUID taskId = UUID.fromString(incompleteTaskId);
-            resultService.addCompletedTask(userName, taskId,obtainedScore);
+            UUID currentTaskId = UUID.fromString(taskId);
+            resultService.addCompletedTask(userName,currentTaskId,obtainedScore);
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            modelAndView.addObject("errorMessage", e.getMessage());
-            modelAndView.addObject("urlToReturnTo", "/zombie/attendee/home");
-            modelAndView.addObject("returnToPrevPageMessage", "Go back to home page");
+            modelAndView.addObject("errorMessage",e.getMessage());
+            modelAndView.addObject("urlToReturnTo","/zombie/attendee/home");
+            modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
             return modelAndView;
         }
     }
