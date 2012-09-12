@@ -1,9 +1,9 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.ConferenceHelper;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,18 +28,11 @@ public class UserRegistrationPageTest extends BasePageTest{
         .build();
   }
 
-
   private UUID populateWithOneConference() {
     jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
-    jdbcTemplate.execute("DELETE zombie_option");
-    jdbcTemplate.execute("DELETE zombie_question");
-    jdbcTemplate.execute("DELETE zombie_task");
-    jdbcTemplate.execute("DELETE zombie_conference");
+    ConferenceHelper.clearDatabase(jdbcTemplate);
     conferenceRepository = new ConferenceRepository(jdbcTemplate);
-    UUID conferenceId = UUID.randomUUID();
-    conferenceRepository.insertConference(
-        new Conference(conferenceId, "Java", "Java", "Java", "here", "2013-01-01", "2013-01-05", 100));
-    return conferenceId;
+    return ConferenceHelper.insertSampleConference(conferenceRepository);
   }
 
   @Test

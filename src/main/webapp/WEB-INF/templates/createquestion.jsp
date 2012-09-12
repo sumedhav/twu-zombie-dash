@@ -25,13 +25,13 @@
                     <h1>Zombie Dash</h1>
                     <h3>Create a New Question</h3>
 
-                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/attendee/game">
+                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/admin/task/${taskId}/create/question">
 
                         <div class="control-group">
-                            <label class="control-label align-left" for="questionText"><span class="error ">*</span>Question:</label>
+                            <label class="control-label align-left" for="question_text"><span class="error ">*</span>Question:</label>
                                 <div class="controls">
-                                    <input type="text" name="questionText" id="questionText" onkeyup="limitNumOfCharsInField(questionText, 100, '#questionText_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(questionText, 100, '#questionText_exceed_error');"value="<c:out value=""/>"
+                                    <input type="text" name="question_text" id="question_text" onkeyup="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"
+                                        onkeydown="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"value="<c:out value=""/>"
                                         placeholder="enter question"/>
                                     <span id="questionText_field_empty" class="error ">${questionTextFieldEmpty}</span>
                                     <span id="questionText_exceed_error" class="error "></span>
