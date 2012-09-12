@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS zombie_attendee_answers;
+DROP TABLE IF EXISTS zombie_attendee_score;
+DROP TABLE IF EXISTS zombie_attendee_info;
+DROP TABLE IF EXISTS zombie_users;
 DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
-DROP TABLE IF EXISTS zombie_attendee_score;
 DROP TABLE IF EXISTS zombie_task;
 DROP TABLE IF EXISTS zombie_conference;
-DROP TABLE IF EXISTS zombie_attendee_answers;
 
 CREATE TABLE zombie_conference(
     ID uuid PRIMARY KEY,
@@ -38,8 +40,6 @@ CREATE TABLE zombie_option(
             ON DELETE CASCADE);
 
 
-DROP TABLE IF EXISTS zombie_attendee_info;
-DROP TABLE IF EXISTS zombie_users;
 
 
 
