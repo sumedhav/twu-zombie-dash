@@ -41,6 +41,10 @@ public class Browser {
         return this;
     }
 
+    public Browser refresh() {
+        return this.open(driver.getCurrentUrl());
+    }
+
     public WebElement findElement(final By selector) {
       return new WebDriverWait(driver, TIMEOUT).until(new ExpectedCondition<WebElement>(){
         @Override
@@ -58,6 +62,14 @@ public class Browser {
     public Browser clearTextOn(String id) {
       this.findElement(By.id(id)).clear();
       return this;
+    }
+
+    public Browser loginAs(String user, String password) {
+        this.open("/app/zombie/login");
+        this.findElement(By.name("j_username")).sendKeys(user);
+        this.findElement(By.name("j_password")).sendKeys(password);
+        this.findElement(By.tagName("button")).click();
+        return this;
     }
 
     public Browser selectFromDropDown(String id, String choice) {

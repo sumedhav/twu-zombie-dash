@@ -40,7 +40,7 @@ public class RegistrationServiceTest {
 
         registrationService.registerAttendee(attendee, "password1", uuid);
 
-        verify(attendeeRepository).insertAttendee(attendee, uuid);
+        verify(attendeeRepository).insertAttendeeInfo(attendee, uuid);
         verify(userRepository).insertUser(user, "password1");
     }
 

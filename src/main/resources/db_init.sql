@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS zombie_question;
 DROP TABLE IF EXISTS zombie_attendee_score;
 DROP TABLE IF EXISTS zombie_task;
 DROP TABLE IF EXISTS zombie_conference;
+DROP TABLE IF EXISTS zombie_attendee_answers;
 
 CREATE TABLE zombie_conference(
     ID uuid PRIMARY KEY,
@@ -13,6 +14,7 @@ CREATE TABLE zombie_conference(
     START_DATE VARCHAR(10) NOT NULL,
     END_DATE VARCHAR(10) NOT NULL,
     MAX_ATTENDEE INT NOT NULL);
+
 
 CREATE TABLE zombie_task(name varchar(100) NOT NULL,
                          ID uuid NOT NULL,
@@ -38,6 +40,8 @@ CREATE TABLE zombie_option(
 
 DROP TABLE IF EXISTS zombie_attendee_info;
 DROP TABLE IF EXISTS zombie_users;
+
+
 
 CREATE TABLE zombie_users(username varchar(40)  PRIMARY KEY ,
                 password varchar(128) NOT NULL,

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.zombiedash.app.model.Role.ADMIN;
+import static com.zombiedash.app.model.Role.ATTENDEE;
 
 // Responsible for controlling the flow after a successful authentication
 @Service
@@ -35,7 +36,10 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         if (user.getRole().equals(ADMIN)) {
             return "/zombie/admin/home";
         }
-        return "/zombie/attendee/" + user.getUserId() + "/home";
+        if (user.getRole().equals(ATTENDEE)) {
+            return "/zombie/attendee/home";
+        }
+        return null;
     }
 
 }

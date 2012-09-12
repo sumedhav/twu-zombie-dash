@@ -23,6 +23,6 @@ public class RegistrationService {
     public void registerAttendee(Attendee attendee, String password, UUID uuid) {
         if(userRepository.userNameExists(attendee.getUsername())) throw new IllegalArgumentException("userNameAlreadyExists");
         userRepository.insertUser(attendee.getUser(), password);
-        attendeeRepository.insertAttendee(attendee, uuid);
+        attendeeRepository.insertAttendeeInfo(attendee, uuid);
     }
 }

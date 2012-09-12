@@ -8,22 +8,12 @@ public class User implements java.io.Serializable {
     private Role userRole;
     private String name;
     private String email;
-    private UUID userId;
-
-    public User(String userName) {
-        this(userName, Role.GAME_DESIGNER, "Default Name", "default@mail.com");
-    }
 
     public User(String userName, Role userRole, String name, String email) {
-        this.userName = userName;
-        this.userRole = userRole;
-        this.name = name;
-        this.email = email;
-    }
-
-    public User(UUID userId, String userName, Role userRole, String name, String email) {
-        this(userName, userRole, name, email);
-        this.userId = userId;
+        this.userName=userName;
+        this.name=name;
+        this.userRole=userRole;
+        this.email=email;
     }
 
     public Role getUserRole() {
@@ -51,7 +41,4 @@ public class User implements java.io.Serializable {
         return email;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
 }

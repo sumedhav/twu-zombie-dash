@@ -2,13 +2,13 @@ package com.zombiedash.app.web.page.tests;
 
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
-import com.zombiedash.app.web.page.tests.helper.UserManager;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.Rollback;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -17,9 +17,13 @@ import static org.hamcrest.Matchers.is;
 
 public class CreateUserPageTest extends BasePageTest {
 
+    private JdbcTemplate jdbcTemplate;
+
     @Before
-    public void setupSession() {
+    public void setUp() {
         browser = BrowserSessionBuilder.buildHttpsAdminSession().open("/app/zombie/admin/user/create");
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        jdbcTemplate.execute("DELETE from zombie_users WHERE username!='admin'");
     }
 
     @Test
@@ -48,6 +52,7 @@ public class CreateUserPageTest extends BasePageTest {
     }
 
     @Test
+    @Rollback(true)
     public void shouldSaveNewUserWhenAllFieldsAreValid() {
         browser.inputTextOn("username", "username")
                 .inputTextOn("password", "password123")
@@ -58,10 +63,6 @@ public class CreateUserPageTest extends BasePageTest {
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
         assertThat(browser.getTextById("username_value_1"), is(equalTo("yahya")));
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
-        UserManager userManager = new UserManager(jdbcTemplate, "username");
-        userManager.deleteUser();
-
     }
 
     @Test
@@ -78,6 +79,7 @@ public class CreateUserPageTest extends BasePageTest {
     }
 
     @Test
+    @Rollback(true)
     public void shouldRemainOnCreateUserPageWhenClickedCancelOnAlertBox() {
         browser= BrowserSessionBuilder
                 .aBrowserSession()
@@ -101,4 +103,5 @@ public class CreateUserPageTest extends BasePageTest {
 
         assertThat(browser.getTextByName("error_message_div"), is("Someone already has that username. Try another."));
     }
+
 }

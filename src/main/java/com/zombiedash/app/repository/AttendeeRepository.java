@@ -6,6 +6,8 @@ import com.zombiedash.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -15,8 +17,8 @@ import java.util.UUID;
 
 @Repository
 public class AttendeeRepository {
-    public static final String INSERT_INTO_USER_TABLE = "INSERT INTO zombie_users VALUES(?,?,?,?,?)";
     public static final String INSERT_INTO_ATTENDEE_INFO_TABLE = "INSERT INTO zombie_attendee_info VALUES(?,?,?,?,?,?,?,?,?)";
+
     public static final String SELECT_ATTENDEE = "SELECT * FROM zombie_attendees as attendee," +
             "zombie_users as user" +
             "WHERE user.username= ? AND attendee.conference_ID = ? AND" +
@@ -29,8 +31,8 @@ public class AttendeeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public boolean insertAttendee(Attendee attendee, UUID conference_id) {
-            jdbcTemplate.update(INSERT_INTO_ATTENDEE_INFO_TABLE,
+    public boolean insertAttendeeInfo(Attendee attendee, UUID conference_id) {
+             jdbcTemplate.update(INSERT_INTO_ATTENDEE_INFO_TABLE,
                     attendee.getUsername(),
                     attendee.getDob(),
                     attendee.getCountry(),
@@ -49,7 +51,8 @@ public class AttendeeRepository {
             @Override
             public Attendee mapRow(ResultSet resultSet, int i) throws SQLException {
                 return new Attendee(
-                        new User(resultSet.getString("username"),
+                        new User(
+                                resultSet.getString("username"),
                                 Role.ATTENDEE,
                                 resultSet.getString("name"),
                                 resultSet.getString("email")),

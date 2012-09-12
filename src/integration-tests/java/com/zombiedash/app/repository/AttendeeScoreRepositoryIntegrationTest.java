@@ -1,5 +1,7 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.helper.TaskTestDataManager;
+import com.zombiedash.app.helper.UserTestDataManager;
 import com.zombiedash.app.model.Task;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,9 @@ public class AttendeeScoreRepositoryIntegrationTest {
     private UUID firstTaskId;
     private UUID secondTaskId;
     private Map<String, String> userAnswer;
+    private TaskTestDataManager taskTestDataManager;
+    private UserTestDataManager userTestDataManager;
+
     @Before
     public void setupDb() {
         username = "username";
@@ -43,7 +48,10 @@ public class AttendeeScoreRepositoryIntegrationTest {
         UUID conferenceId = UUID.randomUUID();
         firstTaskId = UUID.randomUUID();
         secondTaskId = UUID.randomUUID();
-        clearAllTables();
+        taskTestDataManager = new TaskTestDataManager(jdbcTemplate);
+        taskTestDataManager.clearTaskRelatedTables();
+        userTestDataManager = new UserTestDataManager(jdbcTemplate);
+        userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
         jdbcTemplate.update(CREATE_CONFERENCE,
                 conferenceId,
                 "name",
@@ -58,10 +66,6 @@ public class AttendeeScoreRepositoryIntegrationTest {
         createAttendee(conferenceId);
     }
 
-    private void clearAllTables() {
-        jdbcTemplate.execute("DELETE zombie_conference");
-        jdbcTemplate.execute("DELETE zombie_users");
-    }
 
     private void createTask(String taskName, UUID taskId, UUID conferenceId) {
         jdbcTemplate.update(CREATE_TASK,

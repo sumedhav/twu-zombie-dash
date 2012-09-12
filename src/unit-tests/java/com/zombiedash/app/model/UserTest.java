@@ -12,4 +12,6 @@ public class UserTest {
         Role userRole = new User("designer", Role.GAME_DESIGNER, "Name", "email@email.com").getUserRole();
         assertThat(userRole, is(Role.GAME_DESIGNER));
     }
+
+
 }

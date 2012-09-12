@@ -6,6 +6,8 @@ import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.Rollback;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -13,11 +15,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CreateConferencePageTest {
     Browser browser;
+    private JdbcTemplate jdbcTemplate;
 
     @Before
     public void adminLogsIn() {
         browser = BrowserSessionBuilder
                 .buildHttpsAdminSession();
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        jdbcTemplate.execute("DELETE zombie_conference");
     }
 
     @Test
@@ -28,6 +33,7 @@ public class CreateConferencePageTest {
     }
 
     @Test
+    @Rollback(true)
     public void shouldSaveConferenceWhenAllFieldsAreValid() throws Exception {
         browser.open("/app/zombie/admin/conference/create");
         browser.inputTextOn("conf_name", "Conference Name")

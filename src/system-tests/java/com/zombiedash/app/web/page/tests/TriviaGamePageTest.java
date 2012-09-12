@@ -1,9 +1,11 @@
 package com.zombiedash.app.web.page.tests;
 
 
+import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
+import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
-import com.zombiedash.app.web.page.tests.helper.TriviaGameTestDataCreationTemplate;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -21,12 +23,18 @@ public class TriviaGamePageTest extends BasePageTest {
 
     private UUID taskID;
     public static final String TRIVIA_GAME_URL = "/app/zombie/attendee/task/";
-    private TriviaGameTestDataCreationTemplate testDataTemplate;
+    private TaskTestDataManager taskTestDataManager;
+    private UserTestDataManager userTestDataManager;
+    private JdbcTemplate jdbcTemplate;
+
+    @After
+    public void tearDown() {
+        userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
+    }
 
     @Test
     public void shouldDisplayGameQuestions() {
         initializeStatelessBrowserAndSetUpData();
-
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
 
         List<WebElement> elements = browser.findElements(By.cssSelector(".question"));
@@ -116,33 +124,56 @@ public class TriviaGamePageTest extends BasePageTest {
 
     private void initializeQuestionsAndOptionsInTheDatabase() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
-        testDataTemplate = new TriviaGameTestDataCreationTemplate(jdbcTemplate);
+        taskTestDataManager = new TaskTestDataManager(jdbcTemplate);
+        taskTestDataManager.clearTaskRelatedTables();
 
-        testDataTemplate.clearTables();
+        UUID conferenceId = taskTestDataManager.insertConference();
         UUID questionID1 = UUID.randomUUID();
+
         taskID = UUID.randomUUID();
-        UUID conferenceId = testDataTemplate.insertConference();
-        testDataTemplate.insertTask("charles_task", taskID, "sample description", conferenceId);
-        testDataTemplate.insertQuestion(questionID1, "Where is Red Fort", taskID);
-        testDataTemplate.insertOption(questionID1, 1, "Delhi", true);
-        testDataTemplate.insertOption(questionID1, 2, "Paris", false);
-        testDataTemplate.insertOption(questionID1, 3, "New York", false);
+
+        taskTestDataManager.insertTask("charles_task", taskID, "sample description", conferenceId);
+        taskTestDataManager.insertQuestion(questionID1, "Where is Red Fort", taskID);
+        taskTestDataManager.insertOption(questionID1, 1, "Delhi", true);
+        taskTestDataManager.insertOption(questionID1, 2, "Paris", false);
+        taskTestDataManager.insertOption(questionID1, 3, "New York", false);
+
         UUID questionID2 = UUID.randomUUID();
-        testDataTemplate.insertQuestion(questionID2, "Is it lunch time?", taskID);
-        testDataTemplate.insertOption(questionID2, 4, "I bet it is", true);
-        testDataTemplate.insertOption(questionID2, 5, "No thanks, fasting at the moment", false);
+        taskTestDataManager.insertQuestion(questionID2, "Is it lunch time?", taskID);
+        taskTestDataManager.insertOption(questionID2, 4, "I bet it is", true);
+        taskTestDataManager.insertOption(questionID2, 5, "No thanks, fasting at the moment", false);
     }
 
 
     private void initializeJavaScriptBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.aBrowserSession().usingHttps().withJavascriptEnabled().build();
+        browser = BrowserSessionBuilder
+                .aBrowserSession()
+                .usingHttps()
+                .withJavascriptEnabled()
+                .build();
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        userTestDataManager = new UserTestDataManager(jdbcTemplate);
+        userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
+        userTestDataManager.insertAttendeeWithGenericConference("attendee","password1");
+
         initializeQuestionsAndOptionsInTheDatabase();
+        browser.loginAs("attendee", "password1");
         browser.open(TRIVIA_GAME_URL.concat(taskID.toString()));
     }
 
     private void initializeStatelessBrowserAndSetUpData() {
-        browser = BrowserSessionBuilder.aBrowserSession().usingHttps().build();
+        browser = BrowserSessionBuilder
+                .aBrowserSession()
+                .usingHttps()
+                .build();
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        userTestDataManager = new UserTestDataManager(jdbcTemplate);
+        userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
+        userTestDataManager.insertAttendeeWithGenericConference("attendee","password1");
+
+
         initializeQuestionsAndOptionsInTheDatabase();
+        browser.loginAs("attendee","password1");
         browser.open(TRIVIA_GAME_URL.concat(taskID.toString()));
     }
 }

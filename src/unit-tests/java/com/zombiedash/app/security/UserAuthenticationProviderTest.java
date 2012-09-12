@@ -1,5 +1,7 @@
 package com.zombiedash.app.security;
 
+import com.zombiedash.app.model.Role;
+import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.junit.Test;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,12 +32,15 @@ public class UserAuthenticationProviderTest {
     public void shouldAuthenticateUserWithCorrectCredentials() {
         Authentication authentication = mock(Authentication.class);
         when(authentication.getPrincipal()).thenReturn("admin");
-        when(authentication.getCredentials()).thenReturn("correct password");
+        when(authentication.getCredentials()).thenReturn("correctPassword1");
         UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider();
-        userAuthenticationProvider.setUserService(mock(UserService.class));
+        UserService mockUserService = mock(UserService.class);
+        userAuthenticationProvider.setUserService(mockUserService);
+        when(mockUserService.authenticateAndReturnUser("admin", "correctPassword1")).thenReturn(
+                new User("admin", Role.ADMIN, "name", "email"));
         Authentication authenticatedUser = userAuthenticationProvider.authenticate(authentication);
-
         assertThat((String) authenticatedUser.getPrincipal(), is(equalTo("admin")));
-        assertThat((String) authenticatedUser.getCredentials(), is(equalTo("correct password")));
+        assertThat((String) authenticatedUser.getCredentials(), is(equalTo("correctPassword1")));
     }
+
 }

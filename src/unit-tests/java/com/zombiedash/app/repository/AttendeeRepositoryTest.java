@@ -26,7 +26,7 @@ public class AttendeeRepositoryTest {
         JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
         AttendeeRepository attendeeRepository = new AttendeeRepository(jdbcTemplate);
         Attendee attendee = mock(Attendee.class);
-        boolean isAttendeeSaved = attendeeRepository.insertAttendee(attendee, UUID.randomUUID());
+        boolean isAttendeeSaved = attendeeRepository.insertAttendeeInfo(attendee, UUID.randomUUID());
         assertTrue(isAttendeeSaved);
     }
 

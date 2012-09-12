@@ -39,7 +39,7 @@ public class UserAuthenticationSuccessHandlerTest {
     public void shouldRedirectToAdminHomeOnAuthenticationSuccessForAdmin() throws Exception {
         UUID userId = randomUUID();
         String username = "admin";
-        User user = new User(userId, username, ADMIN, "silvio the admin", "italiano@mailinator.com");
+        User user = new User(username, ADMIN, "silvio the admin", "italiano@mailinator.com");
         when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
@@ -54,26 +54,26 @@ public class UserAuthenticationSuccessHandlerTest {
     public void shouldRedirectToAttendeeHomeOnAuthenticationSuccessForUserCalledRaphael() throws Exception {
         UUID userId = randomUUID();
         String username = "raphael";
-        User user = new User(userId, username, ATTENDEE, "raphael oliveira", "brasileiro@mailinator.com");
+        User user = new User(username, ATTENDEE, "raphael oliveira", "brasileiro@mailinator.com");
         when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
         given(request.getContextPath()).willReturn("app");
         successHandler.onAuthenticationSuccess(request, response, authentication);
-        verify(response).sendRedirect("app/zombie/attendee/" + userId + "/home");
+        verify(response).sendRedirect("app/zombie/attendee/home");
     }
 
     @Test
     public void shouldRedirectToAttendeeHomeOnAuthenticationSuccessForUserCalledCharles() throws IOException, ServletException {
         UUID userId = randomUUID();
         String username = "charles";
-        User user = new User(userId, username, ATTENDEE, "charles kimpolo", "cramo@mailinator.com");
+        User user = new User(username, ATTENDEE, "charles kimpolo", "cramo@mailinator.com");
         when(userRepository.fetchUser(username)).thenReturn(user);
 
         given(authentication.getPrincipal()).willReturn(username);
         given(request.getContextPath()).willReturn("app");
         successHandler.onAuthenticationSuccess(request, response, authentication);
-        verify(response).sendRedirect("app/zombie/attendee/" + userId + "/home");
+        verify(response).sendRedirect("app/zombie/attendee/home");
     }
 
     private GrantedAuthority adminAuthority() {

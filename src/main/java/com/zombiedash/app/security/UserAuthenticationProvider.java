@@ -1,5 +1,7 @@
 package com.zombiedash.app.security;
 
+import com.zombiedash.app.model.Role;
+import com.zombiedash.app.model.User;
 import com.zombiedash.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,15 +25,16 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String principal = (String) authentication.getPrincipal();
         String credentials = (String) authentication.getCredentials();
-        userService.authenticateAndReturnUser(principal, credentials);
-        return new UsernamePasswordAuthenticationToken(principal, credentials, asList(adminAuthority()));
+        User user = userService.authenticateAndReturnUser(principal, credentials);
+        Role role = user.getUserRole();
+        return new UsernamePasswordAuthenticationToken(principal, credentials, asList(userRoleAuthority(role)));
     }
 
-    private GrantedAuthority adminAuthority() {
+    private GrantedAuthority userRoleAuthority(final Role role) {
         return new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return "ROLE_ADMIN";
+                return "ROLE_" + role.toString().toUpperCase();
             }
         };
     }

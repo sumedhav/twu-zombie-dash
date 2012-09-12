@@ -14,6 +14,7 @@ function validate(numQns,errorName){
       return true;
     }
   }
+
 function isMobileDevice(){
 if((navigator.userAgent.match(/iPhone/i)) ||
          (navigator.userAgent.match(/Android/i))  || (navigator.userAgent.match(/iPod/i))){
@@ -21,6 +22,7 @@ if((navigator.userAgent.match(/iPhone/i)) ||
          }
          return false;
 }
+
 function doExpandCollapse(id,image,contextPath){
     var descriptionLink = document.getElementById(id);
     var helpImage = document.getElementById(image);
