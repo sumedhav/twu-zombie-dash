@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS zombie_attendee_answers;
 DROP TABLE IF EXISTS zombie_attendee_score;
+DROP TABLE IF EXISTS zombie_attendee_answers;
 DROP TABLE IF EXISTS zombie_attendee_info;
 DROP TABLE IF EXISTS zombie_users;
 DROP TABLE IF EXISTS zombie_option;

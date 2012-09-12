@@ -7,16 +7,13 @@ import com.zombiedash.app.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class ResultService {
 
     private QuestionRepository questionRepository;
-    private int POINTS_FOR_CORRECT_ANSWER = 1;
     private AttendeeScoreRepository attendeeScoreRepository;
 
     @Autowired
@@ -35,6 +32,7 @@ public class ResultService {
             if (answer.getOptionId().equals(correspondingQuestion.getValidOption()))
                 score++;
         }
+        attendeeScoreRepository.addCompletedTask(username, taskId, score);
         return score;
     }
 
@@ -47,7 +45,6 @@ public class ResultService {
         return null;
     }
 
-  
 
     public List<Question> listQuestions(String taskId) {
         return questionRepository.fetchAllQuestions(taskId);
@@ -59,6 +56,6 @@ public class ResultService {
     }
 
     public boolean isTaskComplete(String username, String taskId) {
-        return attendeeScoreRepository.doesTaskExist(username,taskId);
+        return attendeeScoreRepository.doesTaskExist(username, taskId);
     }
 }

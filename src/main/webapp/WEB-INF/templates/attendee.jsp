@@ -36,6 +36,7 @@
               </li>
             </c:forEach>
          </ol>
+
          <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" style="float:right;" class="btn btn-primary" >Logout</a>
      </div>
 </body>
