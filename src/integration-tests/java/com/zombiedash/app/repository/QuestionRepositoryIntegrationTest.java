@@ -55,8 +55,8 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         UUID taskId2 = UUID.randomUUID();
         insertTask("sumedha", taskId2, "description when", conferenceId);
         insertQuestion(questionId2, "Is it lunch time?", taskId2);
-        insertOption(questionId2, 10, "I bet it is", true);
-        insertOption(questionId2, 20, "No thanks, fasting at the moment", false);
+        insertOption(questionId2, 70, "I bet it is", true);
+        insertOption(questionId2, 80, "No thanks, fasting at the moment", false);
 
     }
     
