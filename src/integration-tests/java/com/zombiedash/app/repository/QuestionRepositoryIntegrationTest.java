@@ -33,6 +33,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     private OptionRepository optionRepository;
 
     private QuestionRepository questionRepository;
+    private UUID taskId1;
 
     @Before
     public void setUp() {
@@ -42,7 +43,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
 
     private void insertDataIntoDatabase(){
         UUID questionId1 = UUID.randomUUID();
-        UUID taskId1 = UUID.randomUUID();
+        taskId1 = UUID.randomUUID();
         UUID conferenceId = insertConference();
         insertTask("charles_task", taskId1, "sample description", conferenceId);
         insertQuestion(questionId1, "Where is Red Fort", taskId1);
@@ -60,10 +61,10 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
     }
     
     @Test
-    public void shouldRetrieveAllQuestions() {
+    public void shouldRetrieveAllQuestionsOfATask() {
         insertDataIntoDatabase();
-        int noOfQuestions = 2;
-        List<Question> questions = questionRepository.fetchAllQuestions();
+        int noOfQuestions = 1;
+        List<Question> questions = questionRepository.fetchAllQuestions(taskId1.toString());
         assertThat(questions.size(), is(noOfQuestions));
         Matcher<Iterable<Question>> matchTheInsertedQuestions = hasItems(
                 QuestionMatcher.aQuestionWith("Where is Red Fort",
@@ -72,11 +73,7 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
                             put("Paris", false);
                             put("New York", false);
                         }}
-                ),
-                aQuestionWith("Is it lunch time?", new HashMap<String, Boolean>() {{
-                    put("I bet it is", true);
-                    put("No thanks, fasting at the moment", false);
-                }})
+                )
         );
         assertThat(questions, matchTheInsertedQuestions);
     }

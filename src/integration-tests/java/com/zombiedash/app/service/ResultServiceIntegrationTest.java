@@ -24,6 +24,7 @@ public class ResultServiceIntegrationTest {
 
     @Mock
     private ResultRepository resultRepository;
+    private UUID taskId;
 
     @Test
     public void shouldVerifyResultForGivenQuestionListAndAnswersList(){
@@ -32,14 +33,14 @@ public class ResultServiceIntegrationTest {
         List<Question> questionList = createQuestionList();
         userAnswers.add("Bangalore");
         userAnswers.add("Delhi");
-        when(questionRepository.fetchAllQuestions()).thenReturn(questionList);
+        when(questionRepository.fetchAllQuestions(taskId.toString())).thenReturn(questionList);
         ResultService resultService = new ResultService(questionRepository,resultRepository);
-        assertThat(resultService.calculateScore(userAnswers), is(expectedScore));
+        assertThat(resultService.calculateScore(userAnswers,taskId.toString()), is(expectedScore));
     }
 
     private List<Question> createQuestionList() {
 
-        UUID taskId = UUID.randomUUID();
+        taskId = UUID.randomUUID();
 
         List<Question> questionList=new ArrayList<Question>();
 

@@ -24,9 +24,9 @@ public class ResultService {
         this.resultRepository = resultRepository;
     }
 
-    public int calculateScore(List<String> userAnswers) {
+    public int calculateScore(List<String> userAnswers, String taskId) {
         int score = 0, currentAnswer = 0;
-        for (Question question : listQuestions()) {
+        for (Question question : listQuestions(taskId)) {
             if (question.getValidOption().equals(userAnswers.get(currentAnswer))) {
 
                 score += POINTS_FOR_CORRECT_ANSWER;
@@ -36,17 +36,17 @@ public class ResultService {
         return score;
     }
 
-    public int getScoreOfUserSelectedOptions(Map<String, String> params) {
-        int noOfQuestionsInRepository = listQuestions().size();
+    public int getScoreOfUserSelectedOptions(Map<String, String> params, String taskId) {
+        int noOfQuestionsInRepository = listQuestions(taskId).size();
         List<String> userAnswers = new ArrayList<String>();
         for (int questionId = 1; questionId <= noOfQuestionsInRepository; questionId++) {
             userAnswers.add(params.get("question_" + questionId));
         }
-        return calculateScore(userAnswers);
+        return calculateScore(userAnswers, taskId);
     }
 
-    public List<Question> listQuestions() {
-        return questionRepository.fetchAllQuestions();
+    public List<Question> listQuestions(String taskId) {
+        return questionRepository.fetchAllQuestions(taskId);
     }
 
     public void addCompletedTask(String username, UUID taskId, int score) {

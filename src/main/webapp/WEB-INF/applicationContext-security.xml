@@ -10,7 +10,7 @@
         <intercept-url pattern="/zombie/login" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="https"/>
         <intercept-url pattern="/static/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/zombie/conference/user/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/zombie/attendee/1/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/zombie/attendee/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/zombie/logout" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="https"/>
         <intercept-url pattern="/**" access="ROLE_ADMIN" requires-channel="https"/>
         <form-login login-page="/zombie/login"

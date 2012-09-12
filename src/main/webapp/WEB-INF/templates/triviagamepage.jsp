@@ -34,7 +34,7 @@
         </div>
         <div class="row-fluid">
              <div class="span12">
-                 <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/attendee/game/result"
+                 <form  class="form-horizontal" method="post" action="${pageContext.request.contextPath}/zombie/attendee/task/${incompleteTaskId}"
                     onSubmit="return validate(${fn:length(questions)},'#incompleteQuestionsError')">
                      <div name="error_message_div" class="error" id="incompleteQuestionsError"></div>
                   <c:forEach var="question" items="${questions}" varStatus="questionStatus">
@@ -53,8 +53,7 @@
                    <div class="control-group">
                     <div class="controls offset8" >
                          <input type="submit" value="Submit" name="submit" id="submit_button"  class="btn btn-primary"/>&nbsp &nbsp
-                     <!--   <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/attendee/1/home')" name="cancel" id="cancel_button" class="btn btn-primary"/> -->
-                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/attendee/1/home')" name="cancel" id="cancel_button" class="btn btn-primary"/>
+                         <input type="button" value="Cancel" onclick="return confirmCancel('${pageContext.request.contextPath}','/zombie/attendee/home')" name="cancel" id="cancel_button" class="btn btn-primary"/>
                     </div>
                    </div>
                  </form>

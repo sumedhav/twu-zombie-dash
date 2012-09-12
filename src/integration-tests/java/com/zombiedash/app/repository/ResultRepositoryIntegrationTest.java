@@ -105,14 +105,11 @@ public class ResultRepositoryIntegrationTest {
         assertEquals(incompleteTasks.get(0).getId(),secondTaskId);
     }
 
-    @Ignore
+
     @Test
     public void shouldGetScoreOfAllTasksCompletedByAttendee() throws Exception {
-        ResultRepository resultRepository = new ResultRepository(jdbcTemplate);
-        jdbcTemplate.execute("DELETE FROM zombie_attendee_score");
-        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 1);
-        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 2);
-        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", "Charles", UUID.randomUUID(), 1);
-        assertThat(resultRepository.getAttendeeScore("admin"), is(4));
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, firstTaskId, 1);
+        jdbcTemplate.update("INSERT INTO zombie_attendee_score values(?,?,?)", username, secondTaskId, 3);
+        assertThat(resultRepository.getAttendeeScore(username), is(4));
     }
 }

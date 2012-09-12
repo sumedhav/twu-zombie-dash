@@ -26,12 +26,16 @@
          Your current score is <b id="obtainedScore">${obtainedScore}</b>
          </div>
          </br>
-         <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
-            <a href="${pageContext.request.contextPath}/zombie/attendee/1/game/${incompleteTask.id}">${incompleteTask.name}<a>
-         </c:forEach>
          <div class="sectionTitle">
-            <a href="${pageContext.request.contextPath}/zombie/attendee/game">Play Game</a>
-        </div>
+            Tasks
+         </div>
+         <ol>
+            <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
+              <li>
+                <a href="${pageContext.request.contextPath}/zombie/attendee/task/${incompleteTask.id}">${incompleteTask.name}</a>
+              </li>
+            </c:forEach>
+         </ol>
      </div>
 </body>
 </html>

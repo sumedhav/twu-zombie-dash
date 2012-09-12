@@ -13,10 +13,10 @@ import java.security.Principal;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/attendee/1")
+@RequestMapping("/attendee")
 public class AttendeeController {
-        private ResultService resultService;
-        private ResultRepository resultRepository;
+    private ResultService resultService;
+    private ResultRepository resultRepository;
 
     @Autowired
     public AttendeeController(ResultService resultService,ResultRepository resultRepository) {

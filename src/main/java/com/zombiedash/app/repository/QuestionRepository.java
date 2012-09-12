@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Repository
 public class QuestionRepository {
-    private final String SELECT_ALL_QUESTIONS = "select * from zombie_question";
+    private final String SELECT_ALL_QUESTIONS = "SELECT * from zombie_question WHERE TASK_ID = ?";
     private final String INSERT_QUESTION = "INSERT INTO zombie_question values(?,?,?)";
 
     private JdbcTemplate jdbcTemplate;
@@ -26,8 +26,9 @@ public class QuestionRepository {
         this.optionRepository = new OptionRepository(jdbcTemplate);
     }
 
-    public List<Question> fetchAllQuestions() {
-        return jdbcTemplate.query(SELECT_ALL_QUESTIONS, new RowMapper() {
+    public List<Question> fetchAllQuestions(String taskId) {
+        Object[] args=new Object[]{taskId};
+        return jdbcTemplate.query(SELECT_ALL_QUESTIONS,args, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
 
