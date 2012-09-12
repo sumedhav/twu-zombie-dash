@@ -31,7 +31,7 @@ CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
                        FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID) ON DELETE CASCADE);
 
 CREATE TABLE zombie_option(
-            ID uuid,
+            ID uuid PRIMARY KEY,
             Text varchar(50) NOT NULL,
             correct BOOLEAN,
             QUESTION_ID uuid NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE zombie_attendee_answers(
                 FOREIGN KEY (username) REFERENCES zombie_users(username) ON DELETE CASCADE,
                 FOREIGN KEY (task_ID) REFERENCES zombie_task(id) ON DELETE CASCADE,
                 FOREIGN KEY (question_ID) REFERENCES zombie_question(id) ON DELETE CASCADE,
-                    FOREIGN KEY (option_ID) REFERENCES zombie_option(id) ON DELETE CASCADE,
+                FOREIGN KEY (option_ID) REFERENCES zombie_option(id) ON DELETE CASCADE,
                 PRIMARY KEY(username,task_ID,question_ID)
 );
 
