@@ -29,14 +29,17 @@
          <div class="sectionTitle">
             Tasks
          </div>
+         <c:if test='${empty incompleteTasks}'>
+            <div id="no_task">You Have No task To Play!</div>
+         </c:if>
          <ol>
             <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
               <li>
                 <a href="${pageContext.request.contextPath}/zombie/attendee/task/${incompleteTask.id}">${incompleteTask.name}</a>
+
               </li>
             </c:forEach>
          </ol>
-
          <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" style="float:right;" class="btn btn-primary" >Logout</a>
      </div>
 </body>

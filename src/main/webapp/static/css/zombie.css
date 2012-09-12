@@ -105,3 +105,7 @@ div.question{
 .field-missing {
     padding-left: 25px;
 }
+
+#no_task{
+    font-size:20px;
+}
