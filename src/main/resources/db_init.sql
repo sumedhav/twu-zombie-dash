@@ -1,8 +1,6 @@
-DROP TABLE IF EXISTS zombie_attendee_score;
-DROP TABLE IF EXISTS zombie_attendee_info;
-DROP TABLE IF EXISTS zombie_users;
 DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
+DROP TABLE IF EXISTS zombie_attendee_score;
 DROP TABLE IF EXISTS zombie_task;
 DROP TABLE IF EXISTS zombie_conference;
 
@@ -37,6 +35,9 @@ CREATE TABLE zombie_option(
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)
             ON DELETE CASCADE);
 
+
+DROP TABLE IF EXISTS zombie_attendee_info;
+DROP TABLE IF EXISTS zombie_users;
 
 CREATE TABLE zombie_users(username varchar(40)  PRIMARY KEY ,
                 password varchar(128) NOT NULL,
@@ -75,6 +76,7 @@ CREATE TABLE zombie_attendee_answers(
                 FOREIGN KEY (username) REFERENCES zombie_users(username) ON DELETE CASCADE,
                 FOREIGN KEY (task_ID) REFERENCES zombie_task(id) ON DELETE CASCADE,
                 FOREIGN KEY (question_ID) REFERENCES zombie_question(id) ON DELETE CASCADE,
+                FOREIGN KEY (option_ID) REFERENCES zombie_option(id) ON DELETE CASCADE,
                 PRIMARY KEY(username,task_ID,question_ID)
 );
 

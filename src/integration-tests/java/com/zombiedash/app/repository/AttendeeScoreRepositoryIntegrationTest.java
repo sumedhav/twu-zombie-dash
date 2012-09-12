@@ -34,10 +34,11 @@ public class AttendeeScoreRepositoryIntegrationTest {
     private String username;
     private UUID firstTaskId;
     private UUID secondTaskId;
-
+    private Map<String, String> userAnswer;
     @Before
     public void setupDb() {
         username = "username";
+        userAnswer=new HashMap();
         attendeeScoreRepository = new AttendeeScoreRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
         firstTaskId = UUID.randomUUID();
@@ -123,23 +124,43 @@ public class AttendeeScoreRepositoryIntegrationTest {
         assertThat(attendeeScoreRepository.getAttendeeScore(username), is(4));
     }
 
+
+    public void createQuestionAndAnswerForTask(UUID taskId, UUID questionId,UUID optionId){
+        createQuestion(questionId, "What's your name?", taskId);
+        createOption(questionId, optionId, "Charles", true);
+        userAnswer.put(questionId.toString(), optionId.toString());
+
+    }
+
     @Test
     public void shouldInsertUserAnswersForOneTask() {
-        Map<String, String> userAnswer = new HashMap();
         UUID questionId = UUID.randomUUID();
-        UUID optionId = UUID.randomUUID();
-
-        createQuestion(questionId, "What's your name?", firstTaskId);
-        createOption(questionId, optionId, "Charles", true);
+        UUID firstOptionId = UUID.randomUUID();
+        UUID secondOptionId=UUID.randomUUID();
+        createQuestionAndAnswerForTask(firstTaskId, questionId, firstOptionId);
         UUID secondQuestionId = UUID.randomUUID();
-        UUID secondOptionId = UUID.randomUUID();
-        createQuestion(secondQuestionId, "What's your name?", firstTaskId);
-        createOption(secondQuestionId, optionId, "Charles", true);
-
-        userAnswer.put(questionId.toString(), optionId.toString());
-        userAnswer.put(secondQuestionId.toString(), secondOptionId.toString());
+        createQuestionAndAnswerForTask(firstTaskId, secondQuestionId, secondOptionId);
 
         int result = attendeeScoreRepository.insertAnswers(username, firstTaskId, userAnswer);
+        assertThat(result, is(1));
+    }
+
+    @Test
+    public void shouldInsertUserAnswersForDifferentTask() {
+        Map<String, String> secondTaskUserAnswer = new HashMap();
+        UUID questionId = UUID.randomUUID();
+        UUID secondQuestionId = UUID.randomUUID();
+        UUID optionId = UUID.randomUUID();
+        UUID secondOptionId=UUID.randomUUID();
+        createQuestionAndAnswerForTask(firstTaskId, questionId, optionId);
+        createQuestionAndAnswerForTask(secondTaskId,secondQuestionId,secondOptionId);
+
+        int result = attendeeScoreRepository.insertAnswers(username, firstTaskId, userAnswer);
+        assertThat(result, is(1));
+
+        secondTaskUserAnswer.put(questionId.toString(), optionId.toString());
+        result = attendeeScoreRepository.insertAnswers(username,secondTaskId, userAnswer);
+
         assertThat(result, is(1));
     }
 
