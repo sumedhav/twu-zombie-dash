@@ -42,9 +42,7 @@ public class OptionRepository {
         });
     }
 
-    public UUID insertOption(UUID questionId, Option option) {
-        UUID optionId = UUID.randomUUID();
-        jdbcTemplate.update(INSERT_OPTION, optionId, option.getText(), option.isCorrect(), questionId);
-        return optionId;
+    public void insertOption(Option option) {
+        jdbcTemplate.update(INSERT_OPTION, option.getOptionId(), option.getText(), option.isCorrect(), option.getQuestionId());
     }
 }

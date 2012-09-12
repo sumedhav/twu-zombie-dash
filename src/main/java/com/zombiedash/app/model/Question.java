@@ -18,6 +18,14 @@ public class Question {
         this.taskId = taskId;
     }
 
+    public UUID getQuestionId() {
+        return questionId;
+    }
+
+    public UUID getTaskId() {
+        return taskId;
+    }
+
     public String getText() {
         return text;
     }

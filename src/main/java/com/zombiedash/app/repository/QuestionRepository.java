@@ -1,5 +1,6 @@
 package com.zombiedash.app.repository;
 
+import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,10 +39,12 @@ public class QuestionRepository {
         });
     }
 
-    public UUID insertQuestion(UUID taskId, Question question) {
-        UUID primaryQuestionId = UUID.randomUUID();
-        jdbcTemplate.update(INSERT_QUESTION, primaryQuestionId, question.getText(), taskId);
-        return primaryQuestionId;
+    public UUID insertQuestion(Question question) {
+        jdbcTemplate.update(INSERT_QUESTION, question.getQuestionId(), question.getText(), question.getTaskId());
+        for(Option option: question.getOptions()) {
+            optionRepository.insertOption(option);
+        }
+        return question.getQuestionId();
     }
 
 }

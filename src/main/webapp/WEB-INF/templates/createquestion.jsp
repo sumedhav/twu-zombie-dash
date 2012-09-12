@@ -25,7 +25,7 @@
                     <h1>Zombie Dash</h1>
                     <h3>Create a New Question</h3>
 
-                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/admin/task/${taskId}/create/question">
+                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/attendee/game">
 
                         <div class="control-group">
                             <label class="control-label align-left" for="questionText"><span class="error ">*</span>Question:</label>
@@ -44,6 +44,12 @@
                                 </tr>
                             </table>
                             <input type="button" id="addOption" class="btn btn-primary" onClick="createOption();" value="Add Option"</input>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls offset6" >
+                                 <button id="submitQuestion" type="submit" class="btn btn-primary">Submit Question</button>&nbsp
+                            </div>
                         </div>
 
                     </form>

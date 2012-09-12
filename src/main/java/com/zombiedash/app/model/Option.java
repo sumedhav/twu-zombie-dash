@@ -22,4 +22,12 @@ public class Option {
     public boolean isCorrect() {
         return isCorrect;
     }
+
+    public UUID getQuestionId() {
+        return questionId;
+    }
+
+    public UUID getOptionId() {
+        return optionId;
+    }
 }

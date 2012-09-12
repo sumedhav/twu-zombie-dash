@@ -1,7 +1,10 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.forms.QuestionForm;
 import com.zombiedash.app.forms.TaskForm;
+import com.zombiedash.app.model.Question;
 import com.zombiedash.app.model.Task;
+import com.zombiedash.app.repository.QuestionRepository;
 import com.zombiedash.app.repository.TaskRepository;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -13,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -20,12 +26,13 @@ import static org.mockito.Mockito.when;
 public class TaskControllerTest {
     private  TaskController taskController;
     private TaskRepository taskRepository;
-
+    private QuestionRepository questionRepository;
 
     @Before
     public void setUpRepositories() {
         taskRepository = Mockito.mock(TaskRepository.class);
-        taskController= new TaskController(taskRepository);
+        questionRepository = mock(QuestionRepository.class);
+        taskController= new TaskController(taskRepository, questionRepository);
     }
 
     @Test
@@ -44,7 +51,7 @@ public class TaskControllerTest {
         UUID taskId = UUID.randomUUID();
         when(taskRepository.insertTask(any(Task.class))).thenReturn(taskId);
         ModelAndView modelAndView = taskController.createTask("" + conferenceId, taskForm);
-        MatcherAssert.assertThat(modelAndView.getViewName(), Matchers.is(Matchers.equalTo("redirect:/zombie/admin/task/" + taskId + "/create/question")));
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/task/" + taskId + "/create/question"));
     }
 
     @Test
@@ -59,4 +66,20 @@ public class TaskControllerTest {
         MatcherAssert.assertThat(modelAndView.getViewName(), Matchers.is(Matchers.equalTo("createtask")));
     }
 
+    @Test
+    public void shouldGoToQuestionCreationPageAfterTaskCreation() throws Exception {
+        UUID taskId = UUID.randomUUID();
+        ModelAndView modelAndView = taskController.showQuestionCreationForm("" + taskId);
+        MatcherAssert.assertThat(modelAndView.getViewName(), Matchers.is("createquestion"));
+    }
+
+    @Test
+    public void shouldCreateQuestionForTask() throws Exception {
+        QuestionForm questionForm = mock(QuestionForm.class);
+        UUID taskId = UUID.randomUUID();
+        when(questionRepository.insertQuestion(any(Question.class))).thenReturn(taskId);
+        when(questionForm.isValidData()).thenReturn(true);
+        ModelAndView modelAndView = taskController.createQuestion(taskId.toString(), questionForm);
+        assertThat(modelAndView.getViewName(), is("redirect://zombie/attendee/game"));
+    }
 }

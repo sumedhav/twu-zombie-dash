@@ -34,12 +34,15 @@ public class OptionRepositoryTest {
         when(jdbcTemplate.update(anyString(), (UUID)anyObject(), anyString(), anyBoolean(), (UUID)anyObject())).thenReturn(1);
 
         Option option = mock(Option.class);
+        UUID questionId = UUID.randomUUID();
+        UUID optionId = UUID.randomUUID();
 
         when(option.getText()).thenReturn("ZombieDash Task Question");
         when(option.isCorrect()).thenReturn(true);
+        when(option.getQuestionId()).thenReturn(questionId);
+        when(option.getOptionId()).thenReturn(optionId);
 
-        UUID questionId = UUID.randomUUID();
-        UUID optionId = optionRepository.insertOption(questionId, option);
+        optionRepository.insertOption(option);
 
         verify(jdbcTemplate).update("INSERT INTO zombie_option values(?,?,?,?)",
                 optionId, "ZombieDash Task Question", true, questionId);

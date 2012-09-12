@@ -1,7 +1,10 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.forms.QuestionForm;
 import com.zombiedash.app.forms.TaskForm;
+import com.zombiedash.app.model.Question;
 import com.zombiedash.app.model.Task;
+import com.zombiedash.app.repository.QuestionRepository;
 import com.zombiedash.app.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +20,12 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class TaskController {
     private TaskRepository taskRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    public TaskController(TaskRepository taskRepository) {
+    public TaskController(TaskRepository taskRepository, QuestionRepository questionRepository) {
         this.taskRepository = taskRepository;
+        this.questionRepository = questionRepository;
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.GET)
@@ -60,9 +65,22 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/task/{taskId}/create/question", method = RequestMethod.POST)
-    public ModelAndView createQuestion(@PathVariable String taskId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createquestion");
-        return modelAndView;
+    public ModelAndView createQuestion(@PathVariable String taskId, QuestionForm questionForm) {
+        try {
+            boolean validDataFlag = questionForm.isValidData();
+
+            HashMap<String, String> model = questionForm.populateModelMapWithFormValues();
+            if (validDataFlag) {
+                Question question = questionForm.createQuestion(UUID.fromString(taskId));
+                questionRepository.insertQuestion(question);
+                ModelAndView modelAndView = new ModelAndView("redirect://zombie/attendee/game");
+                return modelAndView;
+            }
+            return new ModelAndView("createquestion", "model", model);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
+            return modelAndView;
+        }
     }
 }

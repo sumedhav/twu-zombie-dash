@@ -27,14 +27,17 @@ public class QuestionRepositoryTest {
 
     @Test
     public void shouldInsertQuestionIntoDatabase(){
-        when(jdbcTemplate.update(anyString(),anyLong(), any(Question.class), anyLong())).thenReturn(1);
-
         Question question = mock(Question.class);
-        when(question.getText()).thenReturn("What is this question?");
+        UUID questionID = UUID.randomUUID();
         UUID taskID = UUID.randomUUID();
-        UUID questionID = questionRepository.insertQuestion(taskID, question);
         String INSERT_QUESTION = "INSERT INTO zombie_question values(?,?,?)";
 
+        when(jdbcTemplate.update(anyString(), any(UUID.class), any(Question.class), any(UUID.class))).thenReturn(1);
+        when(question.getText()).thenReturn("What is this question?");
+        when(question.getTaskId()).thenReturn(taskID);
+        when(question.getQuestionId()).thenReturn(questionID);
+
+        questionRepository.insertQuestion(question);
         verify(jdbcTemplate).update(INSERT_QUESTION, questionID, "What is this question?", taskID);
     }
 
