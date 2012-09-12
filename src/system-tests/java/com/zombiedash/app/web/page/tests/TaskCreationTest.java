@@ -40,6 +40,14 @@ public class TaskCreationTest extends BasePageTest{
         .inputTextOn("task_description", "My Task Description")
         .clickOn("addQuestion");
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Create Question")));
+    fillOutQuestionForm("addAnotherQuestion");
+    assertThat(browser.getPageTitle(), is(equalTo("Zombie Dash : Create Question")));
+    fillOutQuestionForm("submitQuestion");
+    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Conference Information")));
+
+  }
+
+  private void fillOutQuestionForm(String whichbutton) {
     browser.inputTextOn("question_text","My Question")
         .clickOn("addOption")
         .inputTextOn("optionText_1","First")
@@ -48,8 +56,7 @@ public class TaskCreationTest extends BasePageTest{
         .clickOn("addOption")
         .inputTextOn("optionText_3","Third")
         .clickOn("isCorrect2")
-        .clickOn("submitQuestion");
-    assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Conference Information")));
+        .clickOn(whichbutton);
   }
 
 }
