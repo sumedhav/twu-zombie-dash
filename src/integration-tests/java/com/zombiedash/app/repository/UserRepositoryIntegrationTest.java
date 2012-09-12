@@ -1,8 +1,8 @@
 package com.zombiedash.app.repository;
 
-import com.zombiedash.app.helper.UserTestDataManager;
 import com.zombiedash.app.model.Role;
 import com.zombiedash.app.model.User;
+import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

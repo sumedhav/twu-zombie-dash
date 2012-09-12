@@ -1,9 +1,9 @@
 package com.zombiedash.app.repository;
 
-import com.zombiedash.app.helper.TaskTestDataManager;
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.test.matchers.QuestionMatcher;
+import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Ignore;

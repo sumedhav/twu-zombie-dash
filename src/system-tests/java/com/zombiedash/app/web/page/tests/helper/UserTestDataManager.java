@@ -28,13 +28,8 @@ public class UserTestDataManager {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    public void insertUser(String uuid,String userName,String password,Role role,String name,String email){
+    public void insertUser(String userName,String password,Role role,String name,String email){
         jdbcTemplate.update(INSERT_USER, userName, passwordEncoder.encodePassword(password, SALT), role.getVal(), name,email);
-    }
-    public void insertAttendeeWithGenericConference(String userName, String password, String name, String email, String dob, String country, String phoneNo, String address, String zipcode){
-        jdbcTemplate.update(INSERT_USER,userName, passwordEncoder.encodePassword(password, SALT), Role.ATTENDEE.getVal(), name,email);
-        UUID confId=insertConference();
-        jdbcTemplate.update(INSERT_ATTENDEE_INFO, userName,dob,country,phoneNo,address,zipcode,false,false,confId);
     }
 
     public void insertAttendeeForConference(UUID confId,String username, String password){

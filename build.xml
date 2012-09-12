@@ -45,7 +45,6 @@
         <pathelement location="${src.dir}/resources"/>
         <pathelement location="${unit.test.dir}/resources"/>
         <pathelement location="${integration.test.dir}/resources"/>
-        <pathelement location="${system.test.dir}/java/com/zombiedash/app/web/page/tests/helper"/>
         <fileset dir="${compile.dir}">
             <include name="*-unit-tests.jar"/>
             <include name="*-int-tests.jar"/>
@@ -87,7 +86,7 @@
         <sequential>
             <mkdir dir="${compile.dir}/classes"/>
             <javac srcdir="@{srcdir}/java" destdir="${compile.dir}/classes" classpathref="@{classpath}"
-            includeantruntime="no" debug="yes"/>
+            includeantruntime="no" debug="yes" />
             <jar jarfile="${compile.dir}/@{jarfile}" basedir="${compile.dir}/classes">
                 <fileset dir="@{srcdir}/java" excludes="**/*.java"/>
             </jar>
@@ -142,10 +141,10 @@
 
     <target name="make-jars" depends="fetch-libs">
         <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" classpath="common-classpath"/>
+        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-sys-tests.jar" classpath="common-classpath"/>
         <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" classpath="common-classpath"/>
         <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-int-tests.jar"
                   classpath="common-classpath"/>
-        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-sys-tests.jar" classpath="common-classpath"/>
     </target>
 
     <target name="run-tests"

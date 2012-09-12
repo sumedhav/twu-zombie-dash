@@ -1,8 +1,8 @@
 package com.zombiedash.app.security;
 
-import com.zombiedash.app.helper.UserTestDataManager;
 import com.zombiedash.app.repository.UserRepository;
 import com.zombiedash.app.service.UserService;
+import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,7 @@ public class UserAuthenticationIntegrationTest {
     }
 
     private void setUpAttendeeData(){
-        userTestDataManager.insertAttendeeWithGenericConference(UUID.randomUUID().toString(),"attendee","password1","attendee name","email@email.com","1990-01-01","INDIA",null,null,null);
+        userTestDataManager.insertAttendeeWithGenericConference("attendee","password1");
     }
 
 }
