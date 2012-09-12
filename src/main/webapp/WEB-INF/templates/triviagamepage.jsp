@@ -40,7 +40,7 @@
                   <c:forEach var="question" items="${questions}" varStatus="questionStatus">
                      <div class="question">${question.text}</div>
                          <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
-                             <input class="options" name="question_${questionStatus.count}" value="${option.text}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" >&nbsp ${option.text}</input>
+                             <input class="options" name="${question.questionId}" value="${option.optionId}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" >&nbsp ${option.text}</input>
                              <br>
                            <c:if test = '${(optionStatus.count) % 2 == 0}'></tr><tr>
                            </c:if>

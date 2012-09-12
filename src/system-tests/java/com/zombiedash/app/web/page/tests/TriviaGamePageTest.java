@@ -34,6 +34,7 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(elements.get(0).getText(), equalTo("Where is Red Fort"));
         assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
     }
+
     @Ignore("depends on attendee login")
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
@@ -63,31 +64,21 @@ public class TriviaGamePageTest extends BasePageTest {
     public void shouldDisplayErrorMessageWhenNotAllQuestionsAreAnsweredAndStayOnSamePage() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
 
-        List<WebElement> questions = browser.findElements(By.className("question"));
-        for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
-            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
-            options.get(0).click();
-        }
+
         browser.clickOn("submit_button");
 
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
-        assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
+        assertThat(browser.getTextById("incompleteQuestionsError"), is("You need to answer all the questions!"));
 
-        for (int questionNumber = 1; questionNumber < questions.size(); questionNumber++) {
-            List<WebElement> options = browser.findElements(By.name("question_" + questionNumber));
-            assertThat(options.get(0).isSelected(),is(true));
-        }
-
-        assertThat(browser.findElement(By.name("question_" + questions.size())).isSelected(),is(false));
     }
 
     @Test
-    public void shouldDisplayErrorMessageWhenNoQuestionsAreAnsweredAndStayOnSamePage(){
+    public void shouldDisplayErrorMessageWhenNoQuestionsAreAnsweredAndStayOnSamePage() {
         initializeJavaScriptBrowserAndSetUpData();
         browser.clickOn("submit_button");
 
         assertThat(browser.getPageTitle(), is("Welcome to Trivia Game!"));
-        assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
+        assertThat(browser.getTextById("incompleteQuestionsError"), is("You need to answer all the questions!"));
     }
 
     @Ignore("depends on attendee login")
@@ -110,7 +101,7 @@ public class TriviaGamePageTest extends BasePageTest {
     public void shouldAllowOnlyOneAnswerForAQuestion() throws Exception {
         initializeStatelessBrowserAndSetUpData();
 
-        List<WebElement> radioButtons = browser.findElements(By.name("question_1"));
+        List<WebElement> radioButtons = browser.findElements(By.id("option_1_1"));
         for (WebElement radioButton : radioButtons) {
             radioButton.click();
         }

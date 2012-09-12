@@ -57,13 +57,17 @@ public class AttendeeScoreRepository {
     public int insertAnswers(String username, UUID taskId, Map<String, String> userAnswer) {
         try {
             for (String key : userAnswer.keySet()) {
-                jdbcTemplate.update(INSERT_USER_ANSWER, username, taskId, UUID.fromString(key), UUID.fromString(userAnswer.get(key)));
 
+                if (!key.startsWith("submit")) {
+                    jdbcTemplate.update(INSERT_USER_ANSWER, username, taskId, UUID.fromString(key), UUID.fromString(userAnswer.get(key)));
+                }
             }
+
             return 1;
         } catch (Exception ex) {
             return 0;
         }
+
 
     }
 }
