@@ -1,10 +1,7 @@
 package com.zombiedash.app.controller;
 
-import com.zombiedash.app.repository.QuestionRepository;
-import com.zombiedash.app.repository.ResultRepository;
 import com.zombiedash.app.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,11 +33,19 @@ public class TriviaGameController {
 
     @RequestMapping(value = "{incompleteTaskId}", method = RequestMethod.POST)
     public ModelAndView showResultsPage(@RequestParam Map<String, String> params,@PathVariable String incompleteTaskId,Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/zombie/attendee/home");
-        int obtainedScore = resultService.getScoreOfUserSelectedOptions(params,incompleteTaskId);
-        String userName = principal.getName();
-        UUID taskId = UUID.fromString(incompleteTaskId);
-        resultService.addCompletedTask(userName, taskId,obtainedScore);
-        return modelAndView;
+        try {
+            ModelAndView modelAndView = new ModelAndView("redirect:/zombie/attendee/home");
+            int obtainedScore = resultService.getScoreOfUserSelectedOptions(params,incompleteTaskId);
+            String userName = principal.getName();
+            UUID taskId = UUID.fromString(incompleteTaskId);
+            resultService.addCompletedTask(userName, taskId,obtainedScore);
+            return modelAndView;
+        } catch (Exception e) {
+            ModelAndView modelAndView = new ModelAndView("generalerrorpage");
+            modelAndView.addObject("errorMessage",e.getMessage());
+            modelAndView.addObject("urlToReturnTo","/zombie/attendee/home");
+            modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
+            return modelAndView;
+        }
     }
 }

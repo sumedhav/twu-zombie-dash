@@ -2,9 +2,8 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
-import com.zombiedash.app.repository.ResultRepository;
+import com.zombiedash.app.repository.AttendeeScoreRepository;
 import com.zombiedash.app.service.ResultService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,9 +29,8 @@ public class TriviaGameControllerTest {
     ResultService mockResultService;
 
     @Mock
-    ResultRepository mockResultRepository;
+    AttendeeScoreRepository mockResultRepository;
 
-    private UUID taskId;
     @Test
     public void shouldForwardToTriviaGamePage() {
         String taskId = UUID.randomUUID().toString();
@@ -46,7 +44,7 @@ public class TriviaGameControllerTest {
         List<Question> expectedQuestions = new ArrayList<Question>();
         List<Option> optionsList1 = new ArrayList<Option>();
         UUID questionId = UUID.randomUUID();
-        taskId = UUID.randomUUID();
+        UUID taskId = UUID.randomUUID();
         optionsList1.add(new Option(UUID.randomUUID(),"Bangalore", true, questionId));
         optionsList1.add(new Option(UUID.randomUUID(),"Paris", false, questionId));
         optionsList1.add(new Option(UUID.randomUUID(),"Johannesburg", false, questionId));
@@ -69,15 +67,21 @@ public class TriviaGameControllerTest {
         assertThat(actualQuestions,sameInstance(expectedQuestions));
     }
 
-    @Ignore
     @Test
     public void shouldRedirectToAttendeeHome() throws Exception {
         TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
         HashMap<String,String> modelMap = mock(HashMap.class);
         Principal principal = mock(Principal.class);
-        when(mockResultService.getScoreOfUserSelectedOptions(modelMap,"")).thenReturn(1);
-        when(principal.getName()).thenReturn("admin");
-        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,taskId.toString(),principal);
+        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,UUID.randomUUID().toString(),principal);
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/attendee/home"));
+    }
+
+    @Test
+    public void shouldShowErrorPageWhenExceptionOccurs() throws Exception {
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
+        HashMap<String,String> modelMap = mock(HashMap.class);
+        Principal principal = null;
+        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,UUID.randomUUID().toString(),principal);
+        assertThat(modelAndView.getViewName(),is("generalerrorpage"));
     }
 }

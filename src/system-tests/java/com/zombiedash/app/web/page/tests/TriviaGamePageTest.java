@@ -34,7 +34,7 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(elements.get(0).getText(), equalTo("Where is Red Fort"));
         assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
     }
-    @Ignore("depend on attendee login")
+    @Ignore("depends on attendee login")
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
@@ -90,7 +90,7 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(browser.getTextById("incompleteQuestionsError"),is("You need to answer all the questions!"));
     }
 
-    @Ignore
+    @Ignore("depends on attendee login")
     @Test
     public void shouldDisplayAttendeeHomePageWithUpdatedScoreWhenAllQuestionsAreAnsweredAndSubmitted() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();

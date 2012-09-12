@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class ResultRepository {
+public class AttendeeScoreRepository {
 
     private JdbcTemplate jdbcTemplate;
     private final String SELECT_INCOMPLETE_TASKS_FOR_ATTENDEE ="SELECT * FROM zombie_task AS task," +
@@ -21,7 +21,7 @@ public class ResultRepository {
     private final String ADD_COMPLETED_TASK="INSERT INTO zombie_attendee_score VALUES(?,?,?)";
     private final String SELECT_SCORES_OF_ATTENDEE = "SELECT sum(score) FROM zombie_attendee_score WHERE username = ?";
     @Autowired
-    public ResultRepository(JdbcTemplate jdbcTemplate) {
+    public AttendeeScoreRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

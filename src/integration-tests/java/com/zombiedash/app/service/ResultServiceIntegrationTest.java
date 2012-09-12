@@ -2,8 +2,8 @@ package com.zombiedash.app.service;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
+import com.zombiedash.app.repository.AttendeeScoreRepository;
 import com.zombiedash.app.repository.QuestionRepository;
-import com.zombiedash.app.repository.ResultRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,7 +23,7 @@ public class ResultServiceIntegrationTest {
     private QuestionRepository questionRepository;
 
     @Mock
-    private ResultRepository resultRepository;
+    private AttendeeScoreRepository resultRepository;
     private UUID taskId;
 
     @Test

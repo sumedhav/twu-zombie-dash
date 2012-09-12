@@ -2,7 +2,6 @@ package com.zombiedash.app.repository;
 
 import com.zombiedash.app.model.Task;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,11 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-application-context.xml")
-public class ResultRepositoryIntegrationTest {
+public class AttendeeScoreRepositoryIntegrationTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private ResultRepository resultRepository;
+    private AttendeeScoreRepository resultRepository;
 
     private final String CREATE_CONFERENCE="INSERT INTO zombie_conference VALUES(?,?,?,?,?,?,?,?)";
     private final String CREATE_USER="INSERT INTO zombie_users VALUES(?,?,?,?,?)";
@@ -36,7 +35,7 @@ public class ResultRepositoryIntegrationTest {
     @Before
     public void setupDb(){
         username="username";
-        resultRepository = new ResultRepository(jdbcTemplate);
+        resultRepository = new AttendeeScoreRepository(jdbcTemplate);
         UUID conferenceId = UUID.randomUUID();
         firstTaskId = UUID.randomUUID();
         secondTaskId = UUID.randomUUID();

@@ -1,8 +1,8 @@
 package com.zombiedash.app.service;
 
 import com.zombiedash.app.model.Question;
+import com.zombiedash.app.repository.AttendeeScoreRepository;
 import com.zombiedash.app.repository.QuestionRepository;
-import com.zombiedash.app.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ public class ResultService {
 
     private QuestionRepository questionRepository;
     private int POINTS_FOR_CORRECT_ANSWER = 1;
-    private ResultRepository resultRepository;
+    private AttendeeScoreRepository resultRepository;
 
     @Autowired
-    public ResultService(QuestionRepository questionRepository, ResultRepository resultRepository) {
+    public ResultService(QuestionRepository questionRepository, AttendeeScoreRepository resultRepository) {
         this.questionRepository = questionRepository;
         this.resultRepository = resultRepository;
     }
