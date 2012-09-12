@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import static com.zombiedash.app.model.Role.ADMIN;
 import static com.zombiedash.app.model.Role.ATTENDEE;
+import static com.zombiedash.app.model.Role.GAME_DESIGNER;
 
 // Responsible for controlling the flow after a successful authentication
 @Service
@@ -38,6 +39,9 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         }
         if (user.getRole().equals(ATTENDEE)) {
             return "/zombie/attendee/home";
+        }
+        if (user.getRole().equals(GAME_DESIGNER)) {
+            return "/zombie/gamedesigner/home";
         }
         return null;
     }

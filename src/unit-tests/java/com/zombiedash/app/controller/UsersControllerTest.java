@@ -119,7 +119,7 @@ public class UsersControllerTest {
     public void shouldRetrieveUserDetails() throws Exception {
         mockUser();
         ModelAndView result = usersController.showUserDetails("username");
-        assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Game Designer, userName=JohnnyBoy}")));
+        assertThat(result.getModel().get("User").toString(), is(equalTo("{email=John@me.com, name=John, role=Game_Designer, userName=JohnnyBoy}")));
     }
 
     private void mockUser() {

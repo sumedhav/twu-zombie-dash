@@ -7,6 +7,10 @@ DROP TABLE IF EXISTS zombie_option;
 DROP TABLE IF EXISTS zombie_question;
 DROP TABLE IF EXISTS zombie_task;
 DROP TABLE IF EXISTS zombie_conference;
+DROP TABLE IF EXISTS zombie_attendee_answers;
+DROP TABLE IF EXISTS zombie_attendee_info;
+DROP TABLE IF EXISTS zombie_users;
+
 
 CREATE TABLE zombie_conference(
     ID uuid PRIMARY KEY,
@@ -38,10 +42,6 @@ CREATE TABLE zombie_option(
             QUESTION_ID uuid NOT NULL,
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)
             ON DELETE CASCADE);
-
-
-
-
 
 CREATE TABLE zombie_users(username varchar(40)  PRIMARY KEY ,
                 password varchar(128) NOT NULL,

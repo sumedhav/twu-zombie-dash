@@ -2,8 +2,10 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.forms.QuestionForm;
 import com.zombiedash.app.forms.TaskForm;
+import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.model.Task;
+import com.zombiedash.app.repository.ConferenceRepository;
 import com.zombiedash.app.repository.QuestionRepository;
 import com.zombiedash.app.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -21,12 +24,20 @@ import java.util.UUID;
 public class TaskController {
     private TaskRepository taskRepository;
     private QuestionRepository questionRepository;
-  private String conferenceId;
+    private String conferenceId;
+    private ConferenceRepository conferenceRepository;
 
-  @Autowired
-    public TaskController(TaskRepository taskRepository, QuestionRepository questionRepository) {
+    @Autowired
+    public TaskController(TaskRepository taskRepository, QuestionRepository questionRepository, ConferenceRepository conferenceRepository) {
         this.taskRepository = taskRepository;
         this.questionRepository = questionRepository;
+        this.conferenceRepository = conferenceRepository;
+    }
+
+
+    @RequestMapping(value = "home",method=RequestMethod.GET)
+    public ModelAndView showHomePage(){
+        return ConferenceController.populateWithConferenceList("gamedesignerhome",conferenceRepository);
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.GET)
@@ -35,6 +46,11 @@ public class TaskController {
         modelAndView.setViewName("createtask");
         modelAndView.addObject("conferenceId", conferenceId);
         return modelAndView;
+    }
+    @RequestMapping(value = "/conference/{conferenceId}", method = RequestMethod.GET)
+    public ModelAndView showTasksForConference(@PathVariable String conferenceId) {
+        return ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
+
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.POST)
@@ -77,7 +93,7 @@ public class TaskController {
                 if(questionForm.getAddAnotherQuestion()){
                   return new ModelAndView("redirect:/zombie/gamedesigner/task/"+ taskId +"/create/question");
                 }
-                return new ModelAndView("redirect:/zombie/admin/conference/view/"+ conferenceId);
+                return new ModelAndView("redirect:/zombie/gamedesigner/conference/"+ conferenceId);
             }
             return new ModelAndView("createquestion", "model", model);
         } catch (Exception e) {

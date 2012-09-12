@@ -53,4 +53,5 @@ public class UserTestDataManager {
     {
         jdbcTemplate.update(INSERT_USER,userName,"password12",Role.GAME_DESIGNER.getVal(),"yahya","email@email.com");
     }
+
 }

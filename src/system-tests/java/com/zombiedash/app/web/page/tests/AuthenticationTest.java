@@ -1,5 +1,6 @@
 package com.zombiedash.app.web.page.tests;
 
+import com.zombiedash.app.model.Role;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
@@ -52,5 +53,21 @@ public class AuthenticationTest extends BasePageTest {
         UserTestDataManager userTestDataManager = new UserTestDataManager(jdbcTemplate);
         userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
         userTestDataManager.insertAttendeeWithGenericConference("attendee","password1");
+    }
+
+    private void setUpGameDesignerInDb() {
+        jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
+        UserTestDataManager userTestDataManager = new UserTestDataManager(jdbcTemplate);
+        userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
+        userTestDataManager.insertUser("gamedesigner","password1", Role.GAME_DESIGNER,"gameDesignerName","email@email.com");
+    }
+
+    @Test
+    @Rollback(true)
+    public void shouldGoToGameDesignerHomePageIfUserIsGameDesigner(){
+        browser = BrowserSessionBuilder.aBrowserSession().usingHttps().build();
+        setUpGameDesignerInDb();
+        browser.loginAs("gamedesigner","password1");
+        assertThat(browser.getPageTitle(),is("Zombie Dash : Game Designer Home"));
     }
 }

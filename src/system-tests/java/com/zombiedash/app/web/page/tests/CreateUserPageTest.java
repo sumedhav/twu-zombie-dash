@@ -59,7 +59,6 @@ public class CreateUserPageTest extends BasePageTest {
                 .inputTextOn("name", "yahya")
                 .inputTextOn("email", "email@email.com").clickOn("submit");
 
-
         assertThat(browser.getPageTitle(), is("Zombie Dash : User List"));
 
         assertThat(browser.getTextById("username_value_1"), is(equalTo("yahya")));

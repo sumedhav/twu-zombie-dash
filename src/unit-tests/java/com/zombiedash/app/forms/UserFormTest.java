@@ -147,7 +147,7 @@ public class UserFormTest {
 
     @Test
     public void shouldCreateAUser() throws Exception {
-        UserForm userForm = userFormFactory("user123","GameDesigner","name","email@email.com", "password134234fsd");
+        UserForm userForm = userFormFactory("user123","Game_Designer","name","email@email.com", "password134234fsd");
         User user = userForm.createUser();
         assertThat(user, UserMatcher.isAUserWith("user123", Role.GAME_DESIGNER, "name", "email@email.com"));
     }
