@@ -26,11 +26,11 @@
          Your current score is <b id="obtainedScore">${obtainedScore}</b>
          </div>
          </br>
-         <div class="sectionTitle">
+         <div class="sectionTitleForTask">
             Tasks
          </div>
          <c:if test='${empty incompleteTasks}'>
-            <div id="no_task">You Have No task To Play!</div>
+            <div>You Have No task To Play!</div>
          </c:if>
          <ol>
             <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
