@@ -34,7 +34,7 @@ public class TaskCreationTest extends BasePageTest{
     ConferenceHelper.clearDatabase(jdbcTemplate);
     conferenceRepository = new ConferenceRepository(jdbcTemplate);
     UUID conferenceId = ConferenceHelper.insertSampleConference(conferenceRepository);
-    browser.open("/app/zombie/admin/conference/" + conferenceId + "/create/task");
+    browser.open("/app/zombie/gamedesigner/conference/" + conferenceId + "/create/task");
     assertThat(browser.getPageTitle(),is(equalTo("Zombie Dash : Create Task")));
     browser.inputTextOn("task_name", "My Task Name")
         .inputTextOn("task_description", "My Task Description")

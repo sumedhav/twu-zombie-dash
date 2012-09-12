@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/gamedesigner")
 public class TaskController {
     private TaskRepository taskRepository;
     private QuestionRepository questionRepository;
@@ -47,7 +47,7 @@ public class TaskController {
             if (validDataFlag) {
                 Task task = taskForm.createTask(UUID.fromString(conferenceId));
                 UUID taskId = taskRepository.insertTask(task);
-                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/admin/task/" + taskId + "/create/question");
+                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/gamedesigner/task/" + taskId + "/create/question");
                 modelAndView.addObject("taskId", taskId);
                 return modelAndView;
             }

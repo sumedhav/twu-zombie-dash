@@ -25,7 +25,7 @@
                     <h1>Zombie Dash</h1>
                     <h3>Create a New Question</h3>
 
-                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/admin/task/${taskId}/create/question">
+                    <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/gamedesigner/task/${taskId}/create/question">
 
                         <div class="control-group">
                             <label class="control-label align-left" for="question_text"><span class="error ">*</span>Question:</label>

@@ -18,7 +18,7 @@
                     <h1>Zombie Dash</h1>
                     <h3>Create a New Task</h3>
 
-                    <form id="createTask" class="form-horizontal" name="taskForm" method="post" action="${pageContext.request.contextPath}/zombie/admin/conference/${conferenceId}/create/task">
+                    <form id="createTask" class="form-horizontal" name="taskForm" method="post" action="${pageContext.request.contextPath}/zombie/gamedesigner/conference/${conferenceId}/create/task">
 
                         <div class="control-group">
                             <label class="control-label align-left" for="task_name"><span class="error ">*</span>Name:</label>

@@ -50,7 +50,7 @@ public class TaskControllerTest {
         UUID taskId = UUID.randomUUID();
         when(taskRepository.insertTask(any(Task.class))).thenReturn(taskId);
         ModelAndView modelAndView = taskController.createTask("" + conferenceId, taskForm);
-        assertThat(modelAndView.getViewName(), is("redirect:/zombie/admin/task/" + taskId + "/create/question"));
+        assertThat(modelAndView.getViewName(), is("redirect:/zombie/gamedesigner/task/" + taskId + "/create/question"));
     }
 
     @Test
