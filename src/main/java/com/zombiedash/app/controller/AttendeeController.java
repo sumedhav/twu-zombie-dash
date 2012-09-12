@@ -17,9 +17,9 @@ public class AttendeeController {
     private AttendeeScoreRepository attendeeScoreRepository;
 
     @Autowired
-    public AttendeeController(ResultService resultService,AttendeeScoreRepository resultRepository) {
+    public AttendeeController(ResultService resultService, AttendeeScoreRepository resultRepository) {
         this.resultService = resultService;
-        this.attendeeScoreRepository =resultRepository;
+        this.attendeeScoreRepository = resultRepository;
     }
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
@@ -28,6 +28,7 @@ public class AttendeeController {
         String username = principal.getName();
         int score = resultService.getAttendeeScore(username);
         modelAndView.addObject("obtainedScore", score);
+        modelAndView.addObject("username", username);
         modelAndView.addObject("incompleteTasks", attendeeScoreRepository.fetchIncompleteTasks(principal.getName()));
         return modelAndView;
     }

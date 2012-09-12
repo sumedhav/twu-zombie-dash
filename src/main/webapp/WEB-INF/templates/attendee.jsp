@@ -20,7 +20,7 @@
 <body>
      <div class="container">
         <h1 class="pageTitle">
-            <div>Welcome Attendee!!!</div>
+            <div>Welcome ${username}!!!</div>
         </h1>
          <div class="sectionTitle">
          Your current score is <b id="obtainedScore">${obtainedScore}</b>
