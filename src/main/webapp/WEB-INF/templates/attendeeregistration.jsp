@@ -128,7 +128,7 @@
                         <div class="control-group">
                                 <div class="checkbox-controls">
                                   <input type="checkbox" name="productsMailingConfirmation" id="productsMailingConfirmation"
-                                        checked="<c:out value="${model.productsMail}"/>"/>
+                                        <c:if test="${model.productsMailingConfirmation=='on'}"> checked</c:if> />
                                 <label class="checkbox-label" for="productsMailingConfirmation">Would you like to receive emails about new products</label>
                                 </div>
                         </div>
@@ -136,7 +136,7 @@
                         <div class="checkbox-control-group">
                             <div class="checkbox-controls" float="left">
                               <input type="checkbox" name="adsConfirmation" id="adsConfirmation"
-                                    checked="<c:out value="${model.adsConfirm}"/>"/>
+                                <c:if test="${model.adsConfirmation=='on'}"> checked</c:if> />
                                      <label class="checkbox-label" for="adsConfirmation">Would you like to receive general advertisements</label>
                             </div>
 

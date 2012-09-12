@@ -111,7 +111,7 @@ public class RegistrationFormTest {
 
     @Test
     public void shouldPopulateFromValuesToModelMap() throws Exception {
-        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "true", "false");
+        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "on", "");
 
         HashMap<String, String> expectedMap = new HashMap<String, String>();
         expectedMap.put("username", "sadasdas");
@@ -122,8 +122,8 @@ public class RegistrationFormTest {
         expectedMap.put("countrylist", "India");
         expectedMap.put("zipCode", "zipcode");
         expectedMap.put("phoneNo", "1241324");
-        expectedMap.put("productsMailingConfirmation", "true");
-        expectedMap.put("adsConfirmation", "false");
+        expectedMap.put("productsMailingConfirmation", "on");
+        expectedMap.put("adsConfirmation", "");
 
         Map map = registrationForm.populateFormValuesToModelMap();
 
@@ -132,7 +132,7 @@ public class RegistrationFormTest {
 
     @Test
     public void shouldCreateAttendee() throws Exception {
-        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "true", "true");
+        registrationForm = registrationFormFactory("sadasdas","Hari Prasad", "sadasdas@email.com", "1990-01-01", "India", "address", "1241324", "zipcode", "on", "on");
 
         Attendee attendee = registrationForm.createAttendee();
 

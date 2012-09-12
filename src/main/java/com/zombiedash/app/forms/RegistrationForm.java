@@ -111,7 +111,7 @@ public class RegistrationForm {
     }
 
     public Attendee createAttendee() {
-        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode, Boolean.parseBoolean(productsMailingConfirmation), Boolean.parseBoolean(adsConfirmation));
+        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode, productsMailingConfirmation.equals("on"), adsConfirmation.equals("on"));
     }
 
     public String getDob() {

@@ -42,8 +42,10 @@ public class RegistrationController {
             return new ModelAndView("404");
         }
         if (conferenceRepository.isConferencePresent(uuid)) {
-            Map<String,UUID> conferenceMap = new HashMap<String,UUID>();
-            conferenceMap.put("confId",uuid);
+            Map<String, String> conferenceMap = new HashMap<String,String>();
+            conferenceMap.put("confId",uuid.toString());
+            conferenceMap.put("productsMailingConfirmation", "on");
+            conferenceMap.put("adsConfirmation", "on");
             return new ModelAndView("attendeeregistration","model",conferenceMap);
         } else {
             return new ModelAndView("404");
