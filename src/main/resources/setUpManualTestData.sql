@@ -7,6 +7,5 @@ insert into zombie_option values (cast('86fa57fd-c3bc-40f6-b19d-b0ba3f713243' AS
 insert into zombie_option values (cast('1059e864-af38-4c89-b72e-948bc69ac98b' AS uuid), 'New York', false, cast('372b7e07-4cbd-47e3-90cd-7f166c2c25df' AS uuid));
 insert into zombie_option values (cast('84e9bdb8-e508-4cb4-99c6-9de32f93b0c9' AS uuid), 'I bet it is', true,  cast('1bf3b297-2d15-4228-8830-1ebe15e35100' AS uuid));
 insert into zombie_option values (cast('c5b8c2c2-d844-44f2-98c6-5b9aa71da2c4' AS uuid), 'No thanks, fasting at the moment', false, cast('1bf3b297-2d15-4228-8830-1ebe15e35100' AS uuid));
-insert into zombie_conference values (cast('c5c9c2c2-d844-44f2-98c6-5b9aa71da2c4' AS uuid), 'confName','confTopic','confDescription','confVenue','2013-01-01','2014-01-01',1);
 insert into zombie_users values ('attendee','bc547750b92797f955b36112cc9bdd5cddf7d0862151d03a167ada8995aa24a9ad24610b36a68bc02da24141ee51670aea13ed6469099a4453f335cb239db5da',2,'name','email');
-insert into zombie_attendee_info values ('attendee','1990-01-01','INDIA',null,null,null,false,false,cast('c5c9c2c2-d844-44f2-98c6-5b9aa71da2c4' AS uuid));
+insert into zombie_attendee_info values ('attendee','1990-01-01','INDIA',null,null,null,false,false,cast('372b7e07-4cbd-47e3-90cd-7f166c2c29df' AS uuid));

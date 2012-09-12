@@ -58,12 +58,11 @@ public class QuestionRepositoryIntegrationTest extends AbstractTransactionalJUni
         taskTestDataManager.insertTask("sumedha", taskId2, "sample description", conferenceId);
         taskTestDataManager.insertQuestion(questionId2, "Is it lunch time?", taskId2);
 
-        taskTestDataManager.insertOption(questionId2, 10, "I bet it is", true);
-        taskTestDataManager.insertOption(questionId2, 20, "No thanks, fasting at the moment", false);
+        taskTestDataManager.insertOption(questionId2, 70, "I bet it is", true);
+        taskTestDataManager.insertOption(questionId2, 80, "No thanks, fasting at the moment", false);
 
     }
 
-    @Ignore
     @Test
     public void shouldRetrieveAllQuestionsOfATask() {
         insertDataIntoDatabase();

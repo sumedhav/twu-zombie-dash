@@ -82,7 +82,7 @@ CREATE TABLE zombie_attendee_answers(
                 FOREIGN KEY (username) REFERENCES zombie_users(username) ON DELETE CASCADE,
                 FOREIGN KEY (task_ID) REFERENCES zombie_task(id) ON DELETE CASCADE,
                 FOREIGN KEY (question_ID) REFERENCES zombie_question(id) ON DELETE CASCADE,
-                FOREIGN KEY (option_ID) REFERENCES zombie_option(id) ON DELETE CASCADE,
+                    FOREIGN KEY (option_ID) REFERENCES zombie_option(id) ON DELETE CASCADE,
                 PRIMARY KEY(username,task_ID,question_ID)
 );
 

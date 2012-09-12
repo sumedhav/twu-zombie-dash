@@ -9,6 +9,7 @@
     <http auto-config='true'>
         <intercept-url pattern="/zombie/login" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="https"/>
         <intercept-url pattern="/static/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/zombie/register/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/zombie/logout" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="https"/>
         <intercept-url pattern="/zombie/attendee/**" access="ROLE_ATTENDEE" requires-channel="https"/>
         <intercept-url pattern="/**" access="ROLE_ADMINISTRATOR" requires-channel="https"/>
