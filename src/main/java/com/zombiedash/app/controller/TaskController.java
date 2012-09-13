@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +36,9 @@ public class TaskController {
 
 
     @RequestMapping(value = "home",method=RequestMethod.GET)
-    public ModelAndView showHomePage(){
-        return ConferenceController.populateWithConferenceList("gamedesignerhome",conferenceRepository);
+    public ModelAndView showHomePage(Principal principal){
+        String username = principal.getName();
+        return ConferenceController.populateWithConferenceList("gamedesignerhome",conferenceRepository).addObject("username",username);
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.GET)
@@ -48,8 +50,8 @@ public class TaskController {
     }
     @RequestMapping(value = "/conference/{conferenceId}", method = RequestMethod.GET)
     public ModelAndView showTasksForConference(@PathVariable String conferenceId) {
-          ModelAndView modelAndView=ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
-         populateWithConferenceTaskList(taskRepository, conferenceId, modelAndView);
+        ModelAndView modelAndView=ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
+        populateWithConferenceTaskList(taskRepository,conferenceId,modelAndView);
         return modelAndView;
     }
     public static ModelAndView populateWithConferenceTaskList(TaskRepository taskRepository,String conferenceId,ModelAndView modelAndView) {

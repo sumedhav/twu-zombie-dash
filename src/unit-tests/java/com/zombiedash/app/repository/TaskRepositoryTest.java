@@ -1,6 +1,5 @@
 package com.zombiedash.app.repository;
 
-import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Task;
 import org.junit.Test;
 import org.mockito.Mock;

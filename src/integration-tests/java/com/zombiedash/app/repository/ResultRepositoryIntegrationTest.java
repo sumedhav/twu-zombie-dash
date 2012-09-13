@@ -4,7 +4,6 @@ import com.zombiedash.app.model.Task;
 import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
 import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +75,7 @@ public class ResultRepositoryIntegrationTest {
     @Test
     public void shouldReturnAllTasksAsIncompleteTasksWhenNoTaskIsCompleted(){
         List<Task> incompleteTasks= attendeeScoreRepository.fetchIncompleteTasks(username);
-        assertThat(incompleteTasks.size(),is(2));
+        assertThat(incompleteTasks.size(), is(2));
     }
 
     @Test

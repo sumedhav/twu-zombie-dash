@@ -6,7 +6,6 @@ import com.zombiedash.app.test.matchers.QuestionMatcher;
 import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
 import org.hamcrest.Matcher;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.zombiedash.app.test.matchers.QuestionMatcher.aQuestionWith;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;

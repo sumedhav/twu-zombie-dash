@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.zombiedash.app.model.Role.ADMIN;
-import static com.zombiedash.app.model.Role.ATTENDEE;
-import static com.zombiedash.app.model.Role.GAME_DESIGNER;
+import static com.zombiedash.app.model.Role.*;
 
 // Responsible for controlling the flow after a successful authentication
 @Service

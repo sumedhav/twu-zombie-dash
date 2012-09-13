@@ -9,8 +9,6 @@ import org.openqa.selenium.By;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 
-import java.util.UUID;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -44,7 +42,7 @@ public class AuthenticationTest extends BasePageTest {
     public void shouldGoToAttendeeLoginSuccessPageIfUserIsAttendee() throws Exception {
         browser = BrowserSessionBuilder.aBrowserSession().usingHttps().build();
         setUpAttendeeInDb();
-        browser.loginAs("attendee","password1");
+        browser.loginAs("attendee", "password1");
         assertThat(browser.getPageTitle(),is("Attendee Home"));
     }
 
@@ -52,14 +50,14 @@ public class AuthenticationTest extends BasePageTest {
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         UserTestDataManager userTestDataManager = new UserTestDataManager(jdbcTemplate);
         userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
-        userTestDataManager.insertAttendeeWithGenericConference("attendee","password1");
+        userTestDataManager.insertAttendeeWithGenericConference("attendee", "password1");
     }
 
     private void setUpGameDesignerInDb() {
         jdbcTemplate = new JdbcTemplate(Application.setupDataSource());
         UserTestDataManager userTestDataManager = new UserTestDataManager(jdbcTemplate);
         userTestDataManager.clearAttendeeRelatedTablesExceptAdmin();
-        userTestDataManager.insertUser("gamedesigner","password1", Role.GAME_DESIGNER,"gameDesignerName","email@email.com");
+        userTestDataManager.insertUser("gamedesigner", "password1", Role.GAME_DESIGNER, "gameDesignerName", "email@email.com");
     }
 
     @Test
@@ -67,7 +65,7 @@ public class AuthenticationTest extends BasePageTest {
     public void shouldGoToGameDesignerHomePageIfUserIsGameDesigner(){
         browser = BrowserSessionBuilder.aBrowserSession().usingHttps().build();
         setUpGameDesignerInDb();
-        browser.loginAs("gamedesigner","password1");
-        assertThat(browser.getPageTitle(),is("Zombie Dash : Game Designer Home"));
+        browser.loginAs("gamedesigner", "password1");
+        assertThat(browser.getPageTitle(), is("Zombie Dash : Game Designer Home"));
     }
 }

@@ -5,7 +5,6 @@ import com.zombiedash.app.web.Browser;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 

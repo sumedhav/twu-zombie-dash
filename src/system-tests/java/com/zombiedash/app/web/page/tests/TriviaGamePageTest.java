@@ -1,12 +1,11 @@
 package com.zombiedash.app.web.page.tests;
 
 
-import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
-import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.TaskTestDataManager;
+import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -148,7 +147,7 @@ public class TriviaGamePageTest extends BasePageTest {
 
 
         initializeQuestionsAndOptionsInTheDatabase();
-        browser.loginAs("attendee","password1");
+        browser.loginAs("attendee", "password1");
         browser.open(TRIVIA_GAME_URL.concat(taskID.toString()));
     }
 }

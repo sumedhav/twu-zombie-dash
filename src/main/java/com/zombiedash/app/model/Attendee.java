@@ -1,7 +1,5 @@
 package com.zombiedash.app.model;
 
-import java.util.UUID;
-
 public class Attendee {
     private User user;
 

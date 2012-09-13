@@ -1,9 +1,8 @@
 package com.zombiedash.app.model;
 
 import org.junit.Test;
-import static com.zombiedash.app.model.Role.ADMIN;
-import static com.zombiedash.app.model.Role.ATTENDEE;
-import static com.zombiedash.app.model.Role.GAME_DESIGNER;
+
+import static com.zombiedash.app.model.Role.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -10,7 +10,7 @@
     <jsp:body>
          <div class="container">
              <h1 class="pageTitle">
-                 <div>Zombie Dash</div>
+                 <div>Welcome ${username}</div>
              </h1>
 
               <div name="existing_conferences" id="existing_conferences" class="conferenceViewSectionTitle">

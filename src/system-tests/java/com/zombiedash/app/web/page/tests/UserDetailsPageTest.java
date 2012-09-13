@@ -1,8 +1,8 @@
 package com.zombiedash.app.web.page.tests;
 
-import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
+import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;

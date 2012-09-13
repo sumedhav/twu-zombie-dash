@@ -1,8 +1,8 @@
 package com.zombiedash.app.controller;
 
+import com.zombiedash.app.forms.ConferenceForm;
 import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.repository.ConferenceRepository;
-import com.zombiedash.app.forms.ConferenceForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;

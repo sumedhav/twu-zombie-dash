@@ -6,7 +6,6 @@ import com.zombiedash.app.web.Application;
 import com.zombiedash.app.web.page.tests.helper.BrowserSessionBuilder;
 import com.zombiedash.app.web.page.tests.helper.ConferenceHelper;
 import com.zombiedash.app.web.page.tests.helper.UserTestDataManager;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;

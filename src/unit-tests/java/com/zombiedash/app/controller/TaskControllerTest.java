@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Map;
 import java.util.UUID;
 
@@ -90,7 +91,8 @@ public class TaskControllerTest {
 
   @Test
   public void shouldGoToHomePage() {
-    ModelAndView homePage = taskController.showHomePage();
+    Principal principal = mock(Principal.class);
+    ModelAndView homePage = taskController.showHomePage(principal);
     assertThat(homePage.getViewName(),is(equalTo("gamedesignerhome")));
   }
 
@@ -117,7 +119,7 @@ public class TaskControllerTest {
   public void shouldStayPageIfDataIsInvalid() {
     QuestionForm questionForm = mock(QuestionForm.class);
     when(questionForm.isValidData()).thenReturn(false);
-    ModelAndView modelAndView = taskController.createQuestion("",questionForm);
-    assertThat(modelAndView.getViewName(),is(equalTo("createquestion")));
+    ModelAndView modelAndView = taskController.createQuestion("", questionForm);
+    assertThat(modelAndView.getViewName(), is(equalTo("createquestion")));
   }
 }

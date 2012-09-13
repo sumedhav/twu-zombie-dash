@@ -1,18 +1,14 @@
 package com.zombiedash.app.repository;
 
-import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import static org.mockito.Matchers.anyString;
 
 @Repository
 public class TaskRepository {

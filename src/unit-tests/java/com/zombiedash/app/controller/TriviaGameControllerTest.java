@@ -19,7 +19,6 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +74,7 @@ public class TriviaGameControllerTest {
         TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
         HashMap<String,String> modelMap = mock(HashMap.class);
         Principal principal = mock(Principal.class);
-        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,UUID.randomUUID().toString(),principal);
+        ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap, UUID.randomUUID().toString(), principal);
         assertThat(modelAndView.getViewName(), is("redirect:/zombie/attendee/home"));
     }
 
@@ -95,7 +94,7 @@ public class TriviaGameControllerTest {
         Principal principal = mock(Principal.class);
         when(principal.getName()).thenReturn("username");
         when(mockResultService.isTaskComplete("username",taskId)).thenReturn(true);
-        ModelAndView modelAndView = triviaGameController.showGamePage(taskId,principal);
+        ModelAndView modelAndView = triviaGameController.showGamePage(taskId, principal);
         assertThat(modelAndView.getViewName(),is("completedtaskerrorpage"));
     }
 }
