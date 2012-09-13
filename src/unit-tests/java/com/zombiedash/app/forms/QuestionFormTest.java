@@ -56,7 +56,8 @@ public class QuestionFormTest {
 
   @Test
   public void shouldPopulateModelMapWithQuestionFormData() throws Exception {
-    model = questionForm.populateModelMapWithFormValues();
+    Boolean isValidData=true;
+    model = questionForm.populateModelMapWithFormValues(isValidData);
     assertThat(model.get("text"), is("Where is Charles From?"));
     for(int optionCounter=0; optionCounter<options.size(); optionCounter++) {
       when(options.get(optionCounter).getText()).thenReturn("");
@@ -75,11 +76,9 @@ public class QuestionFormTest {
   public void shouldReturnFalseIfQuestionHasLessThanTwoOptions() throws Exception {
     options.removeAll(options);
     options.add(mock(Option.class));
-    model = questionForm.populateModelMapWithFormValues();
 
-    fakeOptions();
     assertFalse(questionForm.isValidData());
-    assertThat(model.get("lessThanTwoOptionsError"), is("You must enter more than two options per question"));
+    assertThat(questionForm.getModel().get("less_than_two_options_error"), is("You must enter more than two options per question"));
   }
 
   private void fakeOptions() {

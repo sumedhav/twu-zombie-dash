@@ -53,11 +53,9 @@ public class TaskForm {
   }
 
   private boolean isLessThanMaximumLength(String field, int limit, String errorFieldName) {
-    if(field.length()>limit){
-      model.put(errorFieldName, "Trying to exceed the max number ("+limit+") of characters");
-      return false;
-    }
-    return true;
+    boolean isLessThanMax = field.length() <= limit;
+    if(!isLessThanMax) {model.put(errorFieldName, "Trying to exceed the max number ("+limit+") of characters");}
+    return isLessThanMax;
   }
 
   private boolean isEmpty(String field, String fieldMissingErrorName) {

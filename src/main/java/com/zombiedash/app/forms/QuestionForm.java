@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class QuestionForm {
+  public static final int QUESTION_TEXT_LENGTH = 250;
   private String question_text;
   private List<Option> question_options;
   private UUID questionId;
@@ -41,28 +42,46 @@ public class QuestionForm {
     this.question_options = question_options;
   }
 
+  public HashMap<String, String> getModel() {
+    return model;
+  }
+
   public Question createQuestion(UUID taskId) {
     return new Question(questionId, question_text, question_options, taskId);
   }
 
-  public HashMap<String, String> populateModelMapWithFormValues() {
-    model.put("text", question_text);
-    for(int optionCounter=0; optionCounter< question_options.size();optionCounter++) {
-      model.put("option_"+ optionCounter, question_options.get(optionCounter).getText());
+  public HashMap<String, String> populateModelMapWithFormValues(Boolean validDataFlag) {
+    if(validDataFlag || question_text!=null) {
+      model.put("text", question_text);
+    }
+    if(validDataFlag || (question_options!=null && question_options.size()<2)) {
+      for(int optionCounter=0; optionCounter< question_options.size();optionCounter++) {
+        model.put("option_"+ optionCounter, question_options.get(optionCounter).getText());
+      }
     }
     return model;
   }
 
   public boolean isValidData() {
     questionId = UUID.randomUUID();
-    initializeQuestionOptions();
     question_text = question_text.trim();
-    boolean validDataFlag = this.isNonEmpty(question_text, "questionTextFieldEmpty");
-    validDataFlag &= this.isNumberOfOptionsGreaterThanOne();
+    boolean validDataFlag = isNonEmpty(question_text, "questionText_field_empty");
+    validDataFlag &= isLessThanMaximumLength(question_text,QUESTION_TEXT_LENGTH,"questionText_exceed_error");
+    validDataFlag &= (null != question_option_texts) && (2 < question_option_texts.size());
+    if(validDataFlag) {
+      validDataFlag &= ((null != question_option_values) && (0!=question_option_values.size()));
+      if(!validDataFlag) {
+        model.put("no_option_selected","Select a correct option");
+        return validDataFlag;
+      }
 
-    for(int optionCounter = 0; optionCounter< question_options.size(); optionCounter++)   {
-      String optionText = question_options.get(optionCounter).getText().trim();
-      validDataFlag  &= this.isNonEmpty(optionText, "optionTextFieldMissing_" + optionCounter);
+      initializeQuestionOptions();
+      for(int optionCounter = 0; optionCounter< question_options.size(); optionCounter++)   {
+        String optionText = question_options.get(optionCounter).getText().trim();
+        validDataFlag  &= isNonEmpty(optionText, "optionTextFieldMissing_" + (optionCounter+1));
+      }
+    } else {
+      model.put("less_than_two_options_error", "You must enter more than two options per question");
     }
 
     return validDataFlag;
@@ -80,13 +99,23 @@ public class QuestionForm {
     }
   }
 
-  private boolean isNumberOfOptionsGreaterThanOne() {
-    boolean isMoreThanOne = question_options.size() > 1;
-    if(!isMoreThanOne) {model.put("lessThanTwoOptionsError", "You must enter more than two options per question");}
-    return isMoreThanOne;
+  private boolean isLessThanMaximumLength(String field, int limit, String errorFieldName) {
+    boolean isLessThanMax = field.length() <= limit;
+    if (!isLessThanMax) {model.put(errorFieldName, "Trying to exceed the max number (" + limit + ") of characters");}
+    return isLessThanMax;
+  }
+
+  private boolean isNumberOfOptionsGreaterThanTwo() {
+    boolean isMoreThanTwo = question_options.size() > 2;
+    if(!isMoreThanTwo) {model.put("less_than_two_options_error", "You must enter more than two options per question");}
+    return isMoreThanTwo;
   }
 
   private boolean isNonEmpty(String field, String fieldMissingErrorName) {
+    if(field == null) {
+      model.put(fieldMissingErrorName, "You can't leave this field empty.");
+      return false;
+    }
     boolean isEmpty = field.isEmpty();
     if (isEmpty) {model.put(fieldMissingErrorName,"You can't leave this field empty.");}
     return !isEmpty;

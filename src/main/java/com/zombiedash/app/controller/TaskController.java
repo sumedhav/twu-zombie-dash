@@ -114,7 +114,7 @@ public class TaskController {
     public ModelAndView createQuestion(@PathVariable String taskId, QuestionForm questionForm) {
         try {
             boolean validDataFlag = questionForm.isValidData();
-            HashMap<String, String> model = questionForm.populateModelMapWithFormValues();
+            HashMap<String, String> model = questionForm.populateModelMapWithFormValues(validDataFlag);
             if (validDataFlag) {
                 Question question = questionForm.createQuestion(UUID.fromString(taskId));
                 questionRepository.insertQuestion(question);
@@ -123,9 +123,12 @@ public class TaskController {
                 }
                 return new ModelAndView("redirect:/zombie/gamedesigner/conference/"+ conferenceId);
             }
-            return new ModelAndView("createquestion", "model", model);
+            ModelAndView modelAndView = new ModelAndView("createquestion");
+            modelAndView.addObject("model", model);
+            modelAndView.addObject("taskId", taskId);
+            return modelAndView;
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.FINE, "createQuestion", e);
+            Logger.getAnonymousLogger().log(Level.FINE,"createQuestion",e);
             return new ModelAndView("generalerrorpage");
         }
     }

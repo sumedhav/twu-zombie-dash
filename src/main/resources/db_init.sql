@@ -22,7 +22,7 @@ CREATE TABLE zombie_conference(
     MAX_ATTENDEE INT NOT NULL);
 
 
-CREATE TABLE zombie_task(name varchar(100) NOT NULL,
+CREATE TABLE zombie_task(name varchar(200) NOT NULL,
                          ID uuid NOT NULL,
                          Description varchar(1000) NOT NULL,
                          CONFERENCE_ID uuid NOT NULL,
@@ -30,13 +30,13 @@ CREATE TABLE zombie_task(name varchar(100) NOT NULL,
                          FOREIGN KEY(CONFERENCE_ID) REFERENCES zombie_conference(ID) ON DELETE CASCADE);
 
 CREATE TABLE zombie_question (ID uuid PRIMARY KEY,
-                       Text varchar(50) NOT NULL,
+                       Text varchar(500) NOT NULL,
                        TASK_ID uuid NOT NULL,
                        FOREIGN KEY(TASK_ID) REFERENCES zombie_task(ID) ON DELETE CASCADE);
 
 CREATE TABLE zombie_option(
             ID uuid PRIMARY KEY,
-            Text varchar(50) NOT NULL,
+            Text varchar(200) NOT NULL,
             correct BOOLEAN,
             QUESTION_ID uuid NOT NULL,
             FOREIGN KEY(QUESTION_ID) REFERENCES zombie_question(ID)

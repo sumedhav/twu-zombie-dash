@@ -28,14 +28,16 @@
                             <label class="control-label align-left" for="question_text"><span class="error ">*</span>Question:</label>
                                 <div class="controls">
                                     <input type="text" name="question_text" id="question_text" onkeyup="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"value="<c:out value=""/>"
+                                        onkeydown="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"value="<c:out value="${model.question_text}"/>"
                                         placeholder="enter question"/>
-                                    <span id="questionText_field_empty" class="error ">${questionTextFieldEmpty}</span>
-                                    <span id="questionText_exceed_error" class="error "></span>
+                                    <span id="questionText_field_empty" class="error ">${model.questionText_field_empty}</span>
+                                    <span id="questionText_exceed_error" class="error ">${model.questionText_exceed_error}</span>
                                 </div>
                         </div>
 
                         <div class="control-group">
+                            <span id="less_than_two_options_error" class ="error ">${model.less_than_two_options_error}</span>
+                            <span id="no_option_selected" class ="error ">${model.no_option_selected}</span>
                             <table id="optionTable" name="optionTable">
                                 <tr>
                                 </tr>
