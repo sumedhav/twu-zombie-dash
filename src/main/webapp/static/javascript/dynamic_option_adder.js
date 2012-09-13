@@ -17,7 +17,7 @@ function createOption(){
     var c = getCount();
     setCount(c);
 
-    var tdata = "<tr name=\"row_" + c + "\">"
+    var tdata = "<tr class=\"spaceUnder\" name=\"row_" + c + "\">"
                     + "<td class=\"controls\">"
                         + "<input type=\"radio\" name=\"question_option_values\" id=\"isCorrect" + c + "\" value=\""+c+"\" \" />"
                     + "</td>"
