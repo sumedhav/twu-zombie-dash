@@ -67,7 +67,7 @@ public class QuestionForm {
     question_text = question_text.trim();
     boolean validDataFlag = isNonEmpty(question_text, "questionText_field_empty");
     validDataFlag &= isLessThanMaximumLength(question_text,QUESTION_TEXT_LENGTH,"questionText_exceed_error");
-    validDataFlag &= (null != question_option_texts) && (2 < question_option_texts.size());
+    validDataFlag &= (null != question_option_texts) && (2 <= question_option_texts.size());
     if(validDataFlag) {
       validDataFlag &= ((null != question_option_values) && (0!=question_option_values.size()));
       if(!validDataFlag) {
@@ -81,7 +81,7 @@ public class QuestionForm {
         validDataFlag  &= isNonEmpty(optionText, "optionTextFieldMissing_" + (optionCounter+1));
       }
     } else {
-      model.put("less_than_two_options_error", "You must enter more than two options per question");
+      model.put("less_than_two_options_error", "You must enter atleast two options per question");
     }
 
     return validDataFlag;
@@ -103,12 +103,6 @@ public class QuestionForm {
     boolean isLessThanMax = field.length() <= limit;
     if (!isLessThanMax) {model.put(errorFieldName, "Trying to exceed the max number (" + limit + ") of characters");}
     return isLessThanMax;
-  }
-
-  private boolean isNumberOfOptionsGreaterThanTwo() {
-    boolean isMoreThanTwo = question_options.size() > 2;
-    if(!isMoreThanTwo) {model.put("less_than_two_options_error", "You must enter more than two options per question");}
-    return isMoreThanTwo;
   }
 
   private boolean isNonEmpty(String field, String fieldMissingErrorName) {

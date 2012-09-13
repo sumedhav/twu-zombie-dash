@@ -78,7 +78,7 @@ public class QuestionFormTest {
     options.add(mock(Option.class));
 
     assertFalse(questionForm.isValidData());
-    assertThat(questionForm.getModel().get("less_than_two_options_error"), is("You must enter more than two options per question"));
+    assertThat(questionForm.getModel().get("less_than_two_options_error"), is("You must enter atleast two options per question"));
   }
 
   private void fakeOptions() {
