@@ -72,7 +72,7 @@ public class QuestionForm {
     question_options = new ArrayList<Option>();
     try {
       for (int i = 0; i < question_option_texts.size(); i++) {
-        boolean isChecked = question_option_values.contains(i);
+        boolean isChecked = question_option_values.contains(i+1);
         question_options.add(new Option(UUID.randomUUID(), question_option_texts.get(i), isChecked, questionId));
       }
     } catch (ArrayIndexOutOfBoundsException e) {
