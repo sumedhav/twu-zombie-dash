@@ -31,27 +31,25 @@ public class TaskRepositoryTest {
         UUID id = taskRepository.insertTask(task);
         verify(jdbcTemplate).update(QUERY_BY_NAME, task.getName(), task.getId(),task.getDescription(),task.getConferenceId() );
     }
+
+
     @Test
     public void shouldRetrieveTasksForAConference() throws Exception {
         jdbcTemplate = mock(JdbcTemplate.class);
         String RETRIEVE_TASK_FOR_CONFERENCE="SELECT * FROM zombie_task WHERE CONFERENCE_ID = ?";
-        UUID conferenceId=UUID.randomUUID();
-        when(jdbcTemplate.queryForList(RETRIEVE_TASK_FOR_CONFERENCE,(UUID.class))).thenAnswer(new Answer<List<Map<String, Object>>>() {
+        final UUID conferenceId=UUID.randomUUID();
+        when(jdbcTemplate.queryForList(RETRIEVE_TASK_FOR_CONFERENCE,(UUID.class))).thenAnswer(new Answer<List<Task>>() {
             @Override
-            public List<Map<String,Object>> answer(InvocationOnMock invocation) throws Throwable {
-                List<Map<String,Object>> resultBlock = new ArrayList<Map<String, Object>>();
-                resultBlock.add(generateTaskContent());
-                resultBlock.add(generateTaskContent());
+            public List<Task> answer(InvocationOnMock invocation) throws Throwable {
+                List<Task> resultBlock = new ArrayList<Task>();
+                resultBlock.add(generateTaskContent(conferenceId));
+                resultBlock.add(generateTaskContent(conferenceId));
                 return resultBlock;
             }
 
-            private HashMap<String, Object> generateTaskContent() {
-                HashMap<String,Object> result = new HashMap<String, Object>();
-                result.put("name", "My task");
-                result.put("id", UUID.randomUUID());
-                result.put("description","Very good task");
-                result.put("conference_id",UUID.randomUUID());
-                return result;
+            private Task generateTaskContent(UUID conferenceId) {
+                Task task=new Task(anyString(),UUID.randomUUID(),"Very good task",conferenceId);
+                return task;
             }
         });
         TaskRepository taskRepository = new TaskRepository(jdbcTemplate);

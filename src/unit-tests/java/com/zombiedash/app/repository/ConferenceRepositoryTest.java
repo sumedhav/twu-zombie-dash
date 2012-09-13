@@ -7,6 +7,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.test.annotation.Rollback;
 
 import java.util.*;
 
@@ -66,7 +67,9 @@ public class ConferenceRepositoryTest {
         assertThat(actualConference.getEndDate(),is(equalTo("2012-06-07")));
     }
 
+
     @Test
+    @Rollback(true)
     public void shouldReadAllConferencesFromDatabase(){
         when(jdbcTemplate.queryForList(ConferenceRepository.SQL_CONFERENCE_SELECT_ALL)).thenAnswer(new Answer<List<Map<String, Object>>>() {
             @Override
@@ -92,9 +95,7 @@ public class ConferenceRepositoryTest {
         });
         ConferenceRepository conferenceRepository = new ConferenceRepository(jdbcTemplate);
         List<Conference> actualConferences = conferenceRepository.fetchAllConferences();
-        for (Conference actualConference : actualConferences) {
-            assertThat(actualConference.getEndDate(), is(equalTo("2012-06-07")));
-        }
+        assertThat(actualConferences.size(),is(2));
     }
 
     @Test
