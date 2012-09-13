@@ -49,8 +49,16 @@ public class TaskController {
     }
     @RequestMapping(value = "/conference/{conferenceId}", method = RequestMethod.GET)
     public ModelAndView showTasksForConference(@PathVariable String conferenceId) {
-        return ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
-
+          ModelAndView modelAndView=ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
+         populateWithConferenceTaskList(taskRepository,conferenceId,modelAndView);
+        return modelAndView;
+    }
+    public static ModelAndView populateWithConferenceTaskList(TaskRepository taskRepository,String conferenceId,ModelAndView modelAndView) {
+        List<Task> tasks=taskRepository.fetchTasksForConference(UUID.fromString(conferenceId));
+       if(tasks.isEmpty())
+            modelAndView.addObject("emptyTaskListMessage","No existing Tasks !!");
+        modelAndView.addObject("conferencetasks", tasks);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.POST)

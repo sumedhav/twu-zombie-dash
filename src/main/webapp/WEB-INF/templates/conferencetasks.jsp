@@ -15,6 +15,24 @@
              <h1 class="pageTitle">
                  <div>Zombie Dash</div>
              </h1>
+              <div name="existing_tasks" id="existing_tasks" class="sectionTitle">
+                             Existing Tasks
+                           </div>
+             <div class="taskList">
+                              <ol>
+                                  <c:forEach var="task" items="${conferencetasks}" varStatus="taskStatus">
+                                      <li>
+                                              <!--<a href="${pageContext.request.contextPath}/zombie/gamedesigner/conference/view/${conference.id}"
+                                              name="existing_conference_id" id="existing_conference_id_${confStatus.count}">-->
+                                              <c:out value="${task.name}"/>
+                                              <!--</a>-->
+                                      </li>
+                                      <br>
+                                      </br>
+                                  </c:forEach>
+                                  <div id="empty_task_message">${emptyTaskListMessage}</div>
+                              </ol>
+                          </div>
           	<div class="conferenceViewSectionTitle">Conference Information</div>
           	<div class="row-fluid">
                   <table class="table table-bordered">
