@@ -26,13 +26,13 @@ public class TriviaGameController {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public TriviaGameController(ResultService resultService) {
+    public TriviaGameController(ResultService resultService,TaskRepository taskRepository) {
         this.resultService = resultService;
+        this.taskRepository = taskRepository;
     }
 
     @RequestMapping(value = "{taskId}",method = RequestMethod.GET)
     public ModelAndView showGamePage(@PathVariable String taskId, Principal principal) {
-        taskRepository = new TaskRepository(jdbcTemplate);
         String username = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         if(resultService.isTaskComplete(username,taskId))   {

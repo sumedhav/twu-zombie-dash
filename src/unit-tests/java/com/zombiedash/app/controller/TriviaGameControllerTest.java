@@ -2,7 +2,9 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.model.Option;
 import com.zombiedash.app.model.Question;
+import com.zombiedash.app.model.Task;
 import com.zombiedash.app.repository.AttendeeScoreRepository;
+import com.zombiedash.app.repository.TaskRepository;
 import com.zombiedash.app.service.ResultService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +33,17 @@ public class TriviaGameControllerTest {
     @Mock
     AttendeeScoreRepository mockAttendeeScoreRepository;
 
+    @Mock
+    TaskRepository taskRepository;
+
+
     @Test
     public void shouldForwardToTriviaGamePage() {
         String taskId = UUID.randomUUID().toString();
         Principal principal = mock(Principal.class);
-        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId,principal);
+        when(principal.getName()).thenReturn("attendee");
+        when(taskRepository.fetchTask(UUID.fromString(taskId))).thenReturn(mock(Task.class));
+        ModelAndView modelAndView = new TriviaGameController(mockResultService,taskRepository).showGamePage(taskId,principal);
         when(mockResultService.listQuestions(taskId)).thenReturn(new ArrayList<Question>());
         assertThat(modelAndView.getViewName(), is("triviagamepage"));
     }
@@ -63,7 +71,7 @@ public class TriviaGameControllerTest {
         expectedQuestions.add(question2);
         when(mockResultService.listQuestions(taskId.toString())).thenReturn(expectedQuestions);
         Principal principal = mock(Principal.class);
-        ModelAndView modelAndView = new TriviaGameController(mockResultService).showGamePage(taskId.toString(),principal);
+        ModelAndView modelAndView = new TriviaGameController(mockResultService,taskRepository).showGamePage(taskId.toString(),principal);
         List<Question> actualQuestions = (List<Question>) modelAndView.getModelMap().get("questions");
 
         assertThat(actualQuestions,sameInstance(expectedQuestions));
@@ -71,7 +79,7 @@ public class TriviaGameControllerTest {
 
     @Test
     public void shouldRedirectToAttendeeHome() throws Exception {
-        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService,taskRepository);
         HashMap<String,String> modelMap = mock(HashMap.class);
         Principal principal = mock(Principal.class);
         ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap, UUID.randomUUID().toString(), principal);
@@ -80,7 +88,7 @@ public class TriviaGameControllerTest {
 
     @Test
     public void shouldShowErrorPageWhenExceptionOccurs() throws Exception {
-        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService,taskRepository);
         HashMap<String,String> modelMap = mock(HashMap.class);
         Principal principal = null;
         ModelAndView modelAndView = triviaGameController.showResultsPage(modelMap,UUID.randomUUID().toString(),principal);
@@ -89,7 +97,7 @@ public class TriviaGameControllerTest {
 
     @Test
     public void shouldShowErrorPageIfCompletedTaskIsAccessed() throws Exception {
-        TriviaGameController triviaGameController = new TriviaGameController(mockResultService);
+        TriviaGameController triviaGameController = new TriviaGameController(mockResultService,taskRepository);
         String taskId = UUID.randomUUID().toString();
         Principal principal = mock(Principal.class);
         when(principal.getName()).thenReturn("username");
