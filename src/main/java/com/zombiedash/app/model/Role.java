@@ -15,7 +15,7 @@ public enum Role {
     public static Role generateRole(String roleName) {
         if(roleName.equals("0") || roleName.equalsIgnoreCase("admin"))
             return ADMIN;
-        if (roleName.equals("1") || roleName.equalsIgnoreCase("Game_Designer"))
+        if (roleName.equals("1") || roleName.equalsIgnoreCase("Game Designer"))
             return GAME_DESIGNER;
         if (roleName.equals("2") || roleName.equalsIgnoreCase("Attendee"))
             return ATTENDEE;
@@ -28,7 +28,7 @@ public enum Role {
             case 0:
                 return "Administrator";
             case 1:
-                return "Game_Designer";
+                return "Game Designer";
             case 2:
                 return "Attendee";
             default:

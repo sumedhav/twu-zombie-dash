@@ -9,11 +9,15 @@
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet">
 </head>
 <body>
-    <div id="container">
+    <div class="container">
         <h1 class="pageTitle">
             <div>Registration Confirmed</div>
         </h1>
-        <div class="form-message"> Thank you for registering at Zombie Dash, <c:out value="${registeredName}"/>. </div>
+        <div class="form-message">
+          Thank you for registering at Zombie Dash, <c:out value="${registeredName}"/>.<br/><br/>Please
+          <a name="Login" id="Login" href= "${pageContext.request.contextPath}/j_spring_security_login">login.</a>
+        </div>
     </div>
+
 </body>
 </html>

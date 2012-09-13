@@ -16,7 +16,7 @@ public class RoleTest {
 
     @Test
     public void shouldGenerateGameDesignerRole() throws Exception {
-        assertThat(Role.generateRole("game_designer"), is(equalTo(GAME_DESIGNER)));
+        assertThat(Role.generateRole("game designer"), is(equalTo(GAME_DESIGNER)));
     }
 
     @Test

@@ -87,7 +87,7 @@
                         <label class="control-label align-left" for="role">&#160;Role:</label>
                         <div class="controls">
                         <select name="role" id="role">
-                            <option value="Game_Designer">Game Designer</option>
+                            <option value="Game Designer">Game Designer</option>
                         </select>
                         </div>
                      </div>

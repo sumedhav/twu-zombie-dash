@@ -34,7 +34,8 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         return new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return "ROLE_" + role.toString().toUpperCase();
+                String authority = role.toString().replace(" ","_").toUpperCase();
+                return "ROLE_" + authority;
             }
         };
     }

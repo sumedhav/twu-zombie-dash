@@ -119,7 +119,7 @@
                                 <label class="control-label align-left" for="zipcode">Zipcode:</label>
                                 <div class="controls">
                                   <input type="text" name="zipcode" id="zipcode" onkeyup="limitNumOfCharsInField(zipcode, 40, '#zipcode_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(zipcode, 40, '#zipcode_exceed_error');" value="<c:out value="${model.zipcode}"/>" placeholder="enter zipcode"/>
+                                        onkeydown="limitNumOfCharsInField(zipcode, 40, '#zipcode_exceed_error');" value="<c:out value="${model.zipCode}"/>" placeholder="enter zipcode"/>
                                   <span id="zipcode_field_empty" class="error ">${zipcodeFieldEmpty}</span>
                                   <span id="zipcode_exceed_error" class="error "></span>
                                   <div id="invalid_zipcode" class="error ">${invalidZipcode}</div>
