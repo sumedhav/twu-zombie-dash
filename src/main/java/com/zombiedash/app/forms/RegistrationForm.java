@@ -32,6 +32,11 @@ public class RegistrationForm {
     private final static int ZIPCODE_MAX_LENGTH = 20;
     private List<String> errorCodes;
     private String productsMailingConfirmation;
+
+    public String getAdsConfirmation() {
+        return adsConfirmation;
+    }
+
     private String adsConfirmation;
 
     public RegistrationForm(){
@@ -111,7 +116,11 @@ public class RegistrationForm {
     }
 
     public Attendee createAttendee() {
-        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode, productsMailingConfirmation.equals("on"), adsConfirmation.equals("on"));
+        Boolean isPMConfirmed = true;
+        Boolean isAdsConfirmed = true;
+        if(productsMailingConfirmation == null || !productsMailingConfirmation.equals("on")){isPMConfirmed = false;}
+        if(adsConfirmation == null || !adsConfirmation.equals("on")){isAdsConfirmed = false;}
+        return new Attendee(new User(userName, Role.generateRole(ATTENDEE), name, email), dob, countrylist, phoneNo, address, zipcode, isPMConfirmed, isAdsConfirmed);
     }
 
     public String getDob() {
