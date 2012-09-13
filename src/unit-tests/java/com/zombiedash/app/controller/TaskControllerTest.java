@@ -99,8 +99,7 @@ public class TaskControllerTest {
   @Test
   public void shouldShowErrorPageOnExceptionalCircumstances() {
     TaskForm taskForm = mock(TaskForm.class);
-    NullPointerException nullPointerException = mock(NullPointerException.class);
-    when(taskForm.isValidData()).thenThrow(nullPointerException);
+    when(taskForm.isValidData()).thenThrow(new NullPointerException());
     ModelAndView errorPage = taskController.createTask(null,taskForm);
     assertThat(errorPage.getViewName(),is(equalTo("generalerrorpage")));
   }

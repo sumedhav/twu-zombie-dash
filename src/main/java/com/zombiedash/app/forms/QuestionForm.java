@@ -57,12 +57,12 @@ public class QuestionForm {
     questionId = UUID.randomUUID();
     initializeQuestionOptions();
     question_text = question_text.trim();
-    boolean validDataFlag = this.isEmpty(question_text, "questionTextFieldEmpty");
-    validDataFlag &= this.isNumberOfOptionsLessThanTwo();
+    boolean validDataFlag = this.isNonEmpty(question_text, "questionTextFieldEmpty");
+    validDataFlag &= this.isNumberOfOptionsGreaterThanOne();
 
     for(int optionCounter = 0; optionCounter< question_options.size(); optionCounter++)   {
       String optionText = question_options.get(optionCounter).getText().trim();
-      validDataFlag  &= this.isEmpty(optionText, "optionTextFieldMissing_"+optionCounter);
+      validDataFlag  &= this.isNonEmpty(optionText, "optionTextFieldMissing_" + optionCounter);
     }
 
     return validDataFlag;
@@ -80,19 +80,15 @@ public class QuestionForm {
     }
   }
 
-  private boolean isNumberOfOptionsLessThanTwo() {
-    if(question_options.size()<2) {
-      model.put("lessThanTwoOptionsError", "You must enter more than two options per question");
-      return false;
-    }
-    return true;
+  private boolean isNumberOfOptionsGreaterThanOne() {
+    boolean isMoreThanOne = question_options.size() > 1;
+    if(!isMoreThanOne) {model.put("lessThanTwoOptionsError", "You must enter more than two options per question");}
+    return isMoreThanOne;
   }
 
-  private boolean isEmpty(String field, String fieldMissingErrorName) {
-    if (field.isEmpty()) {
-      model.put(fieldMissingErrorName,"You can't leave this field empty.");
-      return false;
-    }
-    return true;
+  private boolean isNonEmpty(String field, String fieldMissingErrorName) {
+    boolean isEmpty = field.isEmpty();
+    if (isEmpty) {model.put(fieldMissingErrorName,"You can't leave this field empty.");}
+    return !isEmpty;
   }
 }

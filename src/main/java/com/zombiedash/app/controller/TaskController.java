@@ -18,6 +18,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/gamedesigner")
@@ -82,7 +84,7 @@ public class TaskController {
             modelAndView.addObject("conferenceId", conferenceId);
             return  modelAndView;
         } catch (Exception e) {
-            e.printStackTrace();
+          Logger.getAnonymousLogger().log(Level.FINE,"createTask",e);
             return new ModelAndView("generalerrorpage");
         }
     }
@@ -110,7 +112,7 @@ public class TaskController {
             }
             return new ModelAndView("createquestion", "model", model);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getAnonymousLogger().log(Level.FINE,"createQuestion",e);
             return new ModelAndView("generalerrorpage");
         }
     }
