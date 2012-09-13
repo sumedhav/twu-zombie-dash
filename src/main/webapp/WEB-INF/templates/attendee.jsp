@@ -20,7 +20,7 @@
 <body>
      <div class="container">
         <h1 class="pageTitle">
-            <div>Welcome ${username}!!!
+            <div>Welcome <c:out value="${username}"/>!!!
             </div>
         </h1>
          <div class="sectionTitle">
@@ -38,8 +38,7 @@
          <ol>
             <c:forEach var="incompleteTask" items="${incompleteTasks}" varStatus="taskStatus">
               <li>
-                <a href="${pageContext.request.contextPath}/zombie/attendee/task/${incompleteTask.id}">${incompleteTask.name}</a>
-
+                <a href="${pageContext.request.contextPath}/zombie/attendee/task/${incompleteTask.id}"><c:out value="${incompleteTask.name}"/></a>
               </li>
             </c:forEach>
          </ol>
