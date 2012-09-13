@@ -51,14 +51,7 @@
                     </div>
 
                     <div>
-                      <a href="${pageContext.request.contextPath}/zombie/gamedesigner/conference/${Conference.id}/create/task"
-                                            name="create_task" id="create_task_${confStatus.count}" class="btn btn-primary offset10">Create Task</a>
-                    <br />
-                    <br />
-                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/list" name="back_conference_view" id="back_conference_view" class="btn btn-primary offset10">Back</a>
-                    </div>
-                    <div>
-
+                    <a href="${pageContext.request.contextPath}/zombie/admin/conference/list" name="back_conference_view" id="back_conference_view" class="btn btn-primary offset11">Back</a>
                     </div>
 
  </div>
