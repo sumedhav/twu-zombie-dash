@@ -2,6 +2,7 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.forms.QuestionForm;
 import com.zombiedash.app.forms.TaskForm;
+import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.model.Task;
 import com.zombiedash.app.repository.ConferenceRepository;
@@ -40,7 +41,7 @@ public class TaskController {
     @RequestMapping(value = "home",method=RequestMethod.GET)
     public ModelAndView showHomePage(Principal principal){
         String username = principal.getName();
-        return ConferenceController.populateWithConferenceList("gamedesignerhome",conferenceRepository).addObject("username",username);
+        return ConferenceController.populateWithConferenceList("gamedesignerhome",conferenceRepository).addObject("username", username);
     }
 
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.GET)
@@ -50,13 +51,25 @@ public class TaskController {
         modelAndView.addObject("conferenceId", conferenceId);
         return modelAndView;
     }
+
     @RequestMapping(value = "/conference/{conferenceId}", method = RequestMethod.GET)
-    public ModelAndView showTasksForConference(@PathVariable String conferenceId) {
-        ModelAndView modelAndView=ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
-        populateWithConferenceTaskList(taskRepository,conferenceId,modelAndView);
-        return modelAndView;
+    public ModelAndView showConferenceDetailsWithTasks(@PathVariable String conferenceId) {
+        ModelAndView modelAndView;
+        try{
+            Conference thisConference = conferenceRepository.fetchConference(UUID.fromString(conferenceId));
+             modelAndView= new ModelAndView("conferencetasks","Conference", thisConference);
+            populateWithConferenceTaskList(taskRepository,conferenceId,modelAndView);
+            return modelAndView;
+
+        } catch (Exception e) {
+            modelAndView = new ModelAndView("generalerrorpage");
+            modelAndView.addObject("urlToReturnTo", "/zombie/gamedesigner/home");
+            modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
+            return modelAndView;
+        }
     }
-    public static ModelAndView populateWithConferenceTaskList(TaskRepository taskRepository,String conferenceId,ModelAndView modelAndView) {
+
+    private ModelAndView populateWithConferenceTaskList(TaskRepository taskRepository,String conferenceId,ModelAndView modelAndView) {
         List<Task> tasks=taskRepository.fetchTasksForConference(UUID.fromString(conferenceId));
        if(tasks.isEmpty())
             modelAndView.addObject("emptyTaskListMessage","No existing Tasks !!");
@@ -84,7 +97,7 @@ public class TaskController {
             modelAndView.addObject("conferenceId", conferenceId);
             return  modelAndView;
         } catch (Exception e) {
-          Logger.getAnonymousLogger().log(Level.FINE,"createTask",e);
+          Logger.getAnonymousLogger().log(Level.FINE, "createTask", e);
             return new ModelAndView("generalerrorpage");
         }
     }
@@ -112,7 +125,7 @@ public class TaskController {
             }
             return new ModelAndView("createquestion", "model", model);
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.FINE,"createQuestion",e);
+            Logger.getAnonymousLogger().log(Level.FINE, "createQuestion", e);
             return new ModelAndView("generalerrorpage");
         }
     }

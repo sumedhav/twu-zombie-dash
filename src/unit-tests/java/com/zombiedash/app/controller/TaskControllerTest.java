@@ -115,10 +115,11 @@ public class TaskControllerTest {
   }
 
   @Test
-  public void shouldStayPageIfDataIsInvalid() {
+  public void shouldStayOnCreateQuestionPageIfDataIsInvalid() {
     QuestionForm questionForm = mock(QuestionForm.class);
     when(questionForm.isValidData()).thenReturn(false);
     ModelAndView modelAndView = taskController.createQuestion("", questionForm);
     assertThat(modelAndView.getViewName(), is(equalTo("createquestion")));
   }
+
 }

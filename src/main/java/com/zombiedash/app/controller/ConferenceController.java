@@ -69,16 +69,12 @@ public class ConferenceController {
 
     @RequestMapping(value = "view/{conferenceId}")
     public ModelAndView view(@PathVariable String conferenceId) {
-        return showConferenceInformation(conferenceId, "conferenceview", conferenceRepository,"/zombie/admin/conference/list");
-    }
-
-    public static ModelAndView showConferenceInformation(String conferenceId, String viewname, ConferenceRepository conferenceRepository,String urlToReturnTo) {
         try{
             Conference thisConference = conferenceRepository.fetchConference(UUID.fromString(conferenceId));
-            return new ModelAndView(viewname,"Conference", thisConference);
+            return new ModelAndView("conferenceview","Conference", thisConference);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("generalerrorpage");
-            modelAndView.addObject("urlToReturnTo",urlToReturnTo);
+            modelAndView.addObject("urlToReturnTo", "/zombie/admin/conference/list");
             modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
             return modelAndView;
         }
