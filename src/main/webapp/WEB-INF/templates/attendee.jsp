@@ -20,10 +20,13 @@
 <body>
      <div class="container">
         <h1 class="pageTitle">
-            <div>Welcome ${username}!!!</div>
+            <div>Welcome ${username}!!!
+            </div>
         </h1>
          <div class="sectionTitle">
          Your current score is <b id="obtainedScore">${obtainedScore}</b>
+         <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" style="float:right;" class="btn btn-primary" >Logout</a>
+
          </div>
          </br>
          <div class="sectionTitleForTask">
@@ -40,7 +43,6 @@
               </li>
             </c:forEach>
          </ol>
-         <a name="Logout" id="Logout" href= "${pageContext.request.contextPath}/j_spring_security_logout" style="float:right;" class="btn btn-primary" >Logout</a>
      </div>
 </body>
 </html>

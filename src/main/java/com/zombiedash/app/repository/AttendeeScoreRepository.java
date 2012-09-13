@@ -58,7 +58,7 @@ public class AttendeeScoreRepository {
     }
 
     public boolean doesTaskExist(String username, String taskId) {
-        Object[] args = new Object[]{username,taskId};
+        Object[] args = new Object[]{username,UUID.fromString(taskId)};
         Integer doesTaskExist = jdbcTemplate.queryForInt(COUNT_OF_TASK_OF_ATTENDEE,args);
         if(doesTaskExist == 0) return false;
         return true;

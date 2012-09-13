@@ -96,7 +96,7 @@
                           </div>
 
                         <div class="control-group">
-                                <label class="control-label align-left" for="phoneNo">Phone Number::</label>
+                                <label class="control-label align-left" for="phoneNo">Phone Number:</label>
                                 <div class="controls">
                                   <input type="text" name="phoneNo" id="phoneNo" onkeyup="limitNumOfCharsInField(phoneno, 40, '#phoneno_exceed_error');"
                                         onkeydown="limitNumOfCharsInField(phoneNo, 40, '#phoneno_exceed_error');" value="<c:out value="${model.phoneNo}"/>" placeholder="enter phone number"/>
