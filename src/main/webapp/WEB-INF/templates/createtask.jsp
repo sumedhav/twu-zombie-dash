@@ -6,6 +6,7 @@
     <head>
         <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
+        <script type="text/javascript" src="/app/static/javascript/jquery-1.8.1.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
 
         <title>Zombie Dash : Create Task</title>
