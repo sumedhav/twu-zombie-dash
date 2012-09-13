@@ -11,7 +11,6 @@
 
         <title>Zombie Dash : Create Task</title>
     </head>
-
     <body>
         <div class="container">
             <div class="row-fluid">

@@ -57,6 +57,7 @@
                                  <span id="password_field_empty" class="error ">${passwordFieldEmpty}</span>
                                  <span id="password_exceed_error" class="error "></span>
                                  <div id="invalid_password" class="error ">${invalidPassword}</div>
+                                 <div id="password_mismatch" class="error ">${passwordMismatch}</div>
                                </div>
                         </div>
                          <div class="control-group">
