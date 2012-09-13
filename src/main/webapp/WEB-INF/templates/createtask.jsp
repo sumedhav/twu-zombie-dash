@@ -6,6 +6,7 @@
     <head>
         <link type="text/css" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link type="text/css" href="${pageContext.request.contextPath}/static/css/zombie.css" rel="stylesheet"/>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/length_validation.js"></script>
 
         <title>Zombie Dash : Create Task</title>
     </head>
@@ -25,9 +26,9 @@
 
                             <div class="controls">
                                 <input type="text" name="task_name" id="task_name" onkeyup="limitNumOfCharsInField(task_name, 100, '#taskname_exceed_error');"
-                                    onkeydown="limitNumOfCharsInField(task_name, 100, '#taskname_exceed_error');" placeholder="enter task name"/>
-                                    <c:out value="${model.name}"/></input>
+                                    onkeydown="limitNumOfCharsInField(task_name, 100, '#taskname_exceed_error');" placeholder="enter task name" value="<c:out value="${model.name}"/>" />
                                     <span class="error field-missing">${model.tasknameFieldEmpty}</span>
+                                    <span class="error " id="taskname_exceed_error">${model.taskname_exceed_error}</span>
                             </div>
                         </div>
 
@@ -36,8 +37,9 @@
                             <div class="controls">
                                 <textarea id='task_description' name='task_description' onkeyup="limitNumOfCharsInField(task_description,500,'#description_exceed_error');"
                                     onkeydown="limitNumOfCharsInField(task_description,500,'#description_exceed_error');"
-                                    placeholder="enter task description"><c:out value="${model.description}"/></textarea>
+                                    placeholder="enter task description" value="<c:out value='${model.description}'/>"></textarea>
                                 <span class="error field-missing">${model.descriptionFieldMissing}</span>
+                                <span class="error " id="description_exceed_error">${model.description_exceed_error}</span>
                             </div>
                         </div>
                         <div class="control-group">

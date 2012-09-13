@@ -2,7 +2,6 @@ package com.zombiedash.app.controller;
 
 import com.zombiedash.app.forms.QuestionForm;
 import com.zombiedash.app.forms.TaskForm;
-import com.zombiedash.app.model.Conference;
 import com.zombiedash.app.model.Question;
 import com.zombiedash.app.model.Task;
 import com.zombiedash.app.repository.ConferenceRepository;
@@ -50,7 +49,7 @@ public class TaskController {
     @RequestMapping(value = "/conference/{conferenceId}", method = RequestMethod.GET)
     public ModelAndView showTasksForConference(@PathVariable String conferenceId) {
           ModelAndView modelAndView=ConferenceController.showConferenceInformation(conferenceId, "conferencetasks", conferenceRepository,"/zombie/gamedesigner/home");
-         populateWithConferenceTaskList(taskRepository,conferenceId,modelAndView);
+         populateWithConferenceTaskList(taskRepository, conferenceId, modelAndView);
         return modelAndView;
     }
     public static ModelAndView populateWithConferenceTaskList(TaskRepository taskRepository,String conferenceId,ModelAndView modelAndView) {
@@ -64,6 +63,7 @@ public class TaskController {
     @RequestMapping(value = "/conference/{conferenceId}/create/task", method = RequestMethod.POST)
     public ModelAndView createTask(@PathVariable String conferenceId, TaskForm taskForm) {
         this.conferenceId = conferenceId;
+        ModelAndView modelAndView;
         try {
             boolean validDataFlag = taskForm.isValidData();
 
@@ -71,11 +71,14 @@ public class TaskController {
             if (validDataFlag) {
                 Task task = taskForm.createTask(UUID.fromString(conferenceId));
                 UUID taskId = taskRepository.insertTask(task);
-                ModelAndView modelAndView = new ModelAndView("redirect:/zombie/gamedesigner/task/" + taskId + "/create/question");
+                modelAndView = new ModelAndView("redirect:/zombie/gamedesigner/task/" + taskId + "/create/question");
                 modelAndView.addObject("taskId", taskId);
                 return modelAndView;
             }
-            return new ModelAndView("createtask", "model", model);
+            modelAndView = new ModelAndView("createtask");
+            modelAndView.addObject("model", model);
+            modelAndView.addObject("conferenceId", conferenceId);
+            return  modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
             return new ModelAndView("generalerrorpage");
