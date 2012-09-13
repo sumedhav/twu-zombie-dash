@@ -17,7 +17,7 @@
              <div style="display: none;">
                  <img id="calImg" width="27" height="27" src="${pageContext.request.contextPath}/static/images/Calendar.jpg" alt="Popup" class="trigger">
              </div>
-          	<div class="sectionTitle">Create Conference: Enter Details</div>
+          	<div class="conferenceViewSectionTitle">Create Conference: Enter Details</div>
              <div class="control-group">
                   <div class="form-message">
                       <b>All (<span class="error ">*</span>) fields are mandatory.</b>
