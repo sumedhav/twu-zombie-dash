@@ -7,6 +7,7 @@
     <jsp:attribute name="title">Zombie Dash : Attendee Registration</jsp:attribute>
     <jsp:body>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/createAttendee.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/javascript/drop_down_selector.js"></script>
      <div class="container">
              <h1 class="pageTitle">
                  <div>Zombie Dash</div>
@@ -157,3 +158,4 @@
     </form>
     </jsp:body>
 </t:form>
+
