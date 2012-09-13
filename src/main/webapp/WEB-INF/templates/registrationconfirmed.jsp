@@ -15,7 +15,7 @@
         </h1>
         <div class="form-message">
           Thank you for registering at Zombie Dash, <c:out value="${registeredName}"/>.<br/><br/>Please
-          <a name="Login" id="Login" href= "${pageContext.request.contextPath}/j_spring_security_login">login.</a>
+          <a name="Login" id="Login" href= "${pageContext.request.contextPath}/zombie/login">login.</a>
         </div>
     </div>
 
