@@ -11,7 +11,6 @@
 
     <jsp:body>
     <div style="color:RED">
-        <p align="center">Something went wrong. Your last request could not be completed.</p>
         <p align="center">${taskAlreadyComplete}</p>
     </div>
     <div>

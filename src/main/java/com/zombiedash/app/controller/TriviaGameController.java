@@ -32,8 +32,8 @@ public class TriviaGameController {
         String username = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         if(resultService.isTaskComplete(username,taskId))   {
-            modelAndView.setViewName("generalerrorpage");
-            modelAndView.addObject("taskAlreadyComplete","This task has already been performed.");
+            modelAndView.setViewName("completedtaskerrorpage");
+            modelAndView.addObject("taskAlreadyComplete","This task has already been completed!");
             modelAndView.addObject("urlToReturnTo","/zombie/attendee/home");
             modelAndView.addObject("returnToPrevPageMessage","Go back to home page");
             return modelAndView;

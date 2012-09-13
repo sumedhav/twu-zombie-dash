@@ -96,6 +96,6 @@ public class TriviaGameControllerTest {
         when(principal.getName()).thenReturn("username");
         when(mockResultService.isTaskComplete("username",taskId)).thenReturn(true);
         ModelAndView modelAndView = triviaGameController.showGamePage(taskId,principal);
-        assertThat(modelAndView.getViewName(),is("generalerrorpage"));
+        assertThat(modelAndView.getViewName(),is("completedtaskerrorpage"));
     }
 }

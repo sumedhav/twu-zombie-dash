@@ -43,7 +43,6 @@ public class TriviaGamePageTest extends BasePageTest {
         assertThat(elements.get(1).getText(), equalTo("Is it lunch time?"));
     }
 
-    @Ignore("depends on attendee login")
     @Test
     public void shouldGoTOHomePageWhenClickedOkOnAlertBox() throws Exception {
         initializeJavaScriptBrowserAndSetUpData();
