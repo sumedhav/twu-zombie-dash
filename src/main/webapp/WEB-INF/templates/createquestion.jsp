@@ -46,12 +46,12 @@
                         <div class="control-group">
                             <div class="controls offset6" >
                                  <button name ="addAnotherQuestion" id="addAnotherQuestion" type="submit" class="btn btn-primary" value="true">Add Another Question</button>&nbsp
+                                 <button id="submitQuestion" type="submit" class="btn btn-primary">Submit</button>&nbsp
                             </div>
                         </div>
 
                         <div class="control-group">
                             <div class="controls offset6" >
-                                 <button id="submitQuestion" type="submit" class="btn btn-primary">Submit All Questions</button>&nbsp
                             </div>
                         </div>
 
