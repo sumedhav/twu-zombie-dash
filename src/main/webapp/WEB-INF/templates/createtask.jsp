@@ -15,8 +15,8 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <h1>Zombie Dash</h1>
-                    <h3>Create a New Task</h3>
+                    <h1 class="pageTitle">Zombie Dash</h1>
+                    <h3 class="conferenceViewSectionTitle">Create a New Task</h3>
 
                     <form id="createTask" class="form-horizontal" name="taskForm" method="post" action="${pageContext.request.contextPath}/zombie/gamedesigner/conference/${conferenceId}/create/task">
 

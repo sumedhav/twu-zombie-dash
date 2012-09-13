@@ -13,7 +13,6 @@
         <script>
 
         </script>
-
         <title>Zombie Dash : Create Question</title>
     </head>
 
@@ -21,10 +20,8 @@
         <div class="container">
             <div class="row-fluid">
                 <div class="span12">
-
-                    <h1>Zombie Dash</h1>
-                    <h3>Create a New Question</h3>
-
+                    <h1 class="pageTitle">Zombie Dash</h1>
+                    <h3 class="conferenceViewSectionTitle">Create a New Question</h3>
                     <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/gamedesigner/task/${taskId}/create/question">
 
                         <div class="control-group">

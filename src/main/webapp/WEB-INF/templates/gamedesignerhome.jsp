@@ -13,7 +13,7 @@
                  <div>Zombie Dash</div>
              </h1>
 
-              <div name="existing_conferences" id="existing_conferences" class="sectionTitle">
+              <div name="existing_conferences" id="existing_conferences" class="conferenceViewSectionTitle">
                 Existing Conferences
               </div>
 
