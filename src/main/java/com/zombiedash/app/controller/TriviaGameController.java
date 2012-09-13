@@ -1,6 +1,7 @@
 package com.zombiedash.app.controller;
 
 import com.zombiedash.app.repository.AttendeeScoreRepository;
+import com.zombiedash.app.repository.TaskRepository;
 import com.zombiedash.app.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +20,8 @@ import java.util.UUID;
 @RequestMapping("/attendee/task")
 public class TriviaGameController {
     private ResultService resultService;
+    private TaskRepository taskRepository;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -29,6 +32,7 @@ public class TriviaGameController {
 
     @RequestMapping(value = "{taskId}",method = RequestMethod.GET)
     public ModelAndView showGamePage(@PathVariable String taskId, Principal principal) {
+        taskRepository = new TaskRepository(jdbcTemplate);
         String username = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         if(resultService.isTaskComplete(username,taskId))   {
@@ -41,6 +45,7 @@ public class TriviaGameController {
         modelAndView.setViewName("triviagamepage");
         modelAndView.addObject("questions", resultService.listQuestions(taskId));
         modelAndView.addObject("incompleteTaskId",taskId);
+        modelAndView.addObject("task",taskRepository.fetchTask(UUID.fromString(taskId)));
         return modelAndView;
     }
 

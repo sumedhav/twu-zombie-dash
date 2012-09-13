@@ -20,17 +20,14 @@
 <body>
  <div class="container">
          <h1 class="pageTitle">
-             TASK NAME
+             <c:out value="${task.name}"/>
          </h1>
               <input type="image" id="link"
              onclick="return doExpandCollapse('box','link','${pageContext.request.contextPath}')"
              src="${pageContext.request.contextPath}/static/images/sideArrow.jpg">Description
 
         <div id="box" name=tbl style="overflow:hidden;display:none;width: 80%; height: 10%; border: 3px solid gray;">
-                   <label id="description">1.All questions are compulsory<br>
-                   2.No  Negative Marking<br>
-                   3.Each correct answer carries 1 point<br>
-                   4.Best Of Luck!!!</label><br>
+                   <label id="description"><c:out value="${task.description}"/></label><br>
         </div>
         <div class="row-fluid">
              <div class="span12">
@@ -38,9 +35,10 @@
                     onSubmit="return validate(${fn:length(questions)},'#incompleteQuestionsError')">
                      <div name="error_message_div" class="error" id="incompleteQuestionsError"></div>
                   <c:forEach var="question" items="${questions}" varStatus="questionStatus">
-                     <div class="question">${question.text}</div>
+                     <div class="question"><c:out value="${question.text}"/></div>
                          <c:forEach var="option" items="${question.options}" varStatus="optionStatus">
-                             <input class="options" name="${question.questionId}" value="${option.optionId}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" >&nbsp ${option.text}</input>
+                             <input class="options" name="${question.questionId}" value="${option.optionId}" id="option_${questionStatus.count}_${optionStatus.count}" type="radio" >&nbsp
+                              <c:out value="${option.text}"/></input>
                              <br>
                            <c:if test = '${(optionStatus.count) % 2 == 0}'></tr><tr>
                            </c:if>
