@@ -23,8 +23,8 @@ function createOption(){
                     + "</td>"
                     + "<td class=\"controls\">"
                         + "<input type=\"text\" name=\"question_option_texts\" id=\"optionText_" + c
-                            + "\"  onkeyup=\"limitNumOfCharsInField( optionText_" + c + ", 10, \'#optionText_exceed_error_"
-                            + c + " \');\" onkeydown=\"limitNumOfCharsInField( optionText_" + c + ", 10, \'#optionText_exceed_error_"
+                            + "\"  onkeyup=\"limitNumOfCharsInField( optionText_" + c + ", 100, \'#optionText_exceed_error_"
+                            + c + " \');\" onkeydown=\"limitNumOfCharsInField( optionText_" + c + ", 100, \'#optionText_exceed_error_"
                             + c + " \');\"value=\"\" placeholder=\"enter option " + c + "\"/>"
                         + "<span id=\"optionText_exceed_error_" + c + "\" class=\"error\"></span>"
                     + "</td>"
