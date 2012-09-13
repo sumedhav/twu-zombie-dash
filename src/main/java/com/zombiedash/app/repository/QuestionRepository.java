@@ -28,7 +28,7 @@ public class QuestionRepository {
     }
 
     public List<Question> fetchAllQuestions(String taskId) {
-        Object[] args=new Object[]{taskId};
+        Object[] args=new Object[]{UUID.fromString(taskId)};
         return jdbcTemplate.query(SELECT_ALL_QUESTIONS,args, new RowMapper() {
             @Override
             public Object mapRow(ResultSet resultSet, int i) throws SQLException {
