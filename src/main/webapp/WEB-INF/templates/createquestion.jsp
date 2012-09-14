@@ -13,7 +13,6 @@
         <script>
 
         </script>
-
         <title>Zombie Dash : Create Question</title>
     </head>
 
@@ -21,24 +20,24 @@
         <div class="container">
             <div class="row-fluid">
                 <div class="span12">
-
-                    <h1>Zombie Dash</h1>
-                    <h3>Create a New Question</h3>
-
+                    <h1 class="pageTitle">Zombie Dash</h1>
+                    <h3 class="conferenceViewSectionTitle">Create a New Question</h3>
                     <form id="createTask" class="form-horizontal" name="questionForm" method="post" action="${pageContext.request.contextPath}/zombie/gamedesigner/task/${taskId}/create/question">
 
                         <div class="control-group">
                             <label class="control-label align-left" for="question_text"><span class="error ">*</span>Question:</label>
                                 <div class="controls">
                                     <input type="text" name="question_text" id="question_text" onkeyup="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"
-                                        onkeydown="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"value="<c:out value=""/>"
+                                        onkeydown="limitNumOfCharsInField(question_text, 100, '#questionText_exceed_error');"value="<c:out value="${model.question_text}"/>"
                                         placeholder="enter question"/>
-                                    <span id="questionText_field_empty" class="error ">${questionTextFieldEmpty}</span>
-                                    <span id="questionText_exceed_error" class="error "></span>
+                                    <span id="questionText_field_empty" class="error ">${model.questionText_field_empty}</span>
+                                    <span id="questionText_exceed_error" class="error ">${model.questionText_exceed_error}</span>
                                 </div>
                         </div>
 
                         <div class="control-group">
+                            <span id="less_than_two_options_error" class ="error ">${model.less_than_two_options_error}</span>
+                            <span id="no_option_selected" class ="error ">${model.no_option_selected}</span>
                             <table id="optionTable" name="optionTable">
                                 <tr>
                                 </tr>
@@ -49,12 +48,12 @@
                         <div class="control-group">
                             <div class="controls offset6" >
                                  <button name ="addAnotherQuestion" id="addAnotherQuestion" type="submit" class="btn btn-primary" value="true">Add Another Question</button>&nbsp
+                                 <button id="submitQuestion" type="submit" class="btn btn-primary">Submit</button>&nbsp
                             </div>
                         </div>
 
                         <div class="control-group">
                             <div class="controls offset6" >
-                                 <button id="submitQuestion" type="submit" class="btn btn-primary">Submit All Questions</button>&nbsp
                             </div>
                         </div>
 
